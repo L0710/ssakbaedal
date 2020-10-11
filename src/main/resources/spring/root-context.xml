@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- 1. DataSource 등록
+		- DataSource는 서버 구동 시 동시에 연결이 되어야 하며 연결 정보 설정 시 root-context 가장 위쪽에 작성
+		-> DataSource 아래에 작성 되는 설정들에서 DataSource를 참조하여 사용 가능하므로
+	 -->
+	 <!-- 객체가 삭제 되기 전에 실행 되어야 할 기능이 있는 경우 destroy-method 속성 안에 기재
+	 destory-method="close" -> 주어진 세션을 자동으로 close하라는 의미 -->
+	 <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	 destroy-method="close">
+	 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+	 	<property name="username" value="spring"/>
+	 	<property name="password" value="spring"/>
+	 	<property name="defaultAutoCommit" value="false"/>
+	 </bean> -->
+	 
+	 <!-- 기존 dataSource id 변경 후 해당 객체를 참조하는 proxyDataSource 만들기 -->
+	 <bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource"
+	 destroy-method="close">
+	 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+	 	<property name="username" value="ssak"/>
+	 	<property name="password" value="ssak"/>
+	 	<property name="defaultAutoCommit" value="false"/>
+	 </bean>
+	 
+	 <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	 	<constructor-arg ref="dataSourceSpied"/>
+	 	<property name="logFormatter">
+	 		<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+	 			<property name="loggingType" value="MULTI_LINE"/>
+	 			<property name="sqlPrefix" value="[SQL] "/>
+	 		</bean>
+	 	</property>
+	 </bean>
+	 <!-- 
+	 	트랜잭션 처리 (commit/rollback)
+	 	JDBC : Connection 객체
+	 	MyBatis : SqlSession 객체
+	 	Spring : TransactionManager 객체
+	  -->
+	  <!-- 1. DadaSourceTransactionManager 객체 bean 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>	
+	</bean>
+	 
+	 <!-- 2. Namespace에서 tx 추가 -->
+	 <!-- 트랜잭션을 적용할 때 사용 될 Advisor를 생성(실제 트랜잭션 적용은 아님) -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 트랜잭션을 선언 할 메소드 및 트랜잭션 속성 설정
+			name : 적용 메소드명 명시
+			read-only : 성능을 최적화 하기 위해 사용할수도 있고 특정 트랜잭션 작업 안에서 쓰기 작업이 일어나는 것을
+			의도적으로 방지하기 위해 사용. 일반적으로 읽기 전용 트랜잭션이 시작 된 후 DML 작업이 진행되면 예외 발생
+			rollback-for : 특정 예외가 발생 시 강제로 rollback -->
+			<tx:method name="select*" read-only="true" rollback-for="Exception" />
+			<tx:method name="insert*" rollback-for="Exception" />
+			<tx:method name="update*" rollback-for="Exception" />
+			<tx:method name="delete*" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	 
+	 <!-- Mybatis SqlSession 등록하기 -->
+	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<!-- mybatis-config.xml 설정 불러오기 -->
+	 	<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
+	 <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	 	<constructor-arg ref="sqlSession"/>
+	 </bean>
+	 
+	 <!-- 파일 업로드 관련 bean 등록 : MultipartResolver -->
+	 <bean id="multipartResolver"
+	 class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<property name="maxUploadSize" value="100000000"/>
+	 	<property name="maxInMemorySize" value="100000000"/>
+	 </bean>
+	 <!-- 
+	 	maxUploadSize : 한 요청당 업로드가 허용되는 최대 용량을 바이트 단위로 설정
+	 	-1은 제한이 없다는 의미로 이 프로퍼티를 지정하지 않았을 때의 기본값
+	 	
+	 	maxInMemorySize : 디스크에 저장하지 않고 메모리에 유지하도록 허용하는 바이트
+	 	단위의 최대 용량 설정
+	  -->
+</beans>

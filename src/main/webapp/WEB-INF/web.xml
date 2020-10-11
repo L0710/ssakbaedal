@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<!-- 프로젝트 시작 위치 설정 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- contextConfigLocation
+	: ContextLoaderListener로 pre-loading을 진행할 설정 관련 XML 문서의 경로를 등록하는 부분
+	spring 폴더(설정 파일 보관)를 소스 폴더 최상위 패스("src/main/resources/" => classpath)
+	로 옮겨주고 참조 경로 변경 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		classpath:spring/root-context.xml
+		classpath:spring/spring-security.xml
+		</param-value>
+		<!-- <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<!-- DispatcherServlet
+	 	: url-pattern(요청)에 해당하는 ViewResolver, 
+	 	HandlerMapping의 정보를 저장하고 있는 설정 관련 XML 파일을 등록 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- servlet-context.xml 경로를 이용했으므로 수정 -->
+			<param-value>classpath:spring/appServlet/servlet-context.xml</param-value>
+			<!-- <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+		<!-- 앞으로  *.do 인 요청들을 DispatcherServlet에서 HandlerMapping을 통해
+		         해당 Controller에 요청하도록 함 -->
+	</servlet-mapping>
+	
+	<!-- 공용 에러페이지 등록 -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+	
+	<!-- 한글 인코딩 -->
+	<!-- 우리가 직접 필터를 만들어서 등록할수도 있지만 스프링에서 인코딩용 필터를 제공하므로
+	     만들지 않고도 web.xml에 등록만 하여 사용 가능함 -->
+	<filter>
+		<!-- filter-name은 원하는대로 지정 가능 -->
+		<filter-name>encodingFilter</filter-name>
+		<!-- filter-class는 사용 클래스 풀네임 명확히 기재 -->
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<!-- 초기값으로 파라미터를 보내줌(UTF-8) -->
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<!-- 위에서 등록한 필터를 어떤 요청에 사용할 것인지 mapping -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+
+</web-app>
