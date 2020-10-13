@@ -6,141 +6,155 @@
 <head>
 <title>ssakbaedal</title>
 <style>
-#search_area {
-	height: 50px;
-}
 
-#searchValue {
-	height: 40px;
-	width: 280px;
-	background-color: white;
-	font-size: 15px;
-	margin-top: 5px;
-	margin-left: 37%;
-}
-
-li {
-	list-style: none;
-}
-
-.slide_wrapper {
-	position: relative;
-	width: 960px;
-	margin: 0 auto;
-	margin-top: 10px;
-	height: 200px;
-	overflow: hidden;
+	* {
+	font-family: 'Nanum Gothic', sans-serif;
+	margin: 0;
+	padding: 0;
+	}
+	
+	.contents {
+	margin-top: 1%;
+	/*padding: 3%;*/
 	/*border: 1px solid lightgray;*/
-	border-bottom: none;
-}
-
-.slides {
-	position: absolute;
-	left: 0;
-	top: 0;
-	transition: left 0.5s ease-out;
-}
-
-.slides li:not (:last-child ) {
-	float: left;
-	margin-right: 30px;
-}
-
-.slides li p {
-	font-family: 'Motnserrat', sans-serif;
-}
-
-.slides li {
-	overflow: hidden;
-	transition: transform 1s;
-}
-
-.slides li:hover {
-	transform: scale(1.05);
-	cursor: pointer;
-}
-
-.controls {
-	text-align: center;
-	margin-left: 119px;
-	width: 960px;
-	/*border: 1px solid lightgray;*/
-	border-top: none;
-}
-
-#main_title {
-	width: 100%;
-	height: 100px;
-}
-
-#prev {
-	border-radius: 50%;
-}
-
-#next {
-	border-radius: 50%;
-}
-
-#event_re_rank_container {
-	/*border: 1px solid lightgray;*/
-	margin-left: 119px;
-	margin-top: 40px;
-	width: 960px;
-	/*height: 351px;*/
-	height: 595px;
-}
-
-#recommend_area {
-	margin-top: 10px;
-	margin-left: 10px;
-	width: 400px;
-	height: 330px;
-	float: left;
-}
-
-#rank_area {
-	margin-top: 10px;
-	margin-left: 549px;
-	width: 400px;
-	height: 330px;
-}
-
-.main_title {
-	width: 400px;
-	height: 30px;
-	font-family: 'Motnserrat', sans-serif;
-}
-
-.main_recommend_rnak_img_area {
-	margin-top: 10px;
-	width: 400px;
-	height: 300px;
-	transition: transform 1s;
-}
-
-.main_recommend_rnak_img_area:hover {
-	cursor: pointer;
-	transform: scale(1.02);
-}
-
-#event_area {
-	margin-top: 30px;
-	margin-left: 10px;
-	width: 937px;
-	height: 210px;
-}
-
-#main_event_img_area {
-	margin-top: 10px;
-	width: 937px;
-	height: 170px;
-	transition: transform 1s;
-}
-
-#main_event_img_area:hover {
-	cursor: pointer;
-	transform: scale(1.02);
-}
+	height: 100%;
+	}
+	    
+	#search_area {
+		height: 50px;
+	}
+	
+	#searchValue {
+		height: 40px;
+		width: 280px;
+		background-color: white;
+		font-size: 15px;
+		margin-top: 5px;
+		margin-left: 37%;
+	}
+	
+	li {
+		list-style: none;
+	}
+	
+	.slide_wrapper {
+		position: relative;
+		width: 960px;
+		margin: 0 auto;
+		margin-top: 10px;
+		height: 200px;
+		overflow: hidden;
+		/*border: 1px solid lightgray;*/
+		border-bottom: none;
+	}
+	
+	.slides {
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: left 0.5s ease-out;
+	}
+	
+	.slides li:not(:last-child ) {
+		float: left;
+		margin-right: 30px;
+	}
+	
+	.slides li p {
+		font-family: 'Motnserrat', sans-serif;
+	}
+	
+	.slides li {
+		overflow: hidden;
+		transition: transform 1s;
+	}
+	
+	.slides li:hover {
+		transform: scale(1.05);
+		cursor: pointer;
+	}
+	
+	.controls {
+		text-align: center;
+		margin-left: 87px;
+		width: 960px;
+		/*border: 1px solid lightgray;*/
+		border-top: none;
+	}
+	
+	#main_title {
+		width: 100%;
+		height: 100px;
+	}
+	
+	#prev {
+		border-radius: 50%;
+	}
+	
+	#next {
+		border-radius: 50%;
+	}
+	
+	#event_re_rank_container {
+		/*border: 1px solid lightgray;*/
+		margin-left: 87px;
+		margin-top: 40px;
+		width: 960px;
+		/*height: 595px;*/
+	}
+	
+	#recommend_area {
+		margin-top: 10px;
+		margin-left: 10px;
+		width: 400px;
+		height: 330px;
+		float: left;
+	}
+	
+	#rank_area {
+		margin-top: 10px;
+		margin-left: 549px;
+		width: 400px;
+		height: 330px;
+	}
+	
+	.main_title {
+		width: 400px;
+		height: 30px;
+		font-family: 'Motnserrat', sans-serif;
+	}
+	
+	.main_recommend_rnak_img_area {
+		margin-top: 10px;
+		width: 400px;
+		height: 300px;
+		transition: transform 1s;
+	}
+	
+	.main_recommend_rnak_img_area:hover {
+		cursor: pointer;
+		transform: scale(1.02);
+	}
+	
+	#event_area {
+		margin-top: 30px;
+		margin-left: 10px;
+		width: 937px;
+		height: 210px;
+	}
+	
+	#main_event_img_area {
+		margin-top: 10px;
+		width: 937px;
+		height: 170px;
+		transition: transform 1s;
+	}
+	
+	#main_event_img_area:hover {
+		cursor: pointer;
+		transform: scale(1.02);
+	}
+	
 </style>
 </head>
 <body>
@@ -159,7 +173,7 @@ li {
                 <div class="slide_wrapper" align="center">
                     <ul class="slides">
                         <li>
-                            <img src="../../resources/img/total22.jpg" alt="">
+                            <img src="./resources/img/total22.jpg" alt="">
                             <p>전체보기</p>
                         </li>
                         <li>
