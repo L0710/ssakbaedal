@@ -30,13 +30,13 @@
         width: 100%;
         height: auto;
     }
-
+/*
     section {
         width: 100%;
         height: 60%;
-        /* float: left; */
+        float: left;
     }
-
+*/
     nav {
         padding: 24px;
         text-align: center;
@@ -124,7 +124,7 @@
 
     .wrapper {
     	overflow:hidden;
-    	height: 160vh;
+    	height: auto;
     }
 
     .contents {
