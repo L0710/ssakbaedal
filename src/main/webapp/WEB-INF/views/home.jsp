@@ -229,7 +229,7 @@ li {
                             <h1>이벤트</h1>
                         </div>
                         <div id="main_event_img_area">
-                            <img src="./resources/img/event123.PNG" width="937px" height="170">
+                            <img src="./resources/img/event123.PNG" width="937px" height="170" onclick="location.href='${contextPath}/elist.do'">
                         </div>
                     </div>
                     
