@@ -8,10 +8,12 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
 		
 	</typeAliases>
 
 	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
 		
 	</mappers>
 

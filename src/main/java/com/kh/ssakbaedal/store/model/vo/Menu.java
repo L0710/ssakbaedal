@@ -1,7 +1,6 @@
 package com.kh.ssakbaedal.store.model.vo;
 
 public class Menu {
-	
 	private int mnNo;
 	private String mnName;
 	private String mnCategory;
@@ -74,7 +73,6 @@ public class Menu {
 		return "Menu [mnNo=" + mnNo + ", mnName=" + mnName + ", mnCategory=" + mnCategory + ", mnStatus=" + mnStatus
 				+ ", mNo=" + mNo + ", smallCate=" + smallCate + "]";
 	}
-	
 	
 
 }

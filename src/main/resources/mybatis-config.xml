@@ -8,6 +8,7 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
 	</typeAliases>

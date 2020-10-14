@@ -33,7 +33,6 @@
 	 	<property name="password" value="ssak"/>
 	 	<property name="defaultAutoCommit" value="false"/>
 	 </bean>
-	 
 	 <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 	 	<constructor-arg ref="dataSourceSpied"/>
 	 	<property name="logFormatter">
@@ -70,6 +69,13 @@
 		</tx:attributes>
 	</tx:advice>
 
+	<!-- 3. Namaspace에서 AOP 추가 -->
+<!-- 	<aop:config>
+		<aop:pointcut id="serviceMethod"
+			expression="execution(* com.kh.spring..*Impl.*(..)))" />
+		<aop:advisor id="transactionAdvisor" pointcut-ref="serviceMethod"
+			advice-ref="txAdvice" />
+	</aop:config>  -->
 	 
 	 <!-- Mybatis SqlSession 등록하기 -->
 	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
