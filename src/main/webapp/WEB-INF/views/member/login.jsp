@@ -92,9 +92,9 @@
 	<section>
 		<div id="login_div">
 			<h1>로그인</h1>
-			<form>
-				<input type="text" name="id" placeholder="아이디를 입력해 주세요."> <input
-					type="password" name="pwd" placeholder="비밀번호를 입력해 주세요.">
+			<form action="login.do" method="post">
+				<input type="text" name="mId" placeholder="아이디를 입력해 주세요."> <input
+					type="password" name="mPwd" placeholder="비밀번호를 입력해 주세요.">
 				<button id="login" class="body_btn">로그인</button>
 			</form>
 			<div id="find_div">
