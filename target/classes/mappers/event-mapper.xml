@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+	<resultMap type="Event" id="eventResultSet">
+		<id property="eNo" column="ENO"/>
+		<result property="eTitle" column="ETITLE"/>
+		<result property="eContent" column="ECONTENT"/>
+		<result property="eWriter" column="EWRITER"/>
+		<result property="ePoint" column="E_POINT"/>
+		<result property="eCount" column="ECOUNT"/>
+		<result property="eCreateDate" column="E_CREATE_DATE"/>
+		<result property="eModifyDate" column="E_MODIFY_DATE"/>
+		<result property="eStatus" column="E_STATUS"/>
+		<result property="eStartDate" column="E_START_DATE"/>
+		<result property="eEndDate" column="E_END_DATE"/>
+		<result property="eLevel" column="E_LEVEL"/>
+		<result property="rAvailable" column="R_AVAILABLE"/>
+		<result property="mNo" column="MNO"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE E_STATUS='Y'
+	</select>
+	
+	<select id="selectList" resultMap="eventResultSet">
+		SELECT *
+		FROM EVENT
+		WHERE E_STATUS='Y'
+		ORDER BY ENO DESC
+	</select>
+	
+	<insert id="insertEvent" parameterType="Event">
+		INSERT INTO EVENT VALUES(
+			E_SEQ.NEXTVAL, #{eTitle}, #{eContent}, 'ADMIN', #{ePoint},
+			0, SYSDATE, SYSDATE, DEFAULT, #{eStartDate}, #{eEndDate},
+			DEFAULT, 'Y', 1
+		)
+	</insert>
+</mapper>
