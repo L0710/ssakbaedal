@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <title>Insert title here</title>
     <style>
     /* 공통 css */
@@ -114,63 +115,66 @@
     .contents input::placeholder{
         font-size: 10px;
     }
+    .phone{
+    width: 50px; 
+    height: 23px;
+    
+    }
     </style>
 </head>
 <body>
 	<jsp:include page="../common/headerbar.jsp" />
-	<section>
 		<div class="contents" align="center">
 			<div id="sign_up_div">
 				<h1>회원가입</h1>
 				<input type="text" id="textValue" disabled>
-				<form id="sign_up_form" action="" method="POST"
-					onsubmit="return test()">
+				<form id="sign_up_form" action="minsert.do" method="post" onsubmit="return test()">
 					<table id="sign_up_table">
 						<tr>
 							<td>아이디</td>
-							<td><input type="text" name="id"
+							<td><input type="text" name="mId"
 								placeholder="영문,숫자로 포함 4~12자로 입력해주세요.">
 								<button type="button" id="check_btn" onclick="">중복확인</button></td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
-							<td><input type="password" name="password"
+							<td><input type="password" name="mPwd"
 								placeholder="영문,숫자로 포함 8~12자로 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td>비밀번호 확인</td>
-							<td><input type="password" name="password2"
+							<td><input type="password" name="mPwd2"
 								placeholder="다시 한번 확인 해주세요."></td>
 						</tr>
 						<tr>
 							<td>이름</td>
-							<td><input type="text" name="name"
+							<td><input type="text" name="mName"
 								placeholder="2자 이상의 한글로 입력해 주세요."></td>
 						</tr>
 						<tr>
 							<td>이메일</td>
-							<td><input type="email" mame="email"
+							<td><input type="email" name="mEmail"
 								placeholder="인증 시 사용되므로 정확히 작성해 주세요."></td>
 						</tr>
 						<tr>
 							<td>전화번호</td>
-							<td><input type="text" class="phone" name="phone1"
-								style="width: 50px; height: 23px;"> - <input type="text"
-								class="phone" name="phone2" style="width: 50px; height: 23px;">
-								- <input type="text" class="phone" name="phone3"
-								style="width: 50px; height: 23px;"></td>
+							<td>
+							<input type="text" class="phone" name="phone1"> - 
+							<input type="text" class="phone" name="phone2"> - 
+							<input type="text" class="phone" name="phone3">
+							</td>
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td><input type="text" name="birthday"
+							<td><input type="text" name="birth"
 								placeholder="예)201010 형식으로 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td>성별</td>
 							<td><input type="radio" class="gender" id="radio1"
-								name="gender" value="여"> <label for="radio1">여자</label>
+								name="gender" value="F"> <label for="radio1">여자</label>
 								<input type="radio" class="gender" id="radio2" name="gender"
-								value="남"> <label for="radio2">남자</label></td>
+								value="M"> <label for="radio2">남자</label></td>
 						</tr>
 					</table>
 
@@ -178,13 +182,35 @@
 					<textarea id="checktext">
              
                         </textarea>
-					<input type="checkbox" id="check_b"><label>약관 확인 후
-						동의합니다.</label> <input type="button" onclick="test();" id="sign_up"
+					<input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
+					<input type="submit" id="sign_up"
 						class="btn-ghost green" value="회원가입">
 				</form>
 			</div>
 		</div>
-	</section>
+	    <script>
+	    var value = $("#textValue").val();
+	    var check = $(this);
+	    var red = ("border","1px solid  red");
+	    var green = ("border","1px solid rgb(130, 180, 127, 0.7)");
+	    
+	    var pwd = /(?=.*\d{1,11})(?=.*[a-zA-Z]{1,11}).{8,12}$/;
+	    var tName=/^[가-힣]{2,}$/;
+	    var tStore=/^[가-힣a-zA-Z0-9]{1,}$/;
+	    var tBirthday =/^[0-9]{6}$/
+	    var stNumber1 =/^[0-9]{3,}$/
+	    var stNumber2 =/^[0-9]{3,4}$/
+	    
+        // 비밀번호 
+        $('input[name=mPwd]').on("keypress",function(){
+            var mPwd = $('input[name=mPwd]').val();
+            if(!pwd.test(mPwd)){
+            	check.css(red);
+            }else{
+            	check.css(green);
+            }
+        });    
+    </script>
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

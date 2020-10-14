@@ -86,7 +86,23 @@ public class MemberController {
 		return "redirect:login.do";
 	}
 	
-	
+	@RequestMapping("minsert.do")
+	public String memberInsert(Member m, RedirectAttributes rd,
+								String phone1,String phone2,String phone3) {
+		m.setmPhone(phone1 + phone2 + phone3);
+		System.out.println("회원가입 내용 " + m);
+		
+		int result = mService.insertMember(m);
+		
+		if(result > 0) {
+			rd.addFlashAttribute("msg", "회원가입이 완료 되었습니다. 로그인 해주세요.");
+			return "redirect:home.do";
+			
+		} else {
+			throw new MemberException("회원 가입에 실패하였습니다.");
+		}
+		
+	}
 	
 	
 	

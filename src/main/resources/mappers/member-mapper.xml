@@ -30,8 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES (#{id}, #{pwd}, #{name}, #{email}, #{gender}, #{age}, #{phone},
-				#{address}, SYSDATE, SYSDATE, DEFAULT)
+		VALUES (M_SEQ.NEXTVAL,#{mId}, #{mPwd}, #{mName}, #{mEmail}, #{mPhone}, #{birth}, #{gender},SYSDATE, SYSDATE,
+				DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT)
 	</insert>
 	
 	<update id="updateMember" parameterType="Member">
