@@ -48,6 +48,7 @@
         background-color: white;
         width: 60%;
         overflow: hidden;
+        border-radius: 5px;
     }
 
     th, td {
@@ -183,20 +184,9 @@
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
 		</div>
-		<c:if test="${ empty sessionScope.loginUser }">
-			<div class="btnGroup" align="right">
-				<c:url var="login" value="login.do" />
-				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${login}'">로그인/회원가입</button>
-			</div>
-		</c:if>
-		<c:if test="${ !empty sessionScope.loginUser }">
-			<div class="btnGroup" align="right">
-				<c:url var="logout" value="logout.do" />
-				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${logout}'">로그아웃</button>
-			</div>
-		</c:if>
+		<div class="btnGroup" align="right">
+			<button class="btn-ghost green" id="mypageBtn">로그인/회원가입</button>
+		</div>
 		<div class="logoArea">
 			<img src="./resources/img/logo.png" id="logo">
 		</div>
