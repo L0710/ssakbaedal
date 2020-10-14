@@ -99,6 +99,22 @@
         background-color: rgb(130, 180, 127);
         color: white;
     }
+    
+	.btn-ghost.red {
+		background: transparent;
+		border: 2px solid  rgba(250, 61, 27, 0.836);
+		border-radius: 8px;
+		color:  rgba(250, 61, 27, 0.836);
+		text-decoration: none;
+		-webkit-transition-duration: 0.4s;
+		/* Safari */
+		transition-duration: 0.4s;
+	}
+
+	.btn-ghost.red:hover {
+		background-color:  rgba(250, 61, 27, 0.836);
+		color: white;
+	}
 
     .link {
         transition: 0.3s ease;
