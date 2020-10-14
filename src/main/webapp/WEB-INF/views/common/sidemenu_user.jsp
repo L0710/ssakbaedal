@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="sidemenu">
-		<button class="btn-ghost green" id="goEvent">이벤트</button>
+		<button class="btn-ghost green" id="goEvent" onclick="location.href='${contextPath}/elist.do'">이벤트</button>
 		<button class="btn-ghost green" id="goRank">랭킹</button>
 	</div>
 </body>

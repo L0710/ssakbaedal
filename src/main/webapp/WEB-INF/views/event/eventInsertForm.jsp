@@ -36,14 +36,14 @@
                 <table align="center" id="insertTable">
                     <tr>
                         <td>제목</td>
-                        <td style="text-align:left;"><input type="text" style="width:80%" name="eTitle" placeholder="제목을 입력해주세요"></td>
+                        <td style="text-align:left;"><input type="text" style="width:80%" name="eTitle" placeholder="제목을 입력해주세요"  required></td>
                     </tr>
                     <tr>
                         <td>기간</td>
                         <td style="text-align:left;">
-                            <input type="text" id="startDate" name="eStartDate" placeholder="클릭하여 날짜 설정"> 
+                            <input type="text" id="startDate" name="eStartDate" placeholder="클릭하여 날짜 설정" required> 
                             &nbsp;~&nbsp;
-                            <input type="text" id="endDate" name="eEndDate" placeholder="클릭하여 날짜 설정"> 
+                            <input type="text" id="endDate" name="eEndDate" placeholder="클릭하여 날짜 설정" required> 
                         </td>
                         <script>
                             $(function() {
@@ -82,12 +82,12 @@
                     <tr>
                         <td>내용</td>
                         <td style="text-align:left;">
-                            <textarea name="eContent" style="width:80%; height: 150px; resize:none" placeholder="내용을 입력해주세요"></textarea>
+                            <textarea name="eContent" style="width:80%; height: 150px; resize:none" placeholder="내용을 입력해주세요" required></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td>포인트</td>
-                        <td style="text-align:left;"><input type="text" name="ePoint" style="width:200px" placeholder="원 단위로 입력 : ex) 1000"></td>
+                        <td style="text-align:left;"><input type="text" name="ePoint" style="width:200px" placeholder="원 단위로 입력 : ex) 1000" required></td>
                     </tr>
                     <tr>
                         <td>댓글작성가능</td>
@@ -102,7 +102,7 @@
                 <br><br>
                 <div align="right" style="margin-right: 20%">
                     <input class="btn-ghost green" type="submit" id="insertBtn" align="right" value="작성">
-                    <button class="btn-ghost gray" type="button" id="cancelBtn" align="right" >취소</button>
+                    <button class="btn-ghost gray" type="button" id="cancelBtn" align="right" onclick="location.href='${contextPath}/elist.do'">취소</button>
                 </div>
                 </form>
                 <br><br>
