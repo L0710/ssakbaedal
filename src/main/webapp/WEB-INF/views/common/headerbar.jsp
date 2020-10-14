@@ -49,7 +49,6 @@ scope="application"/>
         background-color: white;
         width: 60%;
         overflow: hidden;
-        border-radius: 5px;
     }
 
     th, td {
@@ -178,7 +177,8 @@ scope="application"/>
 			<input id="addtxt" type="text" placeholder="주소입력">
 		</div>
 		<div class="btnGroup" align="right">
-			<button class="btn-ghost green" id="mypageBtn">로그인/회원가입</button>
+			<c:url var="login" value="login.do"/>
+			<button class="btn-ghost green" id="mypageBtn" onclick="location.href='${login}'">로그인/회원가입</button>
 		</div>
 		<div class="logoArea">
 			<img src="./resources/img/logo.png" id="logo">
