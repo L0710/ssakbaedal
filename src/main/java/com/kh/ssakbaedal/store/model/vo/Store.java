@@ -1,8 +1,10 @@
 package com.kh.ssakbaedal.store.model.vo;
 
 public class Store {
-	private String sNo;
+	
+	private int mNo;
 	private String sName;
+	private String sNo;
 	private String sTel;
 	private String sAddress;
 	private int deliveryKm;
@@ -11,16 +13,17 @@ public class Store {
 	private int sStatus;
 	private String sAccept;
 	private String sCategory;
-	private int delivercharge;
+	private int deliveryCharge;
 	private int minPrice;
 	
-	public Store () {}
+	public Store() {}
 
-	public Store(String sNo, String sName, String sTel, String sAddress, int deliveryKm, String sInfo, String openTime,
-			int sStatus, String sAccept, String sCategory, int delivercharge, int minPrice) {
+	public Store(int mNo, String sName, String sNo, String sTel, String sAddress, int deliveryKm, String sInfo,
+			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice) {
 		super();
-		this.sNo = sNo;
+		this.mNo = mNo;
 		this.sName = sName;
+		this.sNo = sNo;
 		this.sTel = sTel;
 		this.sAddress = sAddress;
 		this.deliveryKm = deliveryKm;
@@ -29,16 +32,16 @@ public class Store {
 		this.sStatus = sStatus;
 		this.sAccept = sAccept;
 		this.sCategory = sCategory;
-		this.delivercharge = delivercharge;
+		this.deliveryCharge = deliveryCharge;
 		this.minPrice = minPrice;
 	}
 
-	public String getsNo() {
-		return sNo;
+	public int getmNo() {
+		return mNo;
 	}
 
-	public void setsNo(String sNo) {
-		this.sNo = sNo;
+	public void setmNo(int mNo) {
+		this.mNo = mNo;
 	}
 
 	public String getsName() {
@@ -47,6 +50,14 @@ public class Store {
 
 	public void setsName(String sName) {
 		this.sName = sName;
+	}
+
+	public String getsNo() {
+		return sNo;
+	}
+
+	public void setsNo(String sNo) {
+		this.sNo = sNo;
 	}
 
 	public String getsTel() {
@@ -113,12 +124,12 @@ public class Store {
 		this.sCategory = sCategory;
 	}
 
-	public int getDelivercharge() {
-		return delivercharge;
+	public int getDeliveryCharge() {
+		return deliveryCharge;
 	}
 
-	public void setDelivercharge(int delivercharge) {
-		this.delivercharge = delivercharge;
+	public void setDeliveryCharge(int deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
 	}
 
 	public int getMinPrice() {
@@ -131,11 +142,10 @@ public class Store {
 
 	@Override
 	public String toString() {
-		return "Store [sNo=" + sNo + ", sName=" + sName + ", sTel=" + sTel + ", sAddress=" + sAddress + ", deliveryKm="
-				+ deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus + ", sAccept="
-				+ sAccept + ", sCategory=" + sCategory + ", delivercharge=" + delivercharge + ", minPrice=" + minPrice
-				+ "]";
+		return "Store [mNo=" + mNo + ", sName=" + sName + ", sNo=" + sNo + ", sTel=" + sTel + ", sAddress=" + sAddress
+				+ ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus
+				+ ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
+				+ ", minPrice=" + minPrice + "]";
 	}
-	
 	
 }

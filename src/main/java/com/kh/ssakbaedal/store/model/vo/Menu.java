@@ -5,16 +5,18 @@ public class Menu {
 	private String mnName;
 	private String mnCategory;
 	private String mnStatus;
+	private int mNo;
 	private String smallCate;
 	
-	public Menu () {}
+	public Menu() {}
 
-	public Menu(int mnNo, String mnName, String mnCategory, String mnStatus, String smallCate) {
+	public Menu(int mnNo, String mnName, String mnCategory, String mnStatus, int mNo, String smallCate) {
 		super();
 		this.mnNo = mnNo;
 		this.mnName = mnName;
 		this.mnCategory = mnCategory;
 		this.mnStatus = mnStatus;
+		this.mNo = mNo;
 		this.smallCate = smallCate;
 	}
 
@@ -50,6 +52,14 @@ public class Menu {
 		this.mnStatus = mnStatus;
 	}
 
+	public int getmNo() {
+		return mNo;
+	}
+
+	public void setmNo(int mNo) {
+		this.mNo = mNo;
+	}
+
 	public String getSmallCate() {
 		return smallCate;
 	}
@@ -61,8 +71,8 @@ public class Menu {
 	@Override
 	public String toString() {
 		return "Menu [mnNo=" + mnNo + ", mnName=" + mnName + ", mnCategory=" + mnCategory + ", mnStatus=" + mnStatus
-				+ ", smallCate=" + smallCate + "]";
+				+ ", mNo=" + mNo + ", smallCate=" + smallCate + "]";
 	}
 	
-	
+
 }
