@@ -8,11 +8,11 @@
 	</settings>
 	
 	<typeAliases>
-		
+		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
 	</typeAliases>
 
 	<mappers>
-		
+		<mapper resource="mappers/event-mapper.xml"/>
 	</mappers>
 
 </configuration>
