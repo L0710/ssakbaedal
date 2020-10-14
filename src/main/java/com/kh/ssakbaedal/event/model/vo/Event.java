@@ -16,7 +16,7 @@ public class Event {
 	E_END_DATE	DATE
 	E_LEVEL	NUMBER
 	R_AVAILABLE	VARCHAR2(1 BYTE)
-	MNO	NUMBER*/
+	MNO	NUMBER */
 	private int eNo;
 	private String eTitle;
 	private String eContent;

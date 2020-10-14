@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PageInfo;
 
@@ -29,6 +30,22 @@ public class EventDao {
 
 	public int insertEvent(Event e) {
 		return sqlSession.insert("eventMapper.insertEvent", e);
+	}
+
+	public int insertImg(Attachment at) {
+		return sqlSession.insert("eventMapper.insertImg", at);
+	}
+
+	public void addReadCount(int eNo) {
+		sqlSession.update("eventMapper.updateCount", eNo);		
+	}
+
+	public Event selectEvent(int eNo) {
+		return sqlSession.selectOne("eventMapper.selectOne", eNo);
+	}
+
+	public Attachment selectImg(int eNo) {
+		return sqlSession.selectOne("eventMapper.selectImg", eNo);
 	}
 
 }

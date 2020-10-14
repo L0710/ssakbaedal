@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +29,7 @@
         	<c:if test="${ !empty loginUser }">
             <c:import url="../common/nav_user.jsp"/>
 			</c:if>
+			<!-- 얘는 나중에 지우기 -->
 			<c:import url="../common/nav_user.jsp"/>
             <div class="contents">
             	<h1 align="center">이벤트</h1>
@@ -35,17 +37,28 @@
                 <table align="center" id="eventList">
                     <tr>
                         <th width="7%">NO</th>
-                        <th width="10%">진행</th>
+                        <th width="8%">진행</th>
                         <th>제목</th>
-                        <th width="20%">기간</th>
-                        <th width="15%">작성자</th>
+                        <th width="25%">기간</th>
+                        <th width="12%">작성자</th>
                     </tr>
                     <c:forEach var="e" items="${ list }">
+                    	<c:set var="today" value="<%= new java.util.Date() %>"/>
+                    	<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy-MM-dd"/>
                     	<tr align="center">
                     		<td>${ e.eNo }</td>
+                    	<c:if test="${ now ge e.eStartDate && now le e.eEndDate}">
                     		<td>진행</td>
+                    	</c:if>
+                    	<c:if test="${ now lt e.eStartDate}">
+                    		<td>예정</td>
+                    	</c:if>
+	                    <c:if test="${ now gt e.eEndDate }">
+	                    	<td>종료</td>
+	                    </c:if>
                     		<td>
-                    			<c:if test="${ !empty loginUser }">
+                    		<%-- 로그인 되면 ~~
+                     			<c:if test="${ !empty loginUser }">
 									<c:url var="edetail" value="edetail.do">
 										<c:param name="eNo" value="${ e.eNo }"/>
 										<c:param name="page" value="${ pi.currentPage }"/>
@@ -54,7 +67,12 @@
 								</c:if>
 								<c:if test="${ empty loginUser }">
 								${ e.eTitle }
-								</c:if>
+								</c:if> --%>
+									<c:url var="edetail" value="edetail.do">
+										<c:param name="eNo" value="${ e.eNo }"/>
+										<c:param name="page" value="${ pi.currentPage }"/>
+									</c:url>
+									<a href="${ edetail }">${ e.eTitle }</a>
 							</td>
 							<td>${ e.eStartDate } ~ ${ e.eEndDate }</td>
 							<td>${ fn:toLowerCase(e.eWriter) }
@@ -109,7 +127,7 @@
                         <option value="content">내용</option>
                     </select>
                     <input id="searchValue" type="search" value="" style="width:300px;">
-                    <button class="btn-ghost gray" id="searchBtn" onclick="searchBoard();">검색</button>
+                    <button class="btn-ghost gray" id="searchBtn" onclick="searchEvent();">검색</button>
                 </div>
 
                 <script>
@@ -129,7 +147,7 @@
         </section>
 
         <script>
-            function searchBoard() {
+            function searchEvent() {
                 var searchCondition = $("#searchCondition").val();
                 var searchValue = $("#searchValue").val();
                 location.href = "search.bo?searchCondition=" + searchCondition + "&searchValue=" + searchValue;
