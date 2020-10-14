@@ -10,7 +10,8 @@
         width: 150px;
         position: fixed;
         top: 200px;
-        left: 1150px;
+        /*left: 1150px;*/
+        margin-left: 1035px;
         margin-top: 100px;
     }
     
