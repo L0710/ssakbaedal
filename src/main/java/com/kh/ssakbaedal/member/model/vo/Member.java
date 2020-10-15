@@ -1,5 +1,5 @@
 package com.kh.ssakbaedal.member.model.vo;
-
+ 
 import java.sql.Date;
  
 public class Member {

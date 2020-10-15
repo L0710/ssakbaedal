@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>signUp</title>
     <style>
-    /* 공통 css */
+    /* 공통 css */ 
 
     *:focus{
         outline: none;
