@@ -112,7 +112,7 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="blist.do">
+						<c:url var="after" value="elist.do">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url>
 						<a href="${ after }">[다음]</a>

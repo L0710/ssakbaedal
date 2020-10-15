@@ -26,12 +26,14 @@ public interface EventService {
 		// 4_2. 이미지 셀렉
 		public Attachment selectImg(int eNo);
 		
-		// 5. 게시글 수정
+		// 5_1. 게시글 수정
 		public int updateEvent(Event b);
+		
+		// 5_2. 이미지 수정
+		public int updateEventNImg(Event e, Attachment at);
 		
 		// 6. 게시글 삭제
 		public int deleteEvent(int eNo);
-
 
 
 
