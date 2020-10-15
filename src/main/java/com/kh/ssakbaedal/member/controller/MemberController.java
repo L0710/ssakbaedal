@@ -90,7 +90,6 @@ public class MemberController {
 	public String memberInsert(Member m, RedirectAttributes rd,
 								String phone1,String phone2,String phone3) {
 		m.setmPhone(phone1 + phone2 + phone3);
-		System.out.println("회원가입 내용 " + m);
 		
 		int result = mService.insertMember(m);
 		
