@@ -7,8 +7,6 @@
     pageContext.setAttribute("enter", "\n"); //Enter
     pageContext.setAttribute("br", "<br/>"); //br 태그
 %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,12 +46,15 @@
                         </td>
                         <td style="text-align:right">작성자 : ${ fn:toLowerCase(e.eWriter) }<br>
                         <c:set var="CreateDate" value="${ e.eCreateDate }"/>
+                        <c:set var="ModifyDate" value="${ e.eModifyDate }"/>
                         <c:set var="eStartDate" value="${ e.eStartDate }"/>
                         <c:set var="eEndDate" value="${ e.eEndDate }"/>
                         <fmt:formatDate var="cdate" type="date" value="${CreateDate}" pattern="yyyy년 MM월 dd일"/>
+                        <fmt:formatDate var="mdate" type="date" value="${ModifyDate}" pattern="yyyy년 MM월 dd일"/>
                         <fmt:formatDate var="sdate" type="date" value="${eStartDate}" pattern="MM월 dd일"/>
                         <fmt:formatDate var="edate" type="date" value="${eEndDate}" pattern="MM월 dd일"/>
 							작성일 : ${ cdate }<br>
+							수정일 : ${ mdate }<br>
 							이벤트 기간 : ${ sdate } ~ ${ edate }<br>
 							조회수 : ${ e.eCount }
                         </td>
@@ -62,7 +63,9 @@
                     <tr>
                         <td colspan="2">
                             <div id="imgArea">
-                            	<img id="eventImg" src="${ contextPath }/resources/euploadFiles/${ at.changeFileName }">
+	                            <c:if test="${ !empty at.originalFileName }">
+	                            	<img id="eventImg" src="${ contextPath }/resources/euploadFiles/${ at.changeFileName }">
+	                           	</c:if>
                             </div>
                         </td>
                     </tr>
@@ -70,19 +73,41 @@
                         <td colspan="2">${fn:replace(e.eContent, enter, br)}</td>
                     </tr>
                 </table>
-
-                <br><br><br>
+                <br><br><br><br><br><br><br>
+                
                 <div align="right" style="margin-right:5%;">
-                	<button class="btn-ghost green">수정</button>
-                	<button class="btn-ghost red">삭제</button>
+	                <c:url var="eupview" value="eupview.do">
+						<c:param name="eNo" value="${ e.eNo }"/>
+						<c:param name="page" value="${ currentPage }"/>
+					</c:url>
+					<c:url var="edelete" value="edelete.do">
+						<c:param name="eNo" value="${ e.eNo }"/>
+					</c:url>
+					<c:url var="elist" value="elist.do">
+						<c:param name="page" value="${ currentPage }"/>
+					</c:url>
+					<button class="btn-ghost gray" onclick="location.href='${ elist }'">목록</button>
+                	<button class="btn-ghost green" onclick="location.href='${ eupview }'">수정</button>
+                	<button class="btn-ghost red" onclick="deleteEvent();">삭제</button>
                 </div>
-
+                <script>
+                	function deleteEvent(){
+                		if(confirm("삭제하시겠습니까?") == true){
+                			location.href='${ edelete }';
+                		}
+                	}
+                </script>
                 <hr>
+                
                 <br><br>
+                
                 <div align="center">
-                    <!-- 단순 포인트 받기 이벤트일 시 -->
-                    <button class="btn-ghost green" id="pointBtn">포인트 받기</button>
+                	<c:url var="pupdate" value="pupdate.do">
+						<c:param name="ePoint" value="${ e.ePoint }"/>
+					</c:url>
+                    <button class="btn-ghost green" id="pointBtn" onclick="location.href='${ pupdate }'">포인트 받기</button>
                 </div>
+                
                 <br><br>
 
                 <div id="replyArea" align="center">

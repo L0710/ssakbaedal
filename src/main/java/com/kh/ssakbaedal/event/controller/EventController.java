@@ -62,12 +62,12 @@ public class EventController {
 	}
 	
 	@RequestMapping("einsertView.do")
-	public String boardInsertView() {
+	public String eventInsertView() {
 		return "event/eventInsertForm";
 	}
 	
 	@RequestMapping("einsert.do")
-	public String boardInsert(Event e, HttpServletRequest request, Attachment at,
+	public String eventInsert(Event e, HttpServletRequest request, Attachment at,
 			@RequestParam(value="uploadFile", required=false) MultipartFile file) {
 		int result = 0;
 		
@@ -77,6 +77,7 @@ public class EventController {
 			String renameFileName = saveFile(file, request);
 			
 			String savePath = savePath(file, renameFileName, request);
+			
 			// 파일 저장이 잘 되었다면 DB로 보낼 Board에 파일명 관련 컬럼을 채워줌
 			if(renameFileName != null) {
 				at.setOriginalFileName(file.getOriginalFilename());
@@ -141,7 +142,7 @@ public class EventController {
 	}
 	
 	@RequestMapping("edetail.do")
-	public ModelAndView EventDetail(ModelAndView mv, 
+	public ModelAndView eventDetail(ModelAndView mv, 
 									int eNo, @RequestParam("page") Integer page,
 									HttpServletRequest request,
 									HttpServletResponse response) {
@@ -178,5 +179,84 @@ public class EventController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("eupview.do")
+	public ModelAndView eventUpdateView(ModelAndView mv, int eNo,
+										@RequestParam("page") Integer page) {
+		Event event = eService.selectEvent(eNo, true);
+		Attachment at = eService.selectImg(eNo);
+		
+		mv.addObject("e", event)
+		  .addObject("at", at)
+		  .addObject("currentPage", page)
+		  .setViewName("event/eventUpdateForm");
+		
+		return mv;
+	}
+	
+	@RequestMapping("eupdate.do")
+	public ModelAndView boardUpdate(ModelAndView mv, Event e, Attachment at,
+									HttpServletRequest request, 
+									@RequestParam("page") Integer page,
+									@RequestParam(value="reloadFile", required=false) MultipartFile file) {
+		int result = 0;
+		
+		if(file != null && !file.isEmpty()) {
+			if(at.getChangeFileName() != null) {
+				deleteFile(at.getChangeFileName(), request);
+			}
+			
+			String renameFileName = saveFile(file, request);
+			
+			String savePath = savePath(file, renameFileName, request);
+			
+			if(renameFileName != null) {
+				at.setOriginalFileName(file.getOriginalFilename());
+				at.setChangeFileName(renameFileName);
+				at.setFilePath(savePath);
+			}
+			
+			result = eService.updateEventNImg(e, at);
+		} else {
+			result = eService.updateEvent(e); 
+		}
+		
+		if(result > 0) {
+			mv.addObject("page", page)
+			   .setViewName("redirect:elist.do");
+		}else {
+			throw new EventException("이벤트 수정에 실패하였습니다.");
+		}
+		
+		return mv;
+		
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\euploadFiles"; 
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) 
+			f.delete();
+	}
+	
+	@RequestMapping("edelete.do")
+	public String eventDelete(int eNo, Attachment at, HttpServletRequest request) {
+		Event e = eService.selectEvent(eNo, false);
+		
+		if(at.getOriginalFileName() != null) {
+			deleteFile(at.getChangeFileName(), request);
+		}
+		
+		int result = eService.deleteEvent(eNo);
+		
+		if(result > 0) {
+			return "redirect:elist.do";
+		}else {
+			throw new EventException("이벤트 삭제에 실패하였습니다");
+		}
 	}
 }

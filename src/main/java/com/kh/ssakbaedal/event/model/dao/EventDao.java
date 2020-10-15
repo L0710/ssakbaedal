@@ -48,4 +48,16 @@ public class EventDao {
 		return sqlSession.selectOne("eventMapper.selectImg", eNo);
 	}
 
+	public int updateEvent(Event e) {
+		return sqlSession.update("eventMapper.updateEvent", e);
+	}
+
+	public int updateImg(Attachment at) {
+		return sqlSession.update("eventMapper.updateImg", at);
+	}
+
+	public int deleteEvent(int eNo) {
+		return sqlSession.update("eventMapper.deleteEvent", eNo);
+	}
+
 }

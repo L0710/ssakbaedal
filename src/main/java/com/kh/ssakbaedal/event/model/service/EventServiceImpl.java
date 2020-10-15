@@ -63,16 +63,35 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public int updateEvent(Event b) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateEvent(Event e) {
+		return eDao.updateEvent(e);
+	}
+	
+	@Override
+	public int updateEventNImg(Event e, Attachment at) {
+		int result1 = eDao.updateEvent(e);
+		
+		int refId = e.geteNo();
+		at.setRefId(refId);
+		
+		int result2 = eDao.updateImg(at);
+		
+		int result = 0;
+		
+		if (result1 > 0 && result2 > 0) {
+			result = 1;
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteEvent(int eNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return eDao.deleteEvent(eNo);
 	}
+
+
+
 
 
 

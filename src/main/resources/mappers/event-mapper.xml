@@ -79,4 +79,24 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE REF_ID=#{eNo}
 		AND A_STATUS='Y'
 	</select>
+	
+	<update id="updateEvent" parameterType="Event">
+		UPDATE EVENT
+		SET ETITLE=#{eTitle}, ECONTENT=#{eContent}, E_START_DATE=#{eStartDate}, E_END_DATE=#{eEndDate},
+			E_POINT=#{ePoint}, R_AVAILABLE=#{rAvailable}, E_MODIFY_DATE=SYSDATE
+		WHERE ENO=#{eNo}
+	</update>
+
+	<update id="updateImg" parameterType="Attachment">
+		UPDATE ATTACHMENT
+		SET ORIGINAL_NAME=#{originalFileName}, CHANGE_NAME=#{changeFileName},
+			FILE_PATH=#{filePath}, UPLOAD_DATE=SYSDATE
+		WHERE REF_ID=#{refId}
+	</update>
+	
+	<update id="deleteEvent" parameterType="_int">
+		UPDATE EVENT
+		SET E_STATUS = 'N'
+		WHERE ENO=#{eNo}
+	</update>
 </mapper>
