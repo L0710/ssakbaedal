@@ -14,7 +14,7 @@
     }
 
     /* 공통,색별 버튼 css */
-    button {
+    button { 
         cursor: pointer;
         margin: 3px;
         padding: 10px 20px;

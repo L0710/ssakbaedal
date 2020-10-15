@@ -9,7 +9,7 @@
     <style>
     /* 공통 css */ 
 
-    *:focus{
+    *:focus{ 
         outline: none;
     }
 

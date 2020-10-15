@@ -11,7 +11,7 @@
     /* 공통 css */
 	
     *:focus{
-        outline: none;
+        outline: none; 
     }
 
     /* 공통,색별 버튼 css */

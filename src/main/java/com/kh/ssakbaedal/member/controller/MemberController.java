@@ -45,7 +45,7 @@ public class MemberController {
 	public String mSignUpView() {
 		
 		logger.debug("일반회원 가입 페이지로 이동합니다");
-		
+	
 		return "member/mSignUp";
 	}
 	@RequestMapping("sSignUp.do")
@@ -78,7 +78,7 @@ public class MemberController {
 
 		
 	}
-	
+
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status) {
 		status.setComplete();
@@ -90,11 +90,11 @@ public class MemberController {
 	public String memberInsert(Member m, RedirectAttributes rd,
 								String phone1,String phone2,String phone3) {
 		m.setmPhone(phone1 + phone2 + phone3);
-		
+ 
 		int result = mService.insertMember(m);
 		
 		if(result > 0) {
-			rd.addFlashAttribute("msg", "회원가입이 완료 되었습니다. 로그인 해주세요.");
+			rd.addFlashAttribute("msg", "회원가입을 축하합니다. 로그인 해주세요.");
 			return "redirect:login.do";
 			
 		} else {
