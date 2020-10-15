@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService{
 		String encPwd = bcryptPasswordEncoder.encode(m.getmPwd());
 		m.setmPwd(encPwd);
 		return mDao.insertMember(m);
-	}
+	} 
 
 	@Override
 	public int updateMember(Member m) {
@@ -57,5 +57,7 @@ public class MemberServiceImpl implements MemberService{
 	public int insertStore(Member m) {
 		return 0;
 	}
+
+
 
 }

@@ -12,7 +12,7 @@ public class MemberDao {
  
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+ 
 	public Member selectMember(Member m) {
 		System.out.println(m);
 		return sqlSession.selectOne("memberMapper.selectOne", m);
@@ -33,5 +33,7 @@ public class MemberDao {
 	public int checkIdDup(String id) {
 		return sqlSession.selectOne("memberMapper.idCheck", id);
 	}
+
+
 
 }

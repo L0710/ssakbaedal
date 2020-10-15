@@ -21,6 +21,7 @@ public interface MemberService {
 
 
 	public int checkIdDup(String id);
+
 }
 
 

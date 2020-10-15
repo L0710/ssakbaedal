@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration PUBLIC 
+<!DOCTYPE configuration PUBLIC  
 "-//mybatis.org//DTD Config 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
@@ -10,10 +10,12 @@
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
+		<typeAlias alias="Member" type="com.kh.ssakbaedal.member.model.vo.Member"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 
 </configuration>

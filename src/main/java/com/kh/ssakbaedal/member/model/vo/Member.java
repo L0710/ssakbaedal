@@ -42,6 +42,14 @@ public class Member {
 		this.priceSum = priceSum;
 	}
 
+	
+	public Member(String mId, String mName, String mEmail) {
+		super();
+		this.mId = mId;
+		this.mName = mName;
+		this.mEmail = mEmail;
+	}
+
 	public int getmNo() {
 		return mNo;
 	}

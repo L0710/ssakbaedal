@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html> 
 <html> 
@@ -98,6 +98,8 @@
 				<button id="login" class="body_btn">로그인</button>
 			</form>
 			<div id="find_div">
+				<c:url var="findId" value="findId.do" />
+				<c:url var="findPwd" value="findPwd.do" />
 				<span onclick="id_find();">아이디 찾기</span> / <span
 					onclick="pass_find();">비밀번호 찾기</span>
 			</div>
@@ -113,6 +115,16 @@
 			</div>
 		</div>
 	</section>
+	<script langqwuage="javascript">
+		function id_find() {
+			var win = window.open('${findId}',"아이디찾기",
+					"width=450,height=350,left=500px,top=300px");
+		}
+		function pass_find() {
+			var win = window.open('${findPwd}', "비밀번호 찾기",
+					"width=450,height=400,left=500px,top=300px");
+		}
+	</script>
 
 	<jsp:include page="../common/footer.jsp" />
 </body>
