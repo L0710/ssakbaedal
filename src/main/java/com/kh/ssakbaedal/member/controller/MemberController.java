@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
 import com.kh.ssakbaedal.member.model.service.MemberService;
 import com.kh.ssakbaedal.member.model.vo.Member;
-
+ 
 
 @SessionAttributes({"loginUser", "msg"})
 @Controller
@@ -95,7 +95,7 @@ public class MemberController {
 		
 		if(result > 0) {
 			rd.addFlashAttribute("msg", "회원가입이 완료 되었습니다. 로그인 해주세요.");
-			return "redirect:home.do";
+			return "redirect:login.do";
 			
 		} else {
 			throw new MemberException("회원 가입에 실패하였습니다.");

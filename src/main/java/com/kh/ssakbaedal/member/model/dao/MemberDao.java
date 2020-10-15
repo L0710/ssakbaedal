@@ -9,7 +9,7 @@ import com.kh.ssakbaedal.member.model.vo.Member;
 
 @Repository("mDao") 
 public class MemberDao {
-
+ 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 

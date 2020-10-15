@@ -180,14 +180,14 @@ scope="application"/>
 			<div class="btnGroup" align="right">
 				<c:url var="login" value="login.do" />
 				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${login}'">로그인/회원가입</button>
+					onclick="location.href='${login}'"> 로그인/회원가입 </button>
 			</div>
 		</c:if>
 		<c:if test="${ !empty sessionScope.loginUser }">
 			<div class="btnGroup" align="right">
 				<c:url var="logout" value="logout.do" />
 				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${logout}'">로그아웃</button>
+					onclick="location.href='${logout}'"> 로그아웃 </button>
 			</div>
 		</c:if>
 		<div class="logoArea">

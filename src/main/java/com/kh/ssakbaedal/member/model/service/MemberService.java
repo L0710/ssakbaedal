@@ -1,5 +1,5 @@
 package com.kh.ssakbaedal.member.model.service;
-
+ 
 import com.kh.ssakbaedal.member.model.vo.Member;
 import com.kh.ssakbaedal.store.model.vo.Store;
 
