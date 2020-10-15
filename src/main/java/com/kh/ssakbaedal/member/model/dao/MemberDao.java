@@ -34,4 +34,6 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.idCheck", id);
 	}
 
+
+
 }

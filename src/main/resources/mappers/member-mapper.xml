@@ -52,8 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM MEMBER
 		WHERE ID=#{id}
 	</select>
-	
-	
+
 	
 	
 	

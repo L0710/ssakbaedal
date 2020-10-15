@@ -10,10 +10,12 @@
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
+		<typeAlias alias="Member" type="com.kh.ssakbaedal.member.model.vo.Member"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 
 </configuration>

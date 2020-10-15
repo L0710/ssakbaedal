@@ -51,8 +51,8 @@
     <div id="id_find_div">
         <h1>아이디 찾기</h1>
         <P>본인 확인 완료 시 <br>가입하신 아이디를 일부 알려드립니다.</P>
-        <input name="name" type="text" placeholder="이름을 입력해 주세요.">
-        <input name="email" type="email" placeholder="이메일을 입력해 주세요.">
+        <input name="mName" type="text" placeholder="이름을 입력해 주세요.">
+        <input name="mEmail" type="email" placeholder="이메일을 입력해 주세요.">
         <button id="find">찾기</button>
     </div>
 </body>
