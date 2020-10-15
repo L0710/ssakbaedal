@@ -72,7 +72,7 @@ public class MemberController {
 		
 		return "member/sSignUp";
 	}
-	
+	 
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String memberLogin(Member m, Model model) {
 		
