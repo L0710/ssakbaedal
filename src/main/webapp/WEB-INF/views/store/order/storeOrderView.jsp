@@ -200,7 +200,7 @@
 
 
 
-        #noticeTable {
+        #orderTableTable {
             margin-top: 60px;
             width: 60%;
             border-spacing: 0;
@@ -209,8 +209,8 @@
             margin: 50px auto;
         }
 
-        #noticeTable td,
-        #noticeTable th {
+        #orderTable td,
+        #orderTable th {
             border: 1px solid black;
         }
 
@@ -281,56 +281,25 @@
 </head>
 <body>
     <div class="wrapper">
-                 	<c:import url="../common/headerbar.jsp"/>
+    
+        <c:import url="../common/headerbar.jsp"/>
 
-        <section>
-            <nav id="nav">
-                <a class="link" href="#">주문관리</a>
-                <a class="link" href="#">매장관리</a>
-                <a class="link" href="#">매출현황</a>
-            </nav>
+        <c:import url="../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
                 <div class="tableWrapper" align="center">
-                    <table id="noticeTable">
-                        <tr>
-                            <th>주문시간</th>
-                            <th>주소</th>
-                            <th>주문 메뉴</th>
-                            <th>메뉴 상태</th>
-                        </tr>
-                        <tr>
-                            <td>10월15일 15:30</td>
-                            <td>서울시 강남구</td>
-                            <td>메뉴1, 메뉴2...</td>
-                            <td>주문접수</td>
-                        </tr>
-                        <tr>
-                                <td>10월15일 15:20</td>
-                                <td>서울시 강남구</td>
-                                <td>메뉴1, 메뉴2...</td>
-                                <td>주문접수</td>
-                        </tr>
-                        <tr>
-                                <td>10월15일 15:10</td>
-                                <td>서울시 강남구</td>
-                                <td>메뉴1, 메뉴2...</td>
-                                <td>매장픽업</td>
-                        </tr>
-                        <tr>
-                                <td>10월15일 14:30</td>
-                                <td>서울시 강남구</td>
-                                <td>메뉴1, 메뉴2...</td>
-                                <td>배달완료</td>
-                        </tr>
-                        <tr>
-                                <td>10월15일 14:20</td>
-                                <td>서울시 강남구</td>
-                                <td>메뉴1, 메뉴2...</td>
-                                <td>배달완료</td>
-                        </tr>
+                    <table id="orderTable">
+                    <thead>
+	                        <tr>
+	                            <th>주문시간</th>
+	                            <th>주소</th>
+	                            <th>주문 메뉴</th>
+	                            <th>메뉴 상태</th>
+	                        </tr>
+                        </thead>
+                        <tbody></tbody>
                     </table>
 
                     <div class="pagingArea" align="center" style="font-size:14px;">
@@ -340,26 +309,52 @@
             </div>
 
     </div>
-    </section>
     
-    <div class="sidemenu">
-        <ul id="menubar">
-            <li>메뉴관리</li>
-            <li>영업관리</li>
-            <li>매장관리</li>
-            <li>리뷰관리</li>
-            <li>알림</li>
-        </ul>
-    </div>
-    </section>
+    <script>
+    	$(function() {
+    		orderList(); 
+    		
+    		setInterval(function() {
+    			orderList();
+    		}, 5000);
+    	});
+    	
+    	function orderList() {
+    		$.ajax({
+    			url:"reloadList.do",
+    			dataType:"json",
+    			success:function(data) {
+    				console.log(data);
+    				
+    				 $tableBody = $("orderTable tbody");
+    				 $tableBody.html("");
+    				
+    				 for(var i in data) {
+    					 var $orderTime = $("<td>").text(data[i].orderTime);
+    					 var $oAddress = $("<td>").text(data[i].oAddress);
+    					 var $oMenu = $("<td>").text(data[i].oMenu);
+    					 var $oStatus = $("<td>").text(data[i].oStatus);
+    					 
+    					 $tr.append($orderTime);
+        				 $tr.append($oAddress);
+        				 $tr.append($oMenu);
+        				 $tr.append($oStatus);
+        				 
+        				 $tableBody.append($tr);
+    				 }
+    			},
+    			error:function(e) {
+    				console.log(e);
+    			}
+    		});
+    	}
+    </script>
 
-    </div>
+
     <br><br><br><br><br><br>
 
   	<c:import url="../common/footer.jsp"/>
 
-
-    </div>
 </body>
 
 </html>
