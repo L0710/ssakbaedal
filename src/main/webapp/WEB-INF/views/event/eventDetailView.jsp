@@ -35,7 +35,15 @@
 		<c:import url="../common/headerbar.jsp"/>
 
         <section id="section">
-            <c:import url="../common/nav_user.jsp"/>
+            <!-- 로그인했을시 유저에 따른 내비 보여주기 -->
+        	<!-- 관리자 -->
+        	<c:if test="${ !empty loginUser && loginUser.mId eq 'admin' }">
+        		<c:import url="../common/nav_admin.jsp"/>
+			</c:if>
+			<!-- 일반유저 -->
+			<c:if test="${ !empty loginUser && loginUser.mId ne 'admin' }">
+				<c:import url="../common/nav_user.jsp"/>
+			</c:if>
 
             <div class="contents">
                 <br>
@@ -87,8 +95,10 @@
 						<c:param name="page" value="${ currentPage }"/>
 					</c:url>
 					<button class="btn-ghost gray" onclick="location.href='${ elist }'">목록</button>
-                	<button class="btn-ghost green" onclick="location.href='${ eupview }'">수정</button>
-                	<button class="btn-ghost red" onclick="deleteEvent();">삭제</button>
+					<c:if test="${ loginUser.mId eq e.eWriter }">
+	                	<button class="btn-ghost green" onclick="location.href='${ eupview }'">수정</button>
+	                	<button class="btn-ghost red" onclick="deleteEvent();">삭제</button>
+                	</c:if>
                 </div>
                 <script>
                 	function deleteEvent(){
@@ -103,10 +113,48 @@
                 
                 <div align="center">
                 	<c:url var="pupdate" value="pupdate.do">
+                		<c:param name="eNo" value="${ e.eNo }"/>
 						<c:param name="ePoint" value="${ e.ePoint }"/>
+						<c:param name="mNo" value="${ loginUser.mNo }"/>
 					</c:url>
-                    <button class="btn-ghost green" id="pointBtn" onclick="location.href='${ pupdate }'">포인트 받기</button>
+                    <button class="btn-ghost green" id="pointBtn">포인트 받기</button>
                 </div>
+                
+                <!-- 포인트 지급 내역 확인 후 지급내역 없을 경우 포인트 지급 -->
+                <script>
+                	$(function(){
+                		$("#pointBtn").on("click", function(){
+                			var eNo = ${ e.eNo };
+                			var mNo = ${ loginUser.mNo };
+                			
+                			$.ajax({
+                				url:"selectphsty.do",
+                				data: {eNo:eNo, mNo:mNo},
+                				type: "post",
+                				success : function(data){
+                					console.log(data);
+                					
+                					if(data == "matched"){
+                						warningAlert();
+                					} else {
+                						getPoint();
+                					}
+                				},
+                				error : function(e){
+            						console.log(e);
+            					}
+                			});
+                		});
+                	})
+                	
+                	function warningAlert(){
+                		alert("이미 포인트를 지급받았습니다.");
+                	}
+                	
+                	function getPoint(){
+                		location.href="${ pupdate }";
+                	}
+                </script>
                 
                 <br><br>
 

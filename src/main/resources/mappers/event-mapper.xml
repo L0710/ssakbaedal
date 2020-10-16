@@ -32,6 +32,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="refId" column="REF_ID"/>
 	</resultMap>
 	
+	<resultMap type="PointHistory" id="historyResultSet">
+		<id property="eNo" column="ENO"/>
+		<result property="mNo" column="MNO"/>
+		<result property="point" column="POINT"/>
+		<result property="pDate" column="P_DATE"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM EVENT
@@ -47,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<insert id="insertEvent" parameterType="Event">
 		INSERT INTO EVENT VALUES(
-			E_SEQ.NEXTVAL, #{eTitle}, #{eContent}, 'ADMIN', #{ePoint},
+			E_SEQ.NEXTVAL, #{eTitle}, #{eContent}, #{eWriter}, #{ePoint},
 			0, SYSDATE, SYSDATE, DEFAULT, #{eStartDate}, #{eEndDate},
 			DEFAULT, 'Y', 1
 		)
@@ -99,4 +106,45 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET E_STATUS = 'N'
 		WHERE ENO=#{eNo}
 	</update>
+	
+	<select id="searchList" parameterType="Search" resultMap="eventResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM EVENT
+		<where><!-- where : where + AND|OR로 시작 시 자동 제거 기능 --><!-- trim도 사용 가능 -->
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND ETITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND ECONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (ETITLE LIKE #{sv}
+						OR ECONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY ENO DESC
+	</select>
+	
+	<update id="pointUpdate" parameterType="Member">
+		UPDATE MEMBER
+		SET POINT = POINT + #{point}
+		WHERE MNO=#{mNo}
+	</update>
+	
+	<insert id="insertpHistory" parameterType="PointHistory">
+		INSERT INTO PHISTORY VALUES(
+			#{eNo}, #{mNo}, #{point}, SYSDATE
+		)
+	</insert>
+	
+	<select id="pHistory" parameterType="PointHistory" resultMap="historyResultSet">
+		SELECT *
+		FROM PHISTORY
+		WHERE ENO=#{eNo}
+		AND MNO=#{mNo}
+	</select>
+	
 </mapper>
