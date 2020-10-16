@@ -181,8 +181,13 @@
 <body>
 	<div id="header">
 		<div id="address" align="left">
+		<c:if test="${ loginUser.mType == 1 || loginUser.mType == 2}"> 
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
+ 			</c:if> 
+			<c:if test="${ loginUser.mType == 3}">
+				<c:out value="${ loginUser.mName } 님 환영합니다!"></c:out>
+			</c:if>
 		</div>
 		<c:if test="${ empty sessionScope.loginUser }">
 			<div class="btnGroup" align="right">
