@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PageInfo;
+import com.kh.ssakbaedal.event.model.vo.PointHistory;
+import com.kh.ssakbaedal.event.model.vo.Search;
+import com.kh.ssakbaedal.member.model.vo.Member;
 
 
 public interface EventService {
@@ -35,6 +38,13 @@ public interface EventService {
 		// 6. 게시글 삭제
 		public int deleteEvent(int eNo);
 
+		// 7. 게시글 검색
+		public ArrayList<Event> searchList(Search search);
+		
+		// 8. 포인트 추가
+		public int pointUpdate(Member updateMember, Integer eNo);
 
+		// 9. 포인트 지급 이력 검사
+		public PointHistory pointHistory(PointHistory ph);
 
 }

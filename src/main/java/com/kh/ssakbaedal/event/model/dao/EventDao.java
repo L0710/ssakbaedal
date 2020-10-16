@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PageInfo;
+import com.kh.ssakbaedal.event.model.vo.PointHistory;
+import com.kh.ssakbaedal.event.model.vo.Search;
+import com.kh.ssakbaedal.member.model.vo.Member;
 
 @Repository("eDao")
 public class EventDao {
@@ -58,6 +61,22 @@ public class EventDao {
 
 	public int deleteEvent(int eNo) {
 		return sqlSession.update("eventMapper.deleteEvent", eNo);
+	}
+
+	public ArrayList<Event> searchList(Search search) {
+		return (ArrayList)sqlSession.selectList("eventMapper.searchList", search);
+	}
+
+	public int pointUpdate(Member updateMember) {
+		return sqlSession.update("eventMapper.pointUpdate", updateMember);
+	}
+
+	public int insertpHistory(PointHistory ph) {
+		return sqlSession.insert("eventMapper.insertpHistory", ph);
+	}
+
+	public PointHistory pointHistory(PointHistory ph) {
+		return sqlSession.selectOne("eventMapper.pHistory", ph);
 	}
 
 }

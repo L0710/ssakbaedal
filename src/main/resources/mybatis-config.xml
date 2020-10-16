@@ -9,8 +9,10 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Search" alias="Search"/>
+		<typeAlias type="com.kh.ssakbaedal.event.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
-		<typeAlias alias="Member" type="com.kh.ssakbaedal.member.model.vo.Member"/>
+		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
 
 	<mappers>

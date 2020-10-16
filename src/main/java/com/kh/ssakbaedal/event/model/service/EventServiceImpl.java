@@ -9,6 +9,9 @@ import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.event.model.dao.EventDao;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PageInfo;
+import com.kh.ssakbaedal.event.model.vo.PointHistory;
+import com.kh.ssakbaedal.event.model.vo.Search;
+import com.kh.ssakbaedal.member.model.vo.Member;
 
 @Service("eService")
 public class EventServiceImpl implements EventService {
@@ -90,9 +93,34 @@ public class EventServiceImpl implements EventService {
 		return eDao.deleteEvent(eNo);
 	}
 
+	@Override
+	public ArrayList<Event> searchList(Search search) {
+		return eDao.searchList(search);
+	}
 
+	@Override
+	public int pointUpdate(Member updateMember, Integer eNo) {
+		int result = 0;
+		
+		PointHistory ph = new PointHistory();
+		ph.seteNo(eNo);
+		ph.setmNo(updateMember.getmNo());
+		ph.setPoint(updateMember.getPoint());
+		
+		int result1 = eDao.insertpHistory(ph);
+		int result2 = eDao.pointUpdate(updateMember);
+		
+		if (result1 > 0 && result2 > 0) {
+			result = 1;
+		}
+		
+		return result;
+	}
 
-
+	@Override
+	public PointHistory pointHistory(PointHistory ph) {
+		return eDao.pointHistory(ph);
+	}
 
 
 

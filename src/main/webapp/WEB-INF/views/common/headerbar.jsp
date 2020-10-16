@@ -136,6 +136,7 @@
 
     .logoArea {
         margin-top: 1%;
+        cursor: pointer;
     }
 
     .wrapper {
@@ -179,6 +180,12 @@
 </style>
 </head>
 <body>
+	<!-- msg 전달 받은 내용이 있으면 alert창에 출력 후 해당 값 지우기 -->
+	<c:if test="${ !empty msg }">
+		<script>alert('${msg}');</script>
+		<c:remove var="msg"/>
+	</c:if>
+
 	<div id="header">
 		<div id="address" align="left">
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
@@ -199,7 +206,7 @@
 			</div>
 		</c:if>
 		<div class="logoArea">
-			<img src="./resources/img/logo.png" id="logo">
+			<img src="./resources/img/logo.png" id="logo" onclick="location.href='${contextPath}/home.do'">
 		</div>
 	</div>
 		

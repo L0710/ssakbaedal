@@ -12,17 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.event.model.exception.EventException;
 import com.kh.ssakbaedal.event.model.service.EventService;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PageInfo;
 import com.kh.ssakbaedal.event.model.vo.Pagination;
+import com.kh.ssakbaedal.event.model.vo.PointHistory;
+import com.kh.ssakbaedal.event.model.vo.Search;
+import com.kh.ssakbaedal.member.model.vo.Member;
 
 @Controller
 public class EventController {
@@ -161,7 +169,8 @@ public class EventController {
 			}
 			if(!flag) {	// 게시글을 처음 읽은 경우 쿠키 저장하기
 				Cookie c = new Cookie("eNo"+eNo, String.valueOf(eNo));
-				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
+				c.setMaxAge(30);
+//				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
 				response.addCookie(c);
 			}
 		}
@@ -258,5 +267,58 @@ public class EventController {
 		}else {
 			throw new EventException("이벤트 삭제에 실패하였습니다");
 		}
+	}
+	
+	@RequestMapping("esearch.do")
+	public String eventSearch(Search search, Model model) {
+		/*
+		System.out.println(search.getSearchCondition());
+		System.out.println(search.getSearchValue());
+		*/
+		
+		ArrayList<Event> searchList = eService.searchList(search);
+		
+		model.addAttribute("list", searchList);
+		model.addAttribute("search", search);
+		
+		return "event/eventListView";
+	}
+	
+	@RequestMapping("pupdate.do")
+	public String pointUpdate(Model model, RedirectAttributes rd, HttpServletRequest request,
+								HttpServletResponse response, @RequestParam("eNo") Integer eNo,
+								@RequestParam("ePoint") Integer ePoint, @RequestParam("mNo") Integer mNo) {
+		Member updateMember = new Member();
+		updateMember.setmNo(mNo);
+		updateMember.setPoint(ePoint);
+		
+		int result = eService.pointUpdate(updateMember, eNo);
+		
+		if(result > 0) {
+			model.addAttribute("loginUser", updateMember);
+			rd.addFlashAttribute("msg", "포인트를 받았습니다.");
+		}else {
+			throw new EventException("포인트 추가에 실패하였습니다.");
+		}
+		
+		return "redirect:elist.do";
+	}
+	
+	@RequestMapping("selectphsty.do")
+	@ResponseBody
+	public String pointHistory(int eNo, int mNo) {
+		PointHistory ph = new PointHistory();
+		ph.seteNo(eNo);
+		ph.setmNo(mNo);
+		
+		PointHistory phis = eService.pointHistory(ph);
+		System.out.println("phis:"+phis);
+		
+		if(phis != null) {	// 포인트 지급 내역 존재
+			return "matched";
+		} else {	// 포인트 지급내역 부재
+			return "not matched";
+		}
+		
 	}
 }
