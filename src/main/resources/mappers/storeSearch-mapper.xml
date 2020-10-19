@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storeSearchMapper">
+	<resultMap type="stSearch" id="searchResultSet">
+		<id property="mNo" column="MNO"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sNo" column="SNO"/>
+		<result property="sTel" column="STEL"/>
+		<result property="sAddress" column="S_ADDRESS"/>
+		<result property="deliveryKm" column="DELIVERY_KM"/>
+		<result property="sInfo" column="SINFO"/>
+		<result property="openTime" column="OPEN_TIME"/>
+		<result property="sStatus" column="S_STATUS"/>
+		<result property="sAccept" column="SACCEPT"/>
+		<result property="sCategory" column="S_CATEGORY"/>
+		<result property="deliveryCharge" column="DELIVERTY_CHARGE"/>
+		<result property="minPrice" column="MIN_PRICE"/>
+	</resultMap>
+	<!-- 전체 매장 수  받기 -> 페이징 계산 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+	</select>
+	
+	<!-- 전체 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+	</select>
+	
+	<!-- 한식 매장 수 받기 -> 페이징 계산  -->
+	<select id="selectKsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='한식'
+	</select>
+	
+	<!-- 한식 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectKsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='한식'
+	</select>
+	
+	<!-- 중국집 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectCsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='중국집'
+	</select>
+	
+	<!-- 중국집 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectCsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='중국집'
+	</select>
+	
+	<!-- 돈까스,회,일식 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectJsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='돈까스,회,일식'
+	</select>
+	
+	<!-- 돈까스,회,일식 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectJsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='돈까스,회,일식'
+	</select>
+	
+	<!-- 분식 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectSsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='분식'
+	</select>
+	
+	<!-- 분식 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectSsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='분식'
+	</select>
+	
+	<!-- 치킨 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectChisListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='치킨'
+	</select>
+	
+	<!-- 치킨 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectChisList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='치킨'
+	</select>
+	
+	<!-- 피자 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectPsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='피자'
+	</select>
+	
+	<!-- 피자 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectPsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='피자'
+	</select>
+	
+	<!-- 패스트 푸드 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectFsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='패스트푸드'
+	</select>
+	
+	<!-- 패스트푸드 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectFsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='패스트푸드'
+	</select>
+	
+	<!-- 아시안,양식 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectAsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='아시안,양식'
+	</select>
+	
+	<!-- 아시안,양식 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectAsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='아시안,양식'
+	</select>
+	
+	<!-- 족발,보쌈 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectJosListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='족발,보쌈'
+	</select>
+	
+	<!-- 족발,보쌈 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectJosList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='족발,보쌈'
+	</select>
+	
+	<!-- 야식 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectYasListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='야식'
+	</select>
+	
+	<!-- 야식 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectYasList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='야식'
+	</select>
+	
+	<!-- 찜,탕 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectJjsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='찜,탕'
+	</select>
+	
+	<!-- 찜,탕 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectJjsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='찜,탕'
+	</select>
+	
+	<!-- 도시락 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectDosListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='도시락'
+	</select>
+	
+	<!-- 도시락 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectDosList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='도시락'
+	</select>
+	
+	<!-- 카페,디저트 매장 수 받기 -> 페이징 계산 -->
+	<select id="selectCdsListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='카페,디저트'
+	</select>
+	
+	<!-- 카페,디저트 매장 조회(페이징 처리 된)(임시 sql문) -->
+	<select id="selectCdsList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+		AND S_CATEGORY='카페,디저트'
+	</select>
+	
+	
+</mapper>

@@ -7,8 +7,6 @@
     pageContext.setAttribute("enter", "\n"); //Enter
     pageContext.setAttribute("br", "<br/>"); //br 태그
 %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +35,15 @@
 		<c:import url="../common/headerbar.jsp"/>
 
         <section id="section">
-            <c:import url="../common/nav_user.jsp"/>
+            <!-- 로그인했을시 유저에 따른 내비 보여주기 -->
+        	<!-- 관리자 -->
+        	<c:if test="${ !empty loginUser && loginUser.mId eq 'admin' }">
+        		<c:import url="../common/nav_admin.jsp"/>
+			</c:if>
+			<!-- 일반유저 -->
+			<c:if test="${ !empty loginUser && loginUser.mId ne 'admin' }">
+				<c:import url="../common/nav_user.jsp"/>
+			</c:if>
 
             <div class="contents">
                 <br>
@@ -48,12 +54,15 @@
                         </td>
                         <td style="text-align:right">작성자 : ${ fn:toLowerCase(e.eWriter) }<br>
                         <c:set var="CreateDate" value="${ e.eCreateDate }"/>
+                        <c:set var="ModifyDate" value="${ e.eModifyDate }"/>
                         <c:set var="eStartDate" value="${ e.eStartDate }"/>
                         <c:set var="eEndDate" value="${ e.eEndDate }"/>
                         <fmt:formatDate var="cdate" type="date" value="${CreateDate}" pattern="yyyy년 MM월 dd일"/>
+                        <fmt:formatDate var="mdate" type="date" value="${ModifyDate}" pattern="yyyy년 MM월 dd일"/>
                         <fmt:formatDate var="sdate" type="date" value="${eStartDate}" pattern="MM월 dd일"/>
                         <fmt:formatDate var="edate" type="date" value="${eEndDate}" pattern="MM월 dd일"/>
 							작성일 : ${ cdate }<br>
+							수정일 : ${ mdate }<br>
 							이벤트 기간 : ${ sdate } ~ ${ edate }<br>
 							조회수 : ${ e.eCount }
                         </td>
@@ -62,7 +71,9 @@
                     <tr>
                         <td colspan="2">
                             <div id="imgArea">
-                            	<img id="eventImg" src="${ contextPath }/resources/euploadFiles/${ at.changeFileName }">
+	                            <c:if test="${ !empty at.originalFileName }">
+	                            	<img id="eventImg" src="${ contextPath }/resources/euploadFiles/${ at.changeFileName }">
+	                           	</c:if>
                             </div>
                         </td>
                     </tr>
@@ -70,19 +81,81 @@
                         <td colspan="2">${fn:replace(e.eContent, enter, br)}</td>
                     </tr>
                 </table>
-
-                <br><br><br>
+                <br><br><br><br><br><br><br>
+                
                 <div align="right" style="margin-right:5%;">
-                	<button class="btn-ghost green">수정</button>
-                	<button class="btn-ghost red">삭제</button>
+	                <c:url var="eupview" value="eupview.do">
+						<c:param name="eNo" value="${ e.eNo }"/>
+						<c:param name="page" value="${ currentPage }"/>
+					</c:url>
+					<c:url var="edelete" value="edelete.do">
+						<c:param name="eNo" value="${ e.eNo }"/>
+					</c:url>
+					<c:url var="elist" value="elist.do">
+						<c:param name="page" value="${ currentPage }"/>
+					</c:url>
+					<button class="btn-ghost gray" onclick="location.href='${ elist }'">목록</button>
+					<c:if test="${ loginUser.mId eq e.eWriter }">
+	                	<button class="btn-ghost green" onclick="location.href='${ eupview }'">수정</button>
+	                	<button class="btn-ghost red" onclick="deleteEvent();">삭제</button>
+                	</c:if>
                 </div>
-
+                <script>
+                	function deleteEvent(){
+                		if(confirm("삭제하시겠습니까?") == true){
+                			location.href='${ edelete }';
+                		}
+                	}
+                </script>
                 <hr>
+                
                 <br><br>
+                
                 <div align="center">
-                    <!-- 단순 포인트 받기 이벤트일 시 -->
+                	<c:url var="pupdate" value="pupdate.do">
+                		<c:param name="eNo" value="${ e.eNo }"/>
+						<c:param name="ePoint" value="${ e.ePoint }"/>
+						<c:param name="mNo" value="${ loginUser.mNo }"/>
+					</c:url>
                     <button class="btn-ghost green" id="pointBtn">포인트 받기</button>
                 </div>
+                
+                <!-- 포인트 지급 내역 확인 후 지급내역 없을 경우 포인트 지급 -->
+                <script>
+                	$(function(){
+                		$("#pointBtn").on("click", function(){
+                			var eNo = ${ e.eNo };
+                			var mNo = ${ loginUser.mNo };
+                			
+                			$.ajax({
+                				url:"selectphsty.do",
+                				data: {eNo:eNo, mNo:mNo},
+                				type: "post",
+                				success : function(data){
+                					console.log(data);
+                					
+                					if(data == "matched"){
+                						warningAlert();
+                					} else {
+                						getPoint();
+                					}
+                				},
+                				error : function(e){
+            						console.log(e);
+            					}
+                			});
+                		});
+                	})
+                	
+                	function warningAlert(){
+                		alert("이미 포인트를 지급받았습니다.");
+                	}
+                	
+                	function getPoint(){
+                		location.href="${ pupdate }";
+                	}
+                </script>
+                
                 <br><br>
 
                 <div id="replyArea" align="center">

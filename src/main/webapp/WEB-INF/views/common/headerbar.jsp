@@ -136,6 +136,7 @@
 
     .logoArea {
         margin-top: 1%;
+        cursor: pointer;
     }
 
     .wrapper {
@@ -179,16 +180,38 @@
 </style>
 </head>
 <body>
+	<!-- msg 전달 받은 내용이 있으면 alert창에 출력 후 해당 값 지우기 -->
+	<c:if test="${ !empty msg }">
+		<script>alert('${msg}');</script>
+		<c:remove var="msg"/>
+	</c:if>
+
 	<div id="header">
 		<div id="address" align="left">
+		<c:if test="${ loginUser.mType == 1 || loginUser.mType == 2}"> 
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
+ 			</c:if> 
+			<c:if test="${ loginUser.mType == 3}">
+				<c:out value="${ loginUser.mName } 님 환영합니다!"></c:out>
+			</c:if>
 		</div>
-		<div class="btnGroup" align="right">
-			<button class="btn-ghost green" id="mypageBtn">로그인/회원가입</button>
-		</div>
+		<c:if test="${ empty sessionScope.loginUser }">
+			<div class="btnGroup" align="right">
+				<c:url var="login" value="login.do" />
+				<button class="btn-ghost green" id="mypageBtn"
+					onclick="location.href='${login}'"> 로그인/회원가입 </button>
+			</div>
+		</c:if>
+		<c:if test="${ !empty sessionScope.loginUser }">
+			<div class="btnGroup" align="right">
+				<c:url var="logout" value="logout.do" />
+				<button class="btn-ghost green" id="mypageBtn"
+					onclick="location.href='${logout}'"> 로그아웃 </button>
+			</div>
+		</c:if>
 		<div class="logoArea">
-			<img src="./resources/img/logo.png" id="logo">
+			<img src="./resources/img/logo.png" id="logo" onclick="location.href='${contextPath}/home.do'">
 		</div>
 	</div>
 		

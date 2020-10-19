@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	<resultMap id="memberResultSet" type="Member">
+		<id property="mNo" column="MNO"/>
+		<result property="mId" column="MID"/>
+		<result property="mPwd" column="MPWD"/>
+		<result property="mName" column="MNAME"/>		
+		<result property="mEmail" column="MEMAIL"/>
+		<result property="mPhone" column="MPHONE"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="mEnrollDate" column="M_ENROLL_DATE"/>
+		<result property="mModifyDate" column="M_MODIFY_DATE"/>
+		<result property="mStatus" column="M_STATUS"/>
+		<result property="mGrade" column="M_GRADE"/>
+		<result property="mType" column="M_TYPE"/>
+		<result property="point" column="POINT"/>
+		<result property="priceSum" column="PRICE_SUM"/>
+	</resultMap>
+	
+	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MID=#{mId}
+		AND M_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES (M_SEQ.NEXTVAL,#{mId}, #{mPwd}, #{mName}, #{mEmail}, #{mPhone}, #{birth}, #{gender},SYSDATE, SYSDATE,
+				DEFAULT, DEFAULT, 2, DEFAULT,DEFAULT)
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER
+		SET NAME=#{name}, GENDER=#{gender}, EMAIL=#{email}, AGE=#{age},
+		    PHONE=#{phone}, ADDRESS=#{address}, UPDATE_DATE=SYSDATE
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="deleteMember" parameterType="string">
+		UPDATE MEMBER
+		SET M_STATUS='N'
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="checkId" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MID=#{mId}
+	</select>
+
+	<select id="findId" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNAME=#{mName}
+		AND MEMAIL=#{mEmail}
+	</select>
+	
+	
+	
+	
+</mapper>
