@@ -9,10 +9,13 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
+		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.storeSearch" alias="stSearch"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/storeSearch-mapper.xml"/>
 	</mappers>
 
 </configuration>

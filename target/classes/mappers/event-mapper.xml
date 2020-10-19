@@ -20,6 +20,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mNo" column="MNO"/>
 	</resultMap>
 	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM EVENT
@@ -40,4 +52,32 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			DEFAULT, 'Y', 1
 		)
 	</insert>
+	
+	<insert id="insertImg" parameterType="Attachment">
+		INSERT INTO ATTACHMENT VALUES(
+			A_SEQ.NEXTVAL, #{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE,
+			1, 'Y', 1, E_SEQ.CURRVAL
+		)
+	</insert>
+	
+	<update id="updateCount" parameterType="_int">
+		UPDATE EVENT
+		SET ECOUNT = ECOUNT + 1
+		WHERE ENO=#{eNo}
+	</update>
+	
+	<select id="selectOne" parameterType="_int" resultMap="eventResultSet">
+		SELECT *
+		FROM EVENT
+		WHERE ENO=#{eNo}
+		AND E_STATUS='Y'
+	</select>
+	
+	<select id="selectImg" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{eNo}
+		AND A_STATUS='Y'
+	</select>
+
 </mapper>
