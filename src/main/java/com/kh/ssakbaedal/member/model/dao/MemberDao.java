@@ -30,8 +30,14 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.deleteMember", id);
 	}
 
-	public int checkIdDup(String id) {
-		return sqlSession.selectOne("memberMapper.idCheck", id);
+	public Member findId(Member m) {
+		return sqlSession.selectOne("memberMapper.findId", m);
+
+	}
+
+	public int checkId(Member m) {
+		return sqlSession.selectOne("memberMapper.checkId", m);
+
 	}
 
 

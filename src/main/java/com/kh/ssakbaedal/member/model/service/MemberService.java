@@ -20,7 +20,10 @@ public interface MemberService {
 	public int deleteMember(String id);
 
 
-	public int checkIdDup(String id);
+	public Member findId(Member m);
+
+
+	public int checkId(Member m);
 
 }
 

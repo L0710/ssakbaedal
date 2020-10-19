@@ -127,14 +127,14 @@
 		<div class="contents" align="center">
 			<div id="sign_up_div">
 				<h1>회원가입</h1>
-				<input type="text" id="textValue" disabled>
-				<form id="sign_up_form" action="minsert.do" method="post" onsubmit="return test()">
+				<p id="textValue" disabled></p>
+				<form id="sign_up_form">
 					<table id="sign_up_table">
 						<tr>
 							<td>아이디</td>
 							<td><input type="text" name="mId"
-								placeholder="영문,숫자로 포함 4~12자로 입력해주세요.">
-								<button type="button" id="check_btn" onclick="">중복확인</button></td>
+								placeholder="영문,숫자로 포함 6~8자로 입력해주세요.">
+								<button type="button" id="check_btn" >중복확인</button></td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
@@ -183,34 +183,116 @@
              
                         </textarea>
 					<input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
-					<input type="submit" id="sign_up"
+					<input type="button" id="sign_up"
 						class="btn-ghost green" value="회원가입">
 				</form>
 			</div>
 		</div>
-	    <script>
-	    var value = $("#textValue").val();
-	    var check = $(this);
-	    var red = ("border","1px solid  red");
-	    var green = ("border","1px solid rgb(130, 180, 127, 0.7)");
-	    
-	    var pwd = /(?=.*\d{1,11})(?=.*[a-zA-Z]{1,11}).{8,12}$/;
-	    var tName=/^[가-힣]{2,}$/;
-	    var tStore=/^[가-힣a-zA-Z0-9]{1,}$/;
-	    var tBirthday =/^[0-9]{6}$/
-	    var stNumber1 =/^[0-9]{3,}$/
-	    var stNumber2 =/^[0-9]{3,4}$/
-	    
-        // 비밀번호 
-        $('input[name=mPwd]').on("keypress",function(){
-            var mPwd = $('input[name=mPwd]').val();
-            if(!pwd.test(mPwd)){
-            	check.css(red);
-            }else{
-            	check.css(green);
-            }
-        });    
-    </script>
+	<script>
+		var checkAry = [];
+		
+		var ng = "양식이 맞지 않습니다.";
+		var tGreen = ({"color" : "green"});
+		var tRed = ({"color" : "red"});
+		var red = ({"border" : "2px solid  red"});
+		var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
+		
+
+		$('#check_btn').on('click', function() {
+			var idput = $('input[name=mId]');
+			console.log($('input[name=mId]').prop("readonly"));
+			console.log($('input[name=mId]').attr("readonly"));
+			if(checkAry[0]==true){
+				var result = confirm('사용 가능한 아이디인 경우 변경이 불가합니다.계속 진행하시겠습니까?'); 
+				var mId = idput.val();
+			
+				if (result) {
+					$.ajax({
+						url : "checkId.do",
+						type : "POST",
+						data : {mId : mId},
+						success : function(data) {
+							if (data == "No") {
+								checkAry[0] = false;
+								idput.css(red);
+								$('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
+							} else {
+								checkAry[0] = true;
+								idput.css(green);
+								idput.prop("readonly", true);
+								$('#textValue').text("  ");
+							}
+						},
+						error : function() {
+							alert("문제가 발생하였습니다.관리자에게 문의해주세요.");
+						}
+					});
+				}
+		 	}else{
+		 		$('#textValue').text("다시 확인해주세요").css(tRed);
+		 	}
+		});
+		
+
+		
+		$('input').on("keyup", function() {
+			var put = $('td input');
+			var pwd = put.eq(1).val();
+			console.log( $('input[name=mId]').val());
+			for (var i=0; i<9;i++) {
+				var check = false;
+				var cput = put.eq(i);
+				var vput = put.eq(i).val();
+				
+				switch(i){
+					case 0 :check=(/^[a-zA-Z0-9]{6,10}$/).test(vput);break;
+					case 1 :check=(/^[a-zA-Z0-9]{8,12}$/).test(vput);break;
+					case 2 :check=(pwd==vput);break;
+					case 3 :check=(/^[가-힣]{2,}$/).test(vput);break;
+					case 4 :check=(/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(vput);break;
+					case 5 :check=(/^[0-9]{3}$/).test(vput);break;
+					case 6 :check=(/^[0-9]{3,4}$/).test(vput);break;
+					case 7 :check=(/^[0-9]{4}$/).test(vput);break;
+					case 8 :check=(/^[0-9]{6}$/).test(vput);break;
+				}
+				
+				if(check==false){
+					checkAry[i] = false; 
+					cput.css(red);
+					break;
+				}else{
+					checkAry[i] = true;
+					cput.css(green);
+				}
+			}
+		});
+		
+		$('#sign_up').on("click", function() {
+			
+			checkAry[9]=$('input:radio[name=gender]').is(':checked');
+
+			if($('#check_b').is(":checked") == true){
+				checkAry[10] = true;
+			}else{
+				checkAry[10] = false;
+			}
+			
+			if($('input[name=mId]').prop("readonly")!=true){
+			$('#textValue').text("중복체크를 해주세요.").css(tRed);
+			
+			}else{
+			if($.inArray(false, checkAry) >= 0){
+				$('#textValue').text("다시 확인 해 주세요.").css(tRed);
+				return false;
+			}else{
+				$("#sign_up_form").attr({action:'minsert.do', method:'post'}).submit();
+				return true;
+			}
+			}
+		});
+
+		
+	</script>
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>
