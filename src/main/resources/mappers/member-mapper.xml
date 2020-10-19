@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
 		VALUES (M_SEQ.NEXTVAL,#{mId}, #{mPwd}, #{mName}, #{mEmail}, #{mPhone}, #{birth}, #{gender},SYSDATE, SYSDATE,
-				DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT)
+				DEFAULT, DEFAULT, 2, DEFAULT,DEFAULT)
 	</insert>
 	
 	<update id="updateMember" parameterType="Member">
@@ -47,13 +47,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE ID=#{id}
 	</update>
 	
-	<select id="idCheck" parameterType="string" resultType="_int">
+	<select id="checkId" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE ID=#{id}
+		WHERE MID=#{mId}
 	</select>
 
-	
+	<select id="findId" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNAME=#{mName}
+		AND MEMAIL=#{mEmail}
+	</select>
 	
 	
 	
