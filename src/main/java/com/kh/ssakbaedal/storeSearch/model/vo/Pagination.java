@@ -1,4 +1,4 @@
-package com.kh.ssakbaedal.search.model.vo;
+package com.kh.ssakbaedal.storeSearch.model.vo;
 
 public class Pagination {
 	// PageInfo 객체를 리턴하는 static 메소드

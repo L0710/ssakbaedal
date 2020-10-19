@@ -1,6 +1,6 @@
-package com.kh.ssakbaedal.search.model.vo;
+package com.kh.ssakbaedal.storeSearch.model.vo;
 
-public class Search {
+public class storeSearch {
 	/*
 	MNO	NUMBER
 	SNAME	VARCHAR2(50 BYTE)
@@ -31,9 +31,9 @@ public class Search {
 	private int deliveryCharge;
 	private int minPrice;
 	
-	public Search() {}
+	public storeSearch() {}
 
-	public Search(int mNo, String sName, String sNo, String sTel, String sAddress, int deliveryKm, String sInfo,
+	public storeSearch(int mNo, String sName, String sNo, String sTel, String sAddress, int deliveryKm, String sInfo,
 			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice) {
 		super();
 		this.mNo = mNo;

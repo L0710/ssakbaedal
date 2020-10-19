@@ -1,4 +1,4 @@
-package com.kh.ssakbaedal.search.controller;
+package com.kh.ssakbaedal.storeSearch.controller;
 
 import java.util.ArrayList;
 
@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ssakbaedal.search.model.exception.SearchException;
-import com.kh.ssakbaedal.search.model.service.SearchService;
-import com.kh.ssakbaedal.search.model.vo.PageInfo;
-import com.kh.ssakbaedal.search.model.vo.Pagination;
-import com.kh.ssakbaedal.search.model.vo.Search;
+import com.kh.ssakbaedal.storeSearch.model.exception.storeSearchException;
+import com.kh.ssakbaedal.storeSearch.model.service.storeSearchService;
+import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
+import com.kh.ssakbaedal.storeSearch.model.vo.Pagination;
+import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
 @Controller
-public class SearchController {
+public class storeSearchController {
 	
 	@Autowired
-	private SearchService sService;
+	private storeSearchService sService;
 	
 	// 전체매장 보기
 	@RequestMapping("tslist.do")
@@ -35,7 +35,7 @@ public class SearchController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 		
 		// 페이징 정보에 맞는 게시글 리트트 셀렉
-		ArrayList<Search> tslist = sService.selectList(pi);
+		ArrayList<storeSearch> tslist = sService.selectList(pi);
 		
 		//System.out.println("tslist : " + tslist);
 		//System.out.println("pi : " + pi);
@@ -43,9 +43,9 @@ public class SearchController {
 		if(tslist != null) {
 			mv.addObject("tslist", tslist);
 			mv.addObject("pi", pi);
-			mv.setViewName("search/totalListView");
+			mv.setViewName("storeSearch/totalListView");
 		} else {
-			throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+			throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 		}
 		
 		return mv;
@@ -66,14 +66,14 @@ public class SearchController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 		
 		// 페이징 정보에 맞는 게시글 리트트 셀렉
-		ArrayList<Search> kslist = sService.selectKsList(pi);
+		ArrayList<storeSearch> kslist = sService.selectKsList(pi);
 		
 		if(kslist != null) {
 			mv.addObject("kslist", kslist);
 			mv.addObject("pi", pi);
-			mv.setViewName("search/koreanListView");
+			mv.setViewName("storeSearch/koreanListView");
 		} else {
-			throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+			throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 		}
 		
 		return mv;
@@ -94,14 +94,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 			
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> cslist = sService.selectCsList(pi);
+			ArrayList<storeSearch> cslist = sService.selectCsList(pi);
 			
 			if(cslist != null) {
 				mv.addObject("cslist", cslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/chineseListView");
+				mv.setViewName("storeSearch/chineseListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 			
 			return mv;
@@ -122,14 +122,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 					
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> jslist = sService.selectjsList(pi);
+			ArrayList<storeSearch> jslist = sService.selectjsList(pi);
 					
 			if(jslist != null) {
 				mv.addObject("jslist", jslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/japaneseListView");
+				mv.setViewName("storeSearch/japaneseListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 					
 			return mv;
@@ -150,14 +150,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 							
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> sslist = sService.selectSsList(pi);
+			ArrayList<storeSearch> sslist = sService.selectSsList(pi);
 							
 			if(sslist != null) {
 				mv.addObject("sslist", sslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/streetfoodListView");
+				mv.setViewName("storeSearch/streetfoodListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 							
 			return mv;
@@ -178,14 +178,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 									
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> chislist = sService.selectChisList(pi);
+			ArrayList<storeSearch> chislist = sService.selectChisList(pi);
 									
 			if(chislist != null) {
 				mv.addObject("chislist", chislist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/chickenListView");
+				mv.setViewName("storeSearch/chickenListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 									
 			return mv;
@@ -206,14 +206,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 											
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> pslist = sService.selectPsList(pi);
+			ArrayList<storeSearch> pslist = sService.selectPsList(pi);
 											
 			if(pslist != null) {
 				mv.addObject("pslist", pslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/pizzaListView");
+				mv.setViewName("storeSearch/pizzaListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 											
 			return mv;
@@ -234,14 +234,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 													
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> fslist = sService.selectFsList(pi);
+			ArrayList<storeSearch> fslist = sService.selectFsList(pi);
 													
 			if(fslist != null) {
 				mv.addObject("fslist", fslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/fastfoodListView");
+				mv.setViewName("storeSearch/fastfoodListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 													
 			return mv;
@@ -262,14 +262,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 															
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> aslist = sService.selectAsList(pi);
+			ArrayList<storeSearch> aslist = sService.selectAsList(pi);
 															
 			if(aslist != null) {
 				mv.addObject("aslist", aslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/asianListView");
+				mv.setViewName("storeSearch/asianListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 															
 			return mv;
@@ -290,14 +290,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 																	
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> joslist = sService.selectJosList(pi);
+			ArrayList<storeSearch> joslist = sService.selectJosList(pi);
 																	
 			if(joslist != null) {
 				mv.addObject("joslist", joslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/porkFeetListView");
+				mv.setViewName("storeSearch/porkFeetListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																	
 			return mv;
@@ -318,14 +318,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 																			
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> yaslist = sService.selectYasList(pi);
+			ArrayList<storeSearch> yaslist = sService.selectYasList(pi);
 																			
 			if(yaslist != null) {
 				mv.addObject("yaslist", yaslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/yasigListView");
+				mv.setViewName("storeSearch/yasigListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																			
 			return mv;
@@ -346,14 +346,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 																					
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> jjslist = sService.selectJjsList(pi);
+			ArrayList<storeSearch> jjslist = sService.selectJjsList(pi);
 																					
 			if(jjslist != null) {
 				mv.addObject("jjslist", jjslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/jjimListView");
+				mv.setViewName("storeSearch/jjimListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																					
 			return mv;
@@ -374,14 +374,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 																							
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> doslist = sService.selectDosList(pi);
+			ArrayList<storeSearch> doslist = sService.selectDosList(pi);
 																							
 			if(doslist != null) {
 				mv.addObject("doslist", doslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/lunchboxListView");
+				mv.setViewName("storeSearch/lunchboxListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																							
 			return mv;
@@ -402,14 +402,14 @@ public class SearchController {
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 																									
 			// 페이징 정보에 맞는 게시글 리트트 셀렉
-			ArrayList<Search> cdslist = sService.selectCdsList(pi);
+			ArrayList<storeSearch> cdslist = sService.selectCdsList(pi);
 																									
 			if(cdslist != null) {
 				mv.addObject("cdslist", cdslist);
 				mv.addObject("pi", pi);
-				mv.setViewName("search/cafedessertListView");
+				mv.setViewName("storeSearch/cafedessertListView");
 			} else {
-				throw new SearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																									
 			return mv;

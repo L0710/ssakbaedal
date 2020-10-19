@@ -2,8 +2,8 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="searchMapper">
-	<resultMap type="Search" id="searchResultSet">
+<mapper namespace="storeSearchMapper">
+	<resultMap type="stSearch" id="searchResultSet">
 		<id property="mNo" column="MNO"/>
 		<result property="sName" column="SNAME"/>
 		<result property="sNo" column="SNO"/>

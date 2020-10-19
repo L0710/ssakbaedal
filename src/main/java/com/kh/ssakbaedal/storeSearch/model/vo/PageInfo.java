@@ -1,4 +1,4 @@
-package com.kh.ssakbaedal.search.model.vo;
+package com.kh.ssakbaedal.storeSearch.model.vo;
 
 public class PageInfo {
 	private int currentPage;
