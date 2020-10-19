@@ -228,10 +228,6 @@
                             <img src="./resources/img/cafe2.jpg" onclick="location.href='${contextPath}/cdslist.do'">
                             <p>카페/디저트</p>
                         </li>
-                        <li>
-                            <img src="./resources/img/cafe2.jpg" onclick="location.href='${contextPath}/testlist.do'">
-                            <p>테스트</p>
-                        </li>
                     </ul>
                 </div>
                 <p class="controls">
