@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+	<resultMap type="Order" id="orderResultSet">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oPoint" column="OPOINT"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smNo" column="S_MNO"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="orderResultSet">
+		SELECT *
+		FROM SORDER
+		WHERE O_STATUS = '1'
+		OR O_STATUS = '2' 
+		OR O_STATUS = '3';
+	</select>
+	
+	<update id="deleteList">
+		UPDATE ORDER
+		SET O_STATUS = 'N'
+		WHERE O_STATUS = '1'
+		OR O_STATUS = '2'
+		OR O_STATUS = '3'
+	</update>
+	
+	</mapper>

@@ -79,4 +79,5 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE REF_ID=#{eNo}
 		AND A_STATUS='Y'
 	</select>
+
 </mapper>

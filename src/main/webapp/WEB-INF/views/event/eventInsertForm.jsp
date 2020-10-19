@@ -33,6 +33,8 @@
             <div class="contents" align="center">
                 <br>
                 <form action="einsert.do" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="eWriter" value="${ loginUser.mId }">
+                
                 <table align="center" id="insertTable">
                     <tr>
                         <td>제목</td>
