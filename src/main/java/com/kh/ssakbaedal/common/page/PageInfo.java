@@ -1,4 +1,4 @@
-package com.kh.ssakbaedal.event.model.vo;
+package com.kh.ssakbaedal.common.page;
 
 public class PageInfo {
 	private int currentPage;

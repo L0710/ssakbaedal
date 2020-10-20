@@ -2,10 +2,12 @@ package com.kh.ssakbaedal.order.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
 
 @Repository("oDao")
@@ -22,6 +24,18 @@ public class OrderDao {
 	public int deleteList() {
 
 		return sqlSession.update("orderMapper.deleteList");
+	}
+
+	public int selectListCount(int mNo) {
+		return sqlSession.selectOne("orderMapper.selectListCount", mNo);
+	}
+
+	public ArrayList<Order> selectOList(PageInfo pi, int mNo) {
+		// 1 - offset : 몇 개의 게시글을 건너 뛸 것인지
+		// 2 - boardLimit : 몇 개의 게시글을 select 할 것인지
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("orderMapper.selectOList", mNo, rowBounds);
 	}
 	
 	
