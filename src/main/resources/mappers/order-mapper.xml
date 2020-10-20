@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="smNo" column="S_MNO"/>
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 	</resultMap>
-	
+
 	<resultMap id="v_orderResultSet" type="V_Order">
 		<id property="oNo" column="ONO"/>
 		<result property="oTime" column="OTIME"/>
@@ -44,20 +44,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="price" column="MN_PRICE"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="orderResultSet">
+	<select id="selectorderList" resultMap="orderResultSet">
 		SELECT *
 		FROM SORDER
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2' 
-		OR O_STATUS = '3';
+		WHERE O_STATUS != 'N'
 	</select>
 	
 	<update id="deleteList">
 		UPDATE SORDER
 		SET O_STATUS = 'N'
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2'
-		OR O_STATUS = '3'
+		WHERE O_STATUS != 'N'
 	</update>
 	
 	<select id="selectListCount" resultType="_int">

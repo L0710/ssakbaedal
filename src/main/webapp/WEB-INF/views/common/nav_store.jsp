@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" 
+scope="application"/>
 <style>
 	nav {
 		width: auto;
@@ -34,9 +37,9 @@
 </head>
 <body>
 	<nav id="nav">
-		<a class="link" href="orderlist.do">주문관리</a>
-		<a class="link" href="management.do">매장관리</a>
-		<a class="link" href="statistics.do">매출현황</a>
+		<a class="link" href="${contextPath}/goOrderView.do">주문관리</a>
+		<a class="link" href="${contextPath}/storeManage.do">매장관리</a>
+		<a class="link" href="${contextPath}/statistics.do">매출현황</a>
 	</nav>
 </body>
 </html>

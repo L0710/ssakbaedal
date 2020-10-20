@@ -21,5 +21,20 @@ public class ManagementController {
 		return "redirect:home.do";
 		
 	}
+	
+	@RequestMapping("menuSetting.do")
+	public String goMenuSetting() {
+		return "store/management/menuSettingView";
+	}
+	
+	@RequestMapping("openSetting.do")
+	public String goOpenSetting() {
+		return "store/management/openSettingView";
+	}
+	
+	@RequestMapping("storeManage.do")
+	public String goStoreManage() {
+		return "store/management/storeInfoView";
+	}
 
 }

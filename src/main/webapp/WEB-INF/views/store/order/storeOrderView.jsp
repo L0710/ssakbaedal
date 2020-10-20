@@ -289,6 +289,7 @@
 
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
+                
                 <div class="tableWrapper" align="center">
                     <table id="orderTable">
                     <thead>
@@ -302,9 +303,6 @@
                         <tbody></tbody>
                     </table>
 
-                    <div class="pagingArea" align="center" style="font-size:14px;">
-                            [이전] [1][2][3][4][5] [다음]
-                    </div>
                 </div>
             </div>
 
@@ -330,6 +328,8 @@
     				 $tableBody.html("");
     				
     				 for(var i in data) {
+    					 var $tr = $("<tr>");
+    					 
     					 var $orderTime = $("<td>").text(data[i].orderTime);
     					 var $oAddress = $("<td>").text(data[i].oAddress);
     					 var $oMenu = $("<td>").text(data[i].oMenu);
@@ -349,12 +349,17 @@
     		});
     	}
     </script>
+    
+    </section>
 
+    </section>
 
+    </div>
     <br><br><br><br><br><br>
 
   	<c:import url="../../common/footer.jsp"/>
 
+    </div>
 </body>
 
 </html>

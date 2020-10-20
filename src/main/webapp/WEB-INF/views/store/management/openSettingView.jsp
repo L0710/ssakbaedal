@@ -246,13 +246,6 @@
             text-align: center;
         }
 
-
-        nav a:hover {
-            text-decoration: none;
-            color: rgb(130, 180, 127);
-
-        }
-
         #menubar {
             text-decoration: none;
             list-style: none;
@@ -299,14 +292,10 @@
 </head>
 <body>
     <div class="wrapper">
-	<c:import url="../common/headerbar.jsp"/>
+	<c:import url="../../common/headerbar.jsp"/>
 
         <section>
-            <nav id="nav">
-                <a class="link" href="#">주문관리</a>
-                <a class="link" href="#">매장관리</a>
-                <a class="link" href="#">매출현황</a>
-            </nav>
+	<c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
@@ -375,16 +364,9 @@
 
     </section>
     <div class="sidemenu">
-        <!-- <ul id="menubar">
-            <li>메뉴관리</li>
-            <li>영업관리</li>
-            <li>매장관리</li>
-            <li>리뷰관리</li>
-            <li>알림</li>
-        </ul> -->
-        <button class="btn-ghost gray si">메뉴관리</button>
-        <button class="btn-ghost gray si">영업관리</button>
-        <button class="btn-ghost gray si">매장관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
         <button class="btn-ghost gray si">리뷰관리</button>
         <button class="btn-ghost gray si">알림</button>
     </div>
@@ -393,7 +375,7 @@
     </div>
     <br><br><br><br><br><br>
 
-	<c:import url="../common/footer.jsp"/>
+	<c:import url="../../common/footer.jsp"/>
 
 
     </div>
