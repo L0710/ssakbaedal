@@ -32,7 +32,7 @@ public class V_Order {
 	private int odNum;	// 주문상세번호
 	private int mnPrice;	// 단가
 	private int fee;	// 배달비
-	private int oPrice;	// 총주문금액
+	private int oPrice;	// 총결제금액
 	private String request;	// 요청사항
 	private String sName;	// 점포명
 	private String sTel;	// 점포연락처

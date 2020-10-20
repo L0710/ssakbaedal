@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Repository("oDao")
 public class OrderDao {
@@ -36,6 +37,10 @@ public class OrderDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("orderMapper.selectOList", mNo, rowBounds);
+	}
+
+	public V_Order selectOrder(int oNo) {
+		return sqlSession.selectOne("orderMapper.selectOne", oNo);
 	}
 	
 	
