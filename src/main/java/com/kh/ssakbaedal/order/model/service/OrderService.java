@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 public interface OrderService {
 	
@@ -24,6 +25,9 @@ public interface OrderService {
 
 	// 유저 주문 리스트 출력
 	public ArrayList<Order> selectOList(PageInfo pi, int mNo);
+
+	// 주문내역 상세(유저)
+	public V_Order selectOrder(int oNo);
 
 	
 }

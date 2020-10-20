@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.dao.OrderDao;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Service("oService")
 public class OrderServiceImpl implements OrderService {
@@ -46,6 +47,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public ArrayList<Order> selectOList(PageInfo pi, int mNo) {
 		return oDao.selectOList(pi, mNo);
+	}
+
+	@Override
+	public V_Order selectOrder(int oNo) {
+		return oDao.selectOrder(oNo);
 	}
 	
 	

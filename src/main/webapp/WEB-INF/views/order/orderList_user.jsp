@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,11 +60,17 @@
 	                        <td colspan="2">${ o.sName }(${ o.sTel })</td>
 	                    </tr>
 	                    <tr>
-	                        <td colspan="2">주문메뉴 * 수량, 주문메뉴 * 수량, ...</td>
+	                    	<c:forEach var="d" items="${ o.ODetail }">
+	                        	<td>${ d.mnName } * ${ d.odNum } </td>
+	                        </c:forEach>
 	                    </tr>
 	                    <tr>
 	                        <td colspan="2">
-	                            <a href="#">주문상세</a>
+	                        	<c:url var="odetail" value="odetail.do">
+	                        		<c:param name="oNo" value="${ o.oNo }"/>
+									<c:param name="page" value="${ pi.currentPage }"/>
+	                        	</c:url>
+	                            <a href="${ odetail }">주문상세</a>
 	                        </td>
 	                    </tr>
                     </c:forEach>
@@ -76,7 +83,8 @@
 					[이전]&nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="elist.do">
+						<c:url var="before" value="olist.do">
+							<c:param name="mNo" value="${ loginUser.mNo }"/>
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a>&nbsp;
@@ -88,7 +96,8 @@
 							<font color="red" size="3">[ ${ p } ]</font>
 						</c:if>
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="elist.do">
+							<c:url var="pagination" value="olist.do">
+								<c:param name="mNo" value="${ loginUser.mNo }"/>
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -100,7 +109,8 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="elist.do">
+						<c:url var="after" value="olist.do">
+							<c:param name="mNo" value="${ loginUser.mNo }"/>
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url>
 						<a href="${ after }">[다음]</a>
