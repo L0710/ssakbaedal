@@ -1,4 +1,4 @@
-package com.kh.ssakbaedal.event.model.vo;
+package com.kh.ssakbaedal.common.page;
 
 public class Pagination {
 	// PageInfo 객체를 리턴하는 static 메소드

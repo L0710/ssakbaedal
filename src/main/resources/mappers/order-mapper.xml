@@ -16,6 +16,34 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 	</resultMap>
 	
+	<resultMap id="v_orderResultSet" type="V_Order">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sTel" column="STEL"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPoint" column="OPOINT"/>
+		<result property="fee" column="FEE"/>
+		<result property="pNo" column="PNO"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oPhone" column="OPHONE"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="mNo" column="MNO"/>
+		<collection property="ODetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
+	</resultMap>
+	
+	<resultMap type="ODetail" id="ODetailResultSet">
+		<id property="odNo" column="ODNO"/>
+		<result property="odNum" column="ODNUM"/>
+		<result property="oNo" column="ONO"/>
+		<result property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="price" column="MN_PRICE"/>
+	</resultMap>
+	
 	<select id="selectList" resultMap="orderResultSet">
 		SELECT *
 		FROM SORDER
@@ -25,11 +53,24 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<update id="deleteList">
-		UPDATE ORDER
+		UPDATE SORDER
 		SET O_STATUS = 'N'
 		WHERE O_STATUS = '1'
 		OR O_STATUS = '2'
 		OR O_STATUS = '3'
 	</update>
 	
-	</mapper>
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM V_ORDER
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<select id="selectOList" resultMap="v_orderResultSet">
+		SELECT *
+		FROM V_ORDER
+		WHERE MNO = #{mNo}
+		ORDER BY ONO DESC
+	</select>
+	
+</mapper>

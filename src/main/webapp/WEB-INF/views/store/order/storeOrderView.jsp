@@ -282,9 +282,9 @@
 <body>
     <div class="wrapper">
     
-        <c:import url="../common/headerbar.jsp"/>
+        <c:import url="../../common/headerbar.jsp"/>
 
-        <c:import url="../common/nav_store.jsp"/>
+        <c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
@@ -353,7 +353,7 @@
 
     <br><br><br><br><br><br>
 
-  	<c:import url="../common/footer.jsp"/>
+  	<c:import url="../../common/footer.jsp"/>
 
 </body>
 
