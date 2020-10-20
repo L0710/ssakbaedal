@@ -13,11 +13,16 @@
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Search" alias="Search"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
+		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.storeSearch" alias="stSearch"/>
 		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.ODetail" alias="ODetail"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/storeSearch-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
 	</mappers>

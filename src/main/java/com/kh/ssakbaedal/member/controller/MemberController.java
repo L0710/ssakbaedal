@@ -1,9 +1,5 @@
 package com.kh.ssakbaedal.member.controller;
  
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,19 +73,19 @@ public class MemberController {
 	 
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String memberLogin(Member m, Model model) {
-		System.out.println(m);
+//		System.out.println(m);
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser != null) {
 
-			logger.info(loginUser.getmType() + " 타입");
+//			logger.info(loginUser.getmType() + " 타입");
 			model.addAttribute("loginUser", loginUser);
 			if(loginUser.getmType().equals("1")) {
-				return "redirect:mSignUp.do";
+				return "redirect:home.do";
 			}else if(loginUser.getmType().equals("3")){
 				return "store/management/openSettingView";
 			}else {
-				return "redirect:mSignUp.do";
+				return "redirect:home.do";
 			}
 		}else {
 			throw new MemberException("로그인에 실패하였습니다.");
@@ -102,7 +98,7 @@ public class MemberController {
 	public String logout(SessionStatus status) {
 		status.setComplete();
 		
-		return "redirect:login.do";
+		return "redirect:home.do";
 	}
 	
 	@RequestMapping("minsert.do")
@@ -137,7 +133,7 @@ public class MemberController {
 	@RequestMapping(value = "checkId.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkId(Member m) {
-System.out.println(m);
+//System.out.println(m);
 		int result = mService.checkId(m);
 
 		if(result > 0) {
@@ -153,5 +149,21 @@ System.out.println(m);
 		return "member/pointView";
 	}
 	
+	@RequestMapping("mypage_admin.do")
+	public String adminMypageView() {
+		
+		logger.debug("관리자 마이 페이지로 이동합니다");
+		
+		return "report/reportList";
+	}
+	
+	@RequestMapping("mypage_store.do")
+	public String storeMypageView() {
+		
+		logger.debug("점포 마이 페이지로 이동합니다");
+		
+		return "store/order/storeOrderView";
+	}
+
 	
 }

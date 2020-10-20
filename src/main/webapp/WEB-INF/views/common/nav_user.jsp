@@ -34,7 +34,7 @@
 </head>
 <body>
 	<nav id="nav">
-		<a class="link" href="#">결제내역</a>
+		<a class="link" href="olist.do">주문내역</a>
 		<a class="link" href="#">리뷰</a>
 		<a class="link" href="#">포인트</a>
 		<a class="link" href="#">문의</a>
