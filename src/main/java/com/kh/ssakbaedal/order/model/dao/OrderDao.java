@@ -16,7 +16,7 @@ public class OrderDao {
 
 	public ArrayList<Order> selectList() {
 
-		return (ArrayList)sqlSession.selectList("orderMapper.selectList");
+		return (ArrayList)sqlSession.selectList("orderMapper.selectorderList");
 	}
 
 	public int deleteList() {

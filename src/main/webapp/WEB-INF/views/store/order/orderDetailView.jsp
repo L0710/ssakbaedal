@@ -270,14 +270,10 @@
 <body>
     <div class="wrapper">
     
-                 	<c:import url="../common/headerbar.jsp"/>
+                 	<c:import url="../../common/headerbar.jsp"/>
 
         <section>
-            <nav id="nav">
-                <a class="link" href="#">주문관리</a>
-                <a class="link" href="#">매장관리</a>
-                <a class="link" href="#">매출현황</a>
-            </nav>
+            <c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
@@ -341,21 +337,13 @@
 
     </div>
     </section>
-    <div class="sidemenu">
-        <ul id="menubar">
-            <li>메뉴관리</li>
-            <li>영업관리</li>
-            <li>매장관리</li>
-            <li>리뷰관리</li>
-            <li>알림</li>
-        </ul>
-    </div>
+
     </section>
 
     </div>
     <br><br><br><br><br><br>
 
-  	<c:import url="../common/footer.jsp"/>
+  	<c:import url="../../common/footer.jsp"/>
     </div>
 </body>
 </html>

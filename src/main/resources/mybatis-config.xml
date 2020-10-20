@@ -9,6 +9,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Search" alias="Search"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
@@ -18,6 +19,7 @@
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/order-mapper.xml"/>
 	</mappers>
 
 </configuration>

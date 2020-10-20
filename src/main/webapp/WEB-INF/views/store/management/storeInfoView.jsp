@@ -309,6 +309,7 @@
             font-size: 18px;
             margin-bottom: 0;
         } 
+       
 
         #imgchangeBtn {
             margin-top: 10px;
@@ -353,6 +354,18 @@
         #minprice {
             margin-left: 60px;
         }
+        .btn-ghost.gray.si {
+            width: 150px;
+            height: 40px;
+            padding-top: 5px;
+        }
+        
+        #updateBtn {
+        	width: 100px;
+        	cursor: pointer;
+            margin: 3px;
+            padding: 10px 20px;
+        }
 
 
 
@@ -361,14 +374,10 @@
 <body>
     <div class="wrapper">
     
-              	<c:import url="../common/headerbar.jsp"/>
+              	<c:import url="../../common/headerbar.jsp"/>
 
         <section>
-            <nav id="nav">
-                <a class="link" href="#">주문관리</a>
-                <a class="link" href="#">매장관리</a>
-                <a class="link" href="#">매출현황</a>
-            </nav>
+            <c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" >
@@ -414,7 +423,7 @@
                                 <option value="night">야식</option>
                             </select>
                             <br>
-                            <span>배달팁</span><input id="delverycost" class="stinfo" name="delveryCost"><br>
+                          <%--   <span>배달팁</span><input id="delverycost" class="stinfo" name="delveryCost"><br>
                             <span>최소배달금액</span><input id="minprice" class="stinfo" name="minPrice"><br>
                             <span>매장소개</span><input id="stintro" class="stinfo" name="sIntro"><br>
 
@@ -439,7 +448,7 @@
 							<input type="text" name="address1" class="postcodify_address" value="${ addr2 }"/>
 								상세주소
 							<input type="text" name="address2" class="postcodify_details" value="${ addr3 }"/>
-							
+							 --%>
                             <span>대표자명</span><input id="ownerName" class="stinfo" name="ownerName"><br>
                             <span>사업자등록번호</span><input id="sNumber" class="stinfo" name="sNumber"><br><br>
                         </div>
@@ -452,8 +461,8 @@
                             <span>비밀번호 확인</span><input type="password" id="pwdch" class="stinfo" name="chPwd"><br>
                             <span>이메일</span><input type="email" id="email" class="stinfo" name="email"><br><br><br>
                             <div align="center">
-                                <input type="submit" class="btn-ghost green" value="수정하기">
-                                <button type="button" class="btn-ghost gray" onclick="location.href=#{mdelete}">탈퇴하기</button>
+                                <input type="submit" id="updateBtn"  class="btn-ghost green" value="수정하기">
+                                <button type="button" class="btn-ghost gray" onclick="location.href=${mdelete}">탈퇴하기</button>
                             </div>
                         </div>
                     </div>
@@ -464,21 +473,21 @@
     </div>
 
     </section>
+    </section>
     <div class="sidemenu">
-        <ul id="menubar">
-            <li>메뉴관리</li>
-            <li>영업관리</li>
-            <li>매장관리</li>
-            <li>리뷰관리</li>
-            <li>알림</li>
-        </ul>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
+        <button class="btn-ghost gray si">리뷰관리</button>
+        <button class="btn-ghost gray si">알림</button>
     </div>
+    </section>
     </section>
 
     </div>
     <br><br><br><br><br><br>
 
-  	<c:import url="../common/footer.jsp"/>
+  	<c:import url="../../common/footer.jsp"/>
 
 
 

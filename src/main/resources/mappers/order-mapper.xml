@@ -16,20 +16,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="orderResultSet">
+	<select id="selectorderList" resultMap="orderResultSet">
 		SELECT *
 		FROM SORDER
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2' 
-		OR O_STATUS = '3';
+		WHERE O_STATUS != 'N'
 	</select>
 	
 	<update id="deleteList">
 		UPDATE ORDER
 		SET O_STATUS = 'N'
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2'
-		OR O_STATUS = '3'
+		WHERE O_STATUS != 'N'
 	</update>
 	
 	</mapper>

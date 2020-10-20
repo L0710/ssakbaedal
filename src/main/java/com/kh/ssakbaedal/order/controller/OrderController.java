@@ -29,16 +29,20 @@ public class OrderController {
 		
 	}
 	
+	@RequestMapping("goOrderView.do")
+	public String goOrderView() {
+		return "store/order/storeOrderView";
+	}
+	
 	@RequestMapping("reloadList.do")
 	@ResponseBody
 	public String reloadList() {
 		
 		ArrayList<Order> oList = oService.selectList();
+		
 		String menuList = oService.selectMenu();
 		
-		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
-		
 		
 		return gson.toJson(oList);
 	}
