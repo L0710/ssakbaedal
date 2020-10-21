@@ -66,7 +66,7 @@
         table {
             border-collapse: collapse;
             background-color: white;
-            width: 80%;
+            width: 70%;
             overflow: hidden;
             border-radius: 5px;
         }
@@ -196,13 +196,9 @@
             margin-top: 100px;
         }
 
-
-
-
-
-        #orderTableTable {
+        #orderTable  {
             margin-top: 60px;
-            width: 60%;
+            width: 80%;
             border-spacing: 0;
             text-align: center;
             font-size: 20px;
@@ -212,6 +208,10 @@
         #orderTable td,
         #orderTable th {
             border: 1px solid black;
+        }
+        
+        #orderTable td:hover{
+            cursor: pointer;
         }
 
         .payText {
@@ -228,9 +228,7 @@
             margin-bottom: 7px;
         }
 
-        .btnGroup {
-            margin-left: 840px;
-        }
+
 
         #addtxt {
             height: 25px;
@@ -291,6 +289,7 @@
                 <p id="orderTitle">주문관리</p>
                 
                 <div class="tableWrapper" align="center">
+               	
                     <table id="orderTable">
                     <thead>
 	                        <tr>
@@ -298,9 +297,11 @@
 	                            <th>주소</th>
 	                            <th>주문 메뉴</th>
 	                            <th>메뉴 상태</th>
+	                            <th>주문번호</th>
 	                        </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        </tbody>
                     </table>
 
                 </div>
@@ -322,32 +323,62 @@
     			url:"reloadList.do",
     			dataType:"json",
     			success:function(data) {
-    				console.log(data);
+						var list1 = data.oList;
+    					var list2 = data.odList;
     				
-    				 $tableBody = $("orderTable tbody");
+    				 $tableBody = $("#orderTable tbody");
     				 $tableBody.html("");
-    				
-    				 for(var i in data) {
+    				 var mnName = " ";
+    				 
+    				 for (var j in list2) {
+    					 mnName += list2[j].mnName + ",";
+    				 }
+    				 
+    				 for(var i in list1) {
+    					 
     					 var $tr = $("<tr>");
     					 
-    					 var $orderTime = $("<td>").text(data[i].orderTime);
-    					 var $oAddress = $("<td>").text(data[i].oAddress);
-    					 var $oMenu = $("<td>").text(data[i].oMenu);
-    					 var $oStatus = $("<td>").text(data[i].oStatus);
+    					 var $orderTime = $("<td>").text(list1[i].oTime);
+    					 var $oAddress = $("<td>").text(list1[i].oAddress);
+    					 var $mnName = $("<td>").text(mnName);
+    					 var $oStatus = $("<td>").text(list1[i].oStatus);
+    					 var $blank = $("<td>").text(list1[i].oNo);
+						
     					 
     					 $tr.append($orderTime);
         				 $tr.append($oAddress);
-        				 $tr.append($oMenu);
+        				 $tr.append($mnName);
         				 $tr.append($oStatus);
+        				 $tr.append($blank);
         				 
         				 $tableBody.append($tr);
+        				 
     				 }
+    				 
+    				 $(function() {
+    					 clickEvent();
+    				 });
+    				 
     			},
     			error:function(e) {
     				console.log(e);
     			}
     		});
     	}
+    	
+		function clickEvent() { 
+			$("#orderTable tbody tr").click(function() {
+				$(this).css("background-color", "gray"); 
+				var contents = $(this).children().eq(4).text(); 
+
+		    	console.log(contents);
+		    	
+				location.href="orderDetail.do?oNo="+contents;
+	    	
+			});
+		}
+		    	
+
     </script>
     
     </section>
