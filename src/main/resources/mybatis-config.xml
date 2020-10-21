@@ -18,6 +18,8 @@
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.ODetail" alias="ODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.SODetail" alias="SODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.S_Order" alias="S_Order"/>
 	</typeAliases>
 
 	<mappers>

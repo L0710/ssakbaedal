@@ -1,15 +1,17 @@
 package com.kh.ssakbaedal.order.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +21,8 @@ import com.kh.ssakbaedal.event.model.exception.EventException;
 import com.kh.ssakbaedal.order.model.exception.OrderException;
 import com.kh.ssakbaedal.order.model.service.OrderService;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.SODetail;
+import com.kh.ssakbaedal.order.model.vo.S_Order;
 
 @Controller
 public class OrderController {
@@ -26,6 +30,7 @@ public class OrderController {
 	@Autowired
 	private OrderService oService;
 	
+	//list 출력
 	@RequestMapping("orderlist.do")
 	@ResponseBody
 	public String orderList() {
@@ -34,22 +39,37 @@ public class OrderController {
 		
 	}
 	
+	//storeorderlist 이동
 	@RequestMapping("goOrderView.do")
-	public String goOrderView() {
-		return "store/order/storeOrderView";
+	public ModelAndView goOrderView(ModelAndView mv) {
+		
+		ArrayList<S_Order> oList = oService.selectList();
+		
+		if(oList != null) {
+			mv.addObject("oList", oList);
+			mv.setViewName("store/order/storeOrderView");
+		}
+		
+		return mv;
 	}
 	
+	//5초에 한번씩 orderlist reload
 	@RequestMapping("reloadList.do")
 	@ResponseBody
 	public String reloadList() {
 		
-		ArrayList<Order> oList = oService.selectList();
+		ArrayList<S_Order> oList = oService.selectList();
+		ArrayList<SODetail> odList = oService.selectDetailList();
 		
-		String menuList = oService.selectMenu();
+		HashMap<String, ArrayList> hm = new HashMap<>();
+		hm.put("oList", oList);
+		hm.put("odList", odList);
+		
+		
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 		
-		return gson.toJson(oList);
+		return gson.toJson(hm);
 	}
 	
 	//주문내역이 없어서 일단 주석처리
@@ -99,5 +119,31 @@ public class OrderController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="orderDetail.do", method=RequestMethod.GET)
+	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		S_Order o = oService.selectStoreOrder(oNo);
+		
+		
+		ArrayList<SODetail> od = oService.selectStoreDetail(oNo);
+		
+		if(o != null && od != null) {
+			mv.addObject("sorder", o);
+			mv.addObject("sod", od);
+			mv.setViewName("store/order/orderDetailView");
+		} else {
+			throw new OrderException("주문 상세보기에 실패했습니다.");
+		}
+		return mv;
+		
+	}
+	
+	@RequestMapping("orderTimePopup.do")
+	public String popup() {
+		return "store/order/orderTimePopup";
 	}
 }
