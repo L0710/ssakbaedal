@@ -35,6 +35,28 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<collection property="ODetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
 	</resultMap>
 	
+	<resultMap id="s_orderResultSet" type="S_Order">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="mNo" column="MNO"/>
+		<result property="mPhone" column="MPHONE"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+	</resultMap>
+	
+	<resultMap id="sod_orderResultSet" type="SODetail">
+		<id property="oNo" column="ONO"/>
+		<result property="odNo" column="ODNO"/>
+		<result property="odNum" column="ODNUM"/>
+		<result property="odPrice" column="OD_PRICE"/>
+		<result property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+	</resultMap>
+	
 	<resultMap type="ODetail" id="ODetailResultSet">
 		<id property="odNo" column="ODNO"/>
 		<result property="odNum" column="ODNUM"/>
@@ -44,16 +66,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="price" column="MN_PRICE"/>
 	</resultMap>
 	
-	<select id="selectorderList" resultMap="orderResultSet">
+	<select id="selectodList" resultMap="sod_orderResultSet">
 		SELECT *
-		FROM SORDER
-		WHERE O_STATUS != 'N'
+		FROM SODETAIL
+	</select>
+	
+	<select id="selectorderList" resultMap="s_orderResultSet">
+		SELECT * 
+		FROM S_ORDER
+		WHERE O_STATUS != 'S'
+		OR O_STATUS != 'N'
 	</select>
 	
 	<update id="deleteList">
 		UPDATE SORDER
-		SET O_STATUS = 'N'
-		WHERE O_STATUS != 'N'
+		SET O_STATUS = 'S'
+		WHERE O_STATUS != 'S'
 	</update>
 	
 	<select id="selectListCount" resultType="_int">
@@ -69,10 +97,23 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		ORDER BY ONO DESC
 	</select>
 	
+	<select id="selectStoreOrder" parameterType="_int" resultMap="s_orderResultSet">
+		SELECT *
+		FROM S_ORDER
+		WHERE ONO = #{oNo}
+	</select>
+	
+	<select id="selectStoreDetail"  resultMap="sod_orderResultSet">
+		SELECT *
+		FROM SODETAIL
+		WHERE ONO = #{oNo}
+	</select>
+	
+	
 	<select id="selectOne" parameterType="_int" resultMap="v_orderResultSet">
 		SELECT *
 		FROM V_ORDER
 		WHERE ONO=#{oNo}
 	</select>
-	
+
 </mapper>

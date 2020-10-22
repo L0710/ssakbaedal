@@ -235,9 +235,6 @@
             margin-bottom: 7px;
         }
 
-        .btnGroup {
-            margin-left: 840px;
-        }
 
         #addtxt {
             height: 25px;

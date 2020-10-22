@@ -262,7 +262,7 @@
 
 <script>
     function time_popup() {
-        window.open("orderTimePopup.jsp", "배달예상시간", "width=400,height=500,left=400,top=100");
+        window.open("${contextPath}/orderTimePopup.do", "배달예상시간", "width=400,height=500,left=400,top=100");
     }
 </script>
 
@@ -279,60 +279,43 @@
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
                 <div align="left">
-                    <label for="address" class="label">주소</label><input type="text" id="address" placeholder="서울시 강남구 테헤란로 10길 9" readonly>
-                    <label for="daddress" class="label">상세 주소</label><input type="text" id="daddress" placeholder="그랑프리 빌딩 4층 1강의실" readonly><br>
-                    <label for="clienttel" class="label">전화번호</label><input type="text" id="clienttel" placeholder="010)1234-5678" readonly>
+                    <label for="address" class="label">주소</label><input type="text" id="address" value="${o.oAddress }" readonly>
+                    <label for="clienttel" class="label">전화번호</label><input type="text" id="clienttel" value="${o.mPhone }" readonly>
                 </div>
                 <div align="center">
-                    <table id="orderTable" align="center">
-                        <tr>
+                 <table id="orderTable" align="center">
+                		 <tr>
                             <th>메뉴이름</th>
                             <th>수량</th>
                             <th>가격</th>
                         </tr>
+                	<c:forEach var="sod" items="${ sod }">
                         <tr>
-                            <td>인절미빙수</td>
-                            <td>1</td>
-                            <td>8900</td>
+                            <td>${ sod.mnName }</td>
+                            <td>${ sod.odNum }</td>
+                            <td>${ sod.odPrice }</td>
                         </tr>
-                        <tr>
-                            <td>애플망고치즈빙수</td>
-                            <td>1</td>
-                            <td>11900</td>
-                        </tr>
-                        <tr>
-                            <td>바바리안츄러스</td>
-                            <td>1</td>
-                            <td>2500</td>
-                        </tr>
-                        <tr>
-                            <td>고구마붕어빵</td>
-                            <td>1</td>
-                            <td>2500</td>
-                        </tr>
+                   	</c:forEach>
                         <tr>
                             <td colspan="2">배달팁</td>
-                            <td colspan="2">3000</td>
+                            <td colspan="2">${o.deliveryCharge}</td>
                         </tr>
                         <tr>
                             <td colspan="2">총가격</td>
-                            <td>28800</td>
+                            <td>${o.oPrice }</td>
                         </tr>
-                    </table>
+                  </table>
+                    
                     <div align="left">
-                        <label for="require" class="label">요청사항</label><br>
-                        <!-- <input type="text" id="require" maxlength="500" placeholder="최대150자)단무지 많이 가져다주세요."> -->
-                        <textarea id="require" maxlength="300" readonly></textarea>
+                        <label for="require" class="label" >요청사항</label><br>
+                        <textarea id="require" maxlength="300"  value="${o.request}" readonly></textarea>
                     </div>
                     <div align="center">
                         <button class="btn-ghost green" id="pickupBtn" onclick="time_popup();">주문접수</button> 
-                        <!-- <a href="com-orderTimepop.html" onclick="window.open(this.href,'_blank',width=400,height=500,toolbars=no); return false;" id="pick">주문접수</a> -->
                         <label for="time">예상시간 : </label><input type="text" id="time">
                         <button class="btn-ghost blue" id="pickupBtn">매장픽업</button>
                     </div>
                 </div>
-
-
             </div>
 
     </div>

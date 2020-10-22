@@ -30,13 +30,7 @@
         width: 100%;
         height: auto;
     }
-/*
-    section {
-        width: 100%;
-        height: 60%;
-        float: left;
-    }
-*/
+
     nav {
         padding: 24px;
         text-align: center;
@@ -187,10 +181,13 @@
 	</c:if>
 
 	<div id="header">
+	<c:if test="${ loginUser.mType != 3 }">
 		<div id="address" align="left">
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
 		</div>
+	</c:if>
+	<c:if test="${ loginUser.mType == 3 }"></c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<div class="btnGroup" align="right">
 					<c:url var="login" value="login.do" />
