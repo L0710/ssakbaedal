@@ -18,6 +18,7 @@
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.ODetail" alias="ODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.serviceCenter.model.vo.faq" alias="faq"/>
 	</typeAliases>
 
 	<mappers>
@@ -25,6 +26,7 @@
 		<mapper resource="mappers/storeSearch-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
+		<mapper resource="mappers/faq-mapper.xml"/>
 	</mappers>
 
 </configuration>
