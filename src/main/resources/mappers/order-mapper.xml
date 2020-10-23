@@ -109,5 +109,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE ONO = #{oNo}
 	</select>
 	
+	<update id="updateTime"  parameterType="_int">
+		UPDATE SORDER
+		SET ARRIVAL_TIME = #{arrivalTime}, O_STATUS = '2'
+		WHERE ONO = #{oNo}
+	</update>
+	
+	<update id="updateoStatus" parameterType="_int">
+		UPDATE SORDER
+		SET O_STATUS = '3'
+		WHERE ONO = #{oNo}
+	</update>
+	
+	
 	
 </mapper>

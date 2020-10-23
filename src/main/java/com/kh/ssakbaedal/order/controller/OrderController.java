@@ -142,8 +142,57 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping("orderTimePopup.do")
-	public String popup() {
-		return "store/order/orderTimePopup";
+	@RequestMapping(value="orderTimePopup.do", method=RequestMethod.GET)
+	public ModelAndView popup(ModelAndView mv, HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		System.out.println(oNo);
+		
+		mv.addObject("oNo", oNo);
+		mv.setViewName("store/order/orderTimePopup");
+		
+		return mv;
 	}
+	
+	//배달예상시간, 주문상태변경
+	@RequestMapping(value="updateTime.do",  method=RequestMethod.GET)
+	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		int time = Integer.parseInt(request.getParameter("time"));
+		
+		Order order = new Order();
+		order.setoNo(oNo);
+		order.setArrivalTime(time);
+		
+		
+		int result = oService.updateTime(order);
+		
+		if(result > 0) {
+			mv.addObject(order);
+			mv.setViewName("store/order/storeOrderView");
+		} else {
+			throw new OrderException("주문상태/배달예상시간 변경 실패");
+		}
+		
+		return mv;
+	}
+	
+	//주문상태변경2->3
+	@RequestMapping("updateoStatus2.do")
+	public String updateoStatus(int oNo) {
+		
+		int result = oService.updateoStatus(oNo);
+		
+		if(result > 0) {
+			return "store/order/orderDetailView";
+		} else {
+			throw new OrderException("주문상태 변경 실패");
+		}
+		
+		
+	}
+	
 }

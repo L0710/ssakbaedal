@@ -61,6 +61,21 @@ public class OrderServiceImpl implements OrderService {
 
 		return oDao.selectStoreDetail(oNo);
 	}
+
+	//매장) 주문상태변경
+	//배달예상시간 update
+	@Override
+	public int updateTime(Order order) {
+		// TODO Auto-generated method stub
+		return oDao.updateTime(order);
+	}
+
+	//매장)주문상태변경2
+	@Override
+	public int updateoStatus(int oNo) {
+		
+		return oDao.updateoStatus(oNo);
+	}
 	
 	
 	

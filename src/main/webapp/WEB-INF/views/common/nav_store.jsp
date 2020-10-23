@@ -41,5 +41,6 @@ scope="application"/>
 		<a class="link" href="${contextPath}/storeManage.do">매장관리</a>
 		<a class="link" href="${contextPath}/statistics.do">매출현황</a>
 	</nav>
+	
 </body>
 </html>

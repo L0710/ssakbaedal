@@ -8,10 +8,11 @@ public class Menu {
 	private String mnStatus;
 	private int mNo;
 	private String smallCate;
+	private int mnPrice;
 	
 	public Menu() {}
 
-	public Menu(int mnNo, String mnName, String mnCategory, String mnStatus, int mNo, String smallCate) {
+	public Menu(int mnNo, String mnName, String mnCategory, String mnStatus, int mNo, String smallCate, int mnPrice) {
 		super();
 		this.mnNo = mnNo;
 		this.mnName = mnName;
@@ -19,6 +20,7 @@ public class Menu {
 		this.mnStatus = mnStatus;
 		this.mNo = mNo;
 		this.smallCate = smallCate;
+		this.mnPrice = mnPrice;
 	}
 
 	public int getMnNo() {
@@ -69,12 +71,20 @@ public class Menu {
 		this.smallCate = smallCate;
 	}
 
+	public int getMnPrice() {
+		return mnPrice;
+	}
+
+	public void setMnPrice(int mnPrice) {
+		this.mnPrice = mnPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "Menu [mnNo=" + mnNo + ", mnName=" + mnName + ", mnCategory=" + mnCategory + ", mnStatus=" + mnStatus
-				+ ", mNo=" + mNo + ", smallCate=" + smallCate + "]";
+				+ ", mNo=" + mNo + ", smallCate=" + smallCate + ", mnPrice=" + mnPrice + "]";
 	}
-	
+
 	
 
 }

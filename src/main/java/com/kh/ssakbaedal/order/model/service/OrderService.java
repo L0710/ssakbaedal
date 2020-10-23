@@ -28,5 +28,12 @@ public interface OrderService {
 	//매장 주문 디테일
 	public ArrayList<SODetail> selectDetailList();
 
+	//매장)주문상태 변경 1->2 배달예상시간 update
+	public int updateTime(Order order);
+
+	//매장) 주문상태 변경 2->3
+	public int updateoStatus(int oNo);
+	
+
 	
 }

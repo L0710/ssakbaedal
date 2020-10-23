@@ -83,7 +83,7 @@ public class MemberController {
 			if(loginUser.getmType().equals("1")) {
 				return "redirect:home.do";
 			}else if(loginUser.getmType().equals("3")){
-				return "store/management/openSettingView";
+				return "redirect:openSetting.do";
 			}else {
 				return "redirect:home.do";
 			}

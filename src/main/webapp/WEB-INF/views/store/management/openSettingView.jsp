@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+        <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
     <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
@@ -259,9 +263,11 @@
 
         #sName {
             font-size: 18px;
+            font-weight:bold;
             border: none;
             width: 100px;
             margin-bottom: 20px;
+            margin-left:55px;
         }
 
         .date{
@@ -271,8 +277,9 @@
             margin-bottom: 20px;
         }
 
-        #sStatus  {
+        #openStatus  {
             height: 25px;
+            margin-bottom:10px;
         }
 
         #sSaveBtn {
@@ -283,6 +290,11 @@
             font-size: 25px;
             font-weight: bold;
             margin-bottom: 40px;
+        }
+        
+        #sSaveBtn {
+        	width:80px;
+        	height:40px;
         }
 
     </style>
@@ -297,63 +309,132 @@
 
             <div class="contents" align="center">
                 <p id="opentTitle">영업관리</p>
-                <input type="text" id="sName" value="매장이름" readonly>
-                <select id="sStatus">
-                    <option>정상영업</option>
-                    <option>하루폐점</option>
-                    <option>휴무</option>
+                
+                <input type="text" id="sName" value="${store.sName}" readonly>
+                
+                <form action="updatesStatus.do" method="post">
+                <label>매장상태</label>
+                <input type="hidden"  id="mNo" name="mNo">
+                <select id="openStatus" onchange="change();">
+                    <option value="1" selected>정상영업</option>
+                    <option value="2" >하루폐점</option>
+                    <option value="3" >휴무</option>
                 </select>
+                <input type="hidden" name="soStatus" id="soStatus">
                 <br>
-                <span>시작일</span><input type="date" class="date"><br>
-                <span>종료일</span><input type="date" class="date"><br>
-                <button class="btn-ghost gray" id="sSaveBtn">저장</button>
+                <span>시작일</span><input type="date" class="date" id="startDate" name="startDate" disabled><br>
+                <span>종료일</span><input type="date" class="date" id="finishDate" name="finishDate"  disabled><br>
+                <input type="hidden" name="start" id="start">
+                <input type="hidden" name="end" id="end">
+                <input type="submit" class="btn-ghost gray" id="sSaveBtn" value="저장">
                 <hr>
+				</form>
+				
+				<script>
+				
+				var mNo = ${loginUser.mNo};
+				$("input[type=hidden][name=mNo]").val(mNo);
+				
+				var nostatus =  $("#openStatus option:selected").val();
+				$("#soStatus").val(nostatus); 
+				console.log(nostatus);
+				
+				function change() {
+					var status = $("#openStatus option:selected").val();
+					console.log(status);
+					$("#soStatus").val(status);
 
+						if(status == "3") {
+							console.log(status);
+							$("input[type=date][name=startDate]").attr("disabled", false);
+							$("input[type=date][name=finishDate]").attr("disabled", false);
+						} 
+				}
+				
+				$("#startDate").change(function() {
+					var start = $(this).val();
+					console.log(start);
+					$("#start").val(start); 
+				});
+				
+				$("#finishDate").change(function() {
+					var end = $(this).val();
+					console.log(end);
+					$("#end").val(end);
+				});
+				
+				</script>
 
 
                 <div class="tableWrapper" align="center">
+
                     <table id="noticeTable">
                         <tr>
                             <th>날짜</th>
                             <th>매장상태</th>
                         </tr>
+                        
+                        <c:forEach var="db" items="${db}">
+                        
                         <tr>
-                            <td>2020/10/20</td>
-                            <td>정상영업</td>
-                        </tr>
-                        <tr>
-                            <td>2020/10/19</td>
-                            <td>하루폐점</td>
-                        </tr>
-                        <tr>
-                            <td>2020/10/18</td>
-                            <td>
-                                휴무<br>
-                                2020/10/15~2020/10/18
-                            </td>
+                        <c:if test="${db.startDate != null && db.endDate != null }">
+                        	<td>${db.startDate} ~ ${db.endDate}</td>
+                        	<td>휴가</td>
+                        </c:if>
+                        <c:if test="${db.startDate == null && db.endDate == null}">
+                        	<td>${db.today}</td>
+                        	<c:choose>
+                        		<c:when test="${db.sStatus eq 1}">
+                        			<td>정상영업</td>
+                        		</c:when>
+                        		<c:when test="${db.sStatus eq 2 }">
+                        			<td>하루폐점</td>
+                        		</c:when>
+                        	</c:choose>                 
+                        </c:if>
 
                         </tr>
-                        <tr>
-                            <td>2020/10/14</td>
-                            <td>정상영업</td>
-                        </tr>
-                        <tr>
-                            <td>2020/10/13</td>
-                            <td>정상영업</td>
-                        </tr>
-                        <tr>
-                            <td>2020/10/12</td>
-                            <td>정상영업</td>
-                        </tr>
-                        <tr>
-                            <td>2020/10/11</td>
-                            <td>정상영업</td>
-                        </tr>
+                        </c:forEach>
+                        
+                        
+         <tr align="center" height="20">
+			<td colspan="2">
+				<!-- [이전] -->
+				<c:if test="${ pi.currentPage <= 1 }">
+					[이전] &nbsp;
+				</c:if>
+				<c:if test="${ pi.currentPage > 1 }">
+					<c:url var="before" value="openSetting.do">
+						<c:param name="page" value="${ pi.currentPage - 1 }"/>
+					</c:url>
+					<a href="${ before }">[이전]</a> &nbsp;
+				</c:if>
+				<!-- 페이지 숫자 -->
+				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ p eq pi.currentPage }">
+						<font color="red" size="4">[ ${ p } ]</font>
+					</c:if>
+					<c:if test="${ p ne pi.currentPage }">
+						<c:url var="pagination" value="openSetting.do">
+							<c:param name="page" value="${ p }"/>
+						</c:url>
+						<a href="${ pagination }">${ p }</a> &nbsp;
+					</c:if>
+				</c:forEach>
+				<!-- [다음] -->
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
+					[다음]
+				</c:if>
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<c:url var="after" value="openSetting.do">
+						<c:param name="page" value="${ pi.currentPage + 1 }"/>
+					</c:url>
+					<a href="${ after }">[다음]</a>
+				</c:if>
+				</td>
+			</tr>
                     </table>
 
-                    <div class="pagingArea" align="center" style="font-size:14px;">
-                            [이전] [1][2][3][4][5] [다음]
-                    </div>
                 </div>
             </div>
 
@@ -361,6 +442,9 @@
 
     </section>
     <div class="sidemenu">
+    	<c:url var="storeManage" value="storeManage.do">
+			<c:param name="mNo" value="${ loginUser.mNo }"/>
+		</c:url> 
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>

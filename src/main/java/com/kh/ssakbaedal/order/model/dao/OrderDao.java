@@ -56,6 +56,16 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectStoreDetail", oNo);
 	}
 
+	public int updateTime(Order order) {
+		
+		return sqlSession.update("orderMapper.updateTime", order);
+	}
+
+	public int updateoStatus(int oNo) {
+		
+		return sqlSession.update("orderMapper.updateoStatus", oNo);
+	}
+
 
 	
 }
