@@ -123,4 +123,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	
 	
+	<select id="selectOne" parameterType="_int" resultMap="v_orderResultSet">
+		SELECT *
+		FROM V_ORDER
+		WHERE ONO=#{oNo}
+	</select>
+
 </mapper>

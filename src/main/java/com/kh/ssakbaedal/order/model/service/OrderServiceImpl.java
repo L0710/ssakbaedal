@@ -10,6 +10,8 @@ import com.kh.ssakbaedal.order.model.dao.OrderDao;
 import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
+
 
 @Service("oService")
 public class OrderServiceImpl implements OrderService {
@@ -41,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.selectOList(pi, mNo);
 	}
 
+
 	//매장 주문 디테일 리스트
 	@Override
 	public ArrayList<SODetail> selectDetailList() {
@@ -60,6 +63,10 @@ public class OrderServiceImpl implements OrderService {
 	public ArrayList<SODetail> selectStoreDetail(int oNo) {
 
 		return oDao.selectStoreDetail(oNo);
+    
+	@Override
+	public V_Order selectOrder(int oNo) {
+		return oDao.selectOrder(oNo);
 	}
 
 	//매장) 주문상태변경

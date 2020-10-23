@@ -11,6 +11,7 @@ import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Repository("oDao")
 public class OrderDao {
@@ -56,6 +57,7 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectStoreDetail", oNo);
 	}
 
+
 	public int updateTime(Order order) {
 		
 		return sqlSession.update("orderMapper.updateTime", order);
@@ -66,6 +68,12 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateoStatus", oNo);
 	}
 
+
+
+	public V_Order selectOrder(int oNo) {
+		return sqlSession.selectOne("orderMapper.selectOne", oNo);
+	}
+	
 
 	
 }

@@ -5,6 +5,9 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import com.kh.ssakbaedal.order.model.service.OrderService;
 import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Controller
 public class OrderController {
@@ -106,7 +110,7 @@ public class OrderController {
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Order> olist = oService.selectOList(pi, mNo);
 		
-		System.out.println("olist : " + olist);
+//		System.out.println("olist : " + olist);
 		
 //		System.out.println("pi : " + pi);
 		
@@ -115,7 +119,30 @@ public class OrderController {
 			mv.addObject("pi", pi);
 			mv.setViewName("order/orderList_user");
 		} else {
-			throw new EventException("주문 목록 조회에 실패하였습니다.");
+			throw new OrderException("주문 목록 조회에 실패하였습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("odetail.do")
+	public ModelAndView orderDetail(ModelAndView mv, 
+									int oNo, @RequestParam("page") Integer page,
+									HttpServletRequest request,
+									HttpServletResponse response) {
+		
+		int currentPage = page != null ? page : 1;
+		
+		V_Order order = oService.selectOrder(oNo);
+		
+//		System.out.println("order:"+order);
+		
+		if(order != null) {
+			mv.addObject("o", order)
+			  .addObject("currentPage", currentPage)
+			  .setViewName("order/orderDetail");
+		} else {
+			throw new OrderException("주문 상세조회에 실패하였습니다.");
 		}
 		
 		return mv;

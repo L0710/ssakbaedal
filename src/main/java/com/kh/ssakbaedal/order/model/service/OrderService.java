@@ -6,6 +6,7 @@ import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
+import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 public interface OrderService {
 	
@@ -27,6 +28,8 @@ public interface OrderService {
 
 	//매장 주문 디테일
 	public ArrayList<SODetail> selectDetailList();
+	// 주문내역 상세(유저)
+	public V_Order selectOrder(int oNo);
 
 	//매장)주문상태 변경 1->2 배달예상시간 update
 	public int updateTime(Order order);
