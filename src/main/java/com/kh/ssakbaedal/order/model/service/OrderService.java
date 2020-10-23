@@ -31,5 +31,12 @@ public interface OrderService {
 	// 주문내역 상세(유저)
 	public V_Order selectOrder(int oNo);
 
+	//매장)주문상태 변경 1->2 배달예상시간 update
+	public int updateTime(Order order);
+
+	//매장) 주문상태 변경 2->3
+	public int updateoStatus(int oNo);
+	
+
 	
 }
