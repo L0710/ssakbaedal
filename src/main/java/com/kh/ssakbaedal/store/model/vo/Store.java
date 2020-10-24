@@ -15,11 +15,13 @@ public class Store {
 	private String sCategory;
 	private int deliveryCharge;
 	private int minPrice;
+	private String sOff;
 	
 	public Store() {}
 
 	public Store(int mNo, String sName, String sNo, String sTel, String sAddress, int deliveryKm, String sInfo,
-			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice) {
+			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice,
+			String sOff) {
 		super();
 		this.mNo = mNo;
 		this.sName = sName;
@@ -34,6 +36,15 @@ public class Store {
 		this.sCategory = sCategory;
 		this.deliveryCharge = deliveryCharge;
 		this.minPrice = minPrice;
+		this.sOff = sOff;
+	}
+
+	public String getsOff() {
+		return sOff;
+	}
+
+	public void setsOff(String sOff) {
+		this.sOff = sOff;
 	}
 
 	public int getmNo() {
@@ -145,7 +156,9 @@ public class Store {
 		return "Store [mNo=" + mNo + ", sName=" + sName + ", sNo=" + sNo + ", sTel=" + sTel + ", sAddress=" + sAddress
 				+ ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus
 				+ ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
-				+ ", minPrice=" + minPrice + "]";
+				+ ", minPrice=" + minPrice + ", sOff=" + sOff + "]";
 	}
+
+
 	
 }

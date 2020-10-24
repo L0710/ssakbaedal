@@ -134,7 +134,8 @@
 							<td>아이디</td>
 							<td><input type="text" name="mId"
 								placeholder="영문,숫자로 포함 6~8자로 입력해주세요.">
-								<button type="button" id="check_btn" >중복확인</button></td>
+								<button type="button" id="check_btn" >중복확인</button>
+								</td>
 						</tr>
 						<tr>
 							<td>비밀번호</td>
@@ -159,15 +160,14 @@
 						<tr>
 							<td>전화번호</td>
 							<td>
-							<input type="text" class="phone" name="phone1"> - 
-							<input type="text" class="phone" name="phone2"> - 
-							<input type="text" class="phone" name="phone3">
+							<input type="text" class="phone" id="phone1"> - 
+							<input type="text" class="phone" id="phone2"> - 
+							<input type="text" class="phone" id="phone3">							
 							</td>
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td><input type="text" name="birth"
-								placeholder="예)201010 형식으로 입력해주세요."></td>
+							<td><input type="text" name="birth" placeholder="예)201010 형식으로 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td>성별</td>
@@ -183,8 +183,8 @@
              
                         </textarea>
 					<input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
-					<input type="button" id="sign_up"
-						class="btn-ghost green" value="회원가입">
+					<input type="button" id="sign_up"class="btn-ghost green" value="회원가입">
+					<input type="text" name="mPhone" style="display:none">
 				</form>
 			</div>
 		</div>
@@ -202,6 +202,7 @@
 			var idput = $('input[name=mId]');
 			console.log($('input[name=mId]').prop("readonly"));
 			console.log($('input[name=mId]').attr("readonly"));
+			
 			if(checkAry[0]==true){
 				var result = confirm('사용 가능한 아이디인 경우 변경이 불가합니다.계속 진행하시겠습니까?'); 
 				var mId = idput.val();
@@ -238,7 +239,7 @@
 		$('input').on("keyup", function() {
 			var put = $('td input');
 			var pwd = put.eq(1).val();
-			console.log( $('input[name=mId]').val());
+
 			for (var i=0; i<9;i++) {
 				var check = false;
 				var cput = put.eq(i);
@@ -268,6 +269,7 @@
 		});
 		
 		$('#sign_up').on("click", function() {
+			$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
 			
 			checkAry[9]=$('input:radio[name=gender]').is(':checked');
 
@@ -285,7 +287,7 @@
 				$('#textValue').text("다시 확인 해 주세요.").css(tRed);
 				return false;
 			}else{
-				$("#sign_up_form").attr({action:'minsert.do', method:'post'}).submit();
+				$("#sign_up_form").attr({action:'mInsert.do', method:'post'}).submit();
 				return true;
 			}
 			}
