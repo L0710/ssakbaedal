@@ -3,8 +3,8 @@ package com.kh.ssakbaedal.event.model.service;
 import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.event.model.vo.Event;
-import com.kh.ssakbaedal.event.model.vo.PageInfo;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
 import com.kh.ssakbaedal.event.model.vo.Search;
 import com.kh.ssakbaedal.member.model.vo.Member;

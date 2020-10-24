@@ -28,7 +28,7 @@
 		<c:url var="service" value="service.do"/>
         <a href="${ terms }">이용약관</a> &nbsp;&nbsp;&nbsp;
         <a href="${ privacy }">개인정보처리방침</a> &nbsp;&nbsp;&nbsp;
-        <a href="#">고객센터</a>
+        <a href="${ service }">고객센터</a>
         <br><br>
         <p>
 	            싹배달 | 대표자 : 이승근/임한나/이소현/안수연 공동<br><br>

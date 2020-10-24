@@ -9,17 +9,30 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.Search" alias="Search"/>
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
+		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.storeSearch" alias="stSearch"/>
 		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
-		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Store" alias="Store"/>
-		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Menu" alias="Menu"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.ODetail" alias="ODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.serviceCenter.model.vo.faq" alias="faq"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.SODetail" alias="SODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.S_Order" alias="S_Order"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Store" alias="STORE"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Menu" alias="MENU"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.OpenDB" alias="OpenDB"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/storeSearch-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/order-mapper.xml"/>
+		<mapper resource="mappers/management-mapper.xml"/>
+		<mapper resource="mappers/faq-mapper.xml"/>
 	</mappers>
 
 </configuration>

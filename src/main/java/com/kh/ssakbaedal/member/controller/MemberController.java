@@ -1,5 +1,6 @@
 package com.kh.ssakbaedal.member.controller;
  
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -7,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
@@ -87,11 +90,10 @@ public class MemberController {
 	 
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String memberLogin(Member m, Model model) {
-		
+    
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser != null) {
-
 			return "redirect:home.do";
 		}else {
 			throw new MemberException("로그인에 실패하였습니다.");
@@ -102,7 +104,7 @@ public class MemberController {
 	public String logout(SessionStatus status) {
 		status.setComplete();
 		
-		return "redirect:login.do";
+		return "redirect:home.do";
 	}
 	
 	@RequestMapping("mInsert.do")
@@ -199,16 +201,36 @@ public class MemberController {
 	@RequestMapping(value = "checkId.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkId(Member m) {
-		
+
 		int result = mService.checkId(m);
 
 		if(result > 0) {
 			return "No";
-			
 		} else {
 			return "Yes";
 		}
 	}
 	
+	@RequestMapping("pointView.do")
+	public String pointView(){
+		return "member/pointView";
+	}
+	
+	@RequestMapping("mypage_admin.do")
+	public String adminMypageView() {
+		
+		logger.debug("관리자 마이 페이지로 이동합니다");
+		
+		return "report/reportList";
+	}
+	
+	@RequestMapping("mypage_store.do")
+	public String storeMypageView() {
+		
+		logger.debug("점포 마이 페이지로 이동합니다");
+		
+		return "store/order/storeOrderView";
+	}
+
 	
 }

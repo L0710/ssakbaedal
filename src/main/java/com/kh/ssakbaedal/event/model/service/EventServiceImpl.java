@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.event.model.dao.EventDao;
 import com.kh.ssakbaedal.event.model.vo.Event;
-import com.kh.ssakbaedal.event.model.vo.PageInfo;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
 import com.kh.ssakbaedal.event.model.vo.Search;
 import com.kh.ssakbaedal.member.model.vo.Member;

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="managementMapper">
+	<resultMap type="Store" id="storeResultSet">
+		<id property="mNo" column="MNO"/>
+		<result property="sNo" column="SNO"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sTel" column="STEL"/>
+		<result property="sAddress" column="S_ADDRESS"/>
+		<result property="deliveryKm" column="DELIVERY_KM"/>
+		<result property="sInfo" column="SINFO"/>
+		<result property="openTime" column="OPEN_TIME"/>
+		<result property="sStatus" column="S_STATUS"/>
+		<result property="sAccept" column="SACCEPT"/>
+		<result property="sCategory" column="S_CATEGORY"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+		<result property="minPrice" column="MIN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Menu" id="menuResultSet">
+		<id property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="mnCategory" column="MN_CATEGORY"/>
+		<result property="mnStatus" column="MN_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smallCate" column="SMALL_CATE"/>
+		<result property="mnPrice" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="OpenDB" id="openDBResultSet">
+		<id property="mNo" column="MNO"/>
+		<result property="sStatus" column="S_STATUS"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="today" column="TODAY"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM OPENDB
+	</select>
+	
+	<select id="selectList" resultMap="openDBResultSet">
+		SELECT *
+		FROM OPENDB
+		ORDER BY TODAY DESC
+	</select>
+	
+	<select id="selectStore" parameterType="_int" resultMap="storeResultSet">
+		SELECT *
+		FROM STORE
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<select id="selectDB" parameterType="_int" resultMap="openDBResultSet">
+		SELECT *
+		FROM OpenDB
+		WHERE MNO = #{mNo}
+		ORDER BY TODAY DESC
+	</select>
+	
+	<update id="updatesStatus">
+		UPDATE STORE
+		SET S_STATUS = #{sStatus}
+		WHERE MNO = #{mNo}
+	</update>
+	
+	<insert id="insertDB" parameterType="OpenDB">
+		INSERT INTO OPENDB
+		<if test="startDate == null  and endDate == null">
+			VALUES (#{mNo}, #{sStatus}, NULL, NULL, SYSDATE)
+		</if>  
+		<if test="startDate != null and endDate != null">
+			VALUES (#{mNo}, #{sStatus}, #{startDate}, #{endDate}, SYSDATE)
+		</if>	
+	</insert>
+
+
+</mapper>
