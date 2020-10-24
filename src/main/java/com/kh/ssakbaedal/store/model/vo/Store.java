@@ -39,6 +39,14 @@ public class Store {
 		this.sOff = sOff;
 	}
 
+	public String getsOff() {
+		return sOff;
+	}
+
+	public void setsOff(String sOff) {
+		this.sOff = sOff;
+	}
+
 	public int getmNo() {
 		return mNo;
 	}
@@ -157,10 +165,5 @@ public class Store {
 				+ ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus
 				+ ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
 				+ ", minPrice=" + minPrice + ", sOff=" + sOff + "]";
-	}
-
-	
-	
-
-	
+	}	
 }

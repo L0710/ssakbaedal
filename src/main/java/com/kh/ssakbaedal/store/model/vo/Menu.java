@@ -1,5 +1,7 @@
 package com.kh.ssakbaedal.store.model.vo;
 
+import java.util.List;
+
 public class Menu {
 	
 	private int mnNo;
@@ -84,7 +86,4 @@ public class Menu {
 		return "Menu [mnNo=" + mnNo + ", mnName=" + mnName + ", mnCategory=" + mnCategory + ", mnStatus=" + mnStatus
 				+ ", mNo=" + mNo + ", smallCate=" + smallCate + ", mnPrice=" + mnPrice + "]";
 	}
-
-	
-
 }
