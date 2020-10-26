@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+	<resultMap type="Review" id="reviewResultSet">
+		<id property="oNo" column="ONO"/>
+		<result property="rType" column="R_TYPE"/>
+		<result property="rContent" column="RCONTENT"/>
+		<result property="rCreateDate" column="R_CREATE_DATE"/>
+		<result property="rModifyDate" column="R_MODIFY_DATE"/>
+		<result property="rStatus" column="R_STATUS"/>
+		<result property="rStar" column="RSTAR"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+
+	<resultMap id="v_reviewResultSet" type="V_Review">
+		<id property="oNo" column="ONO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sTel" column="STEL"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="rContent" column="RCONTENT"/>
+		<result property="rStar" column="RSTAR"/>
+		<result property="rStatus" column="R_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<collection property="oDetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
+		<collection property="attachment" javaType="java.util.ArrayList" resultMap="atResultSet"/>
+	</resultMap>
+	
+	<resultMap type="ODetail" id="ODetailResultSet">
+		<result property="odNum" column="ODNUM"/>
+		<result property="mnName" column="ODMN"/>
+		<!-- 뷰 테이블에 있는 컬럼명을 column으로 가져가야 값을 출력할 수 있음 ~
+		=> DB에서 V_Review 뷰의 메뉴명은 ODMN으로 되어있기 때문에 그 이름을 써줘야 함!
+		V_Review에서 메뉴를 포함하고 있는 테이블인 ODetail까지 함께 조회할 시
+		이를 V_Review에서 쓸 필요 없으므로 result property에 기입하지 않아야 함 -->
+	</resultMap>
+
+	<resultMap type="Attachment" id="atResultSet">
+		<result property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<select id="selectOne" parameterType="_int" resultMap="reviewResultSet">
+		SELECT *
+		FROM REVIEW
+		WHERE ONO=#{oNo}
+		AND R_STATUS='Y'
+	</select>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW VALUES(
+			#{oNo}, 1, #{rContent}, SYSDATE, SYSDATE, DEFAULT, #{rStar}
+		)
+	</insert>
+	
+	<insert id="insertImg" parameterType="Attachment">
+		INSERT INTO ATTACHMENT VALUES(
+			A_SEQ.NEXTVAL, #{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE,
+			1, 'Y', 7, #{refId}
+		)
+	</insert>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM V_REVIEW
+		WHERE MNO = #{mNo}
+		AND R_STATUS='Y'
+	</select>
+	
+	<select id="selectList" resultMap="v_reviewResultSet">
+		SELECT *
+		FROM V_REVIEW
+		WHERE MNO = #{mNo}
+		AND R_STATUS='Y'
+		ORDER BY ONO DESC
+	</select>
+	
+</mapper>

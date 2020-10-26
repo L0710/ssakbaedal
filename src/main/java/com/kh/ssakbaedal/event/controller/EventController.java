@@ -169,8 +169,7 @@ public class EventController {
 			}
 			if(!flag) {	// 게시글을 처음 읽은 경우 쿠키 저장하기
 				Cookie c = new Cookie("eNo"+eNo, String.valueOf(eNo));
-				c.setMaxAge(30);
-//				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
+				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
 				response.addCookie(c);
 			}
 		}
@@ -321,4 +320,5 @@ public class EventController {
 		}
 		
 	}
+	
 }
