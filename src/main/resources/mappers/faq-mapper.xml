@@ -56,6 +56,49 @@
 		WHERE FNO=#{fNo}
 	</update>
 	
+	<select id="searchListCount" resultType="_int" parameterType="sc_Search">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM FAQ
+		<where>
+			F_STATUS='Y'
+		</where>
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND FTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND FCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (FTITLE LIKE #{sv}
+						OR FCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="faqSearchList" parameterType="sc_Search" resultMap="faqResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM FAQ
+		<where>
+			F_STATUS='Y'
+			<choose>
+				<when test="searchCondition == 'title'">
+				AND FTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND FCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (FTITLE LIKE #{sv}
+						OR FCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY FNO DESC
+	</select>
+	
 	
 	
 </mapper>

@@ -155,7 +155,22 @@
                         <td id="td_button" colspan="2">
                             <br>
                             <br>
-                            <c:url var="flist" value="service.do">
+                            <!-- 검색 후 페이징 처리에 대한 수정 -->
+							<!-- 검색한 값이 있는지 없는지 여부에 따라 넘어갈 주소값을 결정함 -->
+							<c:if test="${ searchValue eq null }">
+								<!-- 검색한 값이 없으면 selectList.bo 호출 -->
+								<c:set var="loc" value="/service.do" scope="page"/>
+							</c:if>
+							<c:if test="${ searchValue ne null }">
+								<!-- 검색한 값이 있으면 search.bo 호출 -->
+								<c:set var="loc" value="/scSearch.do" scope="page"/>
+							</c:if>
+                            
+                            <c:url var="flist" value="${ loc }">
+	                            <c:if test="${ searchValue ne null }">
+									<c:param name="searchCondition" value="${ searchCondition }"/>
+									<c:param name="searchValue" value="${ searchValue }"/>
+								</c:if>
                             	<c:param name="page" value="${ currentPage }"/>
                             </c:url>
                             <button class="btn-ghost gray" onclick="location.href='${ flist }'">목록으로</button>
