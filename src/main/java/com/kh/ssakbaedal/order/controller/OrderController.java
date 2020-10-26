@@ -74,7 +74,7 @@ public class OrderController {
 //	
 	
 	@RequestMapping("olist.do")
-	public ModelAndView eventList(ModelAndView mv, int mNo,
+	public ModelAndView orderList(ModelAndView mv, int mNo,
 			@RequestParam(value="page", required=false) Integer page) {
 		
 		// 1. 전체 게시글 수 리턴 받기
@@ -85,13 +85,12 @@ public class OrderController {
 		int currentPage = page != null ? page : 1;
 		
 		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10 , 5);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5 , 5);
 		
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Order> olist = oService.selectOList(pi, mNo);
 		
 //		System.out.println("olist : " + olist);
-		
 //		System.out.println("pi : " + pi);
 		
 		if(olist != null) {
