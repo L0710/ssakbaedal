@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mType" column="M_TYPE"/>
 		<result property="point" column="POINT"/>
 		<result property="priceSum" column="PRICE_SUM"/>
-	</resultMap>
+	</resultMap>	
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
@@ -31,7 +31,42 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
 		VALUES (M_SEQ.NEXTVAL,#{mId}, #{mPwd}, #{mName}, #{mEmail}, #{mPhone}, #{birth}, #{gender},SYSDATE, SYSDATE,
-				DEFAULT, DEFAULT, 2, DEFAULT,DEFAULT)
+				DEFAULT, DEFAULT, #{mType}, DEFAULT,DEFAULT)
+	</insert>
+	
+	<insert id="insertStore" parameterType="Store">
+		<selectKey keyProperty="mNo" resultType="_int" order="BEFORE">
+            select M_SEQ.currval from DUAL
+        </selectKey>
+		INSERT INTO STORE
+		VALUES ((#{mNo}),#{sName}, #{sNo}, #{sTel}, #{sAddress}, #{deliveryKm}, #{sInfo}, #{openTime},1, DEFAULT,
+				#{sCategory}, #{deliveryCharge}, #{minPrice})
+	</insert>	
+	
+	<insert id="insertAttachment" parameterType="Attachment">
+		<selectKey keyProperty="refId" resultType="_int" order="BEFORE">
+            select M_SEQ.currval from DUAL
+        </selectKey>
+		INSERT INTO ATTACHMENT
+		VALUES (A_SEQ.NEXTVAL,#{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE, 1, 
+				'Y', #{aType},#{refId})
+	</insert>
+	
+	<insert id="insertMenu" parameterType="Menu">
+		<selectKey keyProperty="mNo" resultType="_int" order="BEFORE">
+            select M_SEQ.currval from DUAL
+        </selectKey>
+		INSERT INTO MENU
+		VALUES (MN_SEQ.NEXTVAL,#{mnName}, DEFAULT, DEFAULT, #{mNo},DEFAULT,#{mnPrice})
+	</insert>
+	
+	<insert id="minsertAttachment" parameterType="Attachment">
+		<selectKey keyProperty="refId" resultType="_int" order="BEFORE">
+            SELECT MN_SEQ.CURRVAL FROM DUAL 
+        </selectKey>
+		INSERT INTO ATTACHMENT
+		VALUES (A_SEQ.NEXTVAL,#{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE, 1, 
+				'Y', #{aType},#{refId})
 	</insert>
 	
 	<update id="updateMember" parameterType="Member">

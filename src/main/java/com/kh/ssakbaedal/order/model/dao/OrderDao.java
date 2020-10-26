@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.SODetail;
+import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Repository("oDao")
@@ -17,7 +19,7 @@ public class OrderDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public ArrayList<Order> selectList() {
+	public ArrayList<S_Order> selectList() {
 
 		return (ArrayList)sqlSession.selectList("orderMapper.selectorderList");
 	}
@@ -39,9 +41,39 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectOList", mNo, rowBounds);
 	}
 
+	public ArrayList<SODetail> selectDetaillList() {
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.selectodList");
+	}
+
+
+	public S_Order selectStoreOrder(int oNo) {
+		
+		return sqlSession.selectOne("orderMapper.selectStoreOrder", oNo);
+	}
+
+	public ArrayList<SODetail> selectStoreDetail(int oNo) {
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.selectStoreDetail", oNo);
+	}
+
+
+	public int updateTime(Order order) {
+		
+		return sqlSession.update("orderMapper.updateTime", order);
+	}
+
+	public int updateoStatus(int oNo) {
+		
+		return sqlSession.update("orderMapper.updateoStatus", oNo);
+	}
+
+
+
 	public V_Order selectOrder(int oNo) {
 		return sqlSession.selectOne("orderMapper.selectOne", oNo);
 	}
 	
+
 	
 }

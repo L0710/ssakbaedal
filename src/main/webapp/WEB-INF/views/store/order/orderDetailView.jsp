@@ -226,16 +226,14 @@
 
         .label {
             font-size: 15px;
-            margin-right: 20px;
         }
 
-        #address, #clienttel, #daddress {
-            margin-right: 20px;
-            height: 20px;
-            width: 300px;
+        #oaddress, #clienttel, #daddress {
+            width: 400px;
             border: none;
             margin-bottom: 10px;
-        }
+            margin-left:10%;
+        } 
 
         #require {
             height: 80px;
@@ -260,14 +258,8 @@
         }
     </style>
 
-<script>
-    function time_popup() {
-        window.open("orderTimePopup.jsp", "배달예상시간", "width=400,height=500,left=400,top=100");
-    }
-</script>
-
 </head>
-<body>
+<body onunload="opener.close();">
     <div class="wrapper">
     
                  	<c:import url="../../common/headerbar.jsp"/>
@@ -279,61 +271,95 @@
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
                 <div align="left">
-                    <label for="address" class="label">주소</label><input type="text" id="address" placeholder="서울시 강남구 테헤란로 10길 9" readonly>
-                    <label for="daddress" class="label">상세 주소</label><input type="text" id="daddress" placeholder="그랑프리 빌딩 4층 1강의실" readonly><br>
-                    <label for="clienttel" class="label">전화번호</label><input type="text" id="clienttel" placeholder="010)1234-5678" readonly>
+                    <label for="oaddress" class="label">주소</label><input type="text" id="oaddress" value="${sorder.oAddress }"  readonly><br><br>
+                    <label for="clienttel"class="label">전화번호</label><input type="text" id="clienttel" value="${sorder.mPhone }" readonly>
                 </div>
-                <div align="center">
-                    <table id="orderTable" align="center">
-                        <tr>
+                <div align="center"><br><br>
+                 <table id="orderTable" align="center">
+                		 <tr>
                             <th>메뉴이름</th>
                             <th>수량</th>
                             <th>가격</th>
                         </tr>
+                	<c:forEach var="sod" items="${ sod }">
                         <tr>
-                            <td>인절미빙수</td>
-                            <td>1</td>
-                            <td>8900</td>
+                            <td>${ sod.mnName }</td>
+                            <td>${ sod.odNum }</td>
+                            <td>${ sod.odPrice }</td>
                         </tr>
-                        <tr>
-                            <td>애플망고치즈빙수</td>
-                            <td>1</td>
-                            <td>11900</td>
-                        </tr>
-                        <tr>
-                            <td>바바리안츄러스</td>
-                            <td>1</td>
-                            <td>2500</td>
-                        </tr>
-                        <tr>
-                            <td>고구마붕어빵</td>
-                            <td>1</td>
-                            <td>2500</td>
-                        </tr>
+                   	</c:forEach>
                         <tr>
                             <td colspan="2">배달팁</td>
-                            <td colspan="2">3000</td>
+                            <td colspan="2">${sorder.deliveryCharge}</td>
                         </tr>
                         <tr>
                             <td colspan="2">총가격</td>
-                            <td>28800</td>
+                            <td>${sorder.oPrice }</td>
                         </tr>
-                    </table>
+                  </table>
+                    
                     <div align="left">
-                        <label for="require" class="label">요청사항</label><br>
-                        <!-- <input type="text" id="require" maxlength="500" placeholder="최대150자)단무지 많이 가져다주세요."> -->
-                        <textarea id="require" maxlength="300" readonly></textarea>
+                        <label for="require" class="label" >요청사항</label><br>
+                        <input type="text" id="require" value="${sorder.request}" >
                     </div>
                     <div align="center">
-                        <button class="btn-ghost green" id="pickupBtn" onclick="time_popup();">주문접수</button> 
-                        <!-- <a href="com-orderTimepop.html" onclick="window.open(this.href,'_blank',width=400,height=500,toolbars=no); return false;" id="pick">주문접수</a> -->
-                        <label for="time">예상시간 : </label><input type="text" id="time">
-                        <button class="btn-ghost blue" id="pickupBtn">매장픽업</button>
+                    <c:choose>
+                    	<c:when test="${sorder.oStatus == 1}">
+                    		 <button class="btn-ghost green" id="pickupBtn1" onclick="time_popup();">주문접수</button> 
+                    	</c:when>
+                    	<c:when test="${sorder.oStatus == 2 || sorder.oStatus == 3 }">
+                    		 <button style="background-color:rgb(130, 180, 127); color:white;" class="btn-ghost green" id="pickupBtn1" onclick="time_popup();" disabled >주문접수</button> 
+                    	</c:when>
+                    </c:choose>
+                        <label for="time">예상시간 : </label><input type="text" id="time" name="time" value="${sorder.arrivalTime}" readonly>
+                        <c:if test="${sorder.arrivalTime == null}">
+                        	 <button class="btn-ghost blue" id="pickupBtn2"  disabled>매장픽업</button>
+                        </c:if>
+                        <c:if test="${sorder.arrivalTime != null }">
+                        	  <button class="btn-ghost blue" id="pickupBtn2" style="background-color:rgb(117, 182, 219); color:white;" disabled>매장픽업</button>
+                        </c:if>
                     </div>
                 </div>
-
-
             </div>
+<script>
+    function time_popup() {
+    	var oNo = ${sorder.oNo};
+    	console.log(oNo);
+
+			window.open("${contextPath}/orderTimePopup.do?oNo="+oNo, "배달예상시간", "width=400,height=500,left=400,top=100");
+        
+    }
+    
+    
+     function win() {
+    		 $("input[type=text][name=time]").val(${sorder.arrivalTime});
+   } 
+     
+     $("#pickupBtn2").click(function() {
+    	 var oNo = ${sorder.oNo};
+    	 $.ajax({
+    		 url:"updateoStatus2.do",
+    		 data:{oNo:oNo},
+    		 success:function(data) {
+				console.log(data);
+    		 },
+    		 error:function(e) {
+    			 console.log(e);
+    		 }
+    	 });
+     });
+     
+     
+    
+   	
+    
+    
+    
+    
+</script>
+
+
+
 
     </div>
     </section>

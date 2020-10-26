@@ -1,18 +1,20 @@
 package com.kh.ssakbaedal.order.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +24,8 @@ import com.kh.ssakbaedal.event.model.exception.EventException;
 import com.kh.ssakbaedal.order.model.exception.OrderException;
 import com.kh.ssakbaedal.order.model.service.OrderService;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.SODetail;
+import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
 
 @Controller
@@ -30,6 +34,7 @@ public class OrderController {
 	@Autowired
 	private OrderService oService;
 	
+	//list 출력
 	@RequestMapping("orderlist.do")
 	@ResponseBody
 	public String orderList() {
@@ -38,22 +43,37 @@ public class OrderController {
 		
 	}
 	
+	//storeorderlist 이동
 	@RequestMapping("goOrderView.do")
-	public String goOrderView() {
-		return "store/order/storeOrderView";
+	public ModelAndView goOrderView(ModelAndView mv) {
+		
+		ArrayList<S_Order> oList = oService.selectList();
+		
+		if(oList != null) {
+			mv.addObject("oList", oList);
+			mv.setViewName("store/order/storeOrderView");
+		}
+		
+		return mv;
 	}
 	
+	//5초에 한번씩 orderlist reload
 	@RequestMapping("reloadList.do")
 	@ResponseBody
 	public String reloadList() {
 		
-		ArrayList<Order> oList = oService.selectList();
+		ArrayList<S_Order> oList = oService.selectList();
+		ArrayList<SODetail> odList = oService.selectDetailList();
 		
-		String menuList = oService.selectMenu();
+		HashMap<String, ArrayList> hm = new HashMap<>();
+		hm.put("oList", oList);
+		hm.put("odList", odList);
+		
+		
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 		
-		return gson.toJson(oList);
+		return gson.toJson(hm);
 	}
 	
 	//주문내역이 없어서 일단 주석처리
@@ -126,4 +146,79 @@ public class OrderController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="orderDetail.do", method=RequestMethod.GET)
+	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		S_Order o = oService.selectStoreOrder(oNo);
+		
+		
+		ArrayList<SODetail> od = oService.selectStoreDetail(oNo);
+		
+		if(o != null && od != null) {
+			mv.addObject("sorder", o);
+			mv.addObject("sod", od);
+			mv.setViewName("store/order/orderDetailView");
+		} else {
+			throw new OrderException("주문 상세보기에 실패했습니다.");
+		}
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="orderTimePopup.do", method=RequestMethod.GET)
+	public ModelAndView popup(ModelAndView mv, HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		System.out.println(oNo);
+		
+		mv.addObject("oNo", oNo);
+		mv.setViewName("store/order/orderTimePopup");
+		
+		return mv;
+	}
+	
+	//배달예상시간, 주문상태변경
+	@RequestMapping(value="updateTime.do",  method=RequestMethod.GET)
+	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		int time = Integer.parseInt(request.getParameter("time"));
+		
+		Order order = new Order();
+		order.setoNo(oNo);
+		order.setArrivalTime(time);
+		
+		
+		int result = oService.updateTime(order);
+		
+		if(result > 0) {
+			mv.addObject(order);
+			mv.setViewName("store/order/storeOrderView");
+		} else {
+			throw new OrderException("주문상태/배달예상시간 변경 실패");
+		}
+		
+		return mv;
+	}
+	
+	//주문상태변경2->3
+	@RequestMapping("updateoStatus2.do")
+	public String updateoStatus(int oNo) {
+		
+		int result = oService.updateoStatus(oNo);
+		
+		if(result > 0) {
+			return "store/order/orderDetailView";
+		} else {
+			throw new OrderException("주문상태 변경 실패");
+		}
+		
+		
+	}
+	
 }

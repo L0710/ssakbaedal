@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
     <style>
         button {
             cursor: pointer;
@@ -21,8 +25,8 @@
             /* Safari */
             transition-duration: 0.4s;
         }
-
-
+        
+        
         .btn-ghost.red {
             background: transparent;
             border: 2px solid rgb(231, 113, 98);
@@ -35,11 +39,15 @@
         }
 
 
-        #big, #closeBtn {
+        #over, #closeBtn {
             width: 150px;
         }
+        
+        #closeBtn {
+        	height:40px;
+        }
 
-        .btn-ghost.green {
+        .dbtn{
             background: transparent;
             border: 2px solid rgb(130, 180, 127);
             border-radius: 8px;
@@ -49,31 +57,49 @@
             transition-duration: 0.4s;
         }
 
-        .btn-ghost.green:hover {
+        .dbtn:hover {
             background-color: rgb(130, 180, 127);
             color: white;
         }
 
-    </style>
-    <script>
-        function change() {
-          if(document.get)  {
-              document.getElementById("10min").style.backgroundColor("rgb(98, 145, 231)");
+</style>
 
-          } 
-        }
-    </script>
 </head>
 <body align="center">
     <h1>배달예상시간</h1>
-    <button id="10min" class="btn-ghost blue" value="10" onclick="change();">10분</button>
-    <button id="20min" class="btn-ghost blue" value="20" onclick="change();">20분</button><br>
-    <button id="30min" class="btn-ghost blue" value="30" onclick="change();">30분</button>
-    <button id="40min" class="btn-ghost blue" value="40" onclick="change();">40분</button><br>
-    <button id="50min" class="btn-ghost red" value="50" onclick="change();">50분</button>
-    <button id="60min" class="btn-ghost red" value="60" onclick="change();">60분</button><br>
-    <button id="over" class="btn-ghost red" id="big" value="90" onclick="change();">60분 + α</button><br>
-    <button class="btn-ghost green" id="closeBtn">배달호출</button><br>
-    <!-- <input type="text"> -->
+    
+    <button type="button" id="10min" class="btn-ghost blue" value="10" >10분</button>
+    <button type="button"  id="20min" class="btn-ghost blue" value="20">20분</button><br>
+    <button type="button"  id="30min" class="btn-ghost blue" value="30" >30분</button>
+    <button type="button"  id="40min" class="btn-ghost blue" value="40" >40분</button><br>
+    <button type="button"  id="50min" class="btn-ghost blue" value="50" >50분</button>
+    <button type="button"  id="60min" class="btn-ghost blue" value="60" >60분</button><br>
+    <button type="button"  id="over" class="btn-ghost blue"  value="90">60+α</button><br>
+	<input type="hidden"  id="oNo" value="${oNo}">
+    <script >
+    	
+    	$(":button").click(function() {
+    		$(this).css("background-color","rgb(98, 145, 231)");
+    		$(this).css("color", "white");
+    		var value = $(this).attr("value");
+    		var oNo = $("#oNo").attr("value");	
+    		location.href="${contextPath}/updateTime.do?oNo="+oNo+"&time="+value;
+    		$(this).attr("disabled", true);
+    		opener.parent.win();
+    		window.close(); 
+    	});
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </body>
 </html>

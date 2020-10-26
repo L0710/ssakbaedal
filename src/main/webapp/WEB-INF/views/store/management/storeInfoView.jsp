@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+          <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+    <style>
     <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
@@ -254,7 +259,8 @@
         }
 
         #sinfo, #pinfo {
-            font-size: 18px; 
+            font-size: 18px;
+            font-weight:bold; 
         }
 
         #bestwrapper {
@@ -332,6 +338,25 @@
             width: 500px;
             height: 80px;
         }
+        
+        #add2 {
+        	    width: 300px;
+    			height: 30px;
+    			margin-left:55px;
+    			margin-top:30px;
+        }
+        
+        #add1{
+                width: 300px;
+    			height: 30px;
+    			margin-left:40px;
+        }
+        
+        #postnum {
+        	margin-left:85px;
+        	width: 150px;
+    		height: 30px;
+        }
 
         #changeWrapper input[type="file"] { 
             position: absolute;
@@ -366,6 +391,12 @@
             margin: 3px;
             padding: 10px 20px;
         }
+        
+        #wpost {
+        	margin-top:40px;
+        	margin-bottom:40px;
+        	
+        }
 
 
 
@@ -396,38 +427,43 @@
                             <div id="logocontents">
                                 <p>로고 변경은 영업일 기준 최대 5일 이내 처리됩니다.</p>
                                 <div id="changeWrapper" align="left" style="margin-top: 10px;">
-                                    <label for="imgchangeBtn" id="btnla" class="btn-ghost green" >파일선택</label>
+                                    <label for="imgchangeBtn" id="btnla" class="btn-ghost green"  name="reloadFile">파일선택</label>
                                     <input type="file" id="imgchangeBtn" name="uploadFile">
                                 </div>
                             </div>
                             <hr style="margin-top:30px; margin-bottom: 30px;">
                             <div><span id="sinfo">매장정보</span></div><br>
-                            <span>매장명</span><input type="text" id="stName" class="stinfo" name="sName"><br>
-                            <span>전화번호</span><input type="tel" id="sTel" class="stinfo" name="sTel"><br>
-                            <span>운영시간</span><input id="sOpen" class="stinfo" name="sOpen"><br>
-                            <span>휴무일</span><input id="sOff" class="stinfo" name="sOff"><br>
-                            <span>배달지역</span><input id="sDelivery" class="stinfo" name="sDelivery"><br>
+                            <span>매장명</span><input type="text" id="stName" class="stinfo" name="sName" value="${s.sName }"><br>
+                            <span>전화번호</span><input type="tel" id="sTel" class="stinfo" name="sTel" value="${s.sTel }"><br>
+                            <span>운영시간</span><input id="sOpen" class="stinfo" name="sOpen" value="${s.openTime }"><br>
+                            <span>휴무일</span><input id="sOff" class="stinfo" name="sOff"  value="${s.sOff}"><br>
+                            <span>배달지역(km)</span><input id="sDelivery" class="stinfo" name="sDelivery" value="${s.deliveryKm}"><br>
                             <span>카테고리</span><select id="sCate" class="stinfo"  name="sCate">
-                                <option value="korea">한식</option>
-                                <option value="china">중국집</option>
-                                <option value="japen">돈까스, 일식, 회</option>
-                                <option value="snack">분식</option>
-                                <option value="fast">패스트푸드</option>
-                                <option value="cafe">카페, 디저트</option>
-                                <option value="chicken">치킨</option>
-                                <option value="zzim">찜, 탕</option>
-                                <option value="pizza">피자</option>
-                                <option value="pig">족발, 보쌈</option>
-                                <option value="asian">아시안, 양식</option>
-                                <option value="dosirak">도시락</option>
-                                <option value="night">야식</option>
+                                <option value="한식">한식</option>
+                                <option value="중국집">중국집</option>
+                                <option value="돈까스,일식,회">돈까스,일식,회</option>
+                                <option value="분식">분식</option>
+                                <option value="패스트푸드">패스트푸드</option>
+                                <option value="카페,디저트">카페,디저트</option>
+                                <option value="치킨">치킨</option>
+                                <option value="찜,탕">찜,탕</option>
+                                <option value="피자">피자</option>
+                                <option value="족발,보쌈">족발,보쌈</option>
+                                <option value="아시안,양식">아시안,양식</option>
+                                <option value="도시락">도시락</option>
+                                <option value="야식">야식</option>
                             </select>
                             <br>
-                          <%--   <span>배달팁</span><input id="delverycost" class="stinfo" name="delveryCost"><br>
-                            <span>최소배달금액</span><input id="minprice" class="stinfo" name="minPrice"><br>
-                            <span>매장소개</span><input id="stintro" class="stinfo" name="sIntro"><br>
+                        	<span>배달팁</span><input id="delverycost" class="stinfo" name="delveryCost" value="${ s.deliveryCharge}"><br>
+                            <span>최소배달금액</span><input id="minprice" class="stinfo" name="minPrice" value=${s.minPrice }><br>
+                            <span>매장소개</span><input id="stintro" class="stinfo" name="sIntro" value="${s.sInfo }"><br>
 
-								<c:forTokens items="${ loginUser.address }" var="addr"
+							<script>
+								var sCate = "${s.sCategory}";
+								$("#sCate").val(sCate).attr("selected", "selected");
+							</script>
+
+								<c:forTokens items="${ s.sAddress }" var="addr"
 									delims="," varStatus="status">
 									<c:if test="${ status.index eq 0 }">
 										<c:set var="addr1" value="${ addr }" />
@@ -438,28 +474,32 @@
 									<c:if test="${ status.index eq 2 }">
 										<c:set var="addr3" value="${ addr }" />
 									</c:if>
-								</c:forTokens>
-
+								</c:forTokens> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 								<span>매장주소</span><input id="saddress" class="stinfo" name="sAddress" value=""><br>
-                            	매장주소 수정하기
-                            <input type="text" name="post" class="postcodify_postcode5" size="6" value="${ addr1 }"/>
-							<button id="postcodify_search_button" type="button">검색</button>
-								도로명주소
-							<input type="text" name="address1" class="postcodify_address" value="${ addr2 }"/>
-								상세주소
-							<input type="text" name="address2" class="postcodify_details" value="${ addr3 }"/>
-							 --%>
-                            <span>대표자명</span><input id="ownerName" class="stinfo" name="ownerName"><br>
-                            <span>사업자등록번호</span><input id="sNumber" class="stinfo" name="sNumber"><br><br>
+								<div id="wpost">
+								<span>우편번호</span><input type="text" id="postnum" name="post" class="postcodify_postcode5" value="${addr1 }" readonly/>
+								<button id="postcodify_search_button" type="button" class="btn-ghost gray">검색</button><br>
+								</div>
+								
+								<div>
+								<span>도로명주소</span>
+								<input type="text" name="address1" class="postcodify_address"  id="add1" value="${addr2}" readonly/><br>
+							
+								<span>상세주소</span>
+								<input type="text" name="address2" class="postcodify_details" id="add2" value="${addr3}"  />
+								</div><br>
+                            <span>대표자명</span><input id="ownerName" class="stinfo" name="ownerName" value="${loginUser.mName }"><br>
+                            <span>사업자등록번호</span><input id="sNumber" class="stinfo" name="sNumber" value="${s.sNo}"><br><br>
                         </div>
                         <hr>
                         <br>
                         <div>
                             <div><span id="pinfo">회원정보</span></div><br>
-                            <span>아이디</span><input type="text" id="id" class="stinfo" name="mName" readonly><br>
-                            <span>비밀번호</span><input type="password" id="pwd" class="stinfo" name="pwd"><br>
+                            <span>아이디</span><input type="text" id="id" class="stinfo" name="mName" readonly value="${loginUser.mId }"><br>
+                            <span>비밀번호</span><input type="password" id="pwd" class="stinfo" name="pwd" ><br>
                             <span>비밀번호 확인</span><input type="password" id="pwdch" class="stinfo" name="chPwd"><br>
-                            <span>이메일</span><input type="email" id="email" class="stinfo" name="email"><br><br><br>
+                            <span>이메일</span><input type="email" id="email" class="stinfo" name="email" value="${loginUser.mEmail }"><br><br><br>
                             <div align="center">
                                 <input type="submit" id="updateBtn"  class="btn-ghost green" value="수정하기">
                                 <button type="button" class="btn-ghost gray" onclick="location.href=${mdelete}">탈퇴하기</button>
@@ -475,6 +515,7 @@
     </section>
     </section>
     <div class="sidemenu">
+    
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>

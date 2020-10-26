@@ -101,7 +101,7 @@
         font-size: 15px;
         
     }
-    .sbtn{
+    #check_btn{
         display: inline-block;
         border: none;
         border-radius: 5px;
@@ -243,41 +243,41 @@
 <section>
             <div class="contents" align="center">
                 <div id="sign_up_div">
-                    <h1>회원가입</h1>
-                    <input  type="text" id="textValue" disabled style="border:none;">
-                    <form id="sign_up_form" action="" method="POST" onsubmit="return test()">
+                   <h1>회원가입</h1>
+				<p id="textValue" disabled></p>
+                    <form id="sign_up_form" enctype="multipart/form-data">
                         <table id="sign_up_table">
                             <tr>
                                 <td>아이디</td>
                                 <td>
-                                    <input type="text" name="id" placeholder="영문,숫자로 포함 4~12자로 입력해주세요.">
-                                    <button type="button" class="sbtn" onclick="">중복확인</button> 
+                                    <input type="text" name="mId" placeholder="영문,숫자로 포함 4~12자로 입력해주세요.">
+									<button type="button" id="check_btn" >중복확인</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>비밀번호</td>
-                                <td ><input type="password" name="password"  placeholder="영문,숫자로 포함 8~12자로 입력해주세요."></td>
+                                <td ><input type="password" name="mPwd"  placeholder="영문,숫자로 포함 8~12자로 입력해주세요."></td>
                             </tr>
                             <tr>
                                 <td>비밀번호 확인</td>
-                                <td><input type="password" name="password2" placeholder="다시 한번 확인 해주세요."></td>
+                                <td><input type="password" name="mPwd2" placeholder="다시 한번 확인 해주세요."></td>
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td ><input type="text" name="name" placeholder="2자 이상의 한글로 입력해 주세요."></td>
+                                <td ><input type="text" name="mName" placeholder="2자 이상의 한글로 입력해 주세요."></td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
-                                <td ><input type="email" mame="email" placeholder="인증 시 사용되므로 정확히 작성해 주세요."></td>
+                                <td ><input type="email" name="mEmail" placeholder="인증 시 사용되므로 정확히 작성해 주세요."></td>
                             </tr>
                             <tr>
                                 <td>전화번호</td>
                                 <td >
-                                <input type="text" class="phone" name="phone1" style="width:50px;height: 23px;">
+                                <input type="text" id="phone1" style="width:50px;height: 23px;">
                                 -
-                                <input type="text" class="phone" name="phone2" style="width:50px;height: 23px;">
+                                <input type="text" id="phone2" style="width:50px;height: 23px;">
                                 -
-                                <input type="text" class="phone" name="phone3" style="width:50px;height: 23px;">
+                                <input type="text" id="phone3" style="width:50px;height: 23px;">
                                 </td>
                             </tr>
                         </table>
@@ -286,11 +286,12 @@
                             <tr>
                                 <td>사업자등록번호</td>
                                 <td>
-                                <input type="text" class="bNumber" name="sNumber1" style="width:30px;height: 23px;">
+                                <input type="text" id="sNumber1" style="width:30px;height: 23px;">
                                 -
-                                <input type="text" class="bNumber" name="sNumber2" style="width:15px;height: 23px;">
+                                <input type="text" id="sNumber2" style="width:15px;height: 23px;">
                                 -
-                                <input type="text" class="bNumber" name="sNumber3" style="width:50px;height: 23px;">
+                                <input type="text" id="sNumber3" style="width:50px;height: 23px;">
+
                                 </td>
                             </tr>    
                             <tr>
@@ -298,79 +299,70 @@
                                 <td>
                                 <div class="filebox"> 
                                     <input class="upload-name" value="파일선택" readonly>
-                                    <input type="file"  multiple="multiple" id="buisness_file">
+                                    <input type="file"  multiple="multiple" id="buisness_file"name="bfile">
                                     <label for="buisness_file">업로드</label> 
                                 </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>사업주명</td>
-                                <td><input type="text" name="sname" ></td>
-                            </tr>
-                            <tr>
-                                <td>전화번호</td>
-                                <td >
-                                <input type="text" class="phone" name="sphone1" style="width:50px;height: 23px;">
-                                -
-                                <input type="text" class="phone" name="sphone2" style="width:50px;height: 23px;">
-                                -
-                                <input type="text" class="phone" name="sphone3" style="width:50px;height: 23px;">
-                                </td>
-                            </tr>
                         </table>
-                        <!-- <hr style="width: 100%;"> -->
-                        <img src="./resources/img/open.png" id="open" onclick="change();" >
+                        <img src="./resources/img/open.png" id="open">
                         <table id="store_table" style="display:none" >
                             <caption style="font:25px; margin-bottom: 5px; "><strong>매장 정보</strong></caption>
                             <tr>
-                                <td>매장 이름</td>
-                                <td colspan=""><input type="text" name="store"></td>
+                                <td>매장명</td>
+                                <td colspan=""><input type="text" name="sName"></td>
                             </tr>
                             <tr>
                                 <td>매장 전화번호</td>
                                 <td >
-                                <input type="text" class="phone" name="phone1" style="width:50px;height: 23px;">
+                                <input type="text" id="sTel1" name="phone1" style="width:50px;height: 23px;">
                                 -
-                                <input type="text" class="phone" name="phone2" style="width:50px;height: 23px;">
+                                <input type="text" id="sTel2" name="phone2" style="width:50px;height: 23px;">
                                 -
-                                <input type="text" class="phone" name="phone3" style="width:50px;height: 23px;">
+                                <input type="text" id="sTel3" name="phone3" style="width:50px;height: 23px;">
                                 </td>
                             </tr> 
                               <!--전화번호 유효성 두군데 수정  -->
-                              <tr>
-                                <td>우편번호</td>
-                                <td>
-                                    <input type="text" name="post" class="postcodify_postcode5" size="6"/>
-                                    <button class="sbtn" type="button">검색</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>카테고리</td>
-                                <td>
-                                <select name="category" id="category">
-                                <option value="">선택하기</option>
-                                <option value="한식">한식</option>
-                                <option value="분식">분식</option>
-                                <option value="돈까스,회,일식">돈까스,회,일식</option>
-                                <option value="아시안,양식">아시안,양식</option>
-                                <option value="중국집">중국집</option>
-                                <option value="카페,디저트">카페,디저트</option>
-                                <option value="도시락">도시락</option>
-                                <option value="패스트푸드">패스트푸드</option>
-                                <option value="치킨">치킨</option>
-                                <option value="피자">피자</option>
-                                <option value="족발,보쌈">족발,보쌈</option>
-                                <option value="찜,탕">찜,탕</option>
-                                <option value="야식">야식</option>
-                                </select>
-                                </td>
-                            </tr>
-                            <tr>
+						<tr>
+							<td>우편번호</td>
+							<td><input type="text" name="post"
+								class="postcodify_postcode5" size="6" />
+								<button id="postcodify_search_button" type="button">검색</button>
+							</td>
+						</tr>
+						<tr>
+							<td>도로명 주소</td>
+							<td><input type="text" name="address1"class="postcodify_address" /></td>
+						</tr>
+						<tr>
+							<td>상세 주소</td>
+							<td><input type="text" name="address2"class="postcodify_details" /></td>
+						</tr>
+						<tr>
+							<td>카테고리</td>
+							<td><select name="sCategory" id="category">
+									<option value="">선택하기</option>
+									<option value="한식">한식</option>
+									<option value="분식">분식</option>
+									<option value="돈까스,회,일식">돈까스,회,일식</option>
+									<option value="아시안,양식">아시안,양식</option>
+									<option value="중국집">중국집</option>
+									<option value="카페,디저트">카페,디저트</option>
+									<option value="도시락">도시락</option>
+									<option value="패스트푸드">패스트푸드</option>
+									<option value="치킨">치킨</option>
+									<option value="피자">피자</option>
+									<option value="족발,보쌈">족발,보쌈</option>
+									<option value="찜,탕">찜,탕</option>
+									<option value="야식">야식</option>
+							</select></td>
+						</tr>
+						<tr>
                                 <td>휴무일</td>
                                 <td>
-                                    <input type="checkbox" name="" id=""><label for="">연중무휴</label>
-                                    <input type="checkbox" name="" id="holiday"><label for="holiday">정기휴무</label>
-                                    <input type="checkbox" name="" id=""><label for="">공휴일</label>
+                                    <input type="checkbox" name="sOff" id=""><label for="">연중무휴</label>
+                                    <input type="checkbox" name="sOff" id="holiday"><label for="holiday">정기휴무</label>
+                                    <input type="checkbox" name="sOff" id=""><label for="">공휴일</label>
                                     <p class="holiday" style="display:none;">
                                     주 단위 휴무 : 
                                     <select>
@@ -397,16 +389,16 @@
                             <tr>
                                 <td>운영시간</td>
                                 <td>
-                                    <p>월~금 : <input type="time"> ~ <input type="time"></p>
-                                    <p>토요일 : <input type="time"> ~ <input type="time"></p>
-                                    <p>일요일 : <input type="time"> ~ <input type="time"></p>
+                                    <p>월~금 : <input class="time" type="time"> ~ <input class="time" type="time"></p>
+                                    <p>토요일 : <input class="time" type="time"> ~ <input class="time" type="time"></p>
+                                    <p>일요일 : <input class="time" type="time"> ~ <input class="time" type="time"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배달반경</td>
                                 <td>
-                                    <select name="km" id="km">
-                                    <option value="1.5">1.5km</option>
+                                    <select name="deliveryKm" id="km">
+                                    <option value="1">1.5km</option>
                                     <option value="2">2km</option>
                                     <option value="3">3km</option>
                                     <option value="4">4km</option>
@@ -416,107 +408,120 @@
                             </tr>
                             <tr>
                                 <td>배달비</td>
-                                <td><p><input id="CHARGE" type="number"placeholder="숫자만 입력해 주세요.">원</p></td>
+                                <td><p><input name="deliveryCharge" type="number"placeholder="숫자만 입력해 주세요.">원</p></td>
                             </tr>
                             <tr>
                                 <td>배달가능 최소금액</td>
-                                <td><p><input id="CHARGE" type="number"placeholder="숫자만 입력해 주세요.">원</p></td>
+                                <td><p><input name="minPrice" type="number"placeholder="숫자만 입력해 주세요.">원</p></td>
                             </tr>
                              <tr>
                                 <td>가게 대표 이미지</td>
                                 <td>
                                 <div class="filebox"> 
                                     <input class="upload-name" value="파일선택" readonly>
-                                    <input type="file" id="store_file">
+                                    <input type="file" multiple="multiple" id="store_file"name="sfile">
                                     <label for="store_file">업로드</label> 
                                 </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>가게 소개</td>
-                                <td><textarea name="" rows="5" cols="50" placeholder="내용을 입력해주세요"></textarea></td>
+                                <td><textarea name="sInfo" rows="5" cols="50" placeholder="내용을 입력해주세요"></textarea></td>
                             </tr>
                         </table>
                         <table id="menu_table" style="display:none" >
                             <caption style="font:25px; margin-bottom: 5px; "><strong>메뉴</strong></caption>
                             <tr>
-                                <!-- <td>메뉴입력 </td> -->
                                 <th style="width:250px;">메뉴명</th>
                                 <th style="width:130px">가격</th>
                                 <th style="width:220px">이미지</th>
                                 <th style="width:100px"></th>
                             </tr>
-                            <tr id="sample">
-                                <td><input type="text"></td>
-                                <td><input id="price" type="number" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
+                            <tr >
+                                <td><input type="text" name="menuList[0].mnName"></td>
+                                <td><input type="number" name="menuList[0].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
                                 <td>
-                                <div class="filebox"> 
-                                    <input class="upload-name" value="파일선택" readonly>
-                                    <input type="file"  multiple="multiple" id="buisness_file">
-                                    <label for="buisness_file">업로드</label> 
+                                <div> 
+                                    <input type="file"  multiple="multiple" id="buisness_file" name="mnFile" >
                                 </div>
                                 </td>
                                 <td>
-                                <input type="button" class="choice" value="추가" onclick="plus();">
+                                <input type="button" id="plus0" class="choice" value="추가" >
+                                <input type="button" class="choice" value="삭제" onclick="minus(this);">
+                                </td>
+                            </tr>
+                            <tr >
+                                <td><input type="text" name="menuList[1].mnName"></td>
+                                <td><input type="number" name="menuList[1].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
+                                <td>
+                                <div> 
+                                    <input type="file"  multiple="multiple" id="buisness_file" name="mnFile" >
+                                </div>
+                                </td>
+                                <td>
+                                <input type="button" id="plus0" class="choice" value="추가" >
+                                <input type="button" class="choice" value="삭제" onclick="minus(this);">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="menuList[2].mnName"></td>
+                                <td><input type="number" name="menuList[2].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
+                                <td>
+                                <div> 
+                                    <input type="file"  multiple="multiple" id="buisness_file" name="mnFile" >
+                                </div>
+                                </td>
+                                <td>
+                                <input type="button" id="plus0" class="choice" value="추가" >
                                 <input type="button" class="choice" value="삭제" onclick="minus(this);">
                                 </td>
                             </tr>
                         </table>
-                        <!-- <hr style="width: 100%;"> -->
                         <h4>이용 약관 동의</h4>
                         <textarea id="checktext">
              
                         </textarea>
                         <label><input type="checkbox" >약관 확인 후 동의합니다.</label>
                         <input type="submit" id="sign_up" class="btn-ghost green"value="회원가입">
+                        <input type="text" name="mPhone" style="display:none">
+                        <input type="text" name="sTel" style="display:none">                        
+                        <input type="text" name="sNo" style="display:none">
                     </form>
                 </div>
             </div>
         </section>
-      <script langqwuage="javascript">
-        function plus(){
-
-            var tr_obj    = document.getElementById("sample");
-            var clone_obj = tr_obj.cloneNode(true)
-
-            tr_obj.parentNode.appendChild(clone_obj);
-        }
-
-       function minus(obj){ 
-
-        var menu_table = document.getElementById("menu_table");
-        var tr = obj.parentNode.parentNode;
-
-        if(menu_table.rows.length>2){
-        tr.parentNode.removeChild(tr);
-        }
-
-        }
-
-        function test(){ 
-
-        var txtEle = document.getElementsByTagName("#sign_up_table input");
-        var gender =  document.getElementsByClassName(".gender");
-
-        var color1 = "1px solid rgb(211, 211, 211)";
-        var color2 = "1px solid red";
-
-        for(var i = 1; i < txtEle.length; i ++){
-
-        var txtEle2 = $(txtEle[i]).css("border");
-
-        if(txtEle2==color1||txtEle2==color2){
-            
-            alert("다시 확인해주세요.");
-            $(txtEle[i]).css("border","solid 3px red");
-            
-            return false;
-        }
-        }
-        }
         
-    </script>    
+        <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+		<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+        
+ 
     <script>
+/* 	var i=0;
+    var num="#plus"+(i);
+	console.log(i);
+    
+    var rowItem = "<tr id=\"sample\">"
+    rowItem += "<td><input type=\"text\" name=\"mnList["+(i+1)+"].mnName\"></td>"
+    rowItem += "<td><input type=\"number\" name=\"mnList["+(i+1)+"].mnPrice\" style=\"display:inline-block;\" placeholder=\"숫자만 입력해 주세요.\">원</td>"
+    rowItem += "<td>"
+    rowItem += "<div class=\"filebox\">"
+    rowItem += "<input class=\"upload-name\" value=\"파일선택\" readonly>"
+    rowItem +="<input type=\"file\"  multiple=\"multiple\" id=\"buisness_file\">"
+    rowItem +="<label for=\"buisness_file\">업로드</label>"
+    rowItem +="</div>"
+    rowItem +="</td>"
+    rowItem +="<td>"
+    rowItem +="<input type=\"button\" id=\"plus"+(i+1)+"\" class=\"choice\" value=\"추가\">"
+    rowItem +="<input type=\"button\" class=\"choice\" value=\"삭제\" onclick=\"minus(this);\">"
+    rowItem +="</td>"
+    rowItem +="</tr>"
+    
+    $("#plus").on('click', function() {
+	 	$('#menu_table').append(rowItem);i+=1;
+
+ 	});  */
+    
+
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
             $('#open').attr('src',"./resources/img/close.png");
@@ -537,6 +542,156 @@
             $('#menu_table').hide();
         };
     });
+    
+	var check1 = [];
+	var check2 = [];
+	var check3 = [];
+	var check4 = [];
+	var checkAry = [];
+	
+	var ng = "양식이 맞지 않습니다.";
+	var tGreen = ({"color" : "green"});
+	var tRed = ({"color" : "red"});
+	var red = ({"border" : "2px solid  red"});
+	var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
+	
+
+	$('#check_btn').on('click', function() {
+		var idput = $('input[name=mId]');
+		console.log($('input[name=mId]').prop("readonly"));
+		console.log($('input[name=mId]').attr("readonly"));
+		
+		if(checkAry[0]==true){
+			var result = confirm('사용 가능한 아이디인 경우 변경이 불가합니다.계속 진행하시겠습니까?'); 
+			var mId = idput.val();
+		
+			if (result) {
+				$.ajax({
+					url : "checkId.do",
+					type : "POST",
+					data : {mId : mId},
+					success : function(data) {
+						if (data == "No") {
+							checkAry[0] = false;
+							idput.css(red);
+							$('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
+						} else {
+							checkAry[0] = true;
+							idput.css(green);
+							idput.prop("readonly", true);
+							$('#textValue').text("  ");
+						}
+					},
+					error : function() {
+						alert("문제가 발생하였습니다.관리자에게 문의해주세요.");
+					}
+				});
+			}
+	 	}else{
+	 		$('#textValue').text("다시 확인해주세요").css(tRed);
+	 	}
+	});
+	
+
+	
+	$('input').on("keyup", function() {
+		var put = $('td input');
+		var pwd = put.eq(1).val();
+
+		for (var i=0; i<8;i++) {
+			var check = false;
+			var cput = put.eq(i);
+			var vput = put.eq(i).val();
+			
+			switch(i){
+				case 0 :check=(/^[a-zA-Z0-9]{6,10}$/).test(vput);break;
+				case 1 :check=(/^[a-zA-Z0-9]{8,12}$/).test(vput);break;
+				case 2 :check=(pwd==vput);break;
+				case 3 :check=(/^[가-힣]{2,}$/).test(vput);break;
+				case 4 :check=(/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(vput);break;
+				case 5 :check=(/^[0-9]{3}$/).test(vput);break;
+				case 6 :check=(/^[0-9]{3,4}$/).test(vput);break;
+				case 7 :check=(/^[0-9]{4}$/).test(vput);break;
+			}
+			
+			if(check==false){
+				check1[i] = false; 
+				cput.css(red);
+				break;
+			}else{
+				check1[i] = true;
+				cput.css(green);
+			}
+		}
+	});
+	    $('#sign_up_table').on("mouseover focus", function() {
+	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
+	    	console.log($('input[name=mPhone]').val());
+	    	
+	    	if($.inArray(false, check1) >= 0){
+	    		checkAry[0] = false; 
+	    		console.log(check1);
+			}else{
+	    		checkAry[0] = true; 
+			}
+	    });
+	    $('#buisness_table').on("mouseover focus", function() {
+	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
+	    	console.log($('input[name=sNo]').val());
+	    	
+	    	if($.inArray(false, check2) >= 0){
+	    		checkAry[1] = false; 
+	    		console.log(check2);
+			}else{
+	    		checkAry[1] = true; 
+			}
+	    });
+	    $('#store_table').on("mouseover focus", function() {
+	    	$('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
+	    	var time = ""; 
+	    	for(var i=0;i<6;i++){
+	    	if(i<5){
+	        time+=$('.time').eq(i).val()+",";
+	    	}else{
+	    	time+=$('.time').eq(5).val();
+	    	}
+	    	}
+	    	console.log(time);
+	    	console.log($('input[name=sTel]').val());
+	    	
+	    	
+	    	
+	    	if($.inArray(false, check3) >= 0){
+	    		checkAry[2] = false;
+	    		console.log(check3);
+			}else{
+	    		checkAry[2] = true; 
+			}
+	    });
+	    $('#menu_table').on("mouseover focus", function() {
+
+	    	
+	    	if($.inArray(false, check4) >= 0){
+	    		checkAry[3] = false;
+	    		console.log(check4);
+			}else{
+	    		checkAry[3] = true; 
+			}
+	    });
+
+	    
+	    
+	    $('#sign_up').on("click", function() {
+	    	if($.inArray(false, checkAry) >= 0){
+				$('#textValue').text("다시 확인 해 주세요.").css(tRed);
+				return false;
+			}else{
+				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
+				return true;
+			}
+	    });
+
+	
     </script>   
 <jsp:include page="../common/footer.jsp" />
 </body>
