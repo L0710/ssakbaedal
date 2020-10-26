@@ -63,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
 	public ArrayList<SODetail> selectStoreDetail(int oNo) {
 
 		return oDao.selectStoreDetail(oNo);
+	}
     
 	@Override
 	public V_Order selectOrder(int oNo) {
