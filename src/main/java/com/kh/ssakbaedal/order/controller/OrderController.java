@@ -94,7 +94,7 @@ public class OrderController {
 //	
 	
 	@RequestMapping("olist.do")
-	public ModelAndView eventList(ModelAndView mv, int mNo,
+	public ModelAndView orderList(ModelAndView mv, int mNo,
 			@RequestParam(value="page", required=false) Integer page) {
 		
 		// 1. 전체 게시글 수 리턴 받기
@@ -105,13 +105,12 @@ public class OrderController {
 		int currentPage = page != null ? page : 1;
 		
 		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10 , 5);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5 , 5);
 		
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Order> olist = oService.selectOList(pi, mNo);
 		
 //		System.out.println("olist : " + olist);
-		
 //		System.out.println("pi : " + pi);
 		
 		if(olist != null) {
@@ -169,8 +168,57 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping("orderTimePopup.do")
-	public String popup() {
-		return "store/order/orderTimePopup";
+	@RequestMapping(value="orderTimePopup.do", method=RequestMethod.GET)
+	public ModelAndView popup(ModelAndView mv, HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		System.out.println(oNo);
+		
+		mv.addObject("oNo", oNo);
+		mv.setViewName("store/order/orderTimePopup");
+		
+		return mv;
 	}
+	
+	//배달예상시간, 주문상태변경
+	@RequestMapping(value="updateTime.do",  method=RequestMethod.GET)
+	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request) {
+		
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		
+		int time = Integer.parseInt(request.getParameter("time"));
+		
+		Order order = new Order();
+		order.setoNo(oNo);
+		order.setArrivalTime(time);
+		
+		
+		int result = oService.updateTime(order);
+		
+		if(result > 0) {
+			mv.addObject(order);
+			mv.setViewName("store/order/storeOrderView");
+		} else {
+			throw new OrderException("주문상태/배달예상시간 변경 실패");
+		}
+		
+		return mv;
+	}
+	
+	//주문상태변경2->3
+	@RequestMapping("updateoStatus2.do")
+	public String updateoStatus(int oNo) {
+		
+		int result = oService.updateoStatus(oNo);
+		
+		if(result > 0) {
+			return "store/order/orderDetailView";
+		} else {
+			throw new OrderException("주문상태 변경 실패");
+		}
+		
+		
+	}
+	
 }

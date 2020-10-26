@@ -156,9 +156,7 @@
                             $(this).parent().css({"background":"lightgrey", "cursor":"pointer"});
                         }).mouseout(function(){
                             $(this).parent().css({"background":"white"});
-                        }).click(function(){
-                            var rId = $(this).parent().children().eq(0).text();
-                        });
+                        })
                     })
                     
                 </script>

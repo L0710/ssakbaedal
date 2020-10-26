@@ -18,11 +18,15 @@
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.ODetail" alias="ODetail"/>
+		<typeAlias type="com.kh.ssakbaedal.review.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.ssakbaedal.review.model.vo.V_Review" alias="V_Review"/>
 		<typeAlias type="com.kh.ssakbaedal.serviceCenter.model.vo.faq" alias="faq"/>
 		<typeAlias type="com.kh.ssakbaedal.serviceCenter.model.vo.sc_Search" alias="sc_Search"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.SODetail" alias="SODetail"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.S_Order" alias="S_Order"/>
-
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Store" alias="STORE"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Menu" alias="MENU"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.OpenDB" alias="OpenDB"/>
 	</typeAliases>
 
 	<mappers>
@@ -30,6 +34,8 @@
 		<mapper resource="mappers/storeSearch-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
+		<mapper resource="mappers/review-mapper.xml"/>
+		<mapper resource="mappers/management-mapper.xml"/>
 		<mapper resource="mappers/faq-mapper.xml"/>
 	</mappers>
 

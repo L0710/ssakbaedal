@@ -29,7 +29,7 @@ public class V_Order {
 	private Date oTime;	// 주문날짜
 	private String oStatus;	// 주문상태
 	private String mnName;	// 메뉴명
-	private int odNum;	// 주문상세번호
+	private int odNum;	// 주문수량
 	private int mnPrice;	// 단가
 	private int fee;	// 배달비
 	private int oPrice;	// 총결제금액

@@ -168,7 +168,7 @@
         margin-bottom: 0;
     }
 
-    #address {
+     #address {
         float: left;
     }
 </style>
