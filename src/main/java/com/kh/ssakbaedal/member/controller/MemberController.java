@@ -89,16 +89,18 @@ public class MemberController {
 	}
 	 
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String memberLogin(Member m, Model model) {
-    
-		Member loginUser = mService.loginMember(m);
-		
-		if(loginUser != null) {
-			return "redirect:home.do";
-		}else {
-			throw new MemberException("로그인에 실패하였습니다.");
-		}
-	}
+	   public String memberLogin(Member m, Model model) {
+	      
+	      Member loginUser = mService.loginMember(m);
+	      
+	      if(loginUser != null) {
+	         model.addAttribute("loginUser", loginUser);
+	      }else {
+	         throw new MemberException("로그인에 실패하였습니다.");
+	      }
+
+	      return "redirect:home.do";
+	   }
 
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status) {
