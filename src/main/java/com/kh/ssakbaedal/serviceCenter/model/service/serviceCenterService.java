@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.serviceCenter.model.vo.faq;
+import com.kh.ssakbaedal.serviceCenter.model.vo.sc_Search;
 
 public interface serviceCenterService {
 	// FAQ 게시글 갯수 구하는 메소드 -> 페이징 계산을 위해
@@ -23,6 +24,13 @@ public interface serviceCenterService {
 	
 	// FAQ 게시글 삭제
 	public int faqDelete(int fNo);
+	
+	// FAQ 게시글 검색
+	public ArrayList<faq> faqSearchList(sc_Search search, PageInfo pi);
+	
+	// FAQ 게시글 검색 시 게시글 갯수 구하는 메소드 -> 페이징 계산을 위해
+	public int searchListCount(sc_Search search);
+
 	
 
 }

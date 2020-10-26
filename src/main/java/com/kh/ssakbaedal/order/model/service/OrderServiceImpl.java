@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 
 		return oDao.selectStoreDetail(oNo);
 	}
-    
+
 	@Override
 	public V_Order selectOrder(int oNo) {
 		return oDao.selectOrder(oNo);

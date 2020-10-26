@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +14,7 @@ import com.kh.ssakbaedal.common.page.Pagination;
 import com.kh.ssakbaedal.serviceCenter.model.exception.serviceCenterException;
 import com.kh.ssakbaedal.serviceCenter.model.service.serviceCenterService;
 import com.kh.ssakbaedal.serviceCenter.model.vo.faq;
+import com.kh.ssakbaedal.serviceCenter.model.vo.sc_Search;
 
 @Controller
 public class serviceCenterController {
@@ -36,7 +38,7 @@ public class serviceCenterController {
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<faq> flist = scService.selectList(pi);
 		
-		System.out.println(flist);
+		//System.out.println(flist);
 		
 		if(flist != null) {
 			mv.addObject("flist", flist);
@@ -52,7 +54,13 @@ public class serviceCenterController {
 	// FAQ 게시글 디테일 뷰 이동
 	@RequestMapping("FAQDetail.do")
 	public ModelAndView FAQDetailView(ModelAndView mv,
-									int fNo, @RequestParam("page") Integer page) {
+									int fNo, @RequestParam("page") Integer page,
+									@RequestParam("searchCondition") String searchCondition,
+									@RequestParam("searchValue") String searchValue) {
+		
+	//System.out.println(searchCondition);
+	//System.out.println(searchValue);
+		
 		int currentPage = page != null ? page : 1;
 		
 		faq faq = scService.selectFaq(fNo);
@@ -60,6 +68,8 @@ public class serviceCenterController {
 		if(faq != null) {
 			mv.addObject("faq", faq);
 			mv.addObject("currentPage", currentPage);
+			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("searchValue", searchValue);
 			mv.setViewName("serviceCenter/FAQDetailView");
 		} else {
 			throw new serviceCenterException("FAQ 게시글 상세보기 실패");
@@ -131,6 +141,37 @@ public class serviceCenterController {
 		} else {
 			throw new serviceCenterException("FAQ 게시글 삭제 실패");
 		}
+	}
+	
+	// FAQ 게시글 검색
+	@RequestMapping("scSearch.do")
+	public ModelAndView faqSearch(ModelAndView mv, 
+			sc_Search search,
+			@RequestParam(value="page", required=false) Integer page) {
+		
+		//System.out.println(search);
+		
+		// 전체 게시글 수 리턴 받기
+		int listCount = scService.searchListCount(search);
+				
+		// 현재 페이지 계산
+		int currentPage = page != null ? page : 1;
+				
+		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 5);
+		
+		ArrayList<faq> faqSearchList = scService.faqSearchList(search, pi);
+		
+		if(faqSearchList != null) {
+			mv.addObject("flist", faqSearchList);
+			mv.addObject("search", search);
+			mv.addObject("pi", pi);
+			mv.setViewName("serviceCenter/FAQList");			
+		} else {
+			throw new serviceCenterException("FAQ 게시글 목록 검색 실패");
+		}
+		
+		return mv;
 	}
 	
 	

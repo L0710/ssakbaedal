@@ -155,6 +155,8 @@
 						<c:url var="fdetail" value="FAQDetail.do">
 							<c:param name="fNo" value="${ f.fNo }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
+							<c:param name="searchCondition" value="${ search.searchCondition }"/>
+							<c:param name="searchValue" value="${ search.searchValue }"/>
 						</c:url>
 						<tr onclick="location.href='${contextPath}/${ fdetail }'">
 							<td>${ f.fNo }</td>
@@ -173,12 +175,28 @@
 	            </c:if>
 	            
                 <div class="pagingArea" align="center" style="font-size:14px;">
+                
+                	<!-- 검색 후 페이징 처리에 대한 수정 -->
+					<!-- 검색한 값이 있는지 없는지 여부에 따라 넘어갈 주소값을 결정함 -->
+					<c:if test="${ search.searchValue eq null }">
+						<!-- 검색한 값이 없으면 selectList.bo 호출 -->
+						<c:set var="loc" value="/service.do" scope="page"/>
+					</c:if>
+					<c:if test="${ search.searchValue ne null }">
+						<!-- 검색한 값이 있으면 search.bo 호출 -->
+						<c:set var="loc" value="/scSearch.do" scope="page"/>
+					</c:if>
+                
                     <!-- 페이징 -->
                     <c:if test="${ pi.currentPage <= 1 }">
 					[이전]&nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="service.do">
+						<c:url var="before" value="${ loc }">
+						<c:if test="${ search.searchValue ne null }">
+							<c:param name="searchCondition" value="${ search.searchCondition }"/>
+							<c:param name="searchValue" value="${ search.searchValue }"/>
+						</c:if>
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a>&nbsp;
@@ -190,7 +208,11 @@
 							<font color="red" size="3">[ ${ p } ]</font>
 						</c:if>
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="service.do">
+							<c:url var="pagination" value="${ loc }">
+								<c:if test="${ search.searchValue ne null }">
+									<c:param name="searchCondition" value="${ search.searchCondition }"/>
+									<c:param name="searchValue" value="${ search.searchValue }"/>
+								</c:if>
 								<c:param name="page" value="${ p }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -202,7 +224,11 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="service.do">
+						<c:url var="after" value="${ loc }">
+							<c:if test="${ search.searchValue ne null }">
+								<c:param name="searchCondition" value="${ search.searchCondition }"/>
+								<c:param name="searchValue" value="${ search.searchValue }"/>
+							</c:if>
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
 						</c:url>
 						<a href="${ after }">[다음]</a>
@@ -211,13 +237,29 @@
                 <br>
 
                 <div id="searchArea" align="center">
-                    <select id="searchCondition" name="searchCondition" style="width:50px;">
-                        <option>-----</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                    <input id="searchValue" type="search" value="" style="width:300px;">
-                    <button class="btn-ghost gray" id="searchBtn" onclick="searchBoard();">검색</button>
+                	<form action="scSearch.do" name="searchCondition">
+	                    <select id="searchCondition" name="searchCondition" style="width:50px;">
+	                    	
+	                        <option value="all" 
+	                        <c:if test="${ sc_Search.searchCondition == 'all' }">selected
+	                        </c:if>>
+	                        	전체
+	                        </option>
+	                        
+	                        <option value="title"
+	                        <c:if test="${ sc_Search.searchCondition == 'title' }">selected
+	                        </c:if>>
+	                        	제목
+	                        </option>
+	                        <option value="content"
+	                        <c:if test="${ sc_Search.searchCondition == 'content' }">selected
+	                        </c:if>>	
+	                        	내용
+	                        </option>
+	                    </select>
+	                    <input name="searchValue" type="search" value="${ search.searchValue }" style="width:300px;">
+	                    <button class="btn-ghost gray" id="searchBtn">검색</button>
+                    </form>
                 </div>
                 
             </div>

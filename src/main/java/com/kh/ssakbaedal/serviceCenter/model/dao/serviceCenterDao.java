@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.serviceCenter.model.vo.faq;
+import com.kh.ssakbaedal.serviceCenter.model.vo.sc_Search;
 
 @Repository("scDao")
 public class serviceCenterDao {
@@ -45,6 +46,18 @@ public class serviceCenterDao {
 	// FAQ 게시글 삭제
 	public int faqDelete(int fNo) {
 		return sqlSession.update("FAQMapper.faqDelete", fNo);
+	}
+	
+	// FAQ 게시글 검색
+	public ArrayList<faq> faqSearchList(sc_Search search, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("FAQMapper.faqSearchList", search, rowBounds);
+	}
+	
+	// FAQ 게시글 검색 시 게시글 갯수 구하는 메소드 -> 페이징 계산을 위해
+	public int searchListCount(sc_Search search) {
+		return sqlSession.selectOne("FAQMapper.searchListCount", search);
 	}
 
 }

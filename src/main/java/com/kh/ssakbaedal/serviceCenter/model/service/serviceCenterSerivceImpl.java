@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.serviceCenter.model.dao.serviceCenterDao;
 import com.kh.ssakbaedal.serviceCenter.model.vo.faq;
+import com.kh.ssakbaedal.serviceCenter.model.vo.sc_Search;
 
 @Service("csService")
 public class serviceCenterSerivceImpl implements serviceCenterService {
@@ -49,6 +50,19 @@ public class serviceCenterSerivceImpl implements serviceCenterService {
 	public int faqDelete(int fNo) {
 		return scDao.faqDelete(fNo);
 	}
+	
+	// FAQ 게시글 검색
+	@Override
+	public ArrayList<faq> faqSearchList(sc_Search search, PageInfo pi) {
+		return scDao.faqSearchList(search, pi);
+	}
+	
+	// FAQ 게시글 검색 시 게시글 갯수 구하는 메소드 -> 페이징 계산을 위해
+	@Override
+	public int searchListCount(sc_Search search) {
+		return scDao.searchListCount(search);
+	}
+
 	
 	
 	
