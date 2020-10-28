@@ -20,23 +20,18 @@ public class MemberDao {
 	public Member selectMember(Member m) {
 		return sqlSession.selectOne("memberMapper.selectOne", m);
 	}
-
-	public int insertMember(Member m) {
-		return sqlSession.insert("memberMapper.insertMember", m);
-	}
-
+	
 	public int deleteMember(String id) {
 		return sqlSession.update("memberMapper.deleteMember", id);
 	}
-
-	public Member findId(Member m) {
-		return sqlSession.selectOne("memberMapper.findId", m);
-
-	}
-
+	
 	public int checkId(Member m) {
 		return sqlSession.selectOne("memberMapper.checkId", m);
 
+	}
+
+	public int insertMember(Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
 	public int insertStore(Store s, Attachment bf, Attachment sf) {
@@ -60,6 +55,18 @@ public class MemberDao {
 			result = sqlSession.insert("memberMapper.minsertAttachment", f);
 		}
 		return result;
+	}
+
+	public Member findId(Member m) {
+		return sqlSession.selectOne("memberMapper.findId", m);
+	}
+	
+	public Member findPwd(Member m) {
+		return sqlSession.selectOne("memberMapper.findPwd", m);
+	}
+
+	public int updatePwd(Member findPwd) {
+		return sqlSession.update("memberMapper.updatePwd", findPwd);
 	}
 
 }

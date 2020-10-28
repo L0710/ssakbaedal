@@ -12,14 +12,14 @@ public interface MemberService {
 
 	public Member loginMember(Member m);
 	
-
+	
+	public int checkId(Member m);
+	
+	
 	public int insertMember(Member m);
 	
 	
 	public int insertStore(Member m, Store s, Attachment b, Attachment sf, ArrayList<Attachment> files, MenuList menuList);
-
-
-	public int updateMember(Member m);
 	
 
 	public int deleteMember(String id);
@@ -28,7 +28,10 @@ public interface MemberService {
 	public Member findId(Member m);
 
 
-	public int checkId(Member m);
+	public Member findPwd(Member m);
+
+
+	public int updatePwd(Member findPwd);
 
 }
 
