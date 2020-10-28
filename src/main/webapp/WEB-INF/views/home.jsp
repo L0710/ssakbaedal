@@ -173,43 +173,59 @@
                 <div class="slide_wrapper" align="center">
                     <ul class="slides">
                         <li>
-                            <img src="./resources/img/total22.jpg" alt="">
+                            <img src="./resources/img/total22.jpg" onclick="location.href='${contextPath}/tslist.do'">
                             <p>전체보기</p>
                         </li>
                         <li>
-                            <img src="./resources/img/koreanfood6.jpg" alt="">
+                            <img src="./resources/img/koreanfood6.jpg" onclick="location.href='${contextPath}/kslist.do'">
                             <p>한식</p>
                         </li>
                         <li>
-                            <img src="./resources/img/chinafood2.jpg" alt="">
-                            <p>중식</p>
+                            <img src="./resources/img/chinafood2.jpg" onclick="location.href='${contextPath}/cslist.do'">
+                            <p>중식집</p>
                         </li>
                         <li>
-                            <img src="./resources/img/japanfood2.jpg" alt="">
-                            <p>일식/돈까스</p>
+                            <img src="./resources/img/japanfood2.jpg" onclick="location.href='${contextPath}/jslist.do'">
+                            <p>돈까스,회,일식</p>
                         </li>
                         <li>
-                            <img src="./resources/img/westernfood2.jpg" alt="">
-                            <p>양식/피자</p>
-                        </li>
-                        <li>
-                            <img src="./resources/img/0330020014461.jpg" alt="">
-                            <p>치킨</p>
-                        </li>
-                        <li>
-                            <img src="./resources/img/fastfood2.jpg" alt="">
-                            <p>패스트푸드</p>
-                        </li>
-                        <li>
-                            <img src="./resources/img/dosirak2.jpg" alt="">
-                            <p>도시락</p>
-                        </li>
-                        <li>
-                            <img src="./resources/img/boonsik2.png" alt="">
+                        	<img src="./resources/img/boonsik2.png" onclick="location.href='${contextPath}/sslist.do'">
                             <p>분식</p>
                         </li>
                         <li>
-                            <img src="./resources/img/cafe2.jpg" alt="">
+                            <img src="./resources/img/0330020014461.jpg" onclick="location.href='${contextPath}/chislist.do'">
+                            <p>치킨</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/westernfood2.jpg" onclick="location.href='${contextPath}/pslist.do'">
+                            <p>피자</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/fastfood2.jpg" onclick="location.href='${contextPath}/fslist.do'">
+                            <p>패스트푸드</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/asianfood2.jpg" onclick="location.href='${contextPath}/aslist.do'">
+                            <p>아시안,양식</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/jock2.jpg" onclick="location.href='${contextPath}/joslist.do'">
+                            <p>족발,보쌈</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/gob2.jpg" onclick="location.href='${contextPath}/yaslist.do'">
+                            <p>야식</p>
+                        </li>
+                        <li> 
+                            <img src="./resources/img/jjim2.jpg" onclick="location.href='${contextPath}/jjslist.do'">
+                            <p>찜,탕</p>
+                        </li>
+                        <li> 
+                            <img src="./resources/img/dosirak2.jpg" onclick="location.href='${contextPath}/doslist.do'">
+                            <p>도시락</p>
+                        </li>
+                        <li>
+                            <img src="./resources/img/cafe2.jpg" onclick="location.href='${contextPath}/cdslist.do'">
                             <p>카페/디저트</p>
                         </li>
                     </ul>

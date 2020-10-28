@@ -23,11 +23,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.page.Pagination;
 import com.kh.ssakbaedal.event.model.exception.EventException;
 import com.kh.ssakbaedal.event.model.service.EventService;
 import com.kh.ssakbaedal.event.model.vo.Event;
-import com.kh.ssakbaedal.event.model.vo.PageInfo;
-import com.kh.ssakbaedal.event.model.vo.Pagination;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
 import com.kh.ssakbaedal.event.model.vo.Search;
 import com.kh.ssakbaedal.member.model.vo.Member;
@@ -169,8 +169,7 @@ public class EventController {
 			}
 			if(!flag) {	// 게시글을 처음 읽은 경우 쿠키 저장하기
 				Cookie c = new Cookie("eNo"+eNo, String.valueOf(eNo));
-				c.setMaxAge(30);
-//				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
+				c.setMaxAge(1 * 24 * 60 * 60); // 하루 동안 저장
 				response.addCookie(c);
 			}
 		}
@@ -321,4 +320,5 @@ public class EventController {
 		}
 		
 	}
+	
 }

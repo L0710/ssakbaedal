@@ -30,13 +30,7 @@
         width: 100%;
         height: auto;
     }
-/*
-    section {
-        width: 100%;
-        height: 60%;
-        float: left;
-    }
-*/
+
     nav {
         padding: 24px;
         text-align: center;
@@ -174,7 +168,7 @@
         margin-bottom: 0;
     }
 
-    #address {
+     #address {
         float: left;
     }
 </style>
@@ -187,29 +181,41 @@
 	</c:if>
 
 	<div id="header">
+	<c:if test="${ loginUser.mType != 3 }">
 		<div id="address" align="left">
-		<c:if test="${ loginUser.mType != 3}"> 
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
- 			</c:if> 
-			<c:if test="${ loginUser.mType == 3}">
-				<c:out value="${ loginUser.mName } 님 환영합니다!"></c:out>
-			</c:if>
 		</div>
-		<c:if test="${ empty sessionScope.loginUser }">
-			<div class="btnGroup" align="right">
-				<c:url var="login" value="login.do" />
-				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${login}'"> 로그인/회원가입 </button>
-			</div>
-		</c:if>
-		<c:if test="${ !empty sessionScope.loginUser }">
-			<div class="btnGroup" align="right">
-				<c:url var="logout" value="logout.do" />
-				<button class="btn-ghost green" id="mypageBtn"
-					onclick="location.href='${logout}'"> 로그아웃 </button>
-			</div>
-		</c:if>
+	</c:if>
+	<c:if test="${ loginUser.mType == 3 }"></c:if>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<div class="btnGroup" align="right">
+					<c:url var="login" value="login.do" />
+					<button class="btn-ghost green" id="mypageBtn"
+						onclick="location.href='${login}'">로그인/회원가입</button>
+				</div>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				<div class="btnGroup" align="right">
+					<c:url var="logout" value="logout.do" />
+					<c:url var="mypage_admin" value="mypage_admin.do" />
+					<c:url var="mypage_user" value="olist.do">
+						<c:param name="mNo" value="${ loginUser.mNo }"/>
+					</c:url>
+					<c:url var="mypage_store" value="mypage_store.do" />
+					<label><c:out value="${ loginUser.mName } 님 환영합니다!"></c:out></label>
+					
+					<!-- 회원 타입에 따라 마이페이지 다르게 출력 -->
+					<button class="btn-ghost green" id="mypageBtn"
+						<c:if test="${ loginUser.mType == 1 }">onclick="location.href='${ mypage_admin }'"</c:if>
+						<c:if test="${ loginUser.mType == 2 }">onclick="location.href='${ mypage_user }'"</c:if>
+						<c:if test="${ loginUser.mType == 3 }">onclick="location.href='${ mypage_store }'"</c:if>
+					>MYPAGE</button>
+					
+					<button class="btn-ghost green" id="logoutBtn"
+						onclick="location.href='${logout}'">로그아웃</button>
+				</div>
+			</c:if>
 		<div class="logoArea">
 			<img src="./resources/img/logo.png" id="logo" onclick="location.href='${contextPath}/home.do'">
 		</div>

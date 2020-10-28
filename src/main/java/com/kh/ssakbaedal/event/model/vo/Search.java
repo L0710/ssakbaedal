@@ -3,15 +3,13 @@ package com.kh.ssakbaedal.event.model.vo;
 public class Search {
 	private String searchCondition;
 	private String searchValue;
-	private String existFile;
 	
 	public Search() {}
 
-	public Search(String searchCondition, String searchValue, String existFile) {
+	public Search(String searchCondition, String searchValue) {
 		super();
 		this.searchCondition = searchCondition;
 		this.searchValue = searchValue;
-		this.existFile = existFile;
 	}
 
 	public String getSearchCondition() {
@@ -30,18 +28,10 @@ public class Search {
 		this.searchValue = searchValue;
 	}
 
-	public String getExistFile() {
-		return existFile;
-	}
-
-	public void setExistFile(String existFile) {
-		this.existFile = existFile;
-	}
-
 	@Override
 	public String toString() {
-		return "Search [searchCondition=" + searchCondition + ", searchValue=" + searchValue + ", existFile="
-				+ existFile + "]";
+		return "Search [searchCondition=" + searchCondition + ", searchValue=" + searchValue + "]";
 	}
+
 	
 }

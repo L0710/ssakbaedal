@@ -234,9 +234,6 @@
             margin-bottom: 7px;
         }
 
-        .btnGroup {
-            margin-left: 840px;
-        }
 
         #addtxt {
             height: 25px;
@@ -336,19 +333,20 @@
             width: 130px;
             height: 20px;
         }
+        .btn-ghost.gray.si {
+            width: 150px;
+            height: 40px;
+            padding-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
     
-      	<c:import url="../common/headerbar.jsp"/>
+      	<c:import url="../../common/headerbar.jsp"/>
 
         <section>
-            <nav id="nav">
-                <a class="link" href="#">주문관리</a>
-                <a class="link" href="#">매장관리</a>
-                <a class="link" href="#">매출현황</a>
-            </nav>
+            <c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
@@ -829,20 +827,18 @@
 
     </section>
     <div class="sidemenu">
-        <ul id="menubar">
-            <li>메뉴관리</li>
-            <li>영업관리</li>
-            <li>매장관리</li>
-            <li>리뷰관리</li>
-            <li>알림</li>
-        </ul>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPaht}/storeManage.do'">매장관리</button>
+        <button class="btn-ghost gray si">리뷰관리</button>
+        <button class="btn-ghost gray si">알림</button>
     </div>
     </section>
 
     </div>
     <br><br><br><br><br><br>
 
-	<c:import url="../common/footer.jsp"/>
+	<c:import url="../../common/footer.jsp"/>
 
 
     </div>

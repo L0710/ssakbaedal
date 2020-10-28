@@ -15,21 +15,118 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="smNo" column="S_MNO"/>
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 	</resultMap>
+
+	<resultMap id="v_orderResultSet" type="V_Order">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sTel" column="STEL"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPoint" column="OPOINT"/>
+		<result property="fee" column="FEE"/>
+		<result property="pNo" column="PNO"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oPhone" column="OPHONE"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="mNo" column="MNO"/>
+		<collection property="ODetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
+	</resultMap>
 	
-	<select id="selectList" resultMap="orderResultSet">
+	<resultMap id="s_orderResultSet" type="S_Order">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="mNo" column="MNO"/>
+		<result property="mPhone" column="MPHONE"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+	</resultMap>
+	
+	<resultMap id="sod_orderResultSet" type="SODetail">
+		<id property="oNo" column="ONO"/>
+		<result property="odNo" column="ODNO"/>
+		<result property="odNum" column="ODNUM"/>
+		<result property="odPrice" column="OD_PRICE"/>
+		<result property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+	</resultMap>
+	
+	<resultMap type="ODetail" id="ODetailResultSet">
+		<id property="odNo" column="ODNO"/>
+		<result property="odNum" column="ODNUM"/>
+		<result property="oNo" column="ONO"/>
+		<result property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="price" column="MN_PRICE"/>
+	</resultMap>
+	
+	<select id="selectodList" resultMap="sod_orderResultSet">
 		SELECT *
-		FROM SORDER
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2' 
-		OR O_STATUS = '3';
+		FROM SODETAIL
+	</select>
+	
+	<select id="selectorderList" resultMap="s_orderResultSet">
+		SELECT * 
+		FROM S_ORDER
+		WHERE O_STATUS != 'S'
+		OR O_STATUS != 'N'
 	</select>
 	
 	<update id="deleteList">
-		UPDATE ORDER
-		SET O_STATUS = 'N'
-		WHERE O_STATUS = '1'
-		OR O_STATUS = '2'
-		OR O_STATUS = '3'
+		UPDATE SORDER
+		SET O_STATUS = 'S'
+		WHERE O_STATUS != 'S'
 	</update>
 	
-	</mapper>
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM V_ORDER
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<select id="selectOList" resultMap="v_orderResultSet">
+		SELECT *
+		FROM V_ORDER
+		WHERE MNO = #{mNo}
+		ORDER BY ONO DESC
+	</select>
+	
+	<select id="selectStoreOrder" parameterType="_int" resultMap="s_orderResultSet">
+		SELECT *
+		FROM S_ORDER
+		WHERE ONO = #{oNo}
+	</select>
+	
+	<select id="selectStoreDetail"  resultMap="sod_orderResultSet">
+		SELECT *
+		FROM SODETAIL
+		WHERE ONO = #{oNo}
+	</select>
+	
+	<update id="updateTime"  parameterType="_int">
+		UPDATE SORDER
+		SET ARRIVAL_TIME = #{arrivalTime}, O_STATUS = '2'
+		WHERE ONO = #{oNo}
+	</update>
+	
+	<update id="updateoStatus" parameterType="_int">
+		UPDATE SORDER
+		SET O_STATUS = '3'
+		WHERE ONO = #{oNo}
+	</update>
+	
+	
+	
+	<select id="selectOne" parameterType="_int" resultMap="v_orderResultSet">
+		SELECT *
+		FROM V_ORDER
+		WHERE ONO=#{oNo}
+	</select>
+
+</mapper>

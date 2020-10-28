@@ -11,6 +11,7 @@
 <style>
 	#updateTable{
 		width: 80%;
+		margin: auto;
 	}
 	
 	#updateBtn {
@@ -31,8 +32,6 @@
         <section>
         	<c:import url="../common/nav_admin.jsp"/>
             <div class="contents" align="center">
-            	<!-- 아래 h1은 지우기 ~ -->
-                <h1 align="center">${ e.eNo }번 게시글 수정하기</h1>
                 <br>
                 
                 <form action="eupdate.do" method="post" enctype="multipart/form-data">
@@ -42,7 +41,7 @@
 					<input type="hidden" name="originalFileName" value="${ at.originalFileName }">
 					<input type="hidden" name="filePath" value="${ at.filePath }">
 				
-	                <table align="center" id="updateTable">
+	                <table id="updateTable">
 	                    <tr>
 	                        <td>제목</td>
 	                        <td style="text-align:left;">

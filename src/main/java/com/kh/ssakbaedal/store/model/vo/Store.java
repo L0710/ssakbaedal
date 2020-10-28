@@ -151,14 +151,19 @@ public class Store {
 		this.minPrice = minPrice;
 	}
 
+	public String getsOff() {
+		return sOff;
+	}
+
+	public void setsOff(String sOff) {
+		this.sOff = sOff;
+	}
+
 	@Override
 	public String toString() {
 		return "Store [mNo=" + mNo + ", sName=" + sName + ", sNo=" + sNo + ", sTel=" + sTel + ", sAddress=" + sAddress
 				+ ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus
 				+ ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
 				+ ", minPrice=" + minPrice + ", sOff=" + sOff + "]";
-	}
-
-
-	
+	}	
 }

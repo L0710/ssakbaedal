@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FAQMapper">
+  <resultMap type="faq" id="faqResultSet">
+		<id property="fNo" column="FNO"/>
+		<result property="fWriter" column="FWRITER"/>
+		<result property="fTitle" column="FTITLE"/>
+		<result property="fContent" column="FCONTENT"/>
+		<result property="fStatus" column="F_STATUS"/>
+		<result property="fCreateDate" column="F_CREATE_DATE"/>
+		<result property="fModifyDate" column="F_MODIFY_DATE"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM FAQ
+		WHERE F_STATUS='Y'
+	</select>
+	
+	<!-- FAQ 게시글 조회 -->
+	<select id="selectList" resultMap="faqResultSet">
+		SELECT *
+		FROM FAQ
+		WHERE F_STATUS='Y'
+		ORDER BY FNO DESC
+	</select>
+	
+	<!-- FAQ 게시글 상세보기 -->
+	<select id="selectFaq" parameterType="_int" resultMap="faqResultSet">
+		SELECT *
+		FROM FAQ
+		WHERE FNO=#{fNo}
+		AND F_STATUS='Y'
+	</select>
+	
+	<!-- FAQ 게시글 작성 -->
+	<select id="FAQInsert" parameterType="faq">
+		INSERT INTO FAQ VALUES(
+		FAQ_SEQ.NEXTVAL, #{fWriter}, #{fTitle}, #{fContent},
+		DEFAULT, SYSDATE, SYSDATE
+		)
+	</select>
+	
+	<!-- FAQ 게시글 수정 -->
+	<select id="FAQUpdate" parameterType="faq">
+		UPDATE FAQ
+		SET FTITLE=#{fTitle}, FCONTENT=#{fContent},
+			F_MODIFY_DATE=SYSDATE
+		WHERE FNO=#{fNo}
+	</select>
+	
+	<!-- FAQ 게시글 삭제 -->
+	<update id="faqDelete"	parameterType="_int">
+		UPDATE FAQ
+		SET F_STATUS='N'
+		WHERE FNO=#{fNo}
+	</update>
+	
+	<select id="searchListCount" resultType="_int" parameterType="sc_Search">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM FAQ
+		<where>
+			F_STATUS='Y'
+		</where>
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND FTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND FCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (FTITLE LIKE #{sv}
+						OR FCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="faqSearchList" parameterType="sc_Search" resultMap="faqResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM FAQ
+		<where>
+			F_STATUS='Y'
+			<choose>
+				<when test="searchCondition == 'title'">
+				AND FTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND FCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (FTITLE LIKE #{sv}
+						OR FCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY FNO DESC
+	</select>
+	
+	
+	
+</mapper>
