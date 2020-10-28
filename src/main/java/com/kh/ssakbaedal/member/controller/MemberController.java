@@ -26,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
+import com.kh.ssakbaedal.mail.model.service.MailService;
+import com.kh.ssakbaedal.mail.model.vo.Mail;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
 import com.kh.ssakbaedal.member.model.service.MemberService;
 import com.kh.ssakbaedal.member.model.vo.Member;
@@ -39,6 +41,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService mService;
+	@Autowired
+	private MailService mailService;
+	
 	
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
@@ -91,11 +96,12 @@ public class MemberController {
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser != null) {
-
-			return "redirect:home.do";
+			model.addAttribute("loginUser", loginUser);
 		}else {
 			throw new MemberException("로그인에 실패하였습니다.");
 		}
+
+		return "redirect:home.do";
 	}
 
 	@RequestMapping("logout.do")
@@ -104,7 +110,21 @@ public class MemberController {
 		
 		return "redirect:login.do";
 	}
-	
+	//중복확인
+	@RequestMapping(value = "checkId.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkId(Member m) {
+		
+		int result = mService.checkId(m);
+
+		if(result > 0) {
+			return "No";
+			
+		} else {
+			return "Yes";
+		}
+	}
+	//일반회원 회원가입
 	@RequestMapping("mInsert.do")
 	public String memberInsert(Member m, RedirectAttributes rd) {
 
@@ -113,16 +133,20 @@ public class MemberController {
 		if(result > 0) {
 			rd.addFlashAttribute("msg", "회원가입이 완료 되었습니다. 로그인 해주세요.");
 			return "redirect:login.do";
-			
 		} else {
 			throw new MemberException("회원 가입에 실패하였습니다.");
 		}
 		
 	}
+	
+	//매장회원 회원가입
 	@RequestMapping("sInsert.do")
 	public String storeInsert(Member m, Store s,MultipartHttpServletRequest request,
+			@RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
 			@RequestParam(value="bfile")MultipartFile bfile,@RequestParam(value="sfile")MultipartFile sfile,
 			@RequestParam(value="mnFile") MultipartFile[] mnFile,@ModelAttribute MenuList menuList,RedirectAttributes rd) {
+		
+		s.setsAddress(post + "," + address1 + "," + address2);
 		
 		String renamebFileName = saveFile(bfile,request);
 		Attachment bf = new Attachment();
@@ -157,6 +181,8 @@ public class MemberController {
 		}
 		
 	}
+	
+	//파일 이름 변경
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		System.out.println("변경에 들어온것"+file);
@@ -184,6 +210,7 @@ public class MemberController {
 		return renameFileName;
 	}
 	
+	//아이디 찾기
 	@RequestMapping(value = "findId.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String findId(Member m) {
@@ -196,19 +223,47 @@ public class MemberController {
 			return "null";
 		}
 	}
-	@RequestMapping(value = "checkId.do", method = RequestMethod.POST)
+	
+	//비밀번호 찾기
+	@RequestMapping(value = "findPwd.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String checkId(Member m) {
-		
-		int result = mService.checkId(m);
+	public String findPwd(Member m) throws Exception {
 
-		if(result > 0) {
-			return "No";
+		Member findPwd = mService.findPwd(m);
+
+		if (findPwd != null) {
 			
+			String tmp = "";
+			
+			for(int i=0; i<9; i++) {
+				int div = (int) Math.floor( Math.random() * 2 );
+				if(div == 0) {
+					tmp+= (char) (Math.random() * 10 + '0') ;
+				}else {
+					tmp+= (char) (Math.random() * 26 + 65) ;
+				}
+			}
+
+			findPwd.setmPwd(tmp);
+			
+			Mail mail = new Mail();
+	        mail.setMailFrom("abc7846www@naver.com");
+	        mail.setMailTo(findPwd.getmEmail());
+	        mail.setMailSubject("[싹배달]임시비밀번호가 도착하였습니다.");
+	        mail.setMailContent(findPwd.getmId()+" 님의 임시 비밀번호는"+tmp+"입니다. 로그인 후 비밀번호를 변경해주세요.");
+			
+			
+			
+	        mailService.sendEmail(mail);
+
+			int result = mService.updatePwd(findPwd);
+
+			return "yes";
 		} else {
-			return "Yes";
+			return "null";
 		}
 	}
+	
 	
 	
 }

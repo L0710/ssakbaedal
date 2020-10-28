@@ -188,7 +188,7 @@
 
 	<div id="header">
 		<div id="address" align="left">
-		<c:if test="${ loginUser.mType == 1 || loginUser.mType == 2}"> 
+		<c:if test="${ loginUser.mType != 3}"> 
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
  			</c:if> 

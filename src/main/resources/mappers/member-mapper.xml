@@ -69,13 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				'Y', #{aType},#{refId})
 	</insert>
 	
-	<update id="updateMember" parameterType="Member">
-		UPDATE MEMBER
-		SET NAME=#{name}, GENDER=#{gender}, EMAIL=#{email}, AGE=#{age},
-		    PHONE=#{phone}, ADDRESS=#{address}, UPDATE_DATE=SYSDATE
-		WHERE ID=#{id}
-	</update>
-	
 	<update id="deleteMember" parameterType="string">
 		UPDATE MEMBER
 		SET M_STATUS='N'
@@ -95,7 +88,19 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND MEMAIL=#{mEmail}
 	</select>
 	
+	<select id="findPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNAME=#{mName}
+		AND MEMAIL=#{mEmail}
+		AND MID=#{mId}
+	</select>
 	
+	<update id="updatePwd" parameterType="Member">
+		UPDATE MEMBER
+		SET MPWD=#{mPwd},M_MODIFY_DATE=SYSDATE
+		WHERE MNO=#{mNo}
+	</update>
 	
 	
 </mapper>

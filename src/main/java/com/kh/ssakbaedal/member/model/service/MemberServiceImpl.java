@@ -25,26 +25,7 @@ public class MemberServiceImpl implements MemberService {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@Override
-	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Member loginMember(Member m) {
-
-		Member loginUser = mDao.selectMember(m);
-		System.out.println(loginUser);
-		if (loginUser != null && !bcryptPasswordEncoder.matches(m.getmPwd(), loginUser.getmPwd())) {
-
-			loginUser = null;
-		}
-		return loginUser;
-	}
-
-	@Override
 	public int insertMember(Member m) {
-
 		String encPwd = bcryptPasswordEncoder.encode(m.getmPwd());
 		m.setmPwd(encPwd);
 		m.setmType("2");
@@ -55,12 +36,7 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMember(String id) {
 		return mDao.deleteMember(id);
 	}
-
-	@Override
-	public Member findId(Member m) {
-		return mDao.findId(m);
-	}
-
+	
 	@Override
 	public int checkId(Member m) {
 		return mDao.checkId(m);
@@ -96,6 +72,35 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result;
 	}
+
+	@Override
+	public Member loginMember(Member m) {
+
+		Member loginUser = mDao.selectMember(m);
+		System.out.println(loginUser);
+		if (loginUser != null && !bcryptPasswordEncoder.matches(m.getmPwd(), loginUser.getmPwd())) {
+			loginUser = null;
+		}
+		return loginUser;
+	}
+	
+	@Override
+	public Member findId(Member m) {
+		return mDao.findId(m);
+	}
+
+	@Override
+	public Member findPwd(Member m) {
+		return mDao.findPwd(m);
+	}
+
+	@Override
+	public int updatePwd(Member findPwd) {
+		String encPwd = bcryptPasswordEncoder.encode(findPwd.getmPwd());
+		findPwd.setmPwd(encPwd);
+		return mDao.updatePwd(findPwd);
+	}
+
 }
 
 
