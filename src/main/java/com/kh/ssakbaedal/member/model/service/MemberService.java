@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
+import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.member.model.vo.Member;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
@@ -32,6 +34,21 @@ public interface MemberService {
 
 
 	public int updatePwd(Member findPwd);
+
+	// (관리자)전체 회원 리스트 count
+	public int selectmemListCount();
+
+	// (관리자)전체 회원 리스트 조회
+	public ArrayList<Member> selectmemList(PageInfo pi);
+
+	// (관리자)회원 상태 변경
+	public int updateStatus(int[] num);
+
+	// (스케줄링)밴당한 회원 리스트 가져오기
+	public ArrayList<Member> selectBannedList();
+
+	// (스케줄링)회원 상태 n->y
+	public int releaseMember(int mNo);
 
 }
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
+import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.member.model.dao.MemberDao;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
 import com.kh.ssakbaedal.member.model.vo.Member;
@@ -99,6 +100,41 @@ public class MemberServiceImpl implements MemberService {
 		String encPwd = bcryptPasswordEncoder.encode(findPwd.getmPwd());
 		findPwd.setmPwd(encPwd);
 		return mDao.updatePwd(findPwd);
+	}
+
+	@Override
+	public int selectmemListCount() {
+		return mDao.selectmemListCount();
+	}
+
+	@Override
+	public ArrayList<Member> selectmemList(PageInfo pi) {
+		return mDao.selectmemList(pi);
+	}
+
+	@Override
+	public int updateStatus(int[] num) {
+		int result = 0;
+		
+		for(int i = 0; i < num.length; i++) {
+			result += mDao.updateStatus(num[i]);
+		}
+		
+		if(result < num.length) {
+			return 0;
+		}else {
+			return 1;
+		}
+	}
+
+	@Override
+	public ArrayList<Member> selectBannedList() {
+		return mDao.selectBannedList();
+	}
+
+	@Override
+	public int releaseMember(int mNo) {
+		return mDao.releaseMember(mNo);
 	}
 
 }

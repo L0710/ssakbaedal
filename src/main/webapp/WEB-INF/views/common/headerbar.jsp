@@ -198,7 +198,7 @@
 			<c:if test="${ !empty sessionScope.loginUser }">
 				<div class="btnGroup" align="right">
 					<c:url var="logout" value="logout.do" />
-					<c:url var="mypage_admin" value="mypage_admin.do" />
+					<c:url var="mypage_admin" value="memlist.do" />
 					<c:url var="mypage_user" value="olist.do">
 						<c:param name="mNo" value="${ loginUser.mNo }"/>
 					</c:url>

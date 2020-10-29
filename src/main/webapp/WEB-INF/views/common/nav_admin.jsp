@@ -32,7 +32,7 @@
 </head>
 <body>
 	<nav id="nav">
-		<a class="link" href="#">회원관리</a>
+		<a class="link" href="memlist.do">회원관리</a>
 		<a class="link" href="#">업체승인</a>
 		<a class="link" href="elist.do">이벤트</a>
 		<a class="link" href="#">문의사항</a>
