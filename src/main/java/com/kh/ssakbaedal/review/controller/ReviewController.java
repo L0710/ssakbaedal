@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.order.model.service.OrderService;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
 import com.kh.ssakbaedal.review.model.exception.ReviewException;
@@ -39,13 +40,13 @@ public class ReviewController {
 	public ModelAndView reviewList(ModelAndView mv, int mNo, @RequestParam(value = "page", required = false) Integer page) {
 		// 1. 전체 게시글 수 리턴 받기
 		int listCount = rService.selectListCount(mNo);
-		System.out.println("lCount : " + listCount);
+//		System.out.println("lCount : " + listCount);
 
 		// 현재 페이지 계산
 		int currentPage = page != null ? page : 1;
 
 		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 3, 3);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5, 3);
 
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Review> list = rService.selectList(pi, mNo);
@@ -93,14 +94,14 @@ public class ReviewController {
 	}
 
 	@RequestMapping("rinsert.do")
-	public String reviewInsert(Review r, HttpServletRequest request, Attachment at, int oNo, int mNo,
+	public String reviewInsert(Review r, HttpServletRequest request, int oNo, int mNo,
 			@RequestParam(value = "uploadFile", required = false) MultipartFile[] upFile) {
 		
 		r.setoNo(oNo);	// 리뷰 fk이자 주문pk set, attachment에서 refId로 사용할 것
 
 		int result = 0;
 		
-		ArrayList<Attachment> files = new ArrayList<>();
+		ArrayList<Attachment> files = new ArrayList<Attachment>();
 		
 		for(MultipartFile f:upFile) {
 			if(!f.isEmpty()) {
@@ -110,6 +111,7 @@ public class ReviewController {
 				
 				// 파일 저장이 잘 되었다면 DB로 보낼 Attachment에 파일명 관련 컬럼을 채워줌
 				if (renameFileName != null) {
+					Attachment at = new Attachment();
 					at.setOriginalFileName(f.getOriginalFilename());
 					at.setChangeFileName(renameFileName);
 					at.setFilePath(savePath);
@@ -117,6 +119,7 @@ public class ReviewController {
 				}
 			}
         }
+		
 //		System.out.println("files size:" + files.size());
 		
 		if(files.size() > 0) {
@@ -130,6 +133,7 @@ public class ReviewController {
 		} else {
 			throw new ReviewException("리뷰 등록에 실패하였습니다.");
 		}
+		
 	}
 
 	// 파일 저장을 위한 별도의 메소드
@@ -177,22 +181,135 @@ public class ReviewController {
 		return savePath;
 	}
 
-	@RequestMapping("rdetail.do")
-	public ModelAndView ReviewDetail(ModelAndView mv, int oNo, @RequestParam("page") Integer page,
-			HttpServletRequest request, HttpServletResponse response) {
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\ruploadFiles"; 
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) 
+			f.delete();
+	}
+	
+	@RequestMapping("rdelete.do")
+	public String reviewDelete(int oNo, int mNo, HttpServletRequest request) {
+		
+		int result = 0;
+		ArrayList<Attachment> files = rService.selectImg(oNo);
+//		System.out.println("files size:"+ files.size());
+		
+		if(files.size() > 0) {
+			for(Attachment f:files) {
+				System.out.println("f original:"+f.getOriginalFileName());
+				
+				if(f.getOriginalFileName() != null) {
+					deleteFile(f.getChangeFileName(), request);
+				}
+				result = rService.deleteImg(oNo);
+				
+	        }
+		}
+		
+		result = rService.deleteReview(oNo);
+		
+		if(result > 0) {
+			return "redirect:rlist.do?mNo="+mNo;
+		}else {
+			throw new ReviewException("리뷰 삭제에 실패하였습니다");
+		}
+		
+	}
+	
+	// 매장에서 리뷰 리스트 확인
+	@RequestMapping("srlist.do")
+	public ModelAndView rList(ModelAndView mv, int mNo, @RequestParam(value = "page", required = false) Integer page) {
+//		System.out.println("mNo:"+mNo);
+		// 1. 전체 게시글 수 리턴 받기
+		int listCount = rService.selectrListCount(mNo);
+//		System.out.println("lCount : " + listCount);
 
+		// 현재 페이지 계산
 		int currentPage = page != null ? page : 1;
 
-		Review review = rService.selectReview(oNo);
-		ArrayList<Attachment> alist = rService.selectImg(oNo);
+		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 
-		if (review != null) {
-			mv.addObject("e", review).addObject("currentPage", currentPage).addObject("at", alist)
-					.setViewName("review/reviewDetailView");
+		// 페이징 정보에 맞는 게시글 리스트 셀렉
+		ArrayList<Review> list = rService.selectrList(pi, mNo);
+//		System.out.println("list : " + list);
+//		System.out.println("pi : " + pi);
+
+		if (list != null) {
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("review/reviewList_store");
 		} else {
-			throw new ReviewException("리뷰 상세조회에 실패하였습니다.");
+			throw new ReviewException("리뷰 목록 조회에 실패하였습니다.");
 		}
 
+		return mv;
+	}
+	
+	// 답글 입력폼 이동
+	@RequestMapping("s_rinsertView.do")
+	public ModelAndView sreviewInsertView(ModelAndView mv, 
+					int oNo, @RequestParam("page") Integer page,
+					HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("oNo:"+oNo);
+		int currentPage = page != null ? page : 1;
+	
+		V_Review review = rService.selectRDetail(oNo);
+//		System.out.println("review:"+review);
+		String rWriter = rService.selectId(oNo);
+		review.setrWriter(rWriter);
+//		System.out.println("rWriter:"+rWriter);
+		
+		if(review != null && rWriter != null) {
+			mv.addObject("r", review)
+				.addObject("currentPage", currentPage)
+				.setViewName("review/reviewInsertForm_store");
+		} else {
+			throw new ReviewException("리뷰 상세조회+입력폼에 실패하였습니다.");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("s_rinsert.do")
+	public String replyInsert(Reply r, HttpServletRequest request, int oNo, int mNo) {
+		
+//		System.out.println("r:"+r);
+		
+		int result = rService.insertReply(r);
+		
+		if (result > 0) {
+			return "redirect:srlist.do?mNo="+mNo;
+		} else {
+			throw new ReviewException("답글 등록에 실패하였습니다.");
+		}
+
+	}
+	
+	@RequestMapping("reviewDetailView.do")
+	public ModelAndView reviewDetailView(ModelAndView mv, 
+			int oNo, @RequestParam("page") Integer page,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		int currentPage = page != null ? page : 1;
+		
+		V_Review review = rService.selectRDetail(oNo);
+		String rWriter = rService.selectId(oNo);
+		review.setrWriter(rWriter);
+//		System.out.println("r:"+review);
+		
+		if(review != null  && rWriter != null) {
+			mv.addObject("r", review)
+				.addObject("currentPage", currentPage)
+				.setViewName("review/reviewDetail_store");
+		} else {
+			throw new ReviewException("리뷰 상세 조회에 실패하였습니다.");
+		}
+		
 		return mv;
 	}
 }

@@ -36,10 +36,15 @@ scope="application"/>
 </style>
 </head>
 <body>
+	<c:url var="reviewSetting" value="srlist.do">
+		<c:param name="mNo" value="${ loginUser.mNo }" />
+		<c:param name="page" value="${ currentPage }" />
+	</c:url>
 	<nav id="nav">
 		<a class="link" href="${contextPath}/goOrderView.do">주문관리</a>
 		<a class="link" href="${contextPath}/storeManage.do">매장관리</a>
 		<a class="link" href="${contextPath}/statistics.do">매출현황</a>
+		<a class="link" href="${reviewSetting}">리뷰관리</a>
 	</nav>
 	
 </body>

@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -269,18 +270,28 @@ public class EventController {
 	}
 	
 	@RequestMapping("esearch.do")
-	public String eventSearch(Search search, Model model) {
-		/*
-		System.out.println(search.getSearchCondition());
-		System.out.println(search.getSearchValue());
-		*/
+	public String eventSearch(Search search, Model model, HttpSession session,
+	         	@RequestParam(value="page", required=false) Integer page) {
 		
-		ArrayList<Event> searchList = eService.searchList(search);
+		/*System.out.println(search.getSearchCondition());
+		System.out.println(search.getSearchValue());*/
+		
+		// [페이징] 
+	    /*int listCount = eService.searchListCount(search); // 검색한 전체 글 수
+	            
+	    int currentPage = page != null ? page : 1; // 현재 페이지 계산
+	            
+	    PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10); // 페이지 
+*/
+		
+		ArrayList<Event> searchList = eService.searchList(search, pi);
 		
 		model.addAttribute("list", searchList);
+//		model.addAttribute("pi", pi);
 		model.addAttribute("search", search);
 		
 		return "event/eventListView";
+	    return "";
 	}
 	
 	@RequestMapping("pupdate.do")
