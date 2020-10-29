@@ -19,11 +19,22 @@
 	width: 80%;
 }
 
+#orderList th {
+	padding: 0.2em;
+}
+
 .writeBtn {
 	background-color: transparent;
 	border: 0;
 	outline: 0;
 	font-size: 11px;
+}
+.oStatus {
+	border: 1px solid lightgray;
+	background-color: white;
+	width: 50px;
+	font-size: 10px;
+	padding: 0.5em;
 }
 </style>
 </head>
@@ -50,16 +61,24 @@
 								<th>주문날짜 : ${ orderTime }</th>
 									<c:choose>
 										<c:when test="${ o.oStatus eq '1' }">
-											<th style="color: brown">결제완료</th>
+											<th>
+												<button class="oStatus" style="color:orange"><strong>결제완료</strong></button>
+											</th>
 										</c:when>
 										<c:when test="${ o.oStatus eq '2' }">
-											<th style="color: darkgreen">주문확인</th>
+											<th style="color: darkgreen">
+												<button class="oStatus" style="color:darkgreen"><strong>주문확인</strong></button>
+											</th>
 										</c:when>
 										<c:when test="${ o.oStatus eq '3' }">
-											<th style="color: cornflowerblue">기사픽업</th>
+											<th style="color: cornflowerblue">
+												<button class="oStatus" style="color:blue"><strong>기사픽업</strong></button>
+											</th>
 										</c:when>
 										<c:otherwise>
-											<th style="color: black">결제취소</th>
+											<th>
+												<button class="oStatus" style="color:red"><strong>결제취소</strong></button>
+											</th>
 										</c:otherwise>
 									</c:choose>
 							</tr>

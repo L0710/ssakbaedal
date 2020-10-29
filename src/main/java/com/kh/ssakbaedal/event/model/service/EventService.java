@@ -46,5 +46,8 @@ public interface EventService {
 
 		// 9. 포인트 지급 이력 검사
 		public PointHistory pointHistory(PointHistory ph);
+		
+		// 10. 검색한 게시글 개수
+		public int searchListCount(Search search);
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.order.model.vo.ODetail;
 
 
@@ -21,6 +22,7 @@ public class V_Review {
 	MNO	NUMBER
 	ONO	NUMBER*/
 	
+	private String rWriter;	// 리뷰 작성자명
 	private String originalFileName;	// 기존파일명
 	private String changeFileName;	// 변경파일명
 	private String sName;	// 점포명
@@ -35,13 +37,15 @@ public class V_Review {
 	private int oNo;	// 주문번호
 	private ArrayList<ODetail> oDetail;	// 메뉴
 	private ArrayList<Attachment> attachment;	// 첨부파일
+	private ArrayList<Reply> reply;	// 첨부파일
 	
 	public V_Review() {}
 
-	public V_Review(String originalFileName, String changeFileName, String sName, String sTel, Date oTime,
-			String rContent, int rStar, String rStatus, int mnName, int odNum, int mNo, int oNo,
-			ArrayList<ODetail> oDetail, ArrayList<Attachment> attachment) {
+	public V_Review(String rWriter, String originalFileName, String changeFileName, String sName, String sTel,
+			Date oTime, String rContent, int rStar, String rStatus, int mnName, int odNum, int mNo, int oNo,
+			ArrayList<ODetail> oDetail, ArrayList<Attachment> attachment, ArrayList<Reply> reply) {
 		super();
+		this.rWriter = rWriter;
 		this.originalFileName = originalFileName;
 		this.changeFileName = changeFileName;
 		this.sName = sName;
@@ -56,6 +60,15 @@ public class V_Review {
 		this.oNo = oNo;
 		this.oDetail = oDetail;
 		this.attachment = attachment;
+		this.reply = reply;
+	}
+
+	public String getrWriter() {
+		return rWriter;
+	}
+
+	public void setrWriter(String rWriter) {
+		this.rWriter = rWriter;
 	}
 
 	public String getOriginalFileName() {
@@ -170,13 +183,23 @@ public class V_Review {
 		this.attachment = attachment;
 	}
 
+	public ArrayList<Reply> getReply() {
+		return reply;
+	}
+
+	public void setReply(ArrayList<Reply> reply) {
+		this.reply = reply;
+	}
+
 	@Override
 	public String toString() {
-		return "V_Review [originalFileName=" + originalFileName + ", changeFileName=" + changeFileName + ", sName="
-				+ sName + ", sTel=" + sTel + ", oTime=" + oTime + ", rContent=" + rContent + ", rStar=" + rStar
-				+ ", rStatus=" + rStatus + ", mnName=" + mnName + ", odNum=" + odNum + ", mNo=" + mNo + ", oNo=" + oNo
-				+ ", oDetail=" + oDetail + ", attachment=" + attachment + "]";
+		return "V_Review [rWriter=" + rWriter + ", originalFileName=" + originalFileName + ", changeFileName="
+				+ changeFileName + ", sName=" + sName + ", sTel=" + sTel + ", oTime=" + oTime + ", rContent=" + rContent
+				+ ", rStar=" + rStar + ", rStatus=" + rStatus + ", mnName=" + mnName + ", odNum=" + odNum + ", mNo="
+				+ mNo + ", oNo=" + oNo + ", oDetail=" + oDetail + ", attachment=" + attachment + ", reply=" + reply
+				+ "]";
 	}
+
 
 
 }
