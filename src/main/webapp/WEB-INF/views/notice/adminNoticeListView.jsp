@@ -6,32 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
-        * {
-                font-family: 'Nanum Gothic', sans-serif;
-            }
-        
-        header, section, aside, footer{
-            box-sizing: border-box;
-            display: block;
-        }
-        
-        body{
-            width: 1200px;
-            height: 800px;
-            margin: auto;
-        }
         
         section {
-            margin-left: 186.8px;
-            width: 1013.5px;
+            width: 100%;
             height: 60%;
-            float: left; 
+            float: left;
         }
         
-        #FAQ_table {
-            border-collapse: collapse;
+        #notice_table{
+        	border-collapse: collapse;
             background-color: white;
             width: 80%;
             overflow: hidden;
@@ -59,7 +43,6 @@
             cursor: pointer;
             margin: 3px;
             padding: 10px 20px;
-            outline: 0; /* 버튼 클릭시 테두리 생성하지 않게함.*/
         }
         
         .btn-ghost.gray {
@@ -94,20 +77,65 @@
             color: white;
         }
         
+        .logoArea {
+            margin-top: 1%;
+        }
+        
         .sidemenu {
             width: 150px;
             position: fixed;
             top: 200px;
             /*left: 1290px;*/
-            margin-left: 12.5px;
+            margin-left: 1035px;
             margin-top: 100px;
         }
         
         .contents {
             margin-top: 1%;
             padding: 3%;
-            border: 1px solid rgb(130, 180, 127);
+            border: 1px solid lightgray;
             height: 100%;
+        }
+        
+        .btnGroup {
+            margin-top: 1%;
+        }        
+        
+        #logo {
+            width: 100%;
+            height: 200px;
+        }
+        
+        #addtxt {
+            height: 25px;
+            background-color: white;
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        #mypageBtn,
+        #logoutBtn {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        
+        #address {
+            float: left;
+        }
+        
+        #goEvent, #goRank {
+            width: 100%;
+        }
+        
+        #insertReplyBtn {
+            width: 60px;
+            height: 30px;
+            padding: 0;
+        }
+        
+        #notice_table tr:hover {
+            cursor: pointer;
+            background: rgba(130, 180, 127, 0.1);
         }
         
         #asdf{
@@ -116,75 +144,62 @@
             text-align: center;
         }
 
-        #asdf span{
-            color: rgb(143,145,142);
-        }
-        
-        #FAQ_table tr:hover {
-            cursor: pointer;
-            background: rgba(130, 180, 127, 0.1);
-        }
-        
-        #insertBtn {
-        	margin-right: 100px;
-        }
-
 </style>
+
 
 </head>
 <body>
-<div class="wrapper">
+	<div class="wrapper">
         <c:import url="../common/headerbar.jsp"/>
         
-        <section>
-            <div class="contents" align="center">
-                <div id="asdf">
-                    <h1>FAQ</h1>
-                    <span>자주 묻는 질문</span>
+        <section >
+            <c:import url="../common/nav_admin.jsp"/>
+            
+            <div class="contents">
+            	<div id="asdf">
+                    <h1>공지사항</h1>
                 </div>
+            	<br>
                 <br>
-                <br>
-                <table id="FAQ_table" align="center">
+                <table id="notice_table" align="center">
                     <tr>
-                        <th width="20%">NO</th>
+                        <th width="10%">NO</th>
                         <th>제목</th>
-                        <th width="20%">작성자</th>
+                        <th width="15%">구분</th>
+                        <th width="15%">작성일</th>
                     </tr>
 					
-					<c:forEach var="f" items="${ flist }">
-						<c:url var="fdetail" value="FAQDetail.do">
-							<c:param name="fNo" value="${ f.fNo }"/>
+					<c:forEach var="n" items="${ nlist }">
+						<c:url var="andetail" value="anDetail.do">
+							<c:param name="nId" value="${ n.nId }"/>
 							<c:param name="page" value="${ pi.currentPage }"/>
 							<c:param name="searchCondition" value="${ search.searchCondition }"/>
 							<c:param name="searchValue" value="${ search.searchValue }"/>
 						</c:url>
-						<tr onclick="location.href='${contextPath}/${ fdetail }'">
-							<td>${ f.fNo }</td>
-							<td>${ f.fTitle }</td>
-							<td>${ f.fWriter }</td>
-						</tr>
+	                    <tr onclick="location.href='${contextPath}/${ andetail }'">
+	                        <td>${ n.nId }</td>
+	                        <td>${ n.nTitle }</td>
+	                        <td>${ n.nSort }</td>
+	                        <td>${ n.nCreateDate }</td>
+	                    </tr>
 					</c:forEach>
-					
                 </table>
                 <br>
-                <!-- 관리자만 보이게 함. -->
-                <c:if test="${ !empty loginUser && loginUser.mNo == '1' }">
-					<div id="insertBtn" align="right">
-		            	<button class="btn-ghost green" onclick="location.href='inFAQ.do'">작성</button>
-		            </div>
-	            </c:if>
-	            
+                <div align="right" style="margin-right: 10%">
+                    <button class="btn-ghost green" id="insertBtn" align="right" onclick="location.href='innView.do'">공지작성</button>
+                </div>
+
                 <div class="pagingArea" align="center" style="font-size:14px;">
                 
                 	<!-- 검색 후 페이징 처리에 대한 수정 -->
 					<!-- 검색한 값이 있는지 없는지 여부에 따라 넘어갈 주소값을 결정함 -->
 					<c:if test="${ search.searchValue eq null }">
 						<!-- 검색한 값이 없으면 selectList.bo 호출 -->
-						<c:set var="loc" value="/service.do" scope="page"/>
+						<c:set var="loc" value="/nlist.do" scope="page"/>
 					</c:if>
 					<c:if test="${ search.searchValue ne null }">
 						<!-- 검색한 값이 있으면 search.bo 호출 -->
-						<c:set var="loc" value="/scSearch.do" scope="page"/>
+						<c:set var="loc" value="/anSearch.do" scope="page"/>
 					</c:if>
                 
                     <!-- 페이징 -->
@@ -237,22 +252,22 @@
                 <br>
 
                 <div id="searchArea" align="center">
-                	<form action="scSearch.do" name="searchCondition">
+                	<form action="anSearch.do" name="searchCondition">
 	                    <select id="searchCondition" name="searchCondition" style="width:50px;">
 	                    	
 	                        <option value="all" 
-	                        <c:if test="${ sc_Search.searchCondition == 'all' }">selected
+	                        <c:if test="${ nSearch.searchCondition == 'all' }">selected
 	                        </c:if>>
 	                        	전체
 	                        </option>
 	                        
 	                        <option value="title"
-	                        <c:if test="${ sc_Search.searchCondition == 'title' }">selected
+	                        <c:if test="${ nSearch.searchCondition == 'title' }">selected
 	                        </c:if>>
 	                        	제목
 	                        </option>
 	                        <option value="content"
-	                        <c:if test="${ sc_Search.searchCondition == 'content' }">selected
+	                        <c:if test="${ nSearch.searchCondition == 'content' }">selected
 	                        </c:if>>	
 	                        	내용
 	                        </option>
@@ -265,12 +280,9 @@
             </div>
             
         </section>
-        
-        <c:import url="../common/sidemenu_sCenter.jsp"/>
 
     </div>
     
     <c:import url="../common/footer.jsp"/>
-    
 </body>
 </html>

@@ -513,7 +513,9 @@
     </div>
 
     </section>
+
     <c:import url="../common/sidemenu_store.jsp" />
+
 
     </div>
     <br><br><br><br><br><br>

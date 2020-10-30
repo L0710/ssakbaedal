@@ -155,8 +155,8 @@
                             <td id="td_button" colspan="2">
                                 <br>
                                 <br>
+                                <button type="submit" class="btn-ghost green">수정</button>
                                 <button type="button" class="btn-ghost gray"  onclick="history.go(-1)">취소</button>
-                                <button type="submit" class="btn-ghost gray">수정</button>
                             </td>
                         </tr>
                     </table>

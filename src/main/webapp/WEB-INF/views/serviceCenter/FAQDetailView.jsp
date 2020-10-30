@@ -183,8 +183,8 @@
                             	<c:url var="fdelete" value="FAQDelete.do">
 									<c:param name="fNo" value="${ faq.fNo }"/>
 								</c:url>
-                            	<button class="btn-ghost gray" onclick="location.href='${upFQAView}'">수정하기</button>
-                            	<button class="btn-ghost gray" onclick="faqDelete();">삭제하기</button>
+                            	<button class="btn-ghost green" onclick="location.href='${upFQAView}'">수정하기</button>
+                            	<button class="btn-ghost red" onclick="faqDelete();">삭제하기</button>
                             </c:if>
                         </td>
                     </tr>

@@ -58,9 +58,6 @@ public class serviceCenterController {
 									@RequestParam("searchCondition") String searchCondition,
 									@RequestParam("searchValue") String searchValue) {
 		
-	//System.out.println(searchCondition);
-	//System.out.println(searchValue);
-		
 		int currentPage = page != null ? page : 1;
 		
 		faq faq = scService.selectFaq(fNo);
