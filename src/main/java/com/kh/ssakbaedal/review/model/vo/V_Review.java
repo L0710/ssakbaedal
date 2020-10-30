@@ -23,8 +23,6 @@ public class V_Review {
 	ONO	NUMBER*/
 	
 	private String rWriter;	// 리뷰 작성자명
-	private String originalFileName;	// 기존파일명
-	private String changeFileName;	// 변경파일명
 	private String sName;	// 점포명
 	private String sTel;	// 점포연락처
 	private Date oTime; // 주문날짜
@@ -36,18 +34,17 @@ public class V_Review {
 	private int mNo;	// 주문회원번호
 	private int oNo;	// 주문번호
 	private ArrayList<ODetail> oDetail;	// 메뉴
-	private ArrayList<Attachment> attachment;	// 첨부파일
-	private ArrayList<Reply> reply;	// 첨부파일
+	private ArrayList<Attachment> attachment;	// 리뷰첨부이미지
+	private ArrayList<Attachment> sAttachment;	// 매장대표사진
+	private ArrayList<Reply> reply;	// 답글
 	
 	public V_Review() {}
 
-	public V_Review(String rWriter, String originalFileName, String changeFileName, String sName, String sTel,
-			Date oTime, String rContent, int rStar, String rStatus, int mnName, int odNum, int mNo, int oNo,
-			ArrayList<ODetail> oDetail, ArrayList<Attachment> attachment, ArrayList<Reply> reply) {
+	public V_Review(String rWriter, String sName, String sTel, Date oTime, String rContent, int rStar, String rStatus,
+			int mnName, int odNum, int mNo, int oNo, ArrayList<ODetail> oDetail, ArrayList<Attachment> attachment,
+			ArrayList<Attachment> sAttachment, ArrayList<Reply> reply) {
 		super();
 		this.rWriter = rWriter;
-		this.originalFileName = originalFileName;
-		this.changeFileName = changeFileName;
 		this.sName = sName;
 		this.sTel = sTel;
 		this.oTime = oTime;
@@ -60,6 +57,7 @@ public class V_Review {
 		this.oNo = oNo;
 		this.oDetail = oDetail;
 		this.attachment = attachment;
+		this.sAttachment = sAttachment;
 		this.reply = reply;
 	}
 
@@ -69,22 +67,6 @@ public class V_Review {
 
 	public void setrWriter(String rWriter) {
 		this.rWriter = rWriter;
-	}
-
-	public String getOriginalFileName() {
-		return originalFileName;
-	}
-
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
-	}
-
-	public String getChangeFileName() {
-		return changeFileName;
-	}
-
-	public void setChangeFileName(String changeFileName) {
-		this.changeFileName = changeFileName;
 	}
 
 	public String getsName() {
@@ -183,6 +165,14 @@ public class V_Review {
 		this.attachment = attachment;
 	}
 
+	public ArrayList<Attachment> getsAttachment() {
+		return sAttachment;
+	}
+
+	public void setsAttachment(ArrayList<Attachment> sAttachment) {
+		this.sAttachment = sAttachment;
+	}
+
 	public ArrayList<Reply> getReply() {
 		return reply;
 	}
@@ -193,13 +183,10 @@ public class V_Review {
 
 	@Override
 	public String toString() {
-		return "V_Review [rWriter=" + rWriter + ", originalFileName=" + originalFileName + ", changeFileName="
-				+ changeFileName + ", sName=" + sName + ", sTel=" + sTel + ", oTime=" + oTime + ", rContent=" + rContent
-				+ ", rStar=" + rStar + ", rStatus=" + rStatus + ", mnName=" + mnName + ", odNum=" + odNum + ", mNo="
-				+ mNo + ", oNo=" + oNo + ", oDetail=" + oDetail + ", attachment=" + attachment + ", reply=" + reply
-				+ "]";
+		return "V_Review [rWriter=" + rWriter + ", sName=" + sName + ", sTel=" + sTel + ", oTime=" + oTime
+				+ ", rContent=" + rContent + ", rStar=" + rStar + ", rStatus=" + rStatus + ", mnName=" + mnName
+				+ ", odNum=" + odNum + ", mNo=" + mNo + ", oNo=" + oNo + ", oDetail=" + oDetail + ", attachment="
+				+ attachment + ", sAttachment=" + sAttachment + ", reply=" + reply + "]";
 	}
-
-
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.review.model.vo.Review;
@@ -58,8 +59,8 @@ public class ReviewDao {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectrList", mNo, rowBounds);
 	}
 
-	public V_Review selectRDetail(int oNo) {
-		return sqlSession.selectOne("reviewMapper.selectRDetail", oNo);
+	public V_Review selectRDetail(No no) {
+		return sqlSession.selectOne("reviewMapper.selectRDetail", no);
 	}
 
 	public int deleteImg(int oNo) {

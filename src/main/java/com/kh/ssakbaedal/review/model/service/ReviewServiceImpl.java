@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.review.model.dao.ReviewDao;
@@ -72,8 +73,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public V_Review selectRDetail(int oNo) {
-		return rDao.selectRDetail(oNo);
+	public V_Review selectRDetail(No no) {
+		return rDao.selectRDetail(no);
 	}
 
 	@Override

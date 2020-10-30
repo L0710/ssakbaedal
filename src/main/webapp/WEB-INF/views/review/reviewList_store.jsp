@@ -30,6 +30,7 @@
 	width: 50px;
 	font-size: 10px;
 	padding: 0.5em;
+	text-decoration: none;
 }
 </style>
 </head>
@@ -62,6 +63,7 @@
 	                        	<td>
 	                        		<c:url var="reviewDetailView" value="reviewDetailView.do">
 										<c:param name="oNo" value="${ r.oNo }" />
+										<c:param name="mNo" value="${ loginUser.mNo }" />
 										<c:param name="page" value="${ pi.currentPage }" />
 									</c:url>
 									
@@ -106,6 +108,7 @@
 		                        		<td>
 		                        			<c:url var="s_rinsertView" value="s_rinsertView.do">
 												<c:param name="oNo" value="${ r.oNo }" />
+												<c:param name="mNo" value="${ loginUser.mNo }" />
 												<c:param name="page" value="${ pi.currentPage }" />
 											</c:url>
 		                        			<a class="reply" id="insertReplyBtn${ r.oNo }" href="${ s_rinsertView }">답글작성</a>
@@ -113,7 +116,7 @@
 		                        	</c:if>
 		                        	<c:if test="${ re.rContent ne null }">
 		                        		<td>
-		                        			<button class="reply">작성완료</button>
+		                        			<a class="reply" href="${ reviewDetailView }">작성완료</a>
 		                        		</td>
 		                        	</c:if>
 	                        	</c:forEach>

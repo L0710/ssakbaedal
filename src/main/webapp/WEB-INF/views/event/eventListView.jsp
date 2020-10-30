@@ -18,6 +18,10 @@
 	#eventList {
 		width: 80%;
 	}
+	
+	#eventList tr:hover {
+	cursor: pointer;
+	background: rgba(130, 180, 127, 0.1);
 </style>
 </head>
 <body>
@@ -170,17 +174,6 @@
                     </form>
                 </div>
 
-                <script>
-                    // 상세보기
-                    $(function(){
-                        $("#eventList td").mouseenter(function(){
-                            $(this).parent().css({"background":"lightgrey", "cursor":"pointer"});
-                        }).mouseout(function(){
-                            $(this).parent().css({"background":"white"});
-                        })
-                    })
-                    
-                </script>
             </div>
         </section>
         

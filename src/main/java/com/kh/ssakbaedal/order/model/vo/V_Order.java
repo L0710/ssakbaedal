@@ -3,6 +3,8 @@ package com.kh.ssakbaedal.order.model.vo;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
+
 public class V_Order {
 	/*MNO	NUMBER
 	OPHONE	VARCHAR2(15)
@@ -42,12 +44,14 @@ public class V_Order {
 	private int arrivalTime;	// 도착예정시간
 	private int oNo;	// 주문번호
 	private ArrayList<ODetail> ODetail;	// 메뉴
+	private ArrayList<Attachment> attachment;	// 메뉴
 	
 	public V_Order() {}
 
 	public V_Order(int mNo, String oPhone, String oAddress, Date oTime, String oStatus, String mnName, int odNum,
 			int mnPrice, int fee, int oPrice, String request, String sName, String sTel, String filePath, int pNo,
-			int oPoint, int arrivalTime, int oNo, ArrayList<com.kh.ssakbaedal.order.model.vo.ODetail> oDetail) {
+			int oPoint, int arrivalTime, int oNo, ArrayList<com.kh.ssakbaedal.order.model.vo.ODetail> oDetail,
+			ArrayList<Attachment> attachment) {
 		super();
 		this.mNo = mNo;
 		this.oPhone = oPhone;
@@ -68,6 +72,7 @@ public class V_Order {
 		this.arrivalTime = arrivalTime;
 		this.oNo = oNo;
 		ODetail = oDetail;
+		this.attachment = attachment;
 	}
 
 	public int getmNo() {
@@ -222,13 +227,21 @@ public class V_Order {
 		ODetail = oDetail;
 	}
 
+	public ArrayList<Attachment> getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(ArrayList<Attachment> attachment) {
+		this.attachment = attachment;
+	}
+
 	@Override
 	public String toString() {
 		return "V_Order [mNo=" + mNo + ", oPhone=" + oPhone + ", oAddress=" + oAddress + ", oTime=" + oTime
 				+ ", oStatus=" + oStatus + ", mnName=" + mnName + ", odNum=" + odNum + ", mnPrice=" + mnPrice + ", fee="
 				+ fee + ", oPrice=" + oPrice + ", request=" + request + ", sName=" + sName + ", sTel=" + sTel
 				+ ", filePath=" + filePath + ", pNo=" + pNo + ", oPoint=" + oPoint + ", arrivalTime=" + arrivalTime
-				+ ", oNo=" + oNo + ", ODetail=" + ODetail + "]";
+				+ ", oNo=" + oNo + ", ODetail=" + ODetail + ", attachment=" + attachment + "]";
 	}
 
 }

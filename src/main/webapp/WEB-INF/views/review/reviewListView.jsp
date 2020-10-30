@@ -16,8 +16,21 @@
 #reviewList {
 	width: 85%;
 }
-#imgArea{
 
+/* #reviewList thead {
+	border-bottom: 3px solid rgb(192, 211, 192, 0.2);
+} */
+
+#reviewList tbody {
+	border-bottom: 3px solid rgb(192, 211, 192, 0.2);
+}
+
+#reviewList th {
+	background-color: transparent;
+	color:black;
+}
+.imgArea{
+display:inline-block
 }
 .dBtn {
 	border: 1px solid lightgray;
@@ -82,8 +95,18 @@ img:hover {
 					<br>
 					<table id="reviewList">
 					<c:forEach var="r" items="${ list }">
+					<thead>
 						<tr>
-							<th rowspan="3"><div id="imgArea">매장이미지</div></th>
+							<th rowspan="3">
+								<c:forEach var="sat" items="${ r.sAttachment }">
+									<c:if test="${ !empty sat.originalFileName  }">
+										<div id="imgArea">
+											<img width="100" height="100"
+												src="${ contextPath }/resources/muploadFiles/logo/${ sat.changeFileName }">
+										</div>
+									</c:if>
+								</c:forEach>
+							</th>
 							<th>${ r.sName }(${ r.sTel })</th>
 						</tr>
 						<tr>
@@ -94,25 +117,27 @@ img:hover {
 						<tr>
 							<th>내가 준 별점 : 
 								<c:if test="${ r.rStar eq '1'}">
-	                        	★☆☆☆☆
+	                        		<label style="color:rgb(255, 194, 0);">★☆☆☆☆</label>
 	                        	</c:if>
 	                        	<c:if test="${ r.rStar eq '2'}">
-	                        	★★☆☆☆
+	                        		<label style="color:rgb(255, 194, 0);">★★☆☆☆</label>
 	                        	</c:if>
 	                        	<c:if test="${ r.rStar eq '3'}">
-	                        	★★★☆☆
+	                        		<label style="color:rgb(255, 194, 0);">★★★☆☆</label>
 	                        	</c:if>
 	                        	<c:if test="${ r.rStar eq '4'}">
-	                        	★★★★☆
+	                        		<label style="color:rgb(255, 194, 0);">★★★★☆</label>
 	                        	</c:if>
 	                        	<c:if test="${ r.rStar eq '5'}">
-	                        	★★★★★
+	                        		<label style="color:rgb(255, 194, 0);">★★★★★</label>
 	                        	</c:if>
 							</th>
 						</tr>
+						</thead>
+						<tbody>
 						<tr>
 							<td colspan="2" style="color: rgb(102, 102, 102); text-align: left;">
-							주문한 메뉴 : 
+							주문 메뉴 : 
 							<c:set var="comma" value="," />
 								<c:forEach var="d" items="${ r.oDetail }" varStatus="status">
 									<c:if test="${ !status.last }">
@@ -124,9 +149,10 @@ img:hover {
 								</c:forEach>
 							</td>
 						</tr>
+						
 						<tr>
-							<td colspan="2">
-								<div class="imgArea img" align="center">
+							<td colspan="2" style="text-align:center;">
+								<div class="imgArea img">
 									<c:forEach var="at" items="${ r.attachment }">
 										<c:if test="${ !empty at.originalFileName  }">
 											<div id="contentImgArea" style="float: left;">
@@ -160,8 +186,9 @@ img:hover {
 							</td>
 						</tr>
 						<tr>
-							<td></td>
+							<td colspan="2"></td>
 						</tr>
+						</tbody>
 					</c:forEach>
 					</table>
 					<script>
