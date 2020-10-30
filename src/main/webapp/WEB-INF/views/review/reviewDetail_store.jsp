@@ -145,10 +145,16 @@ img:hover {
 						<br>
 						<br>
 
-						<h3 style="text-align: left; margin-left: 14%">답글</h3>
+						
 						<c:forEach var="rply" items="${ r.reply }">
-							<textarea id="reply" name="rContent" cols="100" rows="6"
-								style="resize: none" placeholder="사장님답글내용" readonly>${ rply.rContent }</textarea>
+							<c:if test="${ rply.rContent ne null }">
+								<h3 style="text-align: left; margin-left: 14%">답글</h3>
+								<textarea id="reply" name="rContent" cols="100" rows="6"
+									style="resize: none" placeholder="사장님답글내용" readonly>${ rply.rContent }</textarea>
+							</c:if>
+							<c:if test="${ rply.rContent eq null }">
+								<h3 style="color:rgb(192, 211, 192)">아직 답글을 작성하지 않았습니다.</h3>
+							</c:if>
 						</c:forEach>
 						
 						<br>

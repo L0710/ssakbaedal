@@ -66,12 +66,12 @@
 											</th>
 										</c:when>
 										<c:when test="${ o.oStatus eq '2' }">
-											<th style="color: darkgreen">
+											<th>
 												<button class="oStatus" style="color:darkgreen"><strong>주문확인</strong></button>
 											</th>
 										</c:when>
 										<c:when test="${ o.oStatus eq '3' }">
-											<th style="color: cornflowerblue">
+											<th>
 												<button class="oStatus" style="color:blue"><strong>기사픽업</strong></button>
 											</th>
 										</c:when>
@@ -83,7 +83,16 @@
 									</c:choose>
 							</tr>
 							<tr>
-								<td rowspan="3"><div id="imgArea">매장이미지</div></td>
+								<td rowspan="3" style="text-align:center;">
+									<c:forEach var="at" items="${ o.attachment }">
+										<c:if test="${ !empty at.originalFileName  }">
+											<div id="imgArea">
+												<img width="100" height="100"
+													src="${ contextPath }/resources/muploadFiles/logo/${ at.changeFileName }">
+											</div>
+										</c:if>
+									</c:forEach>
+								</td>
 								<td colspan="2">${ o.sName }(${ o.sTel })</td>
 							</tr>
 							<tr>

@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mNo" column="MNO"/>
 		<collection property="oDetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
 		<collection property="attachment" javaType="java.util.ArrayList" resultMap="atResultSet"/>
+		<collection property="sAttachment" javaType="java.util.ArrayList" resultMap="satResultSet"/>
 		<collection property="reply" javaType="java.util.ArrayList" resultMap="replyResultSet"/>
 	</resultMap>
 	
@@ -52,6 +53,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="aNo" column="ANO"/>
 		<result property="originalFileName" column="ORIGINAL_NAME"/>
 		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="satResultSet">
+		<result property="aNo" column="ANO"/>
+		<result property="originalFileName" column="SORIGINAL_NAME"/>
+		<result property="changeFileName" column="SCHANGE_NAME"/>
 		<result property="refId" column="REF_ID"/>
 	</resultMap>
 	
@@ -98,11 +106,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectList" parameterType="_int" resultMap="v_reviewResultSet">
-		SELECT *
-		FROM V_REVIEW
-		WHERE MNO=#{mNo}
-		AND R_STATUS='Y'
-		AND R_TYPE=1
+		SELECT R.ONO, R.ORIGINAL_NAME, R.CHANGE_NAME, R.SNAME, R.STEL, R.SORIGINAL_NAME, R.SCHANGE_NAME,
+			R.OTIME, R.RCONTENT, R.RSTAR, R.ODMN, R.ODNUM, RE.RNO, RE.RCONTENT AS RECONTENT, RE.RWRITER, RE.R_CREATE_DATE
+		FROM V_REVIEW R
+		LEFT JOIN (SELECT RNO, RCONTENT, RWRITER, R_CREATE_DATE,
+	               		R_MODIFY_DATE, R_STATUS, R_TYPE, MNO, ONO
+	               FROM REPLY
+	               WHERE R_STATUS='Y' AND R_TYPE=3) RE ON(R.ONO=RE.ONO)
+		WHERE R.MNO=#{mNo}
+		AND R.R_STATUS='Y'
 		ORDER BY ONO DESC
 	</select>
 	
@@ -151,11 +163,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		ORDER BY O.ONO DESC
 	</select>
 	
-	<select id="selectRDetail" parameterType="_int" resultMap="v_reviewResultSet">
-		SELECT *
-		FROM V_REVIEW
-		WHERE ONO=#{oNo}
-		AND R_STATUS='Y'
+	<select id="selectRDetail" parameterType="No" resultMap="v_reviewResultSet">
+		SELECT R.ONO, R.MNO, R.SNAME, R.STEL, R.OTIME, R.RCONTENT, R.RSTAR, R.ODMN, R.ODNUM,
+		    R.ORIGINAL_NAME, R.CHANGE_NAME, RE.RCONTENT AS RECONTENT, RE.R_CREATE_DATE
+		FROM V_REVIEW R
+		LEFT JOIN (SELECT RNO, RCONTENT, RWRITER, R_CREATE_DATE,
+		                R_MODIFY_DATE, R_STATUS, R_TYPE, MNO, ONO
+		            FROM REPLY
+		            WHERE MNO=#{mNo} AND R_STATUS='Y' AND R_TYPE=3) RE ON(R.ONO=RE.ONO)
+		WHERE R.ONO=#{oNo}
+		AND R.R_STATUS='Y'
 	</select>
 	
 	<select id="selectId" parameterType="_int" resultType="string">

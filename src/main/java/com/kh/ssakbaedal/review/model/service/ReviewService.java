@@ -3,6 +3,7 @@ package com.kh.ssakbaedal.review.model.service;
 import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.review.model.vo.Review;
@@ -41,7 +42,7 @@ public interface ReviewService {
 	public ArrayList<Review> selectrList(PageInfo pi, int mNo);
 
 	// 리뷰 상세(매장)
-	public V_Review selectRDetail(int oNo);
+	public V_Review selectRDetail(No no);
 
 	// 리뷰 상세(작성자ID)
 	public String selectId(int oNo);

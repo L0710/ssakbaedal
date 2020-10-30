@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
 import com.kh.ssakbaedal.common.reply.Reply;
@@ -255,10 +256,13 @@ public class ReviewController {
 	public ModelAndView sreviewInsertView(ModelAndView mv, 
 					int oNo, @RequestParam("page") Integer page,
 					HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("oNo:"+oNo);
+//		System.out.println("oNo:"+oNo);
+		No no = new No();
+		no.setoNo(oNo);
+		
 		int currentPage = page != null ? page : 1;
 	
-		V_Review review = rService.selectRDetail(oNo);
+		V_Review review = rService.selectRDetail(no);
 //		System.out.println("review:"+review);
 		String rWriter = rService.selectId(oNo);
 		review.setrWriter(rWriter);
@@ -292,12 +296,16 @@ public class ReviewController {
 	
 	@RequestMapping("reviewDetailView.do")
 	public ModelAndView reviewDetailView(ModelAndView mv, 
-			int oNo, @RequestParam("page") Integer page,
+			int oNo, int mNo, @RequestParam("page") Integer page,
 			HttpServletRequest request, HttpServletResponse response) {
+//		System.out.println("mNo:"+mNo);
+		No no = new No();
+		no.setoNo(oNo);
+		no.setmNo(mNo);
 		
 		int currentPage = page != null ? page : 1;
 		
-		V_Review review = rService.selectRDetail(oNo);
+		V_Review review = rService.selectRDetail(no);
 		String rWriter = rService.selectId(oNo);
 		review.setrWriter(rWriter);
 //		System.out.println("r:"+review);
