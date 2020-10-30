@@ -117,7 +117,9 @@
 						<c:param name="ePoint" value="${ e.ePoint }"/>
 						<c:param name="mNo" value="${ loginUser.mNo }"/>
 					</c:url>
-                    <button class="btn-ghost green" id="pointBtn">포인트 받기</button>
+					<c:if test="${ loginUser.mType eq '2'}">
+                    	<button class="btn-ghost green" id="pointBtn">포인트 받기</button>
+                    </c:if>
                 </div>
                 
                 <!-- 포인트 지급 내역 확인 후 지급내역 없을 경우 포인트 지급 -->

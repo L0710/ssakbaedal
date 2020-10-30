@@ -27,8 +27,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 
 	<resultMap id="v_reviewResultSet" type="V_Review">
 		<id property="oNo" column="ONO"/>
-		<result property="originalFileName" column="ORIGINAL_NAME"/>
-		<result property="changeFileName" column="CHANGE_NAME"/>
 		<result property="sName" column="SNAME"/>
 		<result property="sTel" column="STEL"/>
 		<result property="oTime" column="OTIME"/>
@@ -38,6 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mNo" column="MNO"/>
 		<collection property="oDetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
 		<collection property="attachment" javaType="java.util.ArrayList" resultMap="atResultSet"/>
+		<collection property="sAttachment" javaType="java.util.ArrayList" resultMap="satResultSet"/>
+		<collection property="reply" javaType="java.util.ArrayList" resultMap="replyResultSet"/>
 	</resultMap>
 	
 	<resultMap type="ODetail" id="ODetailResultSet">
@@ -54,6 +54,25 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="originalFileName" column="ORIGINAL_NAME"/>
 		<result property="changeFileName" column="CHANGE_NAME"/>
 		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="satResultSet">
+		<result property="aNo" column="ANO"/>
+		<result property="originalFileName" column="SORIGINAL_NAME"/>
+		<result property="changeFileName" column="SCHANGE_NAME"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<result property="rNo" column="RNO"/>
+		<result property="rContent" column="RECONTENT"/>
+		<result property="rWriter" column="RWRITER"/>
+		<result property="rCreateDate" column="R_CREATE_DATE"/>
+		<result property="rModifyDate" column="R_MODIFY_DATE"/>
+		<result property="rStatus" column="R_STATUS"/>
+		<result property="rType" column="R_TYPE"/>
+		<result property="mNo" column="MNO"/>
+		<result property="oNo" column="ONO"/>
 	</resultMap>
 	
 	<select id="selectOne" parameterType="_int" resultMap="reviewResultSet">
@@ -78,17 +97,97 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM V_REVIEW
-		WHERE MNO = #{mNo}
+		FROM REVIEW R
+        LEFT JOIN SORDER O ON(O.ONO=R.ONO)
+        LEFT JOIN MEMBER M ON(O.MNO=M.MNO)
+		WHERE M.MNO=#{mNo}
 		AND R_STATUS='Y'
+		AND R_TYPE=1
 	</select>
 	
-	<select id="selectList" resultMap="v_reviewResultSet">
-		SELECT *
-		FROM V_REVIEW
-		WHERE MNO = #{mNo}
-		AND R_STATUS='Y'
+	<select id="selectList" parameterType="_int" resultMap="v_reviewResultSet">
+		SELECT R.ONO, R.ORIGINAL_NAME, R.CHANGE_NAME, R.SNAME, R.STEL, R.SORIGINAL_NAME, R.SCHANGE_NAME,
+			R.OTIME, R.RCONTENT, R.RSTAR, R.ODMN, R.ODNUM, RE.RNO, RE.RCONTENT AS RECONTENT, RE.RWRITER, RE.R_CREATE_DATE
+		FROM V_REVIEW R
+		LEFT JOIN (SELECT RNO, RCONTENT, RWRITER, R_CREATE_DATE,
+	               		R_MODIFY_DATE, R_STATUS, R_TYPE, MNO, ONO
+	               FROM REPLY
+	               WHERE R_STATUS='Y' AND R_TYPE=3) RE ON(R.ONO=RE.ONO)
+		WHERE R.MNO=#{mNo}
+		AND R.R_STATUS='Y'
 		ORDER BY ONO DESC
 	</select>
+	
+	<update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		SET R_STATUS = 'N'
+		WHERE ONO=#{oNo}
+	</update>
+	
+	<select id="selectImg" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{oNo}
+		AND A_TYPE=7
+	</select>
+	
+	<update id="deleteImg" parameterType="_int">
+		UPDATE ATTACHMENT
+		SET A_STATUS = 'N'
+		WHERE REF_ID=#{oNo}
+	</update>
+	
+	<select id="selectrListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW R
+        LEFT JOIN SORDER O ON(O.ONO=R.ONO)
+        LEFT JOIN MEMBER M ON(O.MNO=M.MNO)
+		WHERE O.S_MNO = #{mNo}
+		AND R_STATUS='Y'
+		AND R_TYPE=1
+	</select>
+	
+	<select id="selectrList" resultMap="v_reviewResultSet">
+		SELECT O.OTIME, R.ONO, R.RCONTENT, R.RSTAR, RE.RNO, RE.RCONTENT AS RECONTENT,
+			RE.RWRITER, RE.R_CREATE_DATE
+		FROM REVIEW R
+		LEFT JOIN SORDER O ON(R.ONO = O.ONO)
+		LEFT JOIN MEMBER M ON(O.S_MNO = M.MNO)
+        LEFT JOIN (SELECT RNO, RCONTENT, RWRITER, R_CREATE_DATE,
+                    R_MODIFY_DATE, R_STATUS, R_TYPE, MNO, ONO
+                    FROM REPLY
+                    WHERE MNO=#{mNo} AND R_STATUS='Y' AND R_TYPE=3) RE ON(R.ONO=RE.ONO)
+		WHERE M.MNO = #{mNo}
+		AND R.R_STATUS='Y'
+		AND R.R_TYPE=1
+		ORDER BY O.ONO DESC
+	</select>
+	
+	<select id="selectRDetail" parameterType="No" resultMap="v_reviewResultSet">
+		SELECT R.ONO, R.MNO, R.SNAME, R.STEL, R.OTIME, R.RCONTENT, R.RSTAR, R.ODMN, R.ODNUM,
+		    R.ORIGINAL_NAME, R.CHANGE_NAME, RE.RCONTENT AS RECONTENT, RE.R_CREATE_DATE
+		FROM V_REVIEW R
+		LEFT JOIN (SELECT RNO, RCONTENT, RWRITER, R_CREATE_DATE,
+		                R_MODIFY_DATE, R_STATUS, R_TYPE, MNO, ONO
+		            FROM REPLY
+		            WHERE MNO=#{mNo} AND R_STATUS='Y' AND R_TYPE=3) RE ON(R.ONO=RE.ONO)
+		WHERE R.ONO=#{oNo}
+		AND R.R_STATUS='Y'
+	</select>
+	
+	<select id="selectId" parameterType="_int" resultType="string">
+		SELECT M.MID
+		FROM REVIEW R
+		LEFT JOIN SORDER O ON(R.ONO = O.ONO)
+		LEFT JOIN MEMBER M ON(O.MNO = M.MNO)
+		WHERE O.ONO=#{oNo}
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY VALUES(
+			REP_SEQ.NEXTVAL, #{rContent}, #{rWriter}, SYSDATE, SYSDATE, DEFAULT,
+				 3, NULL, NULL, #{mNo}, #{oNo}
+		)
+	</insert>
 	
 </mapper>
