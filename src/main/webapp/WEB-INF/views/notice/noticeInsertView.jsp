@@ -6,18 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
         
         section {
-            margin-left: 187px;
-            width: 1013.5px;
+            width: 100%;
             height: 60%;
             float: left;
         }
         
-        #inFAQ_table {
-            border-collapse: collapse;
+        #in_table{
+        	border-collapse: collapse;
             background-color: white;
             width: 80%;
             overflow: hidden;
@@ -30,12 +28,11 @@
             text-align: center;
             font-size: 12px;
             padding: 10px;
+            border-top: 1px solid rgb(192, 211, 192);
             border-bottom: 1px solid rgb(192, 211, 192);
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            border-top: 1px solid rgb(192, 211, 192);
-            border-bottom: 1px solid rgb(192, 211, 192);
         }
         
         th {
@@ -47,7 +44,6 @@
             cursor: pointer;
             margin: 3px;
             padding: 10px 20px;
-            outline: 0; /* 버튼 클릭시 테두리 생성하지 않게함.*/
         }
         
         .btn-ghost.gray {
@@ -82,24 +78,76 @@
             color: white;
         }
         
+        .logoArea {
+            margin-top: 1%;
+        }
+        
         .sidemenu {
             width: 150px;
             position: fixed;
             top: 200px;
             /*left: 1290px;*/
-            margin-left: 12.5px;
+            margin-left: 1035px;
             margin-top: 100px;
         }
         
         .contents {
             margin-top: 1%;
             padding: 3%;
-            border: 1px solid rgb(130, 180, 127);
+            border: 1px solid lightgray;
             height: 100%;
-        }       
-
-        #td_button {
-            border: 1px solid white;
+        }
+        
+        .btnGroup {
+            margin-top: 1%;
+        }        
+        
+        #logo {
+            width: 100%;
+            height: 200px;
+        }
+        
+        #addtxt {
+            height: 25px;
+            background-color: white;
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        #mypageBtn,
+        #logoutBtn {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        
+        #address {
+            float: left;
+        }
+        
+        #goEvent, #goRank {
+            width: 100%;
+        }
+        
+        #insertReplyBtn {
+            width: 60px;
+            height: 30px;
+            padding: 0;
+        }
+        
+        #notice_table tr:hover {
+            cursor: pointer;
+            background: rgba(130, 180, 127, 0.1);
+        }
+        
+        #asdf{
+            width: 100%;
+            height: 50px;
+            text-align: center;
+        }
+        
+        #btnArea {
+            margin-top: 35px;
+            margin-left: 860px;
         }
         
         #asdf{
@@ -108,67 +156,75 @@
             text-align: center;
         }
 
-        #asdf span{
-            color: rgb(143,145,142);
-        }
-
 </style>
+
 
 </head>
 <body>
-<div class="wrapper">
+	<div class="wrapper">
         <c:import url="../common/headerbar.jsp"/>
         
-        <section>
-            <div class="contents" align="center">
-                
-                <div id="asdf">
-                    <h1>FAQ</h1>
-                    <span>자주 묻는 질문 작성</span>
+        <section >
+            <c:import url="../common/nav_admin.jsp"/>
+            
+            <div class="contents">
+            
+            	<div id="asdf">
+                    <h1>공지사항 작성</h1>
                 </div>
+            	<br>
                 <br>
-                <br>
-                
-                <form action="faqInsert.do" method="POST" enctype="multipart/form-data">
-                    <table id="inFAQ_table" align="center">
+            
+            	<form action="nInsert.do" method="POST" enctype="multipart/form-data">
+                    <table id="in_table" align="center">
                         <tr>
                             <th width="20%">제목</th>
                             <td>
-                                <input type="text" name="fTitle" size="80">
+                                <input type="text" name="nTitle" size="80">
                             </td>
                         </tr>
                         <tr>
                             <th>작성자</th>
                             <td>
-                                <input type="text" name="fWriter" value="${ loginUser.mId }" size="80" readonly>
+                                <input type="text" name="nWriter" value="${ loginUser.mId }" size="80" readonly>
                             </td>
                         </tr>
                         <tr>
-                            <th>내용</th>
+                            <th>알림내용</th>
                             <td>
-                                <textarea cols="80" rows="7" name="fContent"></textarea>
+                                <textarea cols="80" rows="7" name="nContent"></textarea>
                             </td>
                         </tr>
                         <tr>
-                            <td id="td_button" colspan="2">
-                                <br>
-                                <br>
-                                <button type="submit" class="btn-ghost green">작성</button>
-                                <button type="button" class="btn-ghost gray" onclick="location.href='service.do'">취소</button>
+                            <th>첨부파일</th>
+                            <td>
+                                <input type="file" id="anFile" name="uploadFile">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>공지구분</th>
+                            <td>
+                                <input type="radio" name="nSort" value="전체">
+                                <label>전체공지</label>
+
+                                <input type="radio" name="nSort" value="매장">
+                                <label>매장공지</label>
                             </td>
                         </tr>
                     </table>
+
+                    <div id="btnArea">
+                        <button type="submit" class="btn-ghost green">작성</button>
+                        <button type="button" id="cancelBtn" class="btn-ghost gray" onclick="location.href='nlist.do'">취소</button>
+                    </div>
+
                 </form>
-                
             </div>
             
         </section>
-        
-        <c:import url="../common/sidemenu_sCenter.jsp"/>
 
     </div>
     
     <c:import url="../common/footer.jsp"/>
-    
 </body>
 </html>
