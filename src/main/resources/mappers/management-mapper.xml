@@ -37,6 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="today" column="TODAY"/>
 	</resultMap>
 	
+	<resultMap type="SetMenu" id="setMenuResultSet">
+		<id property="smNo" column="SMNO"/>
+		<result property="smName" column="SMNAME"/>
+		<result property="setList" column="SETLIST"/>
+		<result property="setPrice" column="SET_PRICE"/>
+		<result property="mNo" column="MNO"/>
+		<result property="set_mnNo" column="SET_MNNO"/>
+		<result property="setStatus" column="SET_STATUS"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM OPENDB
@@ -76,6 +86,73 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			VALUES (#{mNo}, #{sStatus}, #{startDate}, #{endDate}, SYSDATE)
 		</if>	
 	</insert>
+	
+	<select id="selectMenu" parameterType="_int" resultMap="menuResultSet">
+		SELECT *
+		FROM MENU
+		WHERE MNO = #{mNo}
+		AND MN_STATUS != 'N'
+	</select>
+	
+	<update id="updateLong">
+		UPDATE MENU
+		SET MN_STATUS = 'S'
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<update id="updateDay">
+		UPDATE MENU
+		SET MN_STATUS = 'D'
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<update id="updateSale">
+		UPDATE MENU
+		SET MN_STATUS = 'Y'
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<update id="deleteMenu">
+		UPDATE MENU
+		SET MN_STATUS = 'N'
+		WHERE MN_NO =#{mnNo}
+	</update>
+	
+	<update id="upBest">
+		UPDATE MENU
+		SET MN_CATEGORY = '대표메뉴'
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<update id="delBest">
+		UPDATE MENU
+		SET MN_CATEGORY = NULL
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<select id="selectmnName" parameterType="_int" resultMap="menuResultSet">
+		SELECT *
+		FROM MENU
+		WHERE MN_NO = #{mnNo}
+	</select>
+	
+	<insert id="insertSetMenu" parameterType="SetMenu">
+		INSERT INTO SETMENU
+		VALUES (SM_SEQ.NEXTVAL,#{smName}, #{setList}, #{setPrice}, #{mNo},  #{set_mnNo}, 'Y')
+	</insert>
+	
+	<select id="selectSetMenu" parameterType="_int" resultMap="setMenuResultSet">
+		SELECT *
+		FROM SETMENU
+		WHERE MNO = #{mNo}
+		AND SET_STATUS = 'Y'
+	</select>
+	
+	<update id="deleteSet">
+		UPDATE SETMENU
+		SET SET_STATUS = 'N'
+		WHERE SMNO = #{smNo}
+	</update>
 
 
 </mapper>

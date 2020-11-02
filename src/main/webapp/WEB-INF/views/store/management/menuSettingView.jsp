@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+     <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
     <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
@@ -204,7 +208,7 @@
 
 
 
-        #menuTable {
+        .menuTable {
             margin-top: 60px;
             width: 80%;
             border-spacing: 0;
@@ -213,8 +217,8 @@
             margin: 50px auto;
         }
 
-        #menuTable td,
-        #menuTable th {
+        .menuTable td,
+        .menuTable th {
             border:none;
             border-top: 1px solid black;
         }
@@ -296,6 +300,7 @@
             height: 30px;
             margin-top: 30px;
         }
+        
 
         /* #updateinfo {
             text-align: center;
@@ -304,7 +309,7 @@
         } */
 
 
-        #best, #setMenu, #insertMenu,#sinfo  {
+        #best, #setMenu, #insertMenu,#sinfo,#deleteMenu  {
             font-size: 20px;
             font-weight: bold;
         }
@@ -328,7 +333,7 @@
             margin-bottom: 20px;
         }
 
-        .updateMenuname, .updateMenuprice {
+        .updateMenuname, .updateMenuprice  {
             text-align: center;
             width: 130px;
             height: 20px;
@@ -338,9 +343,45 @@
             height: 40px;
             padding-top: 5px;
         }
+        
+        #menuAddBtn, #upBtn, #insertSetBtn {
+        	width: 100px;
+            height: 40px;
+            padding-top: 5px;
+        }
+        
+        #changeWrapper input[type="file"] { 
+            position: absolute;
+            width: 1px;
+            height: 1px; 
+            padding: 0; 
+            margin: -1px; 
+            overflow: hidden; 
+            clip:rect(0,0,0,0); 
+            border: 0; 
+        }
+        
+          #btnla {
+            font-size: 15px;
+            padding: 5px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+            #imgchangeBtn {
+            margin-top: 10px;
+            
+        }
     </style>
 </head>
-<body>
+<body >
+<script>
+function load() {
+	history.go(0);
+}
+</script>
+
+
     <div class="wrapper">
     
       	<c:import url="../../common/headerbar.jsp"/>
@@ -357,473 +398,483 @@
                 -하루품절에 체크하면 하루이후에 자동으로 체크가 없어집니다.
                 </p>
                 <div class="tableWrapper" align="center">
-                    <table id="menuTable">
+                    <table class="menuTable", id="insertTable">
+                    <thead>
                         <tr>
+                        	<th>메뉴번호</th>
                             <th>메뉴명</th>
                             <th>가격</th>
                             <th>품절여부</th>
                         </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="menu" items="${menu}" varStatus="m">
                         <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
+                        	<td>${menu.mnNo}</td>
+                            <td>${menu.mnName}</td>
+                            <td>${menu.mnPrice}</td>
                             <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
+                            <c:if test="${menu.mnStatus eq 'N'}">
+                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long" checked >
+	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day">
+                            </c:if>
+	                           <c:if test="${menu.mnStatus eq 'D'}">
+                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long"  >
+	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" checked>
+                            </c:if>
+                            <c:if test="${menu.mnStatus eq 'Y'}">
+                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long"  >
+	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" >
+                            </c:if>
                             </td>
                         </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>품절</span><input type="checkbox" class="ch">
-                                <span>하루품절</span><input type="checkbox" class="chOneDay">
-                            </td>
-                        </tr>
+                        </c:forEach>
+                        </tbody>
                     </table>
                 </div>
-                    <hr>
-                    <div id="inputwrapper" align="left">
-                        <div style="margin-top:30px;" align="center"><span id="insertMenu">메뉴등록/수정</span></div><br>
-                        <span>메뉴명</span><input id="sMenu" class="stinfo"><br>
-                        <span>메뉴명</span><select class="stinfo">
-                            <option>카테고리1</option>
-                            <option>카테고리2</option>
-                            <option>카테고리3</option>
-                            <option>카테고리4</option>
-                        </select><br>
-                        <span>파일명</span><input type="text" class="stinfo" ><button class="btn-ghost green">사진등록</button>
-                        <button class="btn-ghost gray">+</button>
-                        +버튼을 누르면 메뉴 추가
-                        <br><br>
-                    </div>
+                
+                <script>
 
+	                var mnno;
+					$("#insertTable tbody tr").click(function() {
+						mnno = $(this).children().eq(0).text();
+	
+					});
+                	           
+                	$("input[name=soldout]").change(function() {
+                		if($(this).prop("checked")) {
+                			$("input[name=soldout]").prop("checked", false);
+                			$(this).prop("checked", true);
+                			var a = $(this).attr("value");
+                			select(a);
+                		} else {
+                			$(this).prop("checked", false) 
+                				sale();
+                		}
+                	});
+                	
+                	
+                	
+                	function select(select) {
+    					
+						alert("품절처리되었습니다.");
+						
+                			 $.ajax({
+                				url:"updateSoldout.do",
+                				data:{mnno:mnno, select:select},
+                				sucess:function(data) {
+                					console.log(data);
+                				}, 
+                				errer:function(e) {
+                					console.log(e);
+                				}
+                			}); 
+    			
+    					}
+                	
+                	function sale() {
+                		alert("품절해제되었습니다.");
+                		 
+                		console.log(mnno);
+                		
+                		$.ajax({
+                			url:"updateSale.do",
+                			data:{mnno:mnno},
+                			success:function(data) {
+                				console.log(data);
+                			},
+                			error:function(e) {
+                				console.log(e);
+                			}
+                		})
+                		
+                		
+                	}
+                
+                </script>
+                
+                    <hr>
+                    <form action="menuInsert.do" method="post" enctype="mulipart/form-data">
+                    <div id="inputwrapper" align="center">
+                        <div style="margin-top:30px;" align="center"><span id="insertMenu">메뉴등록</span></div><br>
+                        <input type="hidden" value="${loginuser.mNo}">
+                        <span>메뉴명</span><input id="sMenu" class="stinfo" name="mnName"><br>
+                        <span>카테고리</span><select id="sCate" class="stinfo"  name="sCate">
+                                <option value="한식">한식</option>
+                                <option value="중국집">중국집</option>
+                                <option value="돈까스,일식,회">돈까스,일식,회</option>
+                                <option value="분식">분식</option>
+                                <option value="패스트푸드">패스트푸드</option>
+                                <option value="카페,디저트">카페,디저트</option>
+                                <option value="치킨">치킨</option>
+                                <option value="찜,탕">찜,탕</option>
+                                <option value="피자">피자</option>
+                                <option value="족발,보쌈">족발,보쌈</option>
+                                <option value="아시안,양식">아시안,양식</option>
+                                <option value="도시락">도시락</option>
+                                <option value="야식">야식</option>
+                            </select><br><br>
+                            하위 카테고리 명 <input class="stinfo" type="text"><br>
+                            
+	                        <div id="changeWrapper" align="left" style="margin-top: 10px;">
+                                    <label for="imgchangeBtn" id="btnla" class="btn-ghost green"  name="reloadFile">파일선택</label>
+                                    <input type="file" id="imgchangeBtn" name="uploadFile">
+                            </div>
+	                        <br><br><br>
+                       <input type="submit" class="btn-ghost gray" value="메뉴추가" id="menuAddBtn"> 
+                        </div>
+                        <br><br>
+                    </form>
+                    
+                    <hr>
+						
+					 <div style="margin-top:30px;" align="center"><span id="deleteMenu">메뉴삭제/수정</span></div><br>	
                     <div class="tableWrapper" align="center">
-                        <table id="menuTable">
+                        <table class="menuTable" id="deleteTable">
+                        <thead>
                             <tr>
+                            	<th>메뉴번호</th>
                                 <th>메뉴명</th>
                                 <th>가격</th>
                                 <th>삭제여부</th>
                             </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>삭제</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
+                          </thead>
+                          <tbody>
+                          <c:forEach var="menu" items="${menu}" varStatus="m">
+                          	<tr>
+                          		<td>${menu.mnNo }</td>
+                          		<td>${menu.mnName}</td>
+                          		<td>${menu.mnPrice}</td>
+                          		<td><button type="button" class="btn-ghost gray" onclick="del();">삭제</button></td>
+                          	</tr>
+                          </c:forEach>
+                          </tbody>
+
                         </table>
                     </div>
+                    
+                    <script>
+		                var mnno;
+						$("#deleteTable tbody tr").click(function() {
+							mnno = $(this).children().eq(0).text();
+						});
+						
+						function del() {
+							
+							var con = confirm("정말로 삭제하시겠습니까?\n 삭제하면 되돌릴 수 없고, 다시 메뉴 등록해야합니다.");
+							if(con) {
+								console.log("mnno" + mnno);
+								
+								 $.ajax({
+										url:"deleteMenu.do",
+										data:{mnno:mnno},
+										success:function(data) {
+											console.log(data);
+											
+											$tableBody = $("#menuTable tbody");
+											$tableBody.html("");
+											
+											 for(var i in data) {
+												var $tr = $("<tr>");
+												
+												var $mnNo = $("<td>").val(data[i].mnNo);
+												var $mnName = $("<td>").text(data[i].mnName);
+												var $mnPrice = $("<td>").text(data[i].mnPrice);
 
+												
+												$tr.append($mnNo);
+												$tr.append($mnName);
+												$tr.append($mnPrice);
+												
+												$tableBody.append($tr);
+												console.log("a");
+												load();
+											 }
+										},
+										error:function(e) {
+											console.log(e);
+										}
+									}); 
+								
+							} else {
+								alert("삭제되지않았습니다.");
+							}		
+			
+						}
+                    </script>
+                    
+					
                     <div class="tableWrapper" align="center">
-                        <table id="menuTable">
+                    
+                        <table class="menuTable" id="upTable" >
+                        <thead>
                             <tr>
+                            	<th>메뉴번호</th>
                                 <th>메뉴명</th>
                                 <th>가격</th>
-                                <th>수정</th>
+                                <th>사진</th>
                             </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input class="updateMenuname" type="text" placeholder="메뉴이름"></td>
-                                <td><input class="updateMenuprice" type="text" placeholder="메뉴가격"></td>
-                                <td>
-                                    <span>수정</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
+                          </thead>
+                          <tbody>
+                          	<c:forEach var="menu" items="${menu}">
+                          		<tr>
+                          			<td>${menu.mnNo}</td>
+                          			<td><input type="text"  value="${menu.mnName}"  name="mnname"></td>
+                          			<td><input type="text" value="${menu.mnPrice}"></td>
+									<td>사진</td>
+                          		</tr>
+                          	</c:forEach>
+                          	<tr colspan="4"></tr>
+                          </tbody> 
                         </table>
+                        <input type="submit" value="수정" class="btn-ghost gray" id="upBtn">
                     </div>
+                    
+                    
                     <hr style="margin-bottom:40px;">
                     <div id="bestwrapper" align="left">
-                        <div align="center"><span id="best">베스트 메뉴 관리</span></div>
-                        <table id="menuTable">
-                            <tr>
+                        <div align="center"><span id="best">대표 메뉴 관리</span></div>
+                        <table class="menuTable" id="bestTable">
+                        <thead>
+                            <tr>	
+                            	<th>메뉴번호</th>
                                 <th>메뉴명</th>
                                 <th>가격</th>
-                                <th>베스트메뉴</th>
+                                <th>대표메뉴</th>
                             </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메뉴1</td>
-                                <td>17,500</td>
-                                <td>
-                                    <span>등록</span><input type="checkbox" class="ch">
-                                </td>
-                            </tr>
+                          </thead>
+                          <tbody>
+                          	<c:forEach var="menu" items="${menu}">
+                          		<tr>
+                          			<td>${menu.mnNo}</td>
+                          			<td>${menu.mnName}</td>
+                          			<td>${menu.mnPrice}</td>
+                          			<td>
+                          				<c:if test="${!empty menu.mnCategory}"><input type="checkbox" name="checkbest" checked></c:if>
+                          				<c:if test="${empty menu.mnCategory}"><input type="checkbox" name="checkbest"></c:if>
+                          			</td>
+                          		</tr>
+                          	</c:forEach>
+                          </tbody>  
                         </table>
                     </div>
-                    <hr style="margin-bottom:40px;">
+                    
+                    <script>
+		                var mnno;
+						$("#bestTable tbody tr").click(function() {
+							mnno = $(this).children().eq(0).text();
+						});
+						
+						$("input[name=checkbest]").change(function() {
+							
+							if($(this).prop("checked")) {
+								alert("대표메뉴 등록");
+								
+								$.ajax({
+									url:"upbest.do",
+									data:{mnno:mnno},
+									success:function(data) {
+										console.log(data);
+									},
+									error:function(e) {
+										console.log(e)
+									}
+								});
+								
+							} else if($(this).prop("checked",false)) {
+								alert("대표메뉴 등록 해제");
+								
+								$.ajax({
+									url:"delbest.do",
+									data:{mnno:mnno},
+									success:function(data) {
+										console.log(data);
+									},
+									error:function(e) {
+										console.log(e)
+									}
+								});
+							}
+						});
+
+                    </script>
+                    
+                    
+                    
+                    
+                    
+                <hr style="margin-bottom:40px;">
                 <div id="setwrapper" align="left">
                     <br>
+                    <form action="insertSet.do" method="post">
                     <div align="center"><span id="setMenu">세트 메뉴 관리</span></div>
-                    <span>세트이름</span><input type="text" class="stinfo">
-                    <table id="menuTable">
+                    <span>세트이름</span><input type="text" class="stinfo" name="setName">
+                    <table class="menuTable" id="setTable">
+                        <thead>
                         <tr>
+                        	<th>메뉴번호</th>
                             <th>메뉴명</th>
                             <th>가격</th>
-                            <th>베스트메뉴</th>
+                            <th>체크</th>
                         </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>메뉴1</td>
-                            <td>17,500</td>
-                            <td>
-                                <span>선택</span><input type="checkbox" class="ch">
-                            </td>
-                        </tr>
-                    </table><br>
-                    <div align="center"><button class="btn-ghost gray">세트 등록</button></div>
+						</thead>
+						<tbody>
+							<c:forEach var="menu" items="${menu}">
+								<tr>
+									<td>${menu.mnNo}</td>
+									<td>${menu.mnName }</td>
+									<td>${menu.mnPrice}</td>
+									<td><input type="checkbox" name="checkset"  value="${menu.mnPrice}" ></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+                    </table>
+                    <input type="hidden" name="sumMnno">
+                    <span>총가격</span><input id="mnprice" name="mnprice" id="setSum" style="width:150px; height:30px; margin-left:40px;">
+                    <br>
+                    <div align="center"><input type="submit" id="insertSetBtn" class="btn-ghost gray" value="세트등록"></div>
+               	</form>
+               	
+               		<div id="setWrapper">
+               			 <table class="menuTable" id="setTable">
+                        <thead>
+                            <tr>	
+                            	<th>세트메뉴 번호</th>
+                                <th>메뉴명</th>
+                                <th>가격</th>
+                                <th>세트메뉴내역</th>
+                                <th>삭제</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          	<c:forEach var="set" items="${set}">
+                          		<tr>
+                          			<td>${set.smNo}</td>
+                          			<td>${set.smName}</td>
+                          			<td>${set.setPrice}</td>
+                          			<td>${set.setList }</td>
+                          			<td><input type="checkbox" name="setdel"></td>
+                          		</tr>
+                          	</c:forEach>
+                          </tbody>  
+                        </table>
+               		</div>
+               	
+               	
                 </div>
                 </div>
             </div>
     </div>
+    
+    <script> 
+/*     function load() {
+    	history.go(0);
+    }
+      */
+    var smno;
+	$("#setTable tbody tr").click(function() {
+		smno = $(this).children().eq(0).text();
+		console.log(smno);
+	});
+	
+	$("input[name=setdel]").change(function() {
+		
+		if($(this).prop("checked")) {
+			
+			var con = confirm("정말로 삭제하시겠습니까?");
+			
+			if(con) {
+					$.ajax({
+						url:"setdel.do",
+						data:{smno:smno},
+						success:function(data) {
+							console.log(data);
+							
+							$tableBody = $("#bordTable tbody");
+							$tableBody.html("");
+							
+							 for(var i in data) {
+								var $tr = $("<tr>");
+								
+								var $smNo = $("<td>").val(data[i].smNo);
+								var $smName = $("<td>").text(data[i].smName);
+								var $setPrice = $("<td>").text(data[i].setPrice);
+								var $setList = $("<td>").text(data[i].setList);
+
+								
+								$tr.append($smNo);
+								$tr.append($smName);
+								$tr.append($setPrice);
+								$tr.append($setList);
+								
+								$tableBody.append($tr);
+								
+								load();
+							} 
+						},
+						error:function(e) {
+							console.log(e)
+						}
+					});	
+				
+				
+			} else {
+				$(this).prop("checked", false);
+			}
+		} 
+	});
+    
+    	if($("input[name=setName]").attr("value") == "") {
+    		alert("세트메뉴 이름을 입력해주세요");
+    	}
+    	
+	    var mnno;
+	    var mnprice;
+	    var mnname;
+	    
+
+		var i = 1;
+	    
+		$("#setTable tbody tr").click(function() {
+			
+			mnno = $(this).children().eq(0).text();
+			mnprice = $(this).children().eq(2).text();	
+			
+		});
+		
+
+		var pricesum = 0;
+		var noList = "";
+		
+			$("input[name=checkset]").change(function() {
+				var value = $(this).attr("value");
+				if($(this).prop("checked")) {
+					var a = parseInt(value);
+					pricesum += a;
+					
+					noList += mnno+",";
+					console.log(noList);
+					
+					$("input[name=mnprice]").val(pricesum);
+					$("input[name=sumMnno]").val(noList);
+					
+				}else{
+					var b = parseInt(value);
+					pricesum -= b;
+					
+					noList = noList.replace(mnno+",","");
+					console.log(noList);
+					
+					$("input[name=mnprice]").val(pricesum);
+					$("input[name=sumMnno]").val(noList);
+				}
+
+			});	
+
+    </script>
+    
+    
+    
 
     </section>
     <div class="sidemenu">
