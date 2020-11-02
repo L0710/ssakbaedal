@@ -30,11 +30,13 @@ public class storeSearch {
 	private String sCategory;
 	private int deliveryCharge;
 	private int minPrice;
+	private String soff;
 	
 	public storeSearch() {}
 
 	public storeSearch(int mNo, String sName, String sNo, String sTel, String sAddress, int deliveryKm, String sInfo,
-			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice) {
+			String openTime, int sStatus, String sAccept, String sCategory, int deliveryCharge, int minPrice,
+			String soff) {
 		super();
 		this.mNo = mNo;
 		this.sName = sName;
@@ -49,6 +51,7 @@ public class storeSearch {
 		this.sCategory = sCategory;
 		this.deliveryCharge = deliveryCharge;
 		this.minPrice = minPrice;
+		this.soff = soff;
 	}
 
 	public int getmNo() {
@@ -155,13 +158,23 @@ public class storeSearch {
 		this.minPrice = minPrice;
 	}
 
+	public String getSoff() {
+		return soff;
+	}
+
+	public void setSoff(String soff) {
+		this.soff = soff;
+	}
+
 	@Override
 	public String toString() {
-		return "Search [mNo=" + mNo + ", sName=" + sName + ", sNo=" + sNo + ", sTel=" + sTel + ", sAddress=" + sAddress
-				+ ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus=" + sStatus
-				+ ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
-				+ ", minPrice=" + minPrice + "]";
+		return "storeSearch [mNo=" + mNo + ", sName=" + sName + ", sNo=" + sNo + ", sTel=" + sTel + ", sAddress="
+				+ sAddress + ", deliveryKm=" + deliveryKm + ", sInfo=" + sInfo + ", openTime=" + openTime + ", sStatus="
+				+ sStatus + ", sAccept=" + sAccept + ", sCategory=" + sCategory + ", deliveryCharge=" + deliveryCharge
+				+ ", minPrice=" + minPrice + ", soff=" + soff + "]";
 	}
+
+	
 	
 	
 

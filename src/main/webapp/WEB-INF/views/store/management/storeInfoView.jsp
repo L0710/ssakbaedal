@@ -514,7 +514,7 @@
 
     </section>
 
-    <c:import url="../common/sidemenu_store.jsp" />
+    <c:import url="../../common/sidemenu_store.jsp" />
 
 
     </div>
@@ -524,7 +524,7 @@
 
 
 
-    </div>
+    
     
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 	

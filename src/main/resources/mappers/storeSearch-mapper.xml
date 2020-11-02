@@ -15,9 +15,33 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="sStatus" column="S_STATUS"/>
 		<result property="sAccept" column="SACCEPT"/>
 		<result property="sCategory" column="S_CATEGORY"/>
-		<result property="deliveryCharge" column="DELIVERTY_CHARGE"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
 		<result property="minPrice" column="MIN_PRICE"/>
+		<result property="soff" column="SOFF"/>
 	</resultMap>
+	
+	<resultMap type="storeMenu" id="storeMenuResultSet">
+		<id property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="mnCategory" column="MN_CATEGORY"/>
+		<result property="mnStatus" column="MN_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smallCate" column="SMALL_CATE"/>
+		<result property="mnPrice" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
 	<!-- 전체 매장 수  받기 -> 페이징 계산 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -30,6 +54,54 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT *
 		FROM STORE
 		WHERE SACCEPT='Y'
+	</select>
+	
+	<!-- 전체 매장 조회(페이징 처리 된) 테스트 진행중 -->
+	<select id="selectToList" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='Y'
+	</select>
+	
+	<!-- 전체 매장 조회(페이징 처리 된) 파일 테스트 진행중 -->
+	<select id="selectToatList" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE A_STATUS='Y'
+		AND A_TYPE=8
+	</select>
+	
+	<!-- 전체 매장 디테일 뷰 출력 (매장 셀렉) -->
+	<select id="selectstore" parameterType="_int" resultMap="searchResultSet">
+		SELECT *
+		FROM STORE
+		WHERE MNO=#{mNo}
+		AND SACCEPT='Y'
+	</select>
+	
+	<!-- 전체 매장 디테일 뷰 출력(메뉴 셀렉) -->
+	<select id="selectTosMenu" resultMap="storeMenuResultSet">
+		SELECT *
+		FROM MENU
+		WHERE MN_STATUS='Y'
+		AND MNO=#{mNo}
+	</select>
+	
+	<!-- 전체 매장 디테일 뷰 출력 (메뉴 이미지 셀렉) -->
+	<select id="selectTosFile" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{mNo}
+		AND A_TYPE=5
+		AND A_STATUS='Y'
+	</select>
+	
+	<select id="selectToslFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{mNo}
+		AND A_TYPE=8
+		AND A_STATUS='Y'
 	</select>
 	
 	<!-- 한식 매장 수 받기 -> 페이징 계산  -->

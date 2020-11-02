@@ -176,6 +176,7 @@
 							<c:param name="searchCondition" value="${ search.searchCondition }"/>
 							<c:param name="searchValue" value="${ search.searchValue }"/>
 						</c:url>
+						
 	                    <tr onclick="location.href='${contextPath}/${ andetail }'">
 	                        <td>${ n.nId }</td>
 	                        <td>${ n.nTitle }</td>
