@@ -24,6 +24,7 @@ public class ManagementDao {
 		return sqlSession.selectOne("managementMapper.selectStore", mNo);
 	}
 
+
 	public int updatesStatus(Store s) {
 		
 		return sqlSession.update("managementMapper.updatesStatus", s);
