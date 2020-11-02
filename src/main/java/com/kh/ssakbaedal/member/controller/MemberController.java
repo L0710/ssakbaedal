@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.attachment.FileInfo;
+import com.kh.ssakbaedal.common.attachment.FileList;
+import com.kh.ssakbaedal.kakao.Kakao_restapi;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
+
 import com.kh.ssakbaedal.mail.model.service.MailService;
 import com.kh.ssakbaedal.mail.model.vo.Mail;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
@@ -97,19 +102,26 @@ public class MemberController {
 		return "member/sSignUp";
 	}
 
-	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public String memberLogin(Member m, Model model) {
+	@RequestMapping("myInfo.do")
+	public String myInfoView() {
+		
+		logger.debug("내정보로 이동합니다");
+		
+		return "member/myInfo";
+	} 
+	@RequestMapping(value="login.do", method=RequestMethod.POST)
+	   public String memberLogin(Member m, Model model) {
+	      
+	      Member loginUser = mService.loginMember(m);
+	      
+	      if(loginUser != null) {
+	         model.addAttribute("loginUser", loginUser);
+	      }else {
+	         throw new MemberException("로그인에 실패하였습니다.");
+	      }
 
-		Member loginUser = mService.loginMember(m);
-
-		if (loginUser != null) {
-			model.addAttribute("loginUser", loginUser);
-		} else {
-			throw new MemberException("로그인에 실패하였습니다.");
-		}
-
-		return "redirect:home.do";
-	}
+	      return "redirect:home.do";
+	   }
 
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status) {
@@ -150,39 +162,41 @@ public class MemberController {
 
 	// 매장회원 회원가입
 	@RequestMapping("sInsert.do")
-	public String storeInsert(Member m, Store s, MultipartHttpServletRequest request, @RequestParam("post") String post,
-			@RequestParam("address1") String address1, @RequestParam("address2") String address2,
-			@RequestParam(value = "bfile") MultipartFile bfile, @RequestParam(value = "sfile") MultipartFile sfile,
-			@RequestParam(value = "mnFile") MultipartFile[] mnFile, @ModelAttribute MenuList menuList,
-			RedirectAttributes rd) {
-
+	public String storeInsert(Member m, Store s,MultipartHttpServletRequest request,
+			@RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
+			@RequestParam(value="bFile")MultipartFile bfile,@RequestParam(value="sFile")MultipartFile sfile,
+			@RequestParam(value="mnFile" ,required=false) MultipartFile[] mnFile,@ModelAttribute MenuList menuList,RedirectAttributes rd) {
+		
 		s.setsAddress(post + "," + address1 + "," + address2);
-
-		String renamebFileName = saveFile(bfile, request);
+		
+		FileInfo bfileInfo = saveFile("6",bfile,request);
 		Attachment bf = new Attachment();
 		bf.setOriginalFileName(bfile.getOriginalFilename());
-		bf.setChangeFileName(renamebFileName);
+		bf.setChangeFileName(bfileInfo.getRenameFileName());
+		bf.setFilePath(bfileInfo.getRenamePath());
 
-		String renamesFileName = saveFile(sfile, request);
+		FileInfo sfileInfo = saveFile("8",sfile,request);	
 		Attachment sf = new Attachment();
 		sf.setOriginalFileName(sfile.getOriginalFilename());
-		sf.setChangeFileName(renamesFileName);
-
+		sf.setChangeFileName(sfileInfo.getRenameFileName());
+		sf.setFilePath(sfileInfo.getRenamePath());
+		
 		ArrayList<Attachment> files = new ArrayList<Attachment>();
-		for (int i = 0; i < mnFile.length; i++) {
-			MultipartFile f = mnFile[i];
+		 for(int i=0;i<mnFile.length;i++) {
+			 	MultipartFile f = mnFile[i];
+			 	
+			 	FileInfo filesInfo = saveFile("5",f,request);
+				Attachment newMnFile = new Attachment();
+				newMnFile.setOriginalFileName(f.getOriginalFilename());
+				newMnFile.setChangeFileName(filesInfo.getRenameFileName());
+				newMnFile.setFilePath(filesInfo.getRenamePath());
+				
+				files.add(newMnFile);
+		 }
 
-			String ChangeFileName = saveFile(f, request);
-			Attachment newMnFile = new Attachment();
-			newMnFile.setOriginalFileName(f.getOriginalFilename());
-			newMnFile.setChangeFileName(ChangeFileName);
-
-			files.add(newMnFile);
-		}
-
-		int result = mService.insertStore(m, s, bf, sf, files, menuList);
-
-		if (result > 0) {
+		int result = mService.insertStore(m,s,bf,sf,files,menuList);
+		
+		if(result > 0) {
 			rd.addFlashAttribute("msg", "회원가입이 완료 되었습니다. 로그인 해주세요.");
 			return "redirect:login.do";
 
@@ -192,11 +206,19 @@ public class MemberController {
 
 	}
 
-	// 파일 이름 변경
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		System.out.println("변경에 들어온것" + file);
-		String savePath = root + "\\file";
+	//파일 이름 변경
+	public FileInfo saveFile(String type,MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources/muploadFiles");
+		
+		String savePath = new String();
+		
+		if(type=="6") {
+			savePath = root + "\\certification";
+		}else if(type=="8") {
+			savePath = root + "\\logo";
+		}else {
+			savePath = root + "\\menu";
+		}
 
 		File folder = new File(savePath);
 
@@ -209,17 +231,31 @@ public class MemberController {
 				+ originFileName.substring(originFileName.lastIndexOf("."));
 
 		String renamePath = folder + "\\" + renameFileName;
+	
+		FileInfo fileInfo = new FileInfo(renamePath, renameFileName);
 
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-		}
-
-		return renameFileName;
+		}		
+		return fileInfo;
 	}
-
-	// 아이디 찾기
+	
+	@RequestMapping("mupdate.do")
+	public String mupdate(Member m,Model model, RedirectAttributes rd) {
+		System.out.println(m);
+		Member loginUser = mService.mupdate(m);
+		
+	      if(loginUser != null) {
+		         model.addAttribute("loginUser", loginUser);
+		      }else {
+		         throw new MemberException(".");
+		      }
+		      return "redirect:myInfo.do";
+		   }
+	
+	//아이디 찾기
 	@RequestMapping(value = "findId.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String findId(Member m) {
@@ -359,4 +395,5 @@ public class MemberController {
 		}
 
 	}
+
 }

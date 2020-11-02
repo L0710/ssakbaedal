@@ -419,14 +419,14 @@
 						<tr>
 							<td>전화번호</td>
 							<td>
-							<input type="text" class="phone" id="phone1"> - 
-							<input type="text" class="phone" id="phone2"> - 
-							<input type="text" class="phone" id="phone3">							
+							<input type="text" class="phone" id="phone1" maxlength="3"> - 
+							<input type="text" class="phone" id="phone2" maxlength="4"> - 
+							<input type="text" class="phone" id="phone3" maxlength="4">							
 							</td>
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td><input type="text" name="birth" placeholder="예)201010 형식으로 입력해주세요."></td>
+							<td><input type="text" name="birth" maxlength="6" placeholder="예)201010 형식으로 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td>성별</td>
@@ -494,6 +494,7 @@
 											} else {
 												checkAry[0] = true;
 												idput.css(green);
+												idput.css("background","Lightgrey");
 												idput.prop("readonly", true);
 												$('#textValue').text("  ");
 											}
@@ -566,11 +567,10 @@
 				"click",
 				function() {
 					$('input[name=mPhone]').val(
-							$('#phone1').val() + $('#phone2').val()
-									+ $('#phone3').val());
+							$('#phone1').val() +"-"+ $('#phone2').val()+"-"+
+									$('#phone3').val());
 
 					checkAry[9] = $('input:radio[name=gender]').is(':checked');
-
 					if ($('#check_b').is(":checked") == true) {
 
 						checkAry[10] = true;

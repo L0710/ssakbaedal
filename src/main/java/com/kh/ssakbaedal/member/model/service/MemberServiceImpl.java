@@ -49,9 +49,10 @@ public class MemberServiceImpl implements MemberService {
 			MenuList menuList) {
 		int result = 0;
 
+		String encPwd = bcryptPasswordEncoder.encode(m.getmPwd());
+		m.setmPwd(encPwd);
 		m.setmType("3");
 		m.setmStatus("N");
-		m.setmGrade("null");
 		result = mDao.insertMember(m);
 		if (result == 0) {
 			throw new MemberException("회원가입 실패");
@@ -84,6 +85,14 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return loginUser;
 	}
+	
+	@Override
+	public Member mupdate(Member m) {
+		String encPwd = bcryptPasswordEncoder.encode(m.getmPwd());
+		m.setmPwd(encPwd);
+		return mDao.mupdate(m);
+	}
+	
 	
 	@Override
 	public Member findId(Member m) {

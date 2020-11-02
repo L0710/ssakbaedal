@@ -105,7 +105,7 @@
 			</div>
 			<hr style="width: 85%;">
 			<h2>SNS 로그인</h2>
-			<button id="kakao" class="body_btn">카카오</button>
+			<button id="kakao" class="body_btn" onclick="loginWithKakao();">카카오</button>
 			<div id="sign_up_div">
 				<h3>아직 싹배달의 회원이 아니신가요?</h3>
 				<p>회원가입을 하시면 더 다양한 혜택을 받으실수 있습니다.</p>
@@ -114,7 +114,16 @@
 					onclick="location.href='${signUp}'">회원가입</button>
 			</div>
 		</div>
+		<p id="token-result"></p>
 	</section>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	 <script>
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('54a0daec21ba792b78efb112d8522735');
+
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+    </script>
 	<script langqwuage="javascript">
 		function id_find() {
 			var win = window.open('${findId}',"아이디찾기",
@@ -124,8 +133,26 @@
 			var win = window.open('${findPwd}', "비밀번호 찾기",
 					"width=450,height=400,left=500px,top=300px");
 		}
+		  function loginWithKakao() {
+			  Kakao.Auth.createLoginButton({
+	              container : "#kakao-login-btn"
+	            , success : function( authObj ) {
+	              console.log( authObj );
+	                Kakao.API.request({
+	                      url : "/v1/user/me"
+	                    , success : function( res ) {
+	                        console.log( res );
+	                    }, fail : function( error ) {
+	                        alert( JSON.stringify( error ) );
+	                    }
+	                });
+	            }
+	            , fail : function( error ) {
+	                alert( JSON.stringify( error ));
+	            }
+	        });
+			  }
 	</script>
-
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

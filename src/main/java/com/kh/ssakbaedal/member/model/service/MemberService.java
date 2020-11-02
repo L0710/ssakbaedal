@@ -23,7 +23,10 @@ public interface MemberService {
 	
 	public int insertStore(Member m, Store s, Attachment b, Attachment sf, ArrayList<Attachment> files, MenuList menuList);
 	
-
+	
+	public Member mupdate(Member m);
+	
+	
 	public int deleteMember(String id);
 
 
@@ -49,6 +52,7 @@ public interface MemberService {
 
 	// (스케줄링)회원 상태 n->y
 	public int releaseMember(int mNo);
+
 
 }
 
