@@ -151,13 +151,6 @@ public class Store {
 		this.minPrice = minPrice;
 	}
 
-	public String getsOff() {
-		return sOff;
-	}
-
-	public void setsOff(String sOff) {
-		this.sOff = sOff;
-	}
 
 	@Override
 	public String toString() {

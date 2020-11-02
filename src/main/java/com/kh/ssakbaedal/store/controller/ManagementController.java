@@ -1,27 +1,35 @@
 package com.kh.ssakbaedal.store.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
 import com.kh.ssakbaedal.member.model.vo.Member;
 import com.kh.ssakbaedal.store.model.exception.ManagementException;
 import com.kh.ssakbaedal.store.model.service.ManagementService;
+import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.OpenDB;
+import com.kh.ssakbaedal.store.model.vo.SetMenu;
 import com.kh.ssakbaedal.store.model.vo.Store;
 
 @Controller
@@ -45,8 +53,211 @@ public class ManagementController {
 	
 	//메뉴 세팅페이지로 이동
 	@RequestMapping("menuSetting.do")
-	public String goMenuSetting() {
-		return "store/management/menuSettingView";
+	public ModelAndView goMenuSetting(HttpSession session,ModelAndView mv) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+		
+		Store s = smService.selectStore(mNo);
+		ArrayList<Menu> menu = smService.selectMenu(mNo);
+		ArrayList<SetMenu> set = smService.selectSetMenu(mNo); 
+		
+		if(menu != null) {
+			mv.addObject("s", s);
+			mv.addObject("menu", menu);
+			mv.addObject("set", set);
+			mv.setViewName("store/management/menuSettingView");
+		} else {
+			throw new ManagementException("메뉴정보 출력실패");
+		}
+		
+		return  mv;
+	}
+	
+	//품절처리
+	@RequestMapping("updateSoldout.do")
+	public String updateSoldout(String mnno, String select) {
+		
+		int mnNo = Integer.parseInt(mnno);
+		
+		if(select.equals("long")) {
+			int result1 = smService.updateLong(mnNo);
+
+		} else if (select.equals("day")) {
+			int result2 = smService.updateDay(mnNo);
+
+		} 
+		
+		return "redirect:store/management/menuSettingView";
+	}
+	
+	//품절해제
+	@RequestMapping("updateSale.do")
+	public String updateSale(String mnno) {
+		
+		int mnNo = Integer.parseInt(mnno);
+		
+		int result = smService.updateSale(mnNo);
+		
+		return "redirect:store/management/menuSettingView";
+	}
+	
+	//메뉴삭제
+	@RequestMapping("deleteMenu.do")
+	public ModelAndView deleteMenu(ModelAndView mv, String mnno, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+		int mnNo = Integer.parseInt(mnno);
+		
+		System.out.println(mnNo);
+		int result = smService.deleteSale(mnNo);
+		System.out.println(result);
+		
+		if(result <= 0) {
+			throw new ManagementException("메뉴 삭제 실패");
+		}
+		
+		ArrayList<Menu> menu = smService.selectMenu(mNo);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		mv.addObject("menu", menu);
+		mv.addObject(gson.toJson(menu));
+		mv.setViewName("store/management/menuSettingView");
+		
+		return mv;
+	}
+	
+	//베스트메뉴로 등록
+	@RequestMapping("upbest.do")
+	public String upbest(String mnno) {
+		
+		int mnNo = Integer.parseInt(mnno);
+		
+		int result = smService.upBest(mnNo);
+		
+		return  "redirect:store/management/menuSettingView";
+	}
+	
+	//베스트메뉴 등록 해제
+	@RequestMapping("delbest.do")
+	public String delBest(String mnno) {
+		
+		int mnNo = Integer.parseInt(mnno);
+		
+		int result = smService.delBest(mnNo);
+		
+		return "redirect:store/management/menuSettingView";
+	}
+	
+	//세트메뉴추가
+	@RequestMapping("insertSet.do")
+	public String insertSet(String setName,String sumMnno, int mnprice, HttpSession session) {
+
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+		SetMenu sm = new SetMenu();
+		String no = sumMnno.substring(0, sumMnno.length()-1);
+		
+		String[] sArr = no.split(",");
+		
+		String nameList = "";
+		
+		for(int i = 0; i < sArr.length; i++) {
+			
+			int mnNo = Integer.parseInt(sArr[i]);
+			
+			Menu me = smService.selectmnName(mnNo);
+			
+			if(me != null) {
+				nameList += me.getMnName()+",";
+			} else {
+				break;
+			}
+		}
+		String smName = nameList.substring(0, nameList.length()-1);
+		
+		sm.setSmName(setName);
+		sm.setSetList(smName);
+		sm.setSetPrice(mnprice);
+		sm.setmNo(mNo);
+		sm.setSet_mnNo(no);
+		
+		
+		int result = smService.insertSetMenu(sm);
+		if(result < 0 ) {
+			throw new ManagementException("세트메뉴 추가 실패");
+		}
+
+		return "redirect:menuSetting.do";
+	}
+	
+	//세트메뉴 삭제
+	@RequestMapping("setdel.do") 
+	public ModelAndView setDelete(String smno, ModelAndView mv, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+		int smNo = Integer.parseInt(smno);
+		System.out.println(smNo);
+		int result = smService.deleteSet(smNo);
+
+		if(result <= 0) {
+			throw new ManagementException("세트메뉴 삭제 실패");
+		}
+		
+		ArrayList<SetMenu> set = smService.selectSetMenu(mNo);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		mv.addObject("set", set);
+		mv.addObject(gson.toJson(set));
+		mv.setViewName("store/management/menuSettingView");
+		
+		return mv;
+	}
+	
+	//메뉴추가
+	@RequestMapping("menuInsert.do")
+	public String menuInsert(Attachment a, FileList fl ,Menu m, HttpServletRequest request,
+												@RequestParam(value="uploadFile" ,required=false) MultipartFile file) {
+		
+		if(!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file, request);
+			
+			if(renameFileName != null) {
+				
+			}
+		}
+		
+		return "";
+	}
+	
+	// 파일 저장을 위한 별도의 메소드
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
+		// 파일이 저장 될 경로 설정
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		String savePath = root + "\\muploadFiles";
+		
+		File folder = new File(savePath);
+		
+		if(!folder.exists())	// 사진을 저장하고자 하는 경로가 존재하지 않는다면
+			folder.mkdirs();	// 포함 된 경로를 모두 생성함
+		
+		// 파일 Rename -> 현재 시간 년월일시분초.확장자
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename(); // -> 원래 이름으로부터 확장자 추출
+		String renameFileName = sdf.format(new Date()) 
+				+ originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = folder + "\\" + renameFileName;
+		
+		
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return renameFileName;
 	}
 	
 	

@@ -438,7 +438,7 @@
                             <span>운영시간</span><input id="sOpen" class="stinfo" name="sOpen" value="${s.openTime }"><br>
                             <span>휴무일</span><input id="sOff" class="stinfo" name="sOff"  value="${s.sOff}"><br>
                             <span>배달지역(km)</span><input id="sDelivery" class="stinfo" name="sDelivery" value="${s.deliveryKm}"><br>
-                            <span>카테고리</span><select id="sCate" class="stinfo"  name="sCate">
+                            <span>카테고리</span><select id="sCate" class="stinfo"  name="sCate" disabled>
                                 <option value="한식">한식</option>
                                 <option value="중국집">중국집</option>
                                 <option value="돈까스,일식,회">돈까스,일식,회</option>
@@ -489,14 +489,14 @@
 								<span>상세주소</span>
 								<input type="text" name="address2" class="postcodify_details" id="add2" value="${addr3}"  />
 								</div><br>
-                            <span>대표자명</span><input id="ownerName" class="stinfo" name="ownerName" value="${loginUser.mName }"><br>
-                            <span>사업자등록번호</span><input id="sNumber" class="stinfo" name="sNumber" value="${s.sNo}"><br><br>
+                            <span>대표자명</span><input id="ownerName" class="stinfo" name="ownerName" value="${loginUser.mName }" readonly><br>
+                            <span>사업자등록번호</span><input id="sNumber" class="stinfo" name="sNumber" value="${s.sNo}" readonly><br><br>
                         </div>
                         <hr>
                         <br>
                         <div>
                             <div><span id="pinfo">회원정보</span></div><br>
-                            <span>아이디</span><input type="text" id="id" class="stinfo" name="mName" readonly value="${loginUser.mId }"><br>
+                            <span>아이디</span><input type="text" id="id" class="stinfo" name="mName"  value="${loginUser.mId }" readonly><br>
                             <span>비밀번호</span><input type="password" id="pwd" class="stinfo" name="pwd" ><br>
                             <span>비밀번호 확인</span><input type="password" id="pwdch" class="stinfo" name="chPwd"><br>
                             <span>이메일</span><input type="email" id="email" class="stinfo" name="email" value="${loginUser.mEmail }"><br><br><br>
