@@ -199,43 +199,6 @@
     p{
         margin: 3px;
     }
-
-    /* file css */
-    .filebox input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    }
-
-    .filebox label {
-    cursor: pointer; 
-    text-align: center;
-    display: inline-block;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(64, 64, 64);
-    color: white;
-    font-size: 13px;
-    padding-top: 3px;
-    width: 50px;
-    height: 23px;
-    }
-
-    /* named upload */
-    .filebox .upload-name {
-    display: inline-block;
-    width: 200px;
-    height: 20px;
-    font-size:10px;
-    color: gray;
-    vertical-align: middle;
-    border-radius: 5px;
-    border: 1px solid  lightgray;
-
-    }
     /* 증감소 버튼 숨기기 css */
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
@@ -557,10 +520,7 @@
                                 <td>사업자등록증 사본등록</td>
                                 <td>
                                 <div class="filebox"> 
-                                    <input class="upload-name" value="파일용량은 100MB까지 가능합니다." readonly>
-                                    <input type="file"  multiple="multiple" id="buisness_file"name="bFile"accept=".gif, .jpg, .png" required>
-                                    <label for="buisness_file">업로드</label> 
-                                </div>
+                                    <input class="filebox" type="file"  multiple="multiple" id="buisness_file"name="bFile"accept=".gif, .jpg, .png" required>                             
                                 </td>
                             </tr>
                         </table>
@@ -677,15 +637,8 @@
 						<tr>
 							<td>가게 대표 이미지</td>
 							<td>
-							<input type="text" id="fileName"class="file_input_textbox" readonly="readonly">
-
-								<div class="file_input_div">
-
-									<input type="button" value="파일선택" class="file_input_button">
-
-									<input type="file" class="file_input_hidden" name="sFile"
-										onchange="javascript:document.getElementById('fileName').value = this.value.split('\\')[this.value.split('\\').length-1]"readonly>
-								</div></td>
+                            	<input type="file"  multiple="multiple" id="store_file"name="sFile"accept=".gif, .jpg, .png" required>
+							</td>
 						</tr>
 						<tr>
                                 <td>가게 소개</td>
@@ -701,7 +654,7 @@
                                 <th style="width:100px"></th>
                             </tr>
                             <tr>
-                                <td><input type="text" name="menuList[0].mnName"></td>
+                                <td><input type="text"  placeholder="한개의 메뉴는 필수로 입력해주세요" name="menuList[0].mnName"></td>
                                 <td><input type="number" name="menuList[0].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
                                 <td>
                                 <div> 
@@ -752,9 +705,7 @@
 		 };
    		$('input[type="checkbox"]').not(this).prop("checked", false);
    });
-
-
-    	  
+       	  
     $(document).on("click","input[name=addStaff]",function(){
 		console.log("동작");
 	     	var i = 1;
@@ -890,7 +841,6 @@
 
 	    	if($.inArray(false, check2) >= 0){
 	    		checkAry[1] = false; 
-	    		console.log(check2);
 			}else{
 	    		checkAry[1] = true; 
 			}
