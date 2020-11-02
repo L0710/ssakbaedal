@@ -79,4 +79,8 @@ public class EventDao {
 		return sqlSession.selectOne("eventMapper.pHistory", ph);
 	}
 
+	public int searchListCount(Search search) {
+		return sqlSession.selectOne("eventMapper.searchListCount");
+	}
+
 }

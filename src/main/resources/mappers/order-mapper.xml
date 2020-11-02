@@ -23,7 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 		<result property="sName" column="SNAME"/>
 		<result property="sTel" column="STEL"/>
-		<result property="filePath" column="FILE_PATH"/>
 		<result property="request" column="REQUEST"/>
 		<result property="oPoint" column="OPOINT"/>
 		<result property="fee" column="FEE"/>
@@ -33,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="oAddress" column="OADDRESS"/>
 		<result property="mNo" column="MNO"/>
 		<collection property="ODetail" javaType="java.util.ArrayList" resultMap="ODetailResultSet"/>
+		<collection property="attachment" javaType="java.util.ArrayList" resultMap="atResultSet"/>
 	</resultMap>
 	
 	<resultMap id="s_orderResultSet" type="S_Order">
@@ -64,6 +64,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mnNo" column="MN_NO"/>
 		<result property="mnName" column="MN_NAME"/>
 		<result property="price" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="atResultSet">
+		<result property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="refId" column="REF_ID"/>
 	</resultMap>
 	
 	<select id="selectodList" resultMap="sod_orderResultSet">

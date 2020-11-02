@@ -122,6 +122,11 @@ public class EventServiceImpl implements EventService {
 		return eDao.pointHistory(ph);
 	}
 
+	@Override
+	public int searchListCount(Search search) {
+		return eDao.searchListCount(search);
+	}
+
 
 
 }

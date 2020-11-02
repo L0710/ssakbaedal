@@ -34,6 +34,7 @@
 	width: 100px;
 	height: 30px;
 	font-size: 15px;
+	color:rgb(255,194,0);
 }
 
 .file-wrapper {
@@ -101,9 +102,13 @@
 					<table id="reviewTable">
 						<tr rowspan="3">
 							<td rowspan="4">
-								<div id="storeImgArea">
-									<img id="storeImg" src="../../resources/img/Toy+story+05.jpg">
-								</div>
+							<c:forEach var="at" items="${ o.attachment }">
+								<c:if test="${ !empty at.originalFileName  }">
+									<div id="storeImgArea">
+										<img id="storeImg" src="${ contextPath }/resources/muploadFiles/logo/${ at.changeFileName }">
+									</div>
+								</c:if>
+							</c:forEach>
 							</td>
 							<td style="font-size:12px;"><b>${ o.sName }(${ o.sTel })</b></td>
 						</tr>
@@ -158,7 +163,7 @@
 
 					<div class="review-wrapper" align="center">
 						<textarea id="rContent" name="rContent" cols="100" rows="6" style="resize: none"
-							placeholder="내용을 작성해주세요. 허위 리뷰일 경우 관리자에 의해 삭제될 수 있습니다."></textarea>
+							placeholder="내용을 작성해주세요. 허위 리뷰일 경우 관리자에 의해 삭제되며 서비스 이용에 제한이 있을 수 있습니다."></textarea>
 						<br>
 						<div id="countingArea">
 							<span style="color: #aaa; font-size: 10px;" id="counter">0/300자</span>

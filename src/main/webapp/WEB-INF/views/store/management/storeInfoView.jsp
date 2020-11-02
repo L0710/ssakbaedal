@@ -513,17 +513,9 @@
     </div>
 
     </section>
-    </section>
-    <div class="sidemenu">
-    
-        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
-        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
-        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
-        <button class="btn-ghost gray si">리뷰관리</button>
-        <button class="btn-ghost gray si">알림</button>
-    </div>
-    </section>
-    </section>
+
+    <c:import url="../common/sidemenu_store.jsp" />
+
 
     </div>
     <br><br><br><br><br><br>

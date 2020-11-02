@@ -47,7 +47,7 @@ nav {
 		<a class="link" href="${ rlist }">리뷰</a>
 		<a class="link" href="#">포인트</a>
 		<a class="link" href="#">문의</a>
-		<a class="link" href="#">정보수정</a>
+		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
 		<a class="link" href="#">회원탈퇴</a>
 	</nav>
 </body>

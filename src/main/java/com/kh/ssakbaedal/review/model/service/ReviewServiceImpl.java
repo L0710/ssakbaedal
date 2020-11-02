@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.review.model.dao.ReviewDao;
 import com.kh.ssakbaedal.review.model.vo.Review;
+import com.kh.ssakbaedal.review.model.vo.V_Review;
 
 @Service("rService")
 public class ReviewServiceImpl implements ReviewService{
@@ -55,27 +58,44 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<Attachment> selectImg(int oNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateReview(Review r) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateReviewNImg(Review r, ArrayList<Attachment> alist) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int deleteReview(int oNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return rDao.deleteReview(oNo);
 	}
+
+	@Override
+	public int selectrListCount(int mNo) {
+		return rDao.selectrListCount(mNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectrList(PageInfo pi, int mNo) {
+		return rDao.selectrList(pi, mNo);
+	}
+
+	@Override
+	public V_Review selectRDetail(No no) {
+		return rDao.selectRDetail(no);
+	}
+
+	@Override
+	public int deleteImg(int oNo) {
+		return rDao.deleteImg(oNo);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectImg(int oNo) {
+		return rDao.selectImg(oNo);
+	}
+
+	@Override
+	public String selectId(int oNo) {
+		return rDao.selectId(oNo);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return rDao.insertReply(r);
+	}
+
 
 }

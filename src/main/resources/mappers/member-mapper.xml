@@ -69,17 +69,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				'Y', #{aType},#{refId})
 	</insert>
 	
-	<update id="updateMember" parameterType="Member">
+	<update id="mupdate" parameterType="Member">
 		UPDATE MEMBER
-		SET NAME=#{name}, GENDER=#{gender}, EMAIL=#{email}, AGE=#{age},
-		    PHONE=#{phone}, ADDRESS=#{address}, UPDATE_DATE=SYSDATE
-		WHERE ID=#{id}
+		SET MPWD=#{mPwd},MNAME=#{mName},MEMAIL=#{mEmail},MPHONE=#{mPhone},BIRTH=#{birth},GENDER=#{gender},M_MODIFY_DATE=SYSDATE
+		WHERE MID=#{mId}
 	</update>
 	
 	<update id="deleteMember" parameterType="string">
 		UPDATE MEMBER
 		SET M_STATUS='N'
-		WHERE ID=#{id}
+		WHERE MID=#{mId}
 	</update>
 	
 	<select id="checkId" parameterType="Member" resultType="_int">
@@ -95,7 +94,52 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND MEMAIL=#{mEmail}
 	</select>
 	
+	<select id="findPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNAME=#{mName}
+		AND MEMAIL=#{mEmail}
+		AND MID=#{mId}
+	</select>
 	
+	<update id="updatePwd" parameterType="Member">
+		UPDATE MEMBER
+		SET MPWD=#{mPwd},M_MODIFY_DATE=SYSDATE
+		WHERE MNO=#{mNo}
+	</update>
 	
+	<select id="selectmemListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE M_STATUS='Y'
+		AND M_TYPE=2
+	</select>
 	
+	<select id="selectmemList" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE M_STATUS='Y'
+		AND M_TYPE=2
+		ORDER BY MNO DESC
+	</select>
+	
+	<update id="updateStatus" parameterType="_int">
+		UPDATE MEMBER
+		SET M_STATUS = 'N'
+		WHERE MNO=#{mNo}
+	</update>
+	
+	<select id="selectBannedList" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE M_STATUS='N'
+		AND M_TYPE=2
+		ORDER BY MNO DESC
+	</select>
+	
+	<update id="releaseMember" parameterType="_int">
+		UPDATE MEMBER
+		SET M_STATUS = 'Y'
+		WHERE MNO=#{mNo}
+	</update>
 </mapper>

@@ -21,6 +21,10 @@
         	width: 150px;
         }
         
+        #goNotice {
+        	width: 150px;
+        }
+        
         .btn-ghost.gray {
             background: transparent;
             border: 2px solid rgb(64, 64, 64);
@@ -53,6 +57,7 @@
 
 	<div class="sidemenu">
     	<button class="btn-ghost gray" id="goFAQ" onclick="location.href='service.do'">FAQ</button>
+    	<button class="btn-ghost gray" id="goNotice" onclick="location.href='tnlist.do'">공지사항</button>
     	<button class="btn-ghost gray" id="goRequire">1:1문의하기</button>
 	</div>
 	

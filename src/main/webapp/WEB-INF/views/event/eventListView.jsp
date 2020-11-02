@@ -18,6 +18,10 @@
 	#eventList {
 		width: 80%;
 	}
+	
+	#eventList tr:hover {
+	cursor: pointer;
+	background: rgba(130, 180, 127, 0.1);
 </style>
 </head>
 <body>
@@ -86,26 +90,27 @@
                 <br><br>
 
                 <div class="pagingArea" align="center" style="font-size:14px;">
-					<!-- 검색 후 페이징 처리에 대한 수정 -->
-					<!-- 검색한 값이 있는지 없는지 여부에 따라 넘어갈 주소값을 결정함 -->
-					<c:if test="${ searchValue eq null }">
-						<!-- 검색 값이 없으면 elist.do 호출 -->
-						<c:set var="loc" value="/elist.do" scope="page"/>
-					</c:if>
-					<c:if test="${ searchValue ne null }">
-						<!-- 검색 값이 있으면 esearch.do 호출 -->
-						<c:set var="loc" value="/esearch.do" scope="page"/>
-					</c:if>
                 
                 	<!-- 페이징 -->
                     <c:if test="${ pi.currentPage <= 1 }">
 					[이전]&nbsp;
 					</c:if>
 					<c:if test="${ pi.currentPage > 1 }">
-						<c:url var="before" value="elist.do">
-							<c:param name="page" value="${ pi.currentPage - 1 }"/>
-						</c:url>
-						<a href="${ before }">[이전]</a>&nbsp;
+						<c:if test="${ search == null }">
+		                  <c:url var="before" value="elist.do">
+		                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+		                  </c:url>
+		                  <a href="${ before }">[이전]</a> &nbsp;
+		               </c:if>
+		               <c:if test="${ search != null }">
+		                  <c:url var="before" value="esearch.do">
+		                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+		                     <c:param name="searchValue" value="${ search.searchValue }"/>
+		                     <c:param name="searchCondition" value="${ search.searchCondition }"/>
+		                  </c:url>
+		                  <a href="${ before }">[이전]</a> &nbsp;
+		               </c:if>
+					
 					</c:if>
 					
 					<!-- 페이지 숫자 -->
@@ -114,10 +119,20 @@
 							<font color="red" size="3">[ ${ p } ]</font>
 						</c:if>
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="elist.do">
-								<c:param name="page" value="${ p }"/>
-							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<c:if test="${ search == null }">
+		                        <c:url var="pagination" value="elist.do">
+		                           <c:param name="page" value="${ p }"/>
+		                              </c:url>
+		                        <a href="${ pagination }">${ p }</a> &nbsp;
+							</c:if>
+							<c:if test="${ search != null }">
+		                        <c:url var="pagination" value="esearch.do">
+		                           <c:param name="page" value="${ p }"/>
+		                           <c:param name="searchValue" value="${ search.searchValue }"/>
+		                           <c:param name="searchCondition" value="${ search.searchCondition }"/>
+		                        </c:url>
+		                        <a href="${ pagination }">${ p }</a> &nbsp;
+		                     </c:if>
 						</c:if>
 					</c:forEach>
 					
@@ -126,10 +141,20 @@
 						[다음]
 					</c:if>
 					<c:if test="${ pi.currentPage < pi.maxPage }">
-						<c:url var="after" value="elist.do">
-							<c:param name="page" value="${ pi.currentPage + 1 }"/>
-						</c:url>
-						<a href="${ after }">[다음]</a>
+						<c:if test="${ search == null }">
+		                  <c:url var="after" value="elist.do">
+		                     <c:param name="page" value="${ pi.currentPage + 1 }"/>
+		                  </c:url>
+		                  <a href="${ after }">[다음]</a>
+		               </c:if>
+		               <c:if test="${ search != null }">
+		                  <c:url var="after" value="esearch.do">
+		                     <c:param name="page" value="${ pi.currentPage + 1 }"/>
+		                     <c:param name="searchValue" value="${ search.searchValue }"/>
+		                     <c:param name="searchCondition" value="${ search.searchCondition }"/>
+		                  </c:url>
+		                  <a href="${ after }">[다음]</a>
+		               </c:if>
 					</c:if>
                 </div>
                 <br>
@@ -149,17 +174,6 @@
                     </form>
                 </div>
 
-                <script>
-                    // 상세보기
-                    $(function(){
-                        $("#eventList td").mouseenter(function(){
-                            $(this).parent().css({"background":"lightgrey", "cursor":"pointer"});
-                        }).mouseout(function(){
-                            $(this).parent().css({"background":"white"});
-                        })
-                    })
-                    
-                </script>
             </div>
         </section>
         

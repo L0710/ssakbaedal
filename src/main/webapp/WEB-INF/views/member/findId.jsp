@@ -77,8 +77,9 @@
     	            		$('#value').text("일치하는 정보가 없습니다.");
     	            		$('#value').css({"color":"red","font-weight":"bold"});
     	            	}else{
-    	            		var id = data.substr(0, data.length-2);
-    	            		$('#value').text("찾으시는 아이디는 "+ id + "**입니다.");
+    	            		var id1 = data.substr(0, 1);
+    	            		var id2 = data.substr(4, data.length);
+    	            		$('#value').text("찾으시는 아이디는 "+ id1 +"**"+ id2 +"입니다.");
     	            		$('#value').css({"color":"green","font-weight":"bold"});
     	            		
     	            	}

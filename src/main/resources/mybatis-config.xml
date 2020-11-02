@@ -28,6 +28,10 @@
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.Menu" alias="MENU"/>
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.OpenDB" alias="OpenDB"/>
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.SetMenu" alias="SetMenu"/>
+		<typeAlias type="com.kh.ssakbaedal.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.ssakbaedal.notice.model.vo.nSearch" alias="nSearch"/>
+		<typeAlias type="com.kh.ssakbaedal.common.reply.Reply" alias="Reply"/>
+		<typeAlias type="com.kh.ssakbaedal.common.no.No" alias="No"/>
 	</typeAliases>
 
 	<mappers>
@@ -38,6 +42,7 @@
 		<mapper resource="mappers/review-mapper.xml"/>
 		<mapper resource="mappers/management-mapper.xml"/>
 		<mapper resource="mappers/faq-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
 	</mappers>
 
 </configuration>
