@@ -1,12 +1,15 @@
 package com.kh.ssakbaedal.storeSearch.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.storeSearch.model.dao.storeSearchDao;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
+import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
 
@@ -24,9 +27,26 @@ public class storeSearchServiceImpl implements storeSearchService {
 	}
 	
 	// 1_2. 전체 매장 조회(페이징 처리 된)
-	@Override
+	/*@Override
 	public ArrayList<storeSearch> selectList(PageInfo pi) {
 		return sDao.selectList(pi);
+	}*/
+	
+	// 전체 매장 조회 이미지 포함 테스트
+	@Override
+	public HashMap<String, Object> selectTestList(PageInfo pi) {
+		
+		ArrayList<storeSearch> toList = sDao.selectToList(pi);
+		ArrayList<Attachment> atList = sDao.selectToatList(pi);
+		
+		HashMap<String, Object> hmap = new HashMap<>();
+		hmap.put("toList", toList);
+		hmap.put("atList", atList);
+		
+		System.out.println(" Service toList : " + hmap.get("toList"));
+		System.out.println(" Service atList : " + hmap.get("atList"));
+		
+		return hmap;
 	}
 	
 	// 2_1. 한식 매장 전체 수 리턴 받기 -> 페이징 계산
@@ -183,6 +203,27 @@ public class storeSearchServiceImpl implements storeSearchService {
 	@Override
 	public ArrayList<storeSearch> selectCdsList(PageInfo pi) {
 		return sDao.selectCdsList(pi);
+	}
+	
+	// 전체 매장 디테일 뷰 출력(매장 셀렉)
+	@Override
+	public storeSearch selectstore(int mNo) {
+		return sDao.selectstore(mNo);
+	}
+	// 전체 매장 디테일 뷰 출력(매장 메뉴 셀렉)
+	@Override
+	public ArrayList<storeMenu> selectTosMenu(int mNo) {
+		return sDao.selectTosMenu(mNo);
+	}
+	// 전체 매장 디테일 뷰 출력(메뉴 이미지 셀렉)
+	@Override
+	public ArrayList<Attachment> selectTosFile(int mNo) {
+		return sDao.selectTosFile(mNo);
+	}
+	// 전체 매장 디테일 뷰 출력(매장 로고 셀렉)
+	@Override
+	public Attachment selectToslFile(int mNo) {
+		return sDao.selectToslFile(mNo);
 	}
 	
 	

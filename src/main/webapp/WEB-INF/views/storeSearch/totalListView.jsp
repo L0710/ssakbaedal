@@ -264,14 +264,23 @@
 					
 					
 		                <div class="store_area">
-		                <c:forEach var="ts" items="${tslist}">
-		                    <div class="store_item" id="storeItem">
+		                <c:forEach var="to" items="${toList}">
+		                	<c:url var="sinfoDetail" value="sinfoDetail.do">
+		                		<c:param name="mNo" value="${ to.mNo }"/>
+		                		<c:param name="page" value="${ pi.currentPage }"/>
+		                		
+		                	</c:url>
+		                    <div class="store_item" id="storeItem" onclick="location.href='${contextPath}/${sinfoDetail}'"><!-- 요걸 클릭했을 때 매장 상세정보 뷰로 이동하게 해야 함. -->
 		                        <div class="store_img_area"> <!-- 사진 파일 저장되면 불러올 예정. -->
-		                            <img src="./resources/img/bhc.png" width="120px" height="100px">
+			                        <c:forEach var="atList" items="${ atList }">
+				                        <c:if test="${ to.mNo == atList.refId }">
+				                            <img src="${ contextPath }/resources/logoUploadFiles/${ atList.changeFileName }" width="120px" height="100px">
+				                        </c:if>
+				                    </c:forEach>
 		                        </div>
 		                        <div class="store_info">
 		                            <p>
-		                            	<strong>${ ts.sName }</strong><br>
+		                            	<strong>${ to.sName }</strong><br>
 		                            	<span>별점 (ex: ★ 4)</span><br>
 										리뷰갯수(ex: 리뷰 100)<br>
 										사장님 댓글(ex: 사장님 댓글 100+)
