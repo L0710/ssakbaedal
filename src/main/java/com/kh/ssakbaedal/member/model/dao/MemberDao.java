@@ -69,4 +69,12 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updatePwd", findPwd);
 	}
 
+	public Member mupdate(Member m) {
+		int result = sqlSession.update("memberMapper.mupdate", m);
+		if (result > 0) {
+			return	sqlSession.selectOne("memberMapper.selectOne", m);
+		}
+		return null;
+	}
+
 }

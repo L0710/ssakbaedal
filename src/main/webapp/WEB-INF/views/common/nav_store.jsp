@@ -40,6 +40,7 @@ scope="application"/>
 		<a class="link" href="${contextPath}/goOrderView.do">주문관리</a>
 		<a class="link" href="${contextPath}/storeManage.do">매장관리</a>
 		<a class="link" href="${contextPath}/statistics.do">매출현황</a>
+		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
 	</nav>
 	
 </body>

@@ -204,7 +204,7 @@
 					</c:url>
 					<c:url var="mypage_store" value="mypage_store.do" />
 					<label><c:out value="${ loginUser.mName } 님 환영합니다!"></c:out></label>
-					
+
 					<!-- 회원 타입에 따라 마이페이지 다르게 출력 -->
 					<button class="btn-ghost green" id="mypageBtn"
 						<c:if test="${ loginUser.mType == 1 }">onclick="location.href='${ mypage_admin }'"</c:if>

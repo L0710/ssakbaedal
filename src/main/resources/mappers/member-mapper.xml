@@ -69,10 +69,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				'Y', #{aType},#{refId})
 	</insert>
 	
+	<update id="mupdate" parameterType="Member">
+		UPDATE MEMBER
+		SET MPWD=#{mPwd},MNAME=#{mName},MEMAIL=#{mEmail},MPHONE=#{mPhone},BIRTH=#{birth},GENDER=#{gender},M_MODIFY_DATE=SYSDATE
+		WHERE MID=#{mId}
+	</update>
+	
 	<update id="deleteMember" parameterType="string">
 		UPDATE MEMBER
 		SET M_STATUS='N'
-		WHERE ID=#{id}
+		WHERE MID=#{mId}
 	</update>
 	
 	<select id="checkId" parameterType="Member" resultType="_int">
