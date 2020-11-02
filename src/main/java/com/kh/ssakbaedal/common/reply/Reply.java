@@ -12,10 +12,12 @@ public class Reply {
 	R_TYPE	NUMBER
 	REF_ENO	NUMBER
 	REID	NUMBER
-	MNO	NUMBER*/
+	MNO	NUMBER
+	ONO	NUMBER*/
 	
 	private int rNo;
 	private String rContent;
+	private String rWriter;
 	private Date rCreateDate;
 	private Date rModifyDate;
 	private String rStatus;
@@ -23,14 +25,16 @@ public class Reply {
 	private int refENo;
 	private int reId;
 	private int mNo;
+	private int oNo;
 	
 	public Reply() {}
 
-	public Reply(int rNo, String rContent, Date rCreateDate, Date rModifyDate, String rStatus, int rType, int refENo,
-			int reId, int mNo) {
+	public Reply(int rNo, String rContent, String rWriter, Date rCreateDate, Date rModifyDate, String rStatus,
+			int rType, int refENo, int reId, int mNo, int oNo) {
 		super();
 		this.rNo = rNo;
 		this.rContent = rContent;
+		this.rWriter = rWriter;
 		this.rCreateDate = rCreateDate;
 		this.rModifyDate = rModifyDate;
 		this.rStatus = rStatus;
@@ -38,6 +42,7 @@ public class Reply {
 		this.refENo = refENo;
 		this.reId = reId;
 		this.mNo = mNo;
+		this.oNo = oNo;
 	}
 
 	public int getrNo() {
@@ -54,6 +59,14 @@ public class Reply {
 
 	public void setrContent(String rContent) {
 		this.rContent = rContent;
+	}
+
+	public String getrWriter() {
+		return rWriter;
+	}
+
+	public void setrWriter(String rWriter) {
+		this.rWriter = rWriter;
 	}
 
 	public Date getrCreateDate() {
@@ -112,11 +125,19 @@ public class Reply {
 		this.mNo = mNo;
 	}
 
+	public int getoNo() {
+		return oNo;
+	}
+
+	public void setoNo(int oNo) {
+		this.oNo = oNo;
+	}
+
 	@Override
 	public String toString() {
-		return "Reply [rNo=" + rNo + ", rContent=" + rContent + ", rCreateDate=" + rCreateDate + ", rModifyDate="
-				+ rModifyDate + ", rStatus=" + rStatus + ", rType=" + rType + ", refENo=" + refENo + ", reId=" + reId
-				+ ", mNo=" + mNo + "]";
+		return "Reply [rNo=" + rNo + ", rContent=" + rContent + ", rWriter=" + rWriter + ", rCreateDate=" + rCreateDate
+				+ ", rModifyDate=" + rModifyDate + ", rStatus=" + rStatus + ", rType=" + rType + ", refENo=" + refENo
+				+ ", reId=" + reId + ", mNo=" + mNo + ", oNo=" + oNo + "]";
 	}
-	
+
 }

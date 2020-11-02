@@ -24,7 +24,7 @@
         }
         
         section {
-            margin-left: 187px;
+            margin-left: 186.8px;
             width: 1013.5px;
             height: 60%;
             float: left; 

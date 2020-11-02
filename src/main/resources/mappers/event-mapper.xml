@@ -147,4 +147,24 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND MNO=#{mNo}
 	</select>
 	
+	<select id="searchListCount" resultType="_int">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM EVENT
+		<where><!-- where : where + AND|OR로 시작 시 자동 제거 기능 --><!-- trim도 사용 가능 -->
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND ETITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND ECONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (ETITLE LIKE #{sv}
+						OR ECONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		
+	</select>
 </mapper>

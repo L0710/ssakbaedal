@@ -153,8 +153,8 @@
                             <td id="td_button" colspan="2">
                                 <br>
                                 <br>
+                                <button type="submit" class="btn-ghost green">작성</button>
                                 <button type="button" class="btn-ghost gray" onclick="location.href='service.do'">취소</button>
-                                <button type="submit" class="btn-ghost gray">작성</button>
                             </td>
                         </tr>
                     </table>

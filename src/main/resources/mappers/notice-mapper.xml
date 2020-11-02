@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="nId" column="NID"/>
+		<result property="nTitle" column="NTITLE"/>
+		<result property="nContent" column="NCONTENT"/>
+		<result property="nWriter" column="NWRITER"/>
+		<result property="nCreateDate" column="N_CREATE_DATE"/>
+		<result property="nModifyDate" column="N_MODIFY_DATE"/>
+		<result property="nStatus" column="N_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="nSort" column="NSORT"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<!-- 관리자 공지사항 게시글 페이징 계산 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE N_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 공지사항 게시글 조회 -->
+	<select id="selectnList" resultMap="noticeResultSet">
+    	SELECT *
+    	FROM NOTICE
+    	WHERE N_STATUS='Y'
+    	ORDER BY NID DESC
+	</select>
+	
+	<!-- 고객센터 공지사항 게시글 페이징 계산 -->
+	<select id="selectTnListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE N_STATUS='Y'
+		AND NSORT='전체'
+	</select>
+	
+	<!-- 고객센터 공지사항 게시글 조회 -->
+	<select id="selectTnList" resultMap="noticeResultSet">
+    	SELECT *
+    	FROM NOTICE
+    	WHERE N_STATUS='Y'
+    	AND NSORT='전체'
+    	ORDER BY NID DESC
+	</select>
+	
+	<!-- 매장회원 공지사항 게시글 페이징 계산 -->
+	<select id="selectSnListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE N_STATUS='Y'
+		AND NSORT='매장'
+	</select>
+	
+	<!-- 매장회원 공지사항 게시글 조회 -->
+	<select id="selectSnList" resultMap="noticeResultSet">
+    	SELECT *
+    	FROM NOTICE
+    	WHERE N_STATUS='Y'
+    	AND NSORT='매장'
+    	ORDER BY NID DESC
+	</select>
+	
+	<!-- 공지사항 게시글 작성 -->
+	<insert id="noticeInsert" parameterType="Notice">
+		INSERT INTO NOTICE VALUES(
+		NO_SEQ.NEXTVAL, #{nTitle}, #{nContent}, #{nWriter},
+		SYSDATE, SYSDATE, DEFAULT, 1, #{nSort}
+		)
+	</insert>
+	
+	<!-- 공지사항 게시글 작성(파일 저장) -->
+	<insert id="noticeInsertFile" parameterType="Attachment">
+		INSERT INTO ATTACHMENT VALUES(
+			A_SEQ.NEXTVAL, #{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE,
+			1, 'Y', 4, NO_SEQ.CURRVAL
+		)
+	</insert>
+	
+	<!-- 관리자 공지사항 게시글 상세보기 -->
+	<select id="selectaNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT *
+		FROM NOTICE
+		WHERE NID=#{nId}
+		AND N_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 공지사항 게시글 상세보기(파일) -->
+	<select id="selectaNoticeFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{nId}
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 고객센터 공지사항 게시글 상세보기 -->
+	<select id="selectToNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT *
+		FROM NOTICE
+		WHERE NID=#{nId}
+		AND N_STATUS='Y'
+	</select>
+	
+	<!-- 고객센터 공지사항 게시글 상세보기(파일) -->
+	<select id="selectToNoticeFile" parameterType='_int' resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{nId}
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 매장회원 공지사항 게시글 상세보기 -->
+	<select id="selectSnNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT *
+		FROM NOTICE
+		WHERE NID=#{nId}
+		AND N_STATUS='Y'
+	</select>
+	
+	<!-- 매장회원 공지사항 게시글 상세보기(파일) -->
+	<select id="selectSnNoticeFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{nId}
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 공지사항 검색 시 게시글 갯수 구하기 -->
+	<select id="searchListCount" resultType="_int" parameterType="nSearch">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+		</where>
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+	</select>
+	
+	<!-- 관리자 공지사항 게시글 검색 -->
+	<select id="noticeSearchList" parameterType="nSearch" resultMap="noticeResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+			<choose>
+				<when test="searchCondition == 'title'">
+				AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY NID DESC
+	</select>
+	
+	<!-- 고객센터 공지사항 검색 시 게시글 갯수 구하기 -->
+	<select id="searchTnListCount" resultType="_int" parameterType="nSearch">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+			AND NSORT='전체'
+		</where>
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+	</select>
+	
+	<!-- 고객센터 공지사항 게시글 검색 -->
+	<select id="tnoticeSearchList" parameterType="nSearch" resultMap="noticeResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+			AND NSORT='전체'
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY NID DESC
+	</select>
+	
+	<!-- 매장회원 공지사항 검색 시 게시글 갯수 구하기  -->
+	<select id="searchSnListCount" resultType="_int" parameterType="nSearch">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT COUNT(*)
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+			AND NSORT='매장'
+		</where>
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+	</select>
+	
+	<!-- 매장회원 공지사항 게시글 검색 -->
+	<select id="snoticeSearchList" parameterType="nSearch" resultMap="noticeResultSet">
+		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT *
+		FROM NOTICE
+		<where>
+			N_STATUS='Y'
+			AND NSORT='매장'
+			<choose>
+				<when test="searchCondition == 'title'">
+					AND NTITLE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'content'">
+					AND NCONTENT LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (NTITLE LIKE #{sv}
+						OR NCONTENT LIKE #{sv})
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY NID DESC
+	</select>
+	
+	<!-- 관리자 공지사항 게시글 수정 -->
+	<update id="noticeUpdate" parameterType="Notice">
+		UPDATE NOTICE
+		SET NTITLE=#{nTitle}, NCONTENT=#{nContent},
+		N_MODIFY_DATE=SYSDATE, NSORT=#{nSort}
+		WHERE NID=#{nId}
+	</update>
+	
+	<!-- 관리자 공지사항 게시글 파일 수정 -->
+	<update id="noticeUpdateFile" parameterType="Attachment">
+		UPDATE ATTACHMENT
+		SET ORIGINAL_NAME=#{originalFileName}, CHANGE_NAME=#{changeFileName},
+			FILE_PATH=#{filePath}, UPLOAD_DATE=SYSDATE
+		WHERE REF_ID=#{refId}
+	</update>
+	
+	<!-- 공지사항 게시글 삭제 -->
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE NOTICE
+		SET N_STATUS='N'
+		WHERE NID=#{nId}
+	</update>
+	
+	
+	
+  
+</mapper>

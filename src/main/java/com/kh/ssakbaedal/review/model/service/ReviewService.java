@@ -3,8 +3,11 @@ package com.kh.ssakbaedal.review.model.service;
 import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.no.No;
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.review.model.vo.Review;
+import com.kh.ssakbaedal.review.model.vo.V_Review;
 
 public interface ReviewService {
 
@@ -23,15 +26,30 @@ public interface ReviewService {
 	// 4_1. 리뷰 상세보기
 	public Review selectReview(int oNo);
 
-	// 4_2. 이미지 셀렉
-	public ArrayList<Attachment> selectImg(int oNo);
-
-	// 5_1. 리뷰 수정
-	public int updateReview(Review r);
-
-	// 5_2. 이미지 수정
-	public int updateReviewNImg(Review r, ArrayList<Attachment> alist);
-
 	// 6. 리뷰 삭제
 	public int deleteReview(int oNo);
+
+	// 6_1. 이미지 리스트
+	public ArrayList<Attachment> selectImg(int oNo);
+	
+	// 6_2. 이미지 삭제
+	public int deleteImg(int oNo);
+	
+	// 리뷰 갯수구하는 메소드(매장)
+	public int selectrListCount(int mNo);
+	
+	// 리뷰 리스트(매장)
+	public ArrayList<Review> selectrList(PageInfo pi, int mNo);
+
+	// 리뷰 상세(매장)
+	public V_Review selectRDetail(No no);
+
+	// 리뷰 상세(작성자ID)
+	public String selectId(int oNo);
+
+	// 답글 작성(매장)
+	public int insertReply(Reply r);
+
+
+
 }

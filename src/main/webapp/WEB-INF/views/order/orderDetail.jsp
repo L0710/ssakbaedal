@@ -19,6 +19,16 @@
 	border-spacing: 0;
 	border: 1px solid lightgray;
 }
+#orderTable th{
+	text-align: center;
+}
+.oStatus {
+	border: 1px solid lightgray;
+	background-color: white;
+	width: 50px;
+	font-size: 10px;
+	padding: 0.5em;
+}
 </style>
 </head>
 <body>
@@ -38,22 +48,28 @@
 						<tr>
 							<th>주문번호 : ${ oTime }${ o.oNo }</th>
 							<th>주문날짜 : ${ orderTime }</th>
-							<th align="right">주문상태 : 
 								<c:choose>
-	                        	<c:when test="${ o.oStatus eq '1' }">
-	                        		<label style="color:brown; font-family:'Motnserrat',sans-serif;">결제완료</label>
-	                        	</c:when>
-	                        	<c:when test="${ o.oStatus eq '2' }">
-	                        		<label style="color:darkgreen; font-family:'Motnserrat',sans-serif;">주문확인</label>
-	                        	</c:when>
-	                        	<c:when test="${ o.oStatus eq '3' }">
-	                        		<label style="color:cornflowerblue; font-family:'Motnserrat',sans-serif;">기사픽업</label>
-	                        	</c:when>
-	                        	<c:otherwise>
-	                        		<label style="color:black; font-family:'Motnserrat',sans-serif;">결제취소</label>
-	                        	</c:otherwise>
-	                        </c:choose>
-							</th>
+									<c:when test="${ o.oStatus eq '1' }">
+										<th style="text-align:right;">
+											<button class="oStatus" style="color:orange"><strong>결제완료</strong></button>
+										</th>
+									</c:when>
+									<c:when test="${ o.oStatus eq '2' }">
+										<th style="text-align:right;">
+											<button class="oStatus" style="color:darkgreen"><strong>주문확인</strong></button>
+										</th>
+									</c:when>
+									<c:when test="${ o.oStatus eq '3' }">
+										<th style="text-align:right;">
+											<button class="oStatus" style="color:blue"><strong>기사픽업</strong></button>
+										</th>
+									</c:when>
+									<c:otherwise>
+										<th style="text-align:right;">
+											<button class="oStatus" style="color:red"><strong>결제취소</strong></button>
+										</th>
+									</c:otherwise>
+								</c:choose>
 						</tr>
 						<tr>
 							<td style="text-align: left; font-size: 14px"><b>${ o.sName }</b></td>
