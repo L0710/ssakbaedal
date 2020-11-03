@@ -24,8 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
+		FULL OUTER JOIN  STORE
+		ON MEMBER.MNO = STORE.MNO
 		WHERE MID=#{mId}
 		AND M_STATUS = 'Y'
+		AND (SACCEPT='Y' OR SACCEPT IS NULL)
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
@@ -40,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         </selectKey>
 		INSERT INTO STORE
 		VALUES ((#{mNo}),#{sName}, #{sNo}, #{sTel}, #{sAddress}, #{deliveryKm}, #{sInfo}, #{openTime},1, DEFAULT,
-				#{sCategory}, #{deliveryCharge}, #{minPrice})
+				#{sCategory}, #{deliveryCharge}, #{minPrice},#{sOff})
 	</insert>	
 	
 	<insert id="insertAttachment" parameterType="Attachment">
