@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
 import com.kh.ssakbaedal.event.model.vo.Search;
@@ -63,8 +64,10 @@ public class EventDao {
 		return sqlSession.update("eventMapper.deleteEvent", eNo);
 	}
 
-	public ArrayList<Event> searchList(Search search) {
-		return (ArrayList)sqlSession.selectList("eventMapper.searchList", search);
+	public ArrayList<Event> searchList(Search search, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("eventMapper.searchList", search, rowBounds);
 	}
 
 	public int pointUpdate(Member updateMember) {
@@ -80,7 +83,15 @@ public class EventDao {
 	}
 
 	public int searchListCount(Search search) {
-		return sqlSession.selectOne("eventMapper.searchListCount");
+		return sqlSession.selectOne("eventMapper.searchListCount", search);
+	}
+
+	public ArrayList<Reply> selectReplyList(int eNo) {
+		return (ArrayList)sqlSession.selectList("eventMapper.selectReplyList", eNo);
+	}
+
+	public int insertReply(Reply r) {
+		return sqlSession.insert("eventMapper.insertReply", r);
 	}
 
 }

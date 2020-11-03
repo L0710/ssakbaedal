@@ -88,11 +88,11 @@
 	}
 	
 	#prev {
-		border-radius: 50%;
+		border-radius: 40%;
 	}
 	
 	#next {
-		border-radius: 50%;
+		border-radius: 40%;
 	}
 	
 	#event_re_rank_container {
@@ -154,6 +154,13 @@
 		cursor: pointer;
 		transform: scale(1.02);
 	}
+	.btn {
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		font-size: 12px;
+		padding: 0.5em;
+	}
 	
 </style>
 </head>
@@ -174,92 +181,92 @@
                     <ul class="slides">
                         <li>
                             <img src="./resources/img/total22.jpg" onclick="location.href='${contextPath}/tslist.do'">
-                            <p>전체보기</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">전체보기</p>
                         </li>
                         <li>
                             <img src="./resources/img/koreanfood6.jpg" onclick="location.href='${contextPath}/kslist.do'">
-                            <p>한식</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">한식</p>
                         </li>
                         <li>
                             <img src="./resources/img/chinafood2.jpg" onclick="location.href='${contextPath}/cslist.do'">
-                            <p>중식집</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">중식</p>
                         </li>
                         <li>
                             <img src="./resources/img/japanfood2.jpg" onclick="location.href='${contextPath}/jslist.do'">
-                            <p>돈까스,회,일식</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">돈까스,회,일식</p>
                         </li>
                         <li>
                         	<img src="./resources/img/boonsik2.png" onclick="location.href='${contextPath}/sslist.do'">
-                            <p>분식</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">분식</p>
                         </li>
                         <li>
                             <img src="./resources/img/0330020014461.jpg" onclick="location.href='${contextPath}/chislist.do'">
-                            <p>치킨</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">치킨</p>
                         </li>
                         <li>
                             <img src="./resources/img/westernfood2.jpg" onclick="location.href='${contextPath}/pslist.do'">
-                            <p>피자</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">피자</p>
                         </li>
                         <li>
                             <img src="./resources/img/fastfood2.jpg" onclick="location.href='${contextPath}/fslist.do'">
-                            <p>패스트푸드</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">패스트푸드</p>
                         </li>
                         <li>
                             <img src="./resources/img/asianfood2.jpg" onclick="location.href='${contextPath}/aslist.do'">
-                            <p>아시안,양식</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">아시안,양식</p>
                         </li>
                         <li>
                             <img src="./resources/img/jock2.jpg" onclick="location.href='${contextPath}/joslist.do'">
-                            <p>족발,보쌈</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">족발,보쌈</p>
                         </li>
                         <li>
                             <img src="./resources/img/gob2.jpg" onclick="location.href='${contextPath}/yaslist.do'">
-                            <p>야식</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">야식</p>
                         </li>
                         <li> 
                             <img src="./resources/img/jjim2.jpg" onclick="location.href='${contextPath}/jjslist.do'">
-                            <p>찜,탕</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">찜,탕</p>
                         </li>
                         <li> 
                             <img src="./resources/img/dosirak2.jpg" onclick="location.href='${contextPath}/doslist.do'">
-                            <p>도시락</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">도시락</p>
                         </li>
                         <li>
                             <img src="./resources/img/cafe2.jpg" onclick="location.href='${contextPath}/cdslist.do'">
-                            <p>카페/디저트</p>
+                            <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;"">카페/디저트</p>
                         </li>
                     </ul>
                 </div>
                 <p class="controls">
-                    <button class="btn-ghost gray" id="prev" onclick="prev();">prev</button>
-                    <button class="btn-ghost gray" id="next" onclick="next();">next</button>
+                    <button class="btn" id="prev" onclick="prev();">prev</button>
+                    <button class="btn" id="next" onclick="next();">next</button>
                 </p>
 
                 <div id="event_re_rank_container">
                     <div id="recommend_area">
                         <div class="main_title">
-                            <h1>추천</h1>
+                            <h1 style="display:none;">추천</h1>
                         </div>
                         <div class="main_recommend_rnak_img_area">
-                            <img src="./resources/img/recommend.png" width="400px" height="300px">
+                            <img src="./resources/img/recommend_1.png" width="400px" height="300px">
                         </div>
                     </div>
 
                     <div id="rank_area">
                         <div class="main_title">
-                            <h1>랭크</h1>
+                            <h1 style="display:none;">랭킹</h1>
                         </div>
                         <div class="main_recommend_rnak_img_area">
-                            <img src="./resources/img/rank.png" width="400px" height="300px">
+                            <img src="./resources/img/rank_1.png" width="400px" height="300px">
                         </div>
                     </div>
 
                     <div id="event_area">
                         <div class="main_title">
-                            <h1>이벤트</h1>
+                            <h1 style="display:none;">이벤트</h1>
                         </div>
                         <div id="main_event_img_area">
-                            <img src="./resources/img/event123.PNG" width="937px" height="170" onclick="location.href='${contextPath}/elist.do'">
+                            <img src="./resources/img/eventImg.png" width="937px" height="170" onclick="location.href='${contextPath}/elist.do'">
                         </div>
                     </div>
                     
