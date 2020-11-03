@@ -1,6 +1,6 @@
 package com.kh.ssakbaedal.common.reply;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Reply {
 	/*RNO	NUMBER

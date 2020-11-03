@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.event.model.exception.EventException;
 import com.kh.ssakbaedal.event.model.service.EventService;
 import com.kh.ssakbaedal.event.model.vo.Event;
@@ -276,22 +277,24 @@ public class EventController {
 		/*System.out.println(search.getSearchCondition());
 		System.out.println(search.getSearchValue());*/
 		
-		// [페이징] 
-	    /*int listCount = eService.searchListCount(search); // 검색한 전체 글 수
-	            
+		// 페이징 
+	    int listCount = eService.searchListCount(search); // 검색한 전체 글 수
+//	    System.out.println("lCount:"+listCount);
+	    
 	    int currentPage = page != null ? page : 1; // 현재 페이지 계산
 	            
 	    PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10); // 페이지 
-*/
-		
+
 		ArrayList<Event> searchList = eService.searchList(search, pi);
 		
+//		System.out.println("slist:"+searchList);
+		
 		model.addAttribute("list", searchList);
-//		model.addAttribute("pi", pi);
+		model.addAttribute("pi", pi);
 		model.addAttribute("search", search);
 		
 		return "event/eventListView";
-	    return "";
+//	    return "";
 	}
 	
 	@RequestMapping("pupdate.do")
@@ -322,7 +325,7 @@ public class EventController {
 		ph.setmNo(mNo);
 		
 		PointHistory phis = eService.pointHistory(ph);
-		System.out.println("phis:"+phis);
+//		System.out.println("phis:"+phis);
 		
 		if(phis != null) {	// 포인트 지급 내역 존재
 			return "matched";
@@ -332,4 +335,32 @@ public class EventController {
 		
 	}
 	
+	@RequestMapping("rList.do")
+	@ResponseBody
+	public String getReplyList(int eNo) {
+		ArrayList<Reply> rList = eService.selectReplyList(eNo);
+		// 2020-09-23
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create(); 
+		// 시분초 표시하고 싶다면 java.util.Date 사용할 것
+		return gson.toJson(rList);
+	}
+	
+	@RequestMapping("addReply.do")
+	@ResponseBody
+	public String addReply(Reply r, HttpSession session) {
+//		System.out.println("r:"+r);	
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String rWriter = loginUser.getmId();
+		
+		r.setrWriter(rWriter);
+		
+		int result = eService.insertReply(r);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new EventException("댓글 등록 실패");
+		}
+//		return "";
+	}
 }

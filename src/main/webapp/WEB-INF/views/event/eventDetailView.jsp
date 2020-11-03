@@ -28,6 +28,31 @@
 		width:100%;
 		height:100%;
 	}
+	
+	.btn {
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		font-size: 12px;
+		padding: 0.5em;
+	}
+	
+	.btn.green{
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		font-size: 12px;
+		padding: 0.5em;
+		color: rgb(130, 180, 127);
+	}
+	.btn.red{
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		font-size: 12px;
+		padding: 0.5em;
+		color: rgba(250, 61, 27, 0.836);
+	}
 </style>
 </head>
 <body>
@@ -94,10 +119,10 @@
 					<c:url var="elist" value="elist.do">
 						<c:param name="page" value="${ currentPage }"/>
 					</c:url>
-					<button class="btn-ghost gray" onclick="location.href='${ elist }'">목록</button>
+					<button class="btn" onclick="location.href='${ elist }'">목록</button>
 					<c:if test="${ loginUser.mId eq e.eWriter }">
-	                	<button class="btn-ghost green" onclick="location.href='${ eupview }'">수정</button>
-	                	<button class="btn-ghost red" onclick="deleteEvent();">삭제</button>
+	                	<button class="btn green" onclick="location.href='${ eupview }'">수정</button>
+	                	<button class="btn red" onclick="deleteEvent();">삭제</button>
                 	</c:if>
                 </div>
                 <script>
@@ -161,9 +186,10 @@
                 <br><br>
 
                 <div id="replyArea" align="center">
-                    <input id="reply" placeholder="내용을 입력하세요" style="width:60%;">
-                    <button class="btn-ghost green" id="insertReplyBtn">입력</button>
+                    <input id="rContent" placeholder="내용을 입력하세요" style="width:60%;">
+                    <button class="btn" id="rSubmit">입력</button>
                     <table id="replyTable">
+                    	<thead>
                         <tr>
                             <td colspan="4" style="text-align:left"><b id="rCount">댓글(n)</b></td>
                         </tr>
@@ -173,7 +199,11 @@
                             <th width="13%">작성일</th>
                             <th width="10%"></th>
                         </tr>
-                        <tr>
+                        </thead>
+                        <tbody>
+		
+						</tbody>
+                        <!-- <tr>
                             <td>user01</td>
                             <td>가나다라마바사~~~</td>
                             <td>2020-09-24</td>
@@ -181,37 +211,95 @@
                                 <a href="#">수정</a> &nbsp;
                                 <a href="#">X</a>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>user01</td>
-                            <td>가나다라마바사~~~</td>
-                            <td>2020-09-24</td>
-                            <td>
-                                <a href="#">수정</a> &nbsp;
-                                <a href="#">X</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>user01</td>
-                            <td>가나다라마바사~~~</td>
-                            <td>2020-09-24</td>
-                            <td>
-                                <a href="#">수정</a> &nbsp;
-                                <a href="#">X</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>user01</td>
-                            <td>가나다라마바사~~~</td>
-                            <td>2020-09-24</td>
-                            <td>
-                                <a href="#">수정</a> &nbsp;
-                                <a href="#">X</a>
-                            </td>
-                        </tr>
+                        </tr> -->
                     </table>
+                    
+                    
                 </div>
             </div>
+	        <script>
+			$(function(){
+				getReplyList();
+				
+				setInterval(function(){
+					getReplyList();
+				}, 10000);
+				
+				// 댓글 등록 ajax
+				$("#rSubmit").on("click", function(){
+					var rContent = $("#rContent").val();
+					var refENo = ${ e.eNo };
+					/* console.log("eNo:"+refENo);
+					console.log("rContent:"+rContent); */
+					
+					$.ajax({
+						url:"addReply.do",
+						data: {rContent:rContent, refENo:refENo},
+						type: "post",
+						success : function(data){
+							console.log(data);
+							
+							if(data == "success"){
+								getReplyList();
+								$("#rContent").val("");
+							}
+						},
+						error : function(e){
+							console.log(e);
+						}
+					});
+				});
+				
+			})
+		
+			// 댓글 리스트를 불러오는 ajax 함수
+			function getReplyList(){
+				var eNo = ${ e.eNo };
+				
+				$.ajax({
+					url : "rList.do",
+					data : {eNo:eNo},
+					dataType: "json",
+					success : function(data){
+						console.log(data);
+						// tbody에 댓글 갯수 만큼(<tr>)
+						// 작성자(<td>), 작성내용(<td>), 작성일(<td>) 담기
+						// rCount에는 댓글 갯수 표기   ex. 댓글(5)
+						// 등록 된 댓글이 없을 경우 <td colspan='3'>등록 된 댓글이 없습니다.</td>
+						$tableBody = $("#replyTable tbody");
+						$tableBody.html("");
+						
+						$("#rCount").text("댓글 ("+data.length+")");
+						
+						if(data.length > 0){
+							for(var i in data){
+								
+								var $tr = $("<tr>");
+								var $rWriter = $("<td width='100' align='center'>").text(data[i].rWriter);
+								var $rContent = $("<td>").text(data[i].rContent);
+								var $rCreateDate = $("<td width='100' align='center'>").text(data[i].rCreateDate);
+
+								$tr.append($rWriter);
+								$tr.append($rContent);
+								$tr.append($rCreateDate);
+								
+								$tableBody.append($tr);
+							}
+						}else{
+							var $tr = $("<tr>");
+							var $rContent = $("<td colspan='3'>").text("등록된 댓글이 없습니다.");
+							
+							$tr.append($rContent);
+							$tableBody.append($tr);
+						}
+					},
+					error : function(e){
+						console.log(e);
+					}
+				});
+			}
+		
+		</script>
         </section>
 
 		<c:import url="../common/sidemenu_user.jsp"/>
