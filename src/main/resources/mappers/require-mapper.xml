@@ -69,6 +69,7 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{reNo}
+		AND A_TYPE=3
 		AND A_STATUS='Y'
 	</select>
 	
@@ -139,6 +140,7 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{reNo}
+		AND A_TYPE=3
 		AND A_STATUS='Y'
 	</select>
 	

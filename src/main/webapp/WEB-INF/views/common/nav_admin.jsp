@@ -39,7 +39,7 @@
 
 	<nav id="nav">
 		<a class="link" href="memlist.do">회원관리</a>
-		<a class="link" href="#">업체승인</a>
+		<a class="link" href="sApproveList.do">업체승인</a>
 		<a class="link" href="elist.do">이벤트</a>
 		<a class="link" href="${ areqList }">문의사항</a>
 		<a class="link" href="nlist.do">공지사항</a>

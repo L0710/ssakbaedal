@@ -35,6 +35,7 @@
 		<typeAlias type="com.kh.ssakbaedal.common.no.No" alias="No"/>
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.Require" alias="Require"/>
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.reqSearch" alias="reqSearch"/>
+		<typeAlias type="com.kh.ssakbaedal.storeApprove.model.vo.StoreAppro" alias="StoreAppro"/>
 	</typeAliases>
 
 	<mappers>
@@ -47,6 +48,7 @@
 		<mapper resource="mappers/faq-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/require-mapper.xml"/>
+		<mapper resource="mappers/storeApprove-mapper.xml"/>
 	</mappers>
 
 </configuration>
