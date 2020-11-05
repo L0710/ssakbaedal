@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="requireMapper">
+	<resultMap type="Require" id ="requireResultSet">
+		<id property="reNo" column="RENO"/>
+		<result property="reTitle" column="RETITLE"/>
+		<result property="reContent" column="RECONTENT"/>
+		<result property="reWriter" column="REWRITER"/>
+		<result property="reCreateDate" column="RE_CREATE_DATE"/>
+		<result property="reModifyDate" column="RE_MODIFY_DATE"/>
+		<result property="reStatus" column="RE_STATUS"/>
+		<result property="reAnswer" column="RE_ANSWER"/>
+		<result property="mNo" column="MNO"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<resultMap type="Reply" id="ReplyResultSet">
+		<id property="rNo" column="RNO"/>
+		<result property="rContent" column="RCONTENT"/>
+		<result property="rWriter" column="RWRITER"/>
+		<result property="rCreateDate" column="R_CREATE_DATE"/>
+		<result property="rModifyDate" column="R_MODIFY_DATE"/>
+		<result property="rStatus" column="R_STATUS"/>
+		<result property="rType" column="R_TYPE"/>
+		<result property="refENo" column="REF_ENO"/>
+		<result property="reId" column="REID"/>
+		<result property="mNo" column="MNO"/>
+		<result property="oNo" column="ONO"/>
+	</resultMap>
+	
+	<!-- 일반회원 문의사항 게시글 페이징 계산 -->
+	<select id="reListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REQUIRE
+		WHERE RE_STATUS='Y'
+		AND MNO=#{mNo}
+	</select>
+	
+	<!-- 일반회원 문의사항 게시글 조회 -->
+	<select id="selectReList" resultMap="requireResultSet">
+		SELECT *
+		FROM REQUIRE
+		WHERE RE_STATUS='Y'
+		AND MNO=#{mNo}
+		ORDER BY RENO DESC
+	</select>
+	
+	<!-- 일반회원 문의사항 상세보기 -->
+	<select id="uReqSelect" parameterType="_int" resultMap="requireResultSet">
+		SELECT *
+		FROM REQUIRE
+		WHERE RENO=#{reNo}
+		AND RE_STATUS='Y'
+	</select>
+	
+	<!-- 일반회원 문의사항 상세보기(파일) -->
+	<select id="uReqSelectFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{reNo}
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 일반회원 문의사항 게시글 작성 -->
+	<insert id="urequireInsert" parameterType="Require">
+		INSERT INTO REQUIRE VALUES(
+			REQ_SEQ.NEXTVAL, #{reTitle}, #{reContent}, #{reWriter},
+			SYSDATE, SYSDATE, 'Y', 'N', #{mNo}
+		)
+	</insert>
+	
+	<!-- 일반회원 문의사항 게시글 작성(파일) -->
+	<insert id="urequireInsertFile" parameterType="Attachment">
+		INSERT INTO ATTACHMENT VALUES(
+			A_SEQ.NEXTVAL, #{originalFileName}, #{changeFileName},
+			#{filePath}, SYSDATE, 1, 'Y', 3, REQ_SEQ.CURRVAL
+		)
+	</insert>
+	
+	<!-- 일반회원 문의사항 게시글 삭제 -->
+	<update id="uReqDelete" parameterType="_int">
+		UPDATE REQUIRE
+		SET RE_STATUS='N'
+		WHERE RENO=#{reNo}
+	</update>
+	
+	<!-- 일반회원 문의사항 게시글 수정 -->
+	<update id="ureqUpdate" parameterType="Require">
+		UPDATE REQUIRE
+		SET RETITLE=#{reTitle}, RECONTENT=#{reContent},
+		RE_MODIFY_DATE=SYSDATE
+		WHERE RENO=#{reNo}
+	</update>
+	
+	<!-- 일반회원 문의사항 게시글 수정(파일) -->
+	<update id="ureqUpdateFile" parameterType="Attachment">
+		UPDATE ATTACHMENT
+		SET ORIGINAL_NAME=#{originalFileName}, CHANGE_NAME=#{changeFileName},
+			FILE_PATH=#{filePath}, UPLOAD_DATE=SYSDATE
+		WHERE REF_ID=#{refId}
+	</update>
+	
+	<!-- 관리자 문의사항 게시글 갯수 -->
+	<select id="aerqListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REQUIRE
+		WHERE RE_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 조회 -->
+	<select id="aSelectReList" resultMap="requireResultSet">
+		SELECT *
+		FROM REQUIRE
+		WHERE RE_STATUS='Y'
+		ORDER BY RENO DESC
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 디테일 뷰 출력 -->
+	<select id="aReqSelete" parameterType="_int" resultMap="requireResultSet">
+		SELECT *
+		FROM REQUIRE
+		WHERE RENO=#{reNo}
+		AND RE_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 디테일 뷰 출력(파일) -->
+	<select id="aReqSelectFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{reNo}
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 답변 작성 -->
+	<insert id="aReAnswerInsert" parameterType="Reply">
+		INSERT INTO REPLY VALUES(
+			REP_SEQ.NEXTVAL, #{rContent}, #{rWriter}, SYSDATE, SYSDATE, DEFAULT,
+			2, NULL, #{reId}, 1, NULL
+		)
+	</insert>
+	
+	<!-- 관리자 문의사항 게시글 답변 작성 했을때 Require RE_ANSWER 'N' -> 'Y'로 변경 -->
+	<update id="aReqUpdate" parameterType="Require">
+		UPDATE REQUIRE
+		SET RE_ANSWER='Y'
+		WHERE RENO=#{reNo}
+	</update>
+	
+	<!-- 관리자 문의사항 게시글 디테일뷰 출력(답변 출력) -->
+	<select id="aReplyselect" parameterType="_int" resultMap="ReplyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE R_STATUS='Y'
+		AND REID=#{reNo}
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 답변 수정 뷰 이동 -->
+	<select id="areqUpView" parameterType="_int" resultMap="ReplyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE R_STATUS='Y'
+		AND RNO=#{rNo}
+	</select>
+	
+	<!-- 관리자 문의사항 게시글 답변 수정 -->
+	<update id="aReaAnswerUpdate" parameterType="Reply">
+		UPDATE REPLY
+		SET RCONTENT=#{rContent}, R_MODIFY_DATE=SYSDATE
+		WHERE RNO=#{rNo}
+	</update>
+	
+	<!-- 관리자 문의사항 게시글 답변 삭제 -->
+  	<update id="areqDelete" parameterType="_int">
+  		UPDATE REPLY
+		SET R_STATUS='N'
+		WHERE REID=#{reNo}
+  	</update>
+  	
+  	<!-- 관리자 문의사항 게시글 답변 삭제 -->
+  	<update id="aareqDelete" parameterType="_int">
+  		UPDATE Require
+  		SET RE_ANSWER='N'
+  		WHERE RENO=#{reNo}
+  	</update>
+  
+  
+</mapper>
