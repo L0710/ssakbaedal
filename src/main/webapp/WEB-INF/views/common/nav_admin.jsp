@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,11 +32,16 @@
 </style>
 </head>
 <body>
+
+	<c:url var="areqList" value="areqList.do">
+		<c:param name="mNo" value="${ loginUser.mNo }"/>
+	</c:url>
+
 	<nav id="nav">
 		<a class="link" href="memlist.do">회원관리</a>
 		<a class="link" href="#">업체승인</a>
 		<a class="link" href="elist.do">이벤트</a>
-		<a class="link" href="#">문의사항</a>
+		<a class="link" href="${ areqList }">문의사항</a>
 		<a class="link" href="nlist.do">공지사항</a>
 		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
 
