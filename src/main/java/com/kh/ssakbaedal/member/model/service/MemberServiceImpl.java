@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
-import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.member.model.dao.MemberDao;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
@@ -144,6 +143,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int releaseMember(int mNo) {
 		return mDao.releaseMember(mNo);
+	}
+
+	@Override
+	public Member selectMemberInfo(int mNo) {
+		return mDao.selectMemberInfo(mNo);
 	}
 
 }

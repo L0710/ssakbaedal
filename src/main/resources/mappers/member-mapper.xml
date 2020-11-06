@@ -145,4 +145,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET M_STATUS = 'Y'
 		WHERE MNO=#{mNo}
 	</update>
+	
+	<select id="selectMemberInfo" parameterType="_int" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNO=#{mNo}
+		AND M_STATUS = 'Y'
+	</select>
+	
+	<update id="usingOrder" parameterType="Order">
+		UPDATE MEMBER
+		SET POINT = POINT - #{oPoint}, PRICE_SUM = PRICE_SUM + #{oPrice} 
+		WHERE MNO = #{mNo}
+	</update>
 </mapper>

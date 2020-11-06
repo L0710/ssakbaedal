@@ -11,6 +11,7 @@ import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.member.model.vo.Member;
+import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
@@ -104,6 +105,14 @@ public class MemberDao {
 
 	public int releaseMember(int mNo) {
 		return sqlSession.update("memberMapper.releaseMember", mNo);
+	}
+
+	public Member selectMemberInfo(int mNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberInfo", mNo);
+	}
+
+	public int usingOrder(Order o) {
+		return sqlSession.update("memberMapper.usingOrder", o);
 	}
 
 }
