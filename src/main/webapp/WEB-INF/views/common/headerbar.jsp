@@ -199,6 +199,10 @@
 				<div class="btnGroup" align="right">
 					<c:url var="logout" value="logout.do" />
 					<c:url var="mypage_admin" value="memlist.do" />
+					<!-- 문의사항 구현을 위해 임시로 작성한 것 -->
+					<%-- <c:url var="uRequireList" value="uRequireList.do">
+						<c:param name="mNo" value="${ loginUser.mNo }"/>
+					</c:url> --%>
 					<c:url var="mypage_user" value="olist.do">
 						<c:param name="mNo" value="${ loginUser.mNo }"/>
 					</c:url>
@@ -208,6 +212,8 @@
 					<!-- 회원 타입에 따라 마이페이지 다르게 출력 -->
 					<button class="btn-ghost green" id="mypageBtn"
 						<c:if test="${ loginUser.mType == 1 }">onclick="location.href='${ mypage_admin }'"</c:if>
+						<%-- 문의사항 구현을 위해 임시로 작성한 것 --%>
+						<%-- <c:if test="${ loginUser.mType == 2 }">onclick="location.href='${ uRequireList }'"</c:if> --%>
 						<c:if test="${ loginUser.mType == 2 }">onclick="location.href='${ mypage_user }'"</c:if>
 						<c:if test="${ loginUser.mType == 3 }">onclick="location.href='${ mypage_store }'"</c:if>
 					>MYPAGE</button>
