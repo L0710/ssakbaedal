@@ -33,6 +33,7 @@
 		<typeAlias type="com.kh.ssakbaedal.notice.model.vo.nSearch" alias="nSearch"/>
 		<typeAlias type="com.kh.ssakbaedal.common.reply.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.ssakbaedal.common.no.No" alias="No"/>
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.PayAPI" alias="PayAPI"/>
 	</typeAliases>
 
 	<mappers>

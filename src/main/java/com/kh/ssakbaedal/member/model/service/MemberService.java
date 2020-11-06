@@ -53,6 +53,9 @@ public interface MemberService {
 	// (스케줄링)회원 상태 n->y
 	public int releaseMember(int mNo);
 
+	// 회원번호 기준으로 회원 정보 가져오기
+	public Member selectMemberInfo(int mNo);
+
 
 }
 

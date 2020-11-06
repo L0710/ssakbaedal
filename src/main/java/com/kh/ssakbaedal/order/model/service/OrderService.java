@@ -3,7 +3,9 @@ package com.kh.ssakbaedal.order.model.service;
 import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.order.model.vo.MnList;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.PayAPI;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
@@ -36,6 +38,18 @@ public interface OrderService {
 
 	//매장) 주문상태 변경 2->3
 	public int updateoStatus(int oNo);
+
+	// 주문 insert
+	public int insertOrder(Order o, MnList mnList, int mNo);
+
+	// 결제에 필요한, 방금 수행한 주문 select
+	public Order selectOrderInfo();
+
+	// 결제 테이블 insert
+	public int insertPayment(PayAPI p);
+
+	// 방금 insert 수행한 결제 select
+	public PayAPI selectPaymentInfo();
 	
 
 	

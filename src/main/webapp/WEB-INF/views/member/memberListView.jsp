@@ -120,8 +120,7 @@
 							});
 
 					$('#acceptBtn')
-							.click(
-									function() {
+							.click(function() {
 										var mNo = new Array;
 										var num = 0;
 										console
