@@ -33,6 +33,9 @@
 		<typeAlias type="com.kh.ssakbaedal.notice.model.vo.nSearch" alias="nSearch"/>
 		<typeAlias type="com.kh.ssakbaedal.common.reply.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.ssakbaedal.common.no.No" alias="No"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.ChartStatistics" alias="Chart"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.ChartSum" alias="ChartSum"/>
+		<typeAlias type="com.kh.ssakbaedal.store.model.vo.MenuChart" alias="MenuChart"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.PayAPI" alias="PayAPI"/>
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.Require" alias="Require"/>
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.reqSearch" alias="reqSearch"/>
@@ -48,6 +51,7 @@
 		<mapper resource="mappers/management-mapper.xml"/>
 		<mapper resource="mappers/faq-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
+		<mapper resource="mappers/chart-mapper.xml"/>
 		<mapper resource="mappers/require-mapper.xml"/>
 		<mapper resource="mappers/storeApprove-mapper.xml"/>
 	</mappers>

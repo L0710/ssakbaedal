@@ -24,6 +24,8 @@
             -webkit-transition-duration: 0.4s;
             /* Safari */
             transition-duration: 0.4s;
+            margin-top:5px;
+            margin-bottom:5px;
         }
         
         
@@ -67,26 +69,42 @@
 </head>
 <body align="center">
     <h1>배달예상시간</h1>
-    
-    <button type="button" id="10min" class="btn-ghost blue" value="10" >10분</button>
-    <button type="button"  id="20min" class="btn-ghost blue" value="20">20분</button><br>
-    <button type="button"  id="30min" class="btn-ghost blue" value="30" >30분</button>
-    <button type="button"  id="40min" class="btn-ghost blue" value="40" >40분</button><br>
-    <button type="button"  id="50min" class="btn-ghost blue" value="50" >50분</button>
-    <button type="button"  id="60min" class="btn-ghost blue" value="60" >60분</button><br>
-    <button type="button"  id="over" class="btn-ghost blue"  value="90">60+α</button><br>
-	<input type="hidden"  id="oNo" value="${oNo}">
+	    <input type="button"  id="10min" class="btn-ghost blue" value="10" style="width:80px;height:40px;">
+	    <input type="button"  id="20min" class="btn-ghost blue" value="20" style="width:80px;height:40px;"><br>
+	    <input type="button" id="30min" class="btn-ghost blue" value="30"  style="width:80px;height:40px;">
+	    <input type="button" id="40min" class="btn-ghost blue" value="40" style="width:80px;height:40px;"><br>
+	    <input type="button" id="50min" class="btn-ghost blue" value="50" style="width:80px;height:40px;">
+	    <input type="button" id="60min" class="btn-ghost blue" value="60" style="width:80px;height:40px;"><br>
+	    <input type="button" id="over" class="btn-ghost blue"  value="90" style="width:160px;height:40px;"><br>
+		<input type="text"  name="oNo" value="${oNo}" style="display:none;">
+		<input type="text" name="time"  style="display:none;">
     <script >
     	
-    	$(":button").click(function() {
-    		$(this).css("background-color","rgb(98, 145, 231)");
-    		$(this).css("color", "white");
+
+		
+    	$("input[type=button]").click(function() {
+
     		var value = $(this).attr("value");
-    		var oNo = $("#oNo").attr("value");	
-    		location.href="${contextPath}/updateTime.do?oNo="+oNo+"&time="+value;
-    		$(this).attr("disabled", true);
-    		opener.parent.win();
-    		window.close(); 
+    		$("input[name=time]").val(value);
+    		var oNo = $("input[name=oNo]").attr("value");
+    		console.log(value+oNo);
+    		
+    		
+    		$.ajax({
+    			url:"updateTime.do",
+    			data:{value:value, oNo:oNo},
+    			success:function(data) {
+    				console.log(data);
+/*     	    		$("form[name=timesub]").submit(); */
+    	      		opener.document.getElementById("time").value=value; 
+    				opener.parent.win();
+    	     		window.close();   
+    			},
+    			error:function(e) {
+    				console.log(e);
+    			}
+    		});
+    		
     	});
     </script>
     

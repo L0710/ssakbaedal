@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,24 +21,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileInfo;
-import com.kh.ssakbaedal.common.attachment.FileList;
-import com.kh.ssakbaedal.kakao.Kakao_restapi;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
-
 import com.kh.ssakbaedal.mail.model.service.MailService;
 import com.kh.ssakbaedal.mail.model.vo.Mail;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
 import com.kh.ssakbaedal.member.model.service.MemberService;
+import com.kh.ssakbaedal.member.model.vo.Cal;
 import com.kh.ssakbaedal.member.model.vo.Member;
+import com.kh.ssakbaedal.store.model.exception.ManagementException;
+import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
 
@@ -159,6 +159,7 @@ public class MemberController {
 		}
 
 	}
+	
 
 	// 매장회원 회원가입
 	@RequestMapping("sInsert.do")
@@ -245,6 +246,223 @@ public class MemberController {
 		return fileInfo;
 	}
 	
+	//메뉴 추가
+	@RequestMapping("menuInsert.do")
+	public String menuInsert( Menu m, HttpSession session,
+			@RequestParam(value="mupFile", required=false) MultipartFile mupFile,
+			HttpServletRequest request) {
+					
+		
+					Member mem = (Member)session.getAttribute("loginUser");
+					int mNo = mem.getmNo();
+					m.setmNo(mNo);
+					
+					int result2 = mService.insertMenu(m);
+					
+					if(result2 > 0) {
+						FileInfo fmenu = saveFile("5",mupFile,request);	
+						
+						Attachment attach = new Attachment();
+						attach.setaType(5);
+						attach.setOriginalFileName(mupFile.getOriginalFilename());
+						attach.setChangeFileName(fmenu.getRenameFileName());
+						attach.setFilePath(fmenu.getRenamePath());
+						
+						int result1 = mService.insertMenuImg(attach, m);
+						ArrayList<Menu> menu = mService.selectMenu(mNo); 
+						
+						if(result1 <= 0) {
+							throw new MemberException("메뉴추가에 실패했습니다.");
+						} 
+					}
+					
+		return "redirect:menuSetting.do";
+	}
+	
+	//메뉴 수정
+	@RequestMapping("menuUpdate.do")
+	public String deleteMenu( HttpServletRequest request , String[] refId,
+			@RequestParam(value="menuUpFile", required=false) MultipartFile[] menuUpFile,
+			@ModelAttribute MenuList menuList) {
+		
+		ArrayList<Attachment> files = new ArrayList<Attachment>();
+		 for(int i=0;i<menuUpFile.length;i++) {
+			 	MultipartFile file = menuUpFile[i];
+
+			 	if(file.getOriginalFilename() != "") {
+/*			 		if(attach.getChangeFileName() != null) {
+			 			deleteFile("5",attach.getChangeFileName(), request);	
+			 		}*/
+			 		
+			 		FileInfo filesInfo = saveFile("5",file,request);
+					Attachment newMnFile = new Attachment();
+					newMnFile.setOriginalFileName(file.getOriginalFilename());
+					newMnFile.setChangeFileName(filesInfo.getRenameFileName());
+					newMnFile.setFilePath(filesInfo.getRenamePath());
+					newMnFile.setRefId(Integer.parseInt(refId[i]));
+					files.add(newMnFile);		 
+				 	
+			 	}
+		 }
+		 
+		 int result = mService.updateMenu(files, menuList);
+		
+		return "redirect:menuSetting.do";
+	}
+	
+	
+	// 파일 삭제용 메소드
+		public void deleteFile(String type,String fileName, HttpServletRequest request) {
+			
+			String root = request.getSession().getServletContext().getRealPath("resources/muploadFiles");
+			
+			String savePath = new String();
+			
+			if(type=="6") {
+				savePath = root + "\\certification";
+			}else if(type=="8") {
+				savePath = root + "\\logo";
+			}else {
+				savePath = root + "\\menu";
+			}
+			
+			// 삭제할 파일을 메모리로 불러옴
+			File deleteFile = new File(savePath + "\\" + fileName);
+			System.out.println(deleteFile);
+
+			if(deleteFile.exists()) {
+				deleteFile.delete();
+			}
+		}
+	
+	//매장정보 수정뷰
+	@RequestMapping("storeManage.do")
+	public ModelAndView storeInfo(ModelAndView mv, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+		System.out.println(mNo);
+		
+		Store s = mService.selectStore(mNo);
+		Attachment attach = mService.selectmImg(mNo); 
+		
+		if(s != null && attach != null) {
+			mv.addObject("s", s);
+			mv.addObject("attach", attach);
+			
+			mv.setViewName("store/management/storeInfoView");
+		} else {
+			throw new MemberException("매장 정보 페이지 조회 실패");
+		}
+		
+		return mv;
+	}
+	
+	
+	//매장 정보 update
+	@RequestMapping("updateInfo.do")
+	public ModelAndView updatesInfo(ModelAndView mv, Store s, Attachment attach, 
+															    HttpServletRequest request,
+															    @RequestParam(value="uploadLogoFile", required=false) MultipartFile file,
+															    @RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
+															    @RequestParam("sOpen1")String open1, @RequestParam("sOpen2")String open2, @RequestParam("sOpen3")String open3,
+															    @RequestParam("sOff")String sOff, 
+															    @RequestParam("week")String week, @RequestParam("date")String date,
+															    @RequestParam("cateinpt") String sCate) {
+		
+		s.setOpenTime(open1+","+open2+","+open3);
+		s.setsAddress(post + "," + address1 + "," + address2);
+		s.setsCategory(sCate);
+		
+		int mNo = s.getmNo();
+		attach.setRefId(mNo);
+		
+		
+		if(sOff.equals("정기휴무")) {
+			s.setsOff(sOff+","+week+","+date);
+			System.out.println(s.getsOff());
+		} else {
+			s.setsOff(sOff);
+		}
+		
+		//로고 수정 했을 때
+		if(file != null && !file.isEmpty()) {
+			
+			FileInfo logoInfo = saveFile("8",file,request);	
+			
+			attach.setOriginalFileName(file.getOriginalFilename());
+			attach.setChangeFileName(logoInfo.getRenameFileName());
+			attach.setFilePath(logoInfo.getRenamePath());
+			
+			int result1 = mService.updateLogo(attach);
+			
+			if(result1 > 0 ) {
+				mv.addObject("attach", attach);
+				mv.setViewName("store/management/storeInfoView");
+			} else {
+				throw new MemberException("매장로고 수정 실패");
+			}
+			
+		} else {  
+			//로고 수정 안했을 때
+			int result2 = mService.updateStore(s);
+			Attachment at = mService.selectmImg(mNo);
+			if(result2 > 0 && at != null) {
+				mv.addObject("s", s);
+				mv.addObject("attach", at);
+				mv.setViewName("store/management/storeInfoView");
+			} else {
+				throw new MemberException("매장정보 수정 실패");
+			}
+			
+		}
+		
+	
+
+		return mv;
+	}
+	
+	//메뉴삭제
+		@RequestMapping("deleteMenu.do")
+		public ModelAndView deleteMenu(ModelAndView mv, String mnno, HttpSession session,HttpServletRequest request) {
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			int mNo = m.getmNo();
+			int mnNo = Integer.parseInt(mnno);
+			System.out.println("메뉴번호 : " + mnNo);
+			
+			Attachment attach = mService.selectOne(mnNo);
+			int result = mService.deleteSale(mnNo);
+		
+			
+			if(result > 0 && attach != null) {
+				deleteFile("5",attach.getChangeFileName(), request);
+			} else {
+				throw new ManagementException("메뉴 삭제 실패");
+			}
+			
+			ArrayList<Menu> menu = mService.selectMenu(mNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			mv.addObject("menu", menu);
+			mv.addObject(gson.toJson(menu));
+			mv.setViewName("store/management/menuSettingView");
+			
+			return mv;
+		}
+	
+/*	public String savePath(MultipartFile file, String renameFileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		String path = root + "\\muploadFiles";
+		File folder = new File(path);
+		
+		String savePath = folder + "\\" + renameFileName;
+		
+		
+		return savePath;
+	}
+*/
+	
 	@RequestMapping("mupdate.do")
 	public String mupdate(Member m,Model model, RedirectAttributes rd) {
 		System.out.println(m);
@@ -310,9 +528,33 @@ public class MemberController {
 		}
 	}
 
+	// 포인트뷰
 	@RequestMapping("pointView.do")
-	public String pointView() {
-		return "member/pointView";
+	public ModelAndView point(HttpSession session, ModelAndView mv) {
+
+		Member member = (Member)session.getAttribute("loginUser");
+		int mNo = member.getmNo();
+		String grade = member.getmGrade();
+		int goal = 0;
+		if(grade.equals("BRONZE")) {
+			goal = 500000;
+		} else if(grade.equals("SILVER")) {
+			goal = 1000000;
+		} else {
+			goal = 10000000;
+		}
+		
+		int priceSum = mService.selectPriceSum(mNo);
+		Cal cal = new Cal();
+		cal.setPriceSum(priceSum);
+		int difference = goal-priceSum;
+		cal.setDifference(difference);
+		
+		mv.addObject("cal",cal);
+		mv.setViewName("member/pointView");
+		
+		return mv;
+
 	}
 
 	@RequestMapping("mypage_store.do")
@@ -398,5 +640,7 @@ public class MemberController {
 		}
 
 	}
+	
+
 
 }

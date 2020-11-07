@@ -1,12 +1,14 @@
 package com.kh.ssakbaedal.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.member.model.vo.Member;
+import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
 
@@ -53,8 +55,37 @@ public interface MemberService {
 	// (스케줄링)회원 상태 n->y
 	public int releaseMember(int mNo);
 
+
+	//회원번호-> 매장회원정보 select
+	public Store selectStore(int mNo);
+
+	//회원번호-> 매장로고이미지 select
+	public Attachment selectmImg(int mNo);
+
+	//매장정보수정 + 로고이미지 수정
+	public int updateLogo(Attachment attach);
+	public int updateStore(Store s);
+
+	//메뉴추가+메뉴사진추가
+	public int insertMenuImg(Attachment attach, Menu m);
+	public int insertMenu(Menu m);
+
+	//메뉴삭제
+	public int deleteSale(int mnNo);
+	public Attachment selectOne(int mnNo);
+	
+	public ArrayList<Menu> selectMenu(int mNo);
+
+	//메뉴수정
+	public int updateMenu(ArrayList<Attachment> files, MenuList menuList);
+
+	//총계산금액누적
+	public int selectPriceSum(int mNo);
+
+
 	// 회원번호 기준으로 회원 정보 가져오기
 	public Member selectMemberInfo(int mNo);
+
 
 
 }

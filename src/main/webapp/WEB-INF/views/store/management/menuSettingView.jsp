@@ -361,17 +361,35 @@
             border: 0; 
         }
         
-          #btnla {
+          #btnla, #btnup {
             font-size: 15px;
             padding: 5px;
             display: inline-block;
             margin-left: 10px;
+            margin-top:20px;
         }
         
             #imgchangeBtn {
             margin-top: 10px;
             
         }
+        
+        .menuImg {
+        	width:100px;
+        	height:100px;
+        }
+        
+     .filebox .upload-name {
+    display: inline-block;
+    width: 200px;
+    height: 20px;
+    font-size:10px;
+    color: gray;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: 1px solid  lightgray;
+
+    }
     </style>
 </head>
 <body >
@@ -423,7 +441,7 @@ function load() {
 	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" checked>
                             </c:if>
                             <c:if test="${menu.mnStatus eq 'Y'}">
-                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long"  >
+                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long" >
 	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" >
                             </c:if>
                             </td>
@@ -438,7 +456,6 @@ function load() {
 	                var mnno;
 					$("#insertTable tbody tr").click(function() {
 						mnno = $(this).children().eq(0).text();
-	
 					});
                 	           
                 	$("input[name=soldout]").change(function() {
@@ -494,37 +511,81 @@ function load() {
                 </script>
                 
                     <hr>
-                    <form action="menuInsert.do" method="post" enctype="mulipart/form-data">
+                    
+                    <form action="menuInsert.do" method="post" enctype="multipart/form-data">
                     <div id="inputwrapper" align="center">
                         <div style="margin-top:30px;" align="center"><span id="insertMenu">메뉴등록</span></div><br>
-                        <input type="hidden" value="${loginuser.mNo}">
+                        
                         <span>메뉴명</span><input id="sMenu" class="stinfo" name="mnName"><br>
-                        <span>카테고리</span><select id="sCate" class="stinfo"  name="sCate">
-                                <option value="한식">한식</option>
-                                <option value="중국집">중국집</option>
-                                <option value="돈까스,일식,회">돈까스,일식,회</option>
-                                <option value="분식">분식</option>
-                                <option value="패스트푸드">패스트푸드</option>
-                                <option value="카페,디저트">카페,디저트</option>
-                                <option value="치킨">치킨</option>
-                                <option value="찜,탕">찜,탕</option>
-                                <option value="피자">피자</option>
-                                <option value="족발,보쌈">족발,보쌈</option>
-                                <option value="아시안,양식">아시안,양식</option>
-                                <option value="도시락">도시락</option>
-                                <option value="야식">야식</option>
-                            </select><br><br>
-                            하위 카테고리 명 <input class="stinfo" type="text"><br>
+						<span>가격</span><input id="sPrice" class="stinfo" name="mnPrice"><br>
+                            하위 카테고리 명 
+							<select  class="stinfo" name="smallCate" >
+								<option value="단품메뉴">단품메뉴</option>
+								<option value="사이드">사이드</option>
+								<option value="음료">음료</option>
+							</select>
+							<br>
                             
-	                        <div id="changeWrapper" align="left" style="margin-top: 10px;">
-                                    <label for="imgchangeBtn" id="btnla" class="btn-ghost green"  name="reloadFile">파일선택</label>
-                                    <input type="file" id="imgchangeBtn" name="uploadFile">
+	                        <div id="changeWrapper" align="center" style="margin-top: 10px;" class="filebox">
+                                    
+                                    <input type="file" id="imgchangeBtn" name="mupFile" >
+                                     <label for="imgchangeBtn" id="file-name"></label>
+                                    <label for="imgchangeBtn" id="btnla" class="btn-ghost green" >파일선택</label>
                             </div>
+                            
 	                        <br><br><br>
                        <input type="submit" class="btn-ghost gray" value="메뉴추가" id="menuAddBtn"> 
                         </div>
                         <br><br>
                     </form>
+                    
+                    
+				<script>
+					
+					$('input[type=file]').on('change',function(){
+
+					    if(window.FileReader){
+
+					      var filename = $(this)[0].files[0].name;
+
+					    } else {
+
+					      var filename = $(this).val().split('/').pop().split('\\').pop();
+
+					    }
+
+					    $(this).siblings('#file-name').text(filename);
+					    $("input[name=originalFileName]").val(filename);
+					    
+
+					  });
+
+
+
+				
+				</script>
+                                           
+					<table class="menuTable" id="menuvTable">
+                        <thead>
+                            <tr>
+                            	<th>메뉴번호</th>
+                                <th>메뉴명</th>
+                                <th>가격</th>
+                                <th>메뉴 하위 카테고리</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <c:forEach var="menu" items="${menu}" varStatus="m">
+                          	<tr>
+                          		<td>${menu.mnNo }</td>
+                          		<td>${menu.mnName}</td>
+                          		<td>${menu.mnPrice}</td>
+                          		<td>${menu.smallCate}</td>
+                          	</tr>
+                          </c:forEach>
+                          </tbody>
+                        </table>
+                    
                     
                     <hr>
 						
@@ -545,11 +606,10 @@ function load() {
                           		<td>${menu.mnNo }</td>
                           		<td>${menu.mnName}</td>
                           		<td>${menu.mnPrice}</td>
-                          		<td><button type="button" class="btn-ghost gray" onclick="del();">삭제</button></td>
+                          		<td><button type="button" class="btn-ghost gray" onclick="del(this);">삭제</button></td>
                           	</tr>
                           </c:forEach>
                           </tbody>
-
                         </table>
                     </div>
                     
@@ -557,10 +617,11 @@ function load() {
 		                var mnno;
 						$("#deleteTable tbody tr").click(function() {
 							mnno = $(this).children().eq(0).text();
+							console.log(mnno);
 						});
 						
-						function del() {
-							
+						
+						function del(obj) {
 							var con = confirm("정말로 삭제하시겠습니까?\n 삭제하면 되돌릴 수 없고, 다시 메뉴 등록해야합니다.");
 							if(con) {
 								console.log("mnno" + mnno);
@@ -570,31 +631,15 @@ function load() {
 										data:{mnno:mnno},
 										success:function(data) {
 											console.log(data);
-											
-											$tableBody = $("#menuTable tbody");
-											$tableBody.html("");
-											
-											 for(var i in data) {
-												var $tr = $("<tr>");
-												
-												var $mnNo = $("<td>").val(data[i].mnNo);
-												var $mnName = $("<td>").text(data[i].mnName);
-												var $mnPrice = $("<td>").text(data[i].mnPrice);
-
-												
-												$tr.append($mnNo);
-												$tr.append($mnName);
-												$tr.append($mnPrice);
-												
-												$tableBody.append($tr);
-												console.log("a");
-												load();
-											 }
+											 
 										},
 										error:function(e) {
 											console.log(e);
 										}
 									}); 
+								 
+								 var tr = $(obj).parent().parent();
+								 tr.remove();
 								
 							} else {
 								alert("삭제되지않았습니다.");
@@ -603,9 +648,8 @@ function load() {
 						}
                     </script>
                     
-					
+					<form action="menuUpdate.do" method="post"  enctype="multipart/form-data">
                     <div class="tableWrapper" align="center">
-                    
                         <table class="menuTable" id="upTable" >
                         <thead>
                             <tr>
@@ -616,12 +660,19 @@ function load() {
                             </tr>
                           </thead>
                           <tbody>
-                          	<c:forEach var="menu" items="${menu}">
+                          	<c:forEach var="menu" items="${menu}" varStatus="index">
                           		<tr>
-                          			<td>${menu.mnNo}</td>
-                          			<td><input type="text"  value="${menu.mnName}"  name="mnname"></td>
-                          			<td><input type="text" value="${menu.mnPrice}"></td>
-									<td>사진</td>
+                          			<td><input type="text" value="${menu.mnNo}" name="menuList[${index.index}].mnNo" readonly style="border:none; width:30px; text-align:center;"></td>
+                          			<td><input type="text"  value="${menu.mnName}"  name="menuList[${index.index }].mnName"></td>
+                          			<td><input type="text" value="${menu.mnPrice}" name="menuList[${index.index }].mnPrice"></td>
+									<td>
+										<input type="text" value="${menu.mnNo }" name="refId" style="display:none;" >
+		                       			 <div id="changeWrapper" align="center"  class="filebox">
+		                                    <input type="file" name="menuUpFile" id="imgupBtn${index.index }" multiple="multiple">
+		                                     <label for="imgupBtn${index.index }" class="filename"></label>
+		                                    <label for="imgupBtn${index.index }"  class="btn-ghost green"  style="font-size: 15px; padding: 5px; display: inline-block; margin-left: 10px; ">파일선택</label>
+	                            		</div>
+									</td>
                           		</tr>
                           	</c:forEach>
                           	<tr colspan="4"></tr>
@@ -629,8 +680,32 @@ function load() {
                         </table>
                         <input type="submit" value="수정" class="btn-ghost gray" id="upBtn">
                     </div>
+                    </form>
+                    <script>
+				
+					
+					$('input[type=file]').on('change',function(){
+
+					    if(window.FileReader){
+
+					      var filename = $(this)[0].files[0].name;
+
+					    } else {
+
+					      var filename = $(this).val().split('/').pop().split('\\').pop();
+
+					    }
+
+					    $(this).siblings('.filename').text(filename);
+					    
+					  });
+
+
+
+				
+				</script>
                     
-                    
+                    <br><br>
                     <hr style="margin-bottom:40px;">
                     <div id="bestwrapper" align="left">
                         <div align="center"><span id="best">대표 메뉴 관리</span></div>
@@ -881,7 +956,6 @@ function load() {
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPaht}/storeManage.do'">매장관리</button>
-        <button class="btn-ghost gray si">리뷰관리</button>
         <button class="btn-ghost gray si">알림</button>
     </div>
     </section>

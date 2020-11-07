@@ -1,5 +1,6 @@
 package com.kh.ssakbaedal.store.model.vo;
 
+
 import java.util.List;
 
 public class MenuList {
