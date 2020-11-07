@@ -160,10 +160,6 @@
         cursor: pointer;
      }
 
-        .btnGroup {
-            margin-left: 840px;
-        }
-
         
         nav a:hover {
             text-decoration: none;
@@ -220,12 +216,12 @@
                                         
                                         <c:choose>
                                         	<c:when test="${loginUser.mGrade eq 'BRONZE' }">
-                                        		<p style="margin-right:30px">현재 레벨은</p> <p style="font-size:10px; color:rgb(184, 132, 20); ">(골드)</p> 
+                                        		<p style="margin-right:30px">현재 레벨은</p> <p style="font-size:10px; color:rgb(184, 132, 20); ">(브론즈)</p> 
 	                                            <div><img id="level-img1"  src="${contextPath}/resources/img/coin.png" ></div>
 	                                            <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:silver; ">(실버)</p> 
 	                                            <div><img id="level-img2"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
 	                                            <p>까지</p>
-	                                            <p style="color:palevioletred"><input type="text" id="result"></p>
+	                                            <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
 	                                            <p>남았습니다.</p>
                                         	</c:when>
                                         	
@@ -235,7 +231,7 @@
 	                                            <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:gold; ">(골드)</p> 
 	                                            <div><img id="level-img2"  src="${contextPath}/resources/img/diamond.png" ></div>
 	                                            <p>까지</p>
-	                                            <p style="color:palevioletred"><input type="text" id="result"></p>
+	                                            <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
 	                                            <p>남았습니다.</p>
                                         	</c:when>
                                         	
@@ -249,45 +245,53 @@
                                         </div>
                                         <br>
                                         <div id="sum_point" align="center">
-                                            <p id="psum" >누적금액    <fmt:formatNumber value="${loginUser.priceSum}" type="number"/></p>
+                                            <p id="psum" >누적금액    <fmt:formatNumber value="${cal.priceSum}" type="number"/>원</p>
                                             <p id="ppoint">누적 포인트    ${loginUser.point}</p>
                                         </div>
                                 </div>
-                                    <div id="imgwra" align="center">
-                                    <div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
-                                    <input type="range" id="range" min="0" max="1000000" step="1000" value="${loginUser.priceSum}" disabled>
-                                    <div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
-                                    </div>    
+                                    <div id="imgwra" align="center" style="margin-bottom:30px;">
+                                    <c:if test="${loginUser.mGrade eq 'BRONZE' }">
+                                    	<div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
+                                    	<input type="range" id="range" min="0" max="500000" step="1000" value="${cal.priceSum}" disabled>
+                                   		<div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
+                                    </c:if>
+                                    <c:if test="${loginUser.mGrade eq 'SILVER' }">
+                                    	<div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
+                                    	<input type="range" id="range" min="0" max="1000000" step="1000" value="${cal.priceSum}" disabled>
+                                   		<div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
+                                    </c:if>   
+                                    </div>
+       
                                     <div align="center" id="intro" align="center">
                                         <table width="700px" height="100px" class="table"  style="text-align:center;">
                                             <tr>
                                                 <th>등급</th>
                                                 <th>누적금액</th>
-                                                <th>포인트 적립</th>
+                                                <th>포인트지급</th>
                                             </tr>
                                             <tr>
                                                 <td>브론즈</td>
                                                 <td>500000미만</td>
-                                                <td>계산금액의 1%</td>
+                                                <td>한달에 한번 1000원 쿠폰</td>
                                             </tr>
                                             <tr>
                                                 <td>실버</td>
                                                 <td>500000~1000000미만</td>
-                                                <td>계산금액의 2%</td>
+                                                <td>한달에 두번 2000원 쿠폰</td>
                                             </tr>
                                             <tr>
                                                 <td>골드</td>
                                                 <td>1000000이상</td>
-                                                <td>계산금액의 3%</td>
+                                                <td>한달에 세번 3000원 쿠폰</td>
                                             </tr>
                                         </table>
-                                        <p>
-                                            -포인트 적립은 레벨마다 상이합니다. 자세한 사항은 표를 참고해주세요.<br>
+                                        
+                                        <p style="margin-top:30px;">
+                                            -포인트 지급은 레벨마다 상이합니다. 자세한 사항은 표를 참고해주세요.<br>
                                             -적립된 포인트는 1000p부터 100점씩 사용가능합니다.<br>
                                             -적립된 포인트 사용 시 사용하신 포인트 만큼의 포인트를 차감합니다.<br>
-                                            -포인트 사용금액에 대해서 추가 적립은 이루어지지 않습니다.<br>
                                             -포인트 사용은 결제 시 선택 가능합니다.<br>
-                                            -포인트 적립은 결제금액의 n%, 또는 이벤트 등에서 가능합니다.<br>
+                                            -포인트 적립은 이벤트에서 가능합니다.<br>
                                             -포인트 적립과 사용은 회원만 가능합니다.<br>
                                         </p>
                                     </div>

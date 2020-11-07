@@ -103,6 +103,7 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{nId}
+		AND A_TYPE=4
 		AND A_STATUS='Y'
 	</select>
 	
@@ -119,6 +120,7 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{nId}
+		AND A_TYPE=4
 		AND A_STATUS='Y'
 	</select>
 	
@@ -135,6 +137,7 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{nId}
+		AND A_TYPE=4
 		AND A_STATUS='Y'
 	</select>
 	
@@ -291,6 +294,7 @@
 		SET ORIGINAL_NAME=#{originalFileName}, CHANGE_NAME=#{changeFileName},
 			FILE_PATH=#{filePath}, UPLOAD_DATE=SYSDATE
 		WHERE REF_ID=#{refId}
+		AND A_TYPE=4
 	</update>
 	
 	<!-- 공지사항 게시글 삭제 -->

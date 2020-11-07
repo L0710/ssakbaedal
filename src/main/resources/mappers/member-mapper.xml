@@ -21,6 +21,60 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="priceSum" column="PRICE_SUM"/>
 	</resultMap>	
 	
+	<resultMap type="Store" id="storeResultSet">
+		<id property="mNo" column="MNO"/>
+		<result property="sNo" column="SNO"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sTel" column="STEL"/>
+		<result property="sAddress" column="S_ADDRESS"/>
+		<result property="deliveryKm" column="DELIVERY_KM"/>
+		<result property="sInfo" column="SINFO"/>
+		<result property="openTime" column="OPEN_TIME"/>
+		<result property="sStatus" column="S_STATUS"/>
+		<result property="sAccept" column="SACCEPT"/>
+		<result property="sCategory" column="S_CATEGORY"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+		<result property="minPrice" column="MIN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<resultMap type="Menu" id="menuResultSet">
+		<id property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="mnCategory" column="MN_CATEGORY"/>
+		<result property="mnStatus" column="MN_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smallCate" column="SMALL_CATE"/>
+		<result property="mnPrice" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Order" id="orderResultSet">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oPoint" column="OPOINT"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smNo" column="S_MNO"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="oPhone" column="OPHONE"/>
+		<result property="deliveryCharge" column="FEE"/>
+	</resultMap>
+	
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
@@ -144,5 +198,97 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE MEMBER
 		SET M_STATUS = 'Y'
 		WHERE MNO=#{mNo}
+	</update>
+	
+ 	<select id="selectStore" parameterType="_int" resultMap="storeResultSet">
+		SELECT *
+		FROM STORE
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<select id="selectmImg" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT * 
+		FROM ATTACHMENT
+		WHERE REF_ID = #{mNo}
+		AND A_TYPE = 8
+	</select>
+	
+	<update id="updateStore">
+		UPDATE STORE
+		SET SNAME=#{sName}, STEL=#{sTel}, S_ADDRESS=#{sAddress}, DELIVERY_KM=#{deliveryKm},
+								 SINFO=#{sInfo}, OPEN_TIME=#{openTime}, S_CATEGORY=#{sCategory}, DELIVERY_CHARGE=#{deliveryCharge},
+								 MIN_PRICE=#{minPrice}, SOFF=#{sOff}
+		WHERE MNO = #{mNo}						 
+	</update>
+	
+	<update id="updateLogo">
+		UPDATE ATTACHMENT
+		SET ORIGINAL_NAME=#{originalFileName}, CHANGE_NAME=#{changeFileName},
+			FILE_PATH=#{filePath}, UPLOAD_DATE=SYSDATE
+		WHERE REF_ID=#{refId}
+	</update>
+	
+	<insert id="insertsMenu" parameterType="Menu">
+		INSERT INTO MENU
+		VALUES (MN_SEQ.NEXTVAL,#{mnName}, DEFAULT, DEFAULT, #{mNo},#{smallCate},#{mnPrice})
+	</insert>
+	
+	<insert id="insertMenuImg" parameterType="Attachment">
+		<selectKey keyProperty="refId" resultType="_int" order="BEFORE">
+            SELECT MN_SEQ.CURRVAL FROM DUAL
+        </selectKey>
+		INSERT INTO ATTACHMENT
+		VALUES (A_SEQ.NEXTVAL,#{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE, 1, 
+				'Y', #{aType},#{refId})
+	</insert>
+
+	<select id="selectMenu" parameterType="Menu" resultMap="menuResultSet">
+		SELECT * 
+		FROM MENU
+		WHERE MNO = #{mNo}
+		AND MN_STATUS != 'N'
+	</select>
+	
+	<update id="deleteMenu">
+		UPDATE MENU
+		SET MN_STATUS = 'S'
+		WHERE MN_NO =#{mnNo}
+	</update>
+	
+	<select id="selectaOne" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT 
+		WHERE REF_ID = #{refId}
+	</select>
+	
+	<update id="updateMenu">
+		UPDATE MENU
+		SET MN_NAME=#{mnName}, MN_PRICE=#{mnPrice}
+		WHERE MN_NO = #{mnNo}
+	</update>
+	
+	<insert id="updateMenuImg" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES (A_SEQ.NEXTVAL,#{originalFileName}, #{changeFileName}, #{filePath}, SYSDATE, 1, 
+				'Y', #{aType},#{refId})
+	</insert>
+	
+	<select id="selectPriceSum" resultType="_int">
+		SELECT SUM(OPRICE)
+		FROM SORDER
+		WHERE MNO = #{mNo}
+	</select>
+	
+	<select id="selectMemberInfo" parameterType="_int" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MNO=#{mNo}
+		AND M_STATUS = 'Y'
+	</select>
+	
+	<update id="usingOrder" parameterType="Order">
+		UPDATE MEMBER
+		SET POINT = POINT - #{oPoint}, PRICE_SUM = PRICE_SUM + #{oPrice} 
+		WHERE MNO = #{mNo}
 	</update>
 </mapper>

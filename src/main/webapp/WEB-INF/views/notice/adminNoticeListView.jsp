@@ -157,10 +157,8 @@
             
             <div class="contents">
             	<div id="asdf">
-                    <h1>공지사항</h1>
+					<h1 style="font-size: 24px">공지사항</h1>
                 </div>
-            	<br>
-                <br>
                 <table id="notice_table" align="center">
                     <tr>
                         <th width="10%">NO</th>

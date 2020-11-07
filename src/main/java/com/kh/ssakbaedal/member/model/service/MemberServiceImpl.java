@@ -1,13 +1,13 @@
 package com.kh.ssakbaedal.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
-import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.member.model.dao.MemberDao;
 import com.kh.ssakbaedal.member.model.exception.MemberException;
@@ -144,6 +144,110 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int releaseMember(int mNo) {
 		return mDao.releaseMember(mNo);
+	}
+
+	@Override
+	public Store selectStore(int mNo) {
+		
+		return mDao.selectStore(mNo);
+	}
+
+	@Override
+	public Attachment selectmImg(int mNo) {
+		
+		return mDao.selectmImg(mNo);
+	}
+
+	//로고변경
+	@Override
+	public int updateLogo(Attachment attach) {
+		
+		return mDao.updateLogo(attach);
+	}
+
+	//매장정보수정
+	@Override
+	public int updateStore(Store s) {
+		
+		return mDao.updateStore(s);
+	}
+
+	//메뉴사진추가
+	@Override
+	public int insertMenuImg(Attachment attach, Menu m) {
+		
+		return mDao.insertMenuImg(attach);
+	}
+	
+	//메뉴추가
+	@Override
+	public int insertMenu(Menu m) {
+		
+		return mDao.insertsMenu(m);
+	}
+
+	@Override
+	public ArrayList<Menu> selectMenu(int mNo) {
+		
+		return mDao.selectMenu(mNo);
+	}
+
+	@Override
+	public int deleteSale(int mnNo) {
+		
+		return mDao.deleteMenu(mnNo);
+	}
+
+	@Override
+	public Attachment selectOne(int mnNo) {
+		
+		return mDao.selectOne(mnNo);
+	}
+
+	@Override
+	public int updateMenu(ArrayList<Attachment> files, MenuList menuList) {
+		
+		int result = 0;
+		
+		for (int i = 0; i < files.size(); i++) {
+		
+			Menu menu = menuList.getMenuList().get(i);
+			Attachment file = files.get(i);
+				file.setaType(5);
+				System.out.println(file.getRefId());
+				result = mDao.updateMenuImg(file);
+
+			
+			if(result == 0) {
+				throw new MemberException("메뉴이미지 삽입 실패");
+			}
+		}
+		
+		for (int i = 0; i < menuList.getMenuList().size(); i++)  {
+			
+			Menu menu = menuList.getMenuList().get(i);
+			result = mDao.updateMenu(menu);
+			if (result == 0) {
+				throw new MemberException("메뉴 삽입 실패");
+			}
+		}
+		
+		
+
+
+		
+		return result;
+	}
+
+	@Override
+	public int selectPriceSum(int mNo) {
+
+		return mDao.selectPriceSum(mNo);
+	}
+
+
+	public Member selectMemberInfo(int mNo) {
+		return mDao.selectMemberInfo(mNo);
 	}
 
 }

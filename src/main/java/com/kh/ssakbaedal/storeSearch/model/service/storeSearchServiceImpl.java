@@ -43,8 +43,8 @@ public class storeSearchServiceImpl implements storeSearchService {
 		hmap.put("toList", toList);
 		hmap.put("atList", atList);
 		
-		System.out.println(" Service toList : " + hmap.get("toList"));
-		System.out.println(" Service atList : " + hmap.get("atList"));
+//		System.out.println(" Service toList : " + hmap.get("toList"));
+//		System.out.println(" Service atList : " + hmap.get("atList"));
 		
 		return hmap;
 	}

@@ -44,8 +44,8 @@ public class storeSearchController {
 		
 		//System.out.println("tslist : " + tslist);
 		//System.out.println("pi : " + pi);
-		System.out.println("toList : " + hmap.get("toList"));
-		System.out.println("atList : " + hmap.get("atList"));
+//		System.out.println("toList : " + hmap.get("toList"));
+//		System.out.println("atList : " + hmap.get("atList"));
 		
 		/*if(tslist != null) {
 			mv.addObject("tslist", tslist);
@@ -403,7 +403,7 @@ public class storeSearchController {
 			return mv;
 		}
 		
-		// 도시락 매장 보기
+		// 카페/디저트 매장 보기
 		@RequestMapping("cdslist.do")
 		public ModelAndView cafedessertListView(ModelAndView mv,
 				@RequestParam(value="page", required=false) Integer page) {
@@ -443,10 +443,10 @@ public class storeSearchController {
 			ArrayList<storeMenu> menuList = sService.selectTosMenu(mNo);
 			ArrayList<Attachment> atMenuList = sService.selectTosFile(mNo);
 			
-			System.out.println("store : " + store);
-			System.out.println("menuList : " + menuList);
-			System.out.println("atMenuList : " + atMenuList);
-			System.out.println("atLogo : " + atLogo);
+//			System.out.println("store : " + store);
+//			System.out.println("menuList : " + menuList);
+//			System.out.println("atMenuList : " + atMenuList);
+//			System.out.println("atLogo : " + atLogo);
 			
 			if(store != null) {
 				mv.addObject("store", store)

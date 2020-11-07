@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chartMapper">
+
+	<resultMap id="chartResultSet" type="Chart">
+		<id property="smNo" column="S_MNO"/>
+		<result property="oPrice" column="OPRICE"/>		
+		<result property="month" column="MONTH"/>
+	</resultMap>	
+	
+	<resultMap id="chartSumResultSet" type="ChartSum">
+		<id property="month" column="MONTH"/>
+		<result property="monthSum" column="SUM(OPRICE)"/>
+	</resultMap>
+	
+	<resultMap type="ODetail" id="ODetailResultSet">
+		<id property="odNo" column="ODNO"/>
+		<result property="odNum" column="ODNUM"/>
+		<result property="oNo" column="ONO"/>
+		<result property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="price" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="Order" id="orderResultSet">
+		<id property="oNo" column="ONO"/>
+		<result property="oTime" column="OTIME"/>
+		<result property="request" column="REQUEST"/>
+		<result property="oPrice" column="OPRICE"/>
+		<result property="oPoint" column="OPOINT"/>
+		<result property="oAddress" column="OADDRESS"/>
+		<result property="oStatus" column="O_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smNo" column="S_MNO"/>
+		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="oPhone" column="OPHONE"/>
+		<result property="deliveryCharge" column="FEE"/>
+	</resultMap>
+		
+	<resultMap type="Menu" id="menuResultSet">
+		<id property="mnNo" column="MN_NO"/>
+		<result property="mnName" column="MN_NAME"/>
+		<result property="mnCategory" column="MN_CATEGORY"/>
+		<result property="mnStatus" column="MN_STATUS"/>
+		<result property="mNo" column="MNO"/>
+		<result property="smallCate" column="SMALL_CATE"/>
+		<result property="mnPrice" column="MN_PRICE"/>
+	</resultMap>
+	
+	<resultMap type="MenuChart" id="menuChartResultSet">
+		<id property="mnName" column="MN_NAME"/>
+		<result property="count" column="COUNT"/> 
+	</resultMap>
+	
+	<select id="selectChart" parameterType="_int"  resultMap="chartSumResultSet">
+		SELECT SUM(OPRICE), MONTH
+		FROM CHART
+		WHERE S_MNO = #{mNo}
+		GROUP BY MONTH
+		ORDER BY MONTH
+	</select> 
+	
+	<select id="selectMenuChart" parameterType="_int" resultMap="menuChartResultSet">
+        SELECT SUM(ODNUM) AS COUNT ,ME.MN_NAME 
+        FROM ODETAIL OD
+        JOIN MENU ME ON(ME.MN_NO = OD.MN_NO)
+        WHERE ME.MNO = #{mNo}
+        GROUP BY ME.MN_NAME
+        ORDER BY ME.MN_NAME
+	</select>
+	
+	
+	
+</mapper>

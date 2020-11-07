@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +20,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
-import com.kh.ssakbaedal.event.model.exception.EventException;
+
+import com.kh.ssakbaedal.member.model.service.MemberService;
+import com.kh.ssakbaedal.member.model.vo.Member;
 import com.kh.ssakbaedal.order.model.exception.OrderException;
 import com.kh.ssakbaedal.order.model.service.OrderService;
+import com.kh.ssakbaedal.order.model.vo.MnList;
+import com.kh.ssakbaedal.order.model.vo.ODetail;
 import com.kh.ssakbaedal.order.model.vo.Order;
+
+import com.kh.ssakbaedal.order.model.vo.PayAPI;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
@@ -33,6 +39,8 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService oService;
+	@Autowired
+	private MemberService mService;
 	
 	//list 출력
 	@RequestMapping("orderlist.do")
@@ -45,10 +53,17 @@ public class OrderController {
 	
 	//storeorderlist 이동
 	@RequestMapping("goOrderView.do")
-	public ModelAndView goOrderView(ModelAndView mv) {
+	public ModelAndView goOrderView(ModelAndView mv,HttpSession session) {
 		
-		ArrayList<S_Order> oList = oService.selectList();
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+/*		System.out.println(mNo);*/
 		
+		ArrayList<S_Order> oList = oService.selectList(mNo);
+		System.out.println("리스트개수 : "+oList.size());
+		for(int i = 0; i < oList.size(); i++) {
+			System.out.println(oList.get(3));
+		}
 		if(oList != null) {
 			mv.addObject("oList", oList);
 			mv.setViewName("store/order/storeOrderView");
@@ -60,38 +75,32 @@ public class OrderController {
 	//5초에 한번씩 orderlist reload
 	@RequestMapping("reloadList.do")
 	@ResponseBody
-	public String reloadList() {
+	public String reloadList(String mno) {
 		
-		ArrayList<S_Order> oList = oService.selectList();
-		ArrayList<SODetail> odList = oService.selectDetailList();
+		int mNo = Integer.parseInt(mno);
+		
+		ArrayList<S_Order> oList = oService.selectList(mNo);
+		ArrayList<SODetail> odList = oService.selectDetailList(mNo);
+		
+		for(S_Order sorder : oList) {
+			for(SODetail sodetail : odList) {
+				if (sorder.getoNo() == sodetail.getoNo()) {
+					sorder.getList().add(sodetail);
+				}
+			}
+		}
+		
 		
 		HashMap<String, ArrayList> hm = new HashMap<>();
 		hm.put("oList", oList);
 		hm.put("odList", odList);
+
 		
-		
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		return gson.toJson(hm);
+
 	}
-	
-	//주문내역이 없어서 일단 주석처리
-	//하루가지나면 주문내역 o_status = 'n'
-//	@Scheduled(cron="0 0 12 * * * *")
-//	public String deleteList(RedirectAttributes rd) {
-//		
-//		int result = oService.deleteList();
-//
-//		if(result > 0) {
-//			rd.addFlashAttribute("msg", "삭제성공");
-//		} else {
-//			throw new OrderException("삭제 실패");
-//		}
-//		
-//		return "redirect:orderlist.do";
-//	}
-//	
 	
 	@RequestMapping("olist.do")
 	public ModelAndView orderList(ModelAndView mv, int mNo,
@@ -168,6 +177,19 @@ public class OrderController {
 		
 	}
 	
+	//주문취소
+	@RequestMapping("cancelOrder.do")
+	public String cancelOrder(String oNo) {
+		
+		System.out.println(oNo);
+		int ono = Integer.parseInt(oNo);
+		int result = oService.cancelOrder(ono);
+		if(result <= 0) {
+			throw new OrderException("주문취소실패");
+		}
+		return "redirect:goOrderView.do";
+	}
+	
 	@RequestMapping(value="orderTimePopup.do", method=RequestMethod.GET)
 	public ModelAndView popup(ModelAndView mv, HttpServletRequest request) {
 		
@@ -182,17 +204,18 @@ public class OrderController {
 	}
 	
 	//배달예상시간, 주문상태변경
-	@RequestMapping(value="updateTime.do",  method=RequestMethod.GET)
-	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request) {
+	@RequestMapping("updateTime.do")
+	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request,
+																String value, String oNo) {
+	
 		
-		int oNo = Integer.parseInt(request.getParameter("oNo"));
-		
-		int time = Integer.parseInt(request.getParameter("time"));
+		System.out.println("받아온정보 : " +oNo+value);
+		int ono = Integer.parseInt(oNo);
+		int ordertime = Integer.parseInt(value);
 		
 		Order order = new Order();
-		order.setoNo(oNo);
-		order.setArrivalTime(time);
-		
+		order.setoNo(ono);
+		order.setArrivalTime(ordertime);
 		
 		int result = oService.updateTime(order);
 		
@@ -221,4 +244,96 @@ public class OrderController {
 		
 	}
 	
+	@RequestMapping("oinsertView.do")
+	public ModelAndView orderInsertView(ModelAndView mv, @ModelAttribute MnList mnList,  int deliveryCharge, int mNo, int sNo) {
+//		System.out.println("mnList:"+mnList);
+//		System.out.println("deliveryCharge:"+deliveryCharge);
+//		System.out.println("mNo:"+mNo);
+		Order order = new Order();
+		order.setDeliveryCharge(deliveryCharge);
+		order.setmNo(mNo);
+		order.setSmNo(sNo);
+		
+		Member member = mService.selectMemberInfo(mNo);
+//		System.out.println("member:"+member);
+//		System.out.println("order:"+order);
+		ArrayList<ODetail> mList = (ArrayList<ODetail>) mnList.getMnList();
+//		System.out.println(mList);
+		
+		if(mList != null && member != null) {
+			mv.addObject("mList", mList)
+			.addObject(order)
+			.addObject(member)
+			.setViewName("order/orderView");
+		} else {
+			throw new OrderException("주문 뷰 이동 실패");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("orderInsert.do")
+	public ModelAndView orderInsert(ModelAndView mv, Order o, @RequestParam(value="usedPoint", required=false) Integer usedPoint,
+				@RequestParam("address1") String address1, @RequestParam("address2") String address2, @ModelAttribute MnList mnList) {
+//		System.out.println("usedPoint:"+usedPoint);
+		
+//		System.out.println("address1:"+address1);
+//		System.out.println("address2:"+address2);
+		if(usedPoint == null) {	// 포인트 사용하지 않아 usedPoint 값이 0으로 들어왔을 경우
+			usedPoint = 0;
+			o.setoPoint(usedPoint);
+		} else {	// 포인트 사용했을 경우 order에 해당 값 세팅
+			o.setoPoint(usedPoint);
+		}
+		o.setoAddress(address1 + ", " + address2);	// 도로명주소 + 상세주소
+//		System.out.println("주문 입력으로 들어갈 order:"+o);
+//		System.out.println("주문 시 입력해야 할 주문 메뉴 mnList:"+mnList);
+//		System.out.println("Order:"+o);	// 포인트 정상적으로 세팅 되었는지 확인
+		
+		
+		int mNo = o.getmNo();	// 포인트 차감, 주문금액 누적할 멤버 번호
+		int result = oService.insertOrder(o, mnList, mNo);
+//		System.out.println("controller 주문 프로세스 result:" + result);
+		if(result > 0) {
+			Order order = oService.selectOrderInfo();
+//			System.out.println("주문 insert 완료 된 order:"+order);
+			mv.addObject("order", order);
+			mv.setViewName("order/paymentAPI");
+		} else {
+			throw new OrderException("주문 입력 실패");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("paymentSuccess.do")
+	@ResponseBody
+	public String paymentInsert(ModelAndView mv, PayAPI p) {
+//		System.out.println("결제정보 출력 : " + p);
+		
+		int result = oService.insertPayment(p);
+		
+//		System.out.println("controller 결제 프로세스 result:" + result);
+		
+		if(result > 0) {
+			return "success";
+			
+		} else {
+			throw new OrderException("결제 실패");
+		}
+	}
+	
+	@RequestMapping("pComplete.do")
+	public ModelAndView paymentComplete(ModelAndView mv) {
+		PayAPI payment = oService.selectPaymentInfo();
+//		System.out.println("payment:"+payment);
+		Order order = oService.selectOrderInfo();
+		if(payment != null && order != null) {
+			mv.addObject("payment", payment);
+			mv.addObject("order", order);
+			mv.setViewName("order/paymentComplete");
+		} else {
+			throw new OrderException("결제 뷰 이동 실패");
+		}
+		
+		return mv;
+	}
 }

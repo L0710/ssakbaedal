@@ -192,7 +192,7 @@ public class NoticeController {
 		return mv;
 	}
 	
-	// 관리자 공지사항 작성 뷰 이동 테스트
+	// 관리자 공지사항 작성 뷰 이동
 	@RequestMapping("innView.do")
 	public String noticeInsertView() {
 		return "notice/noticeInsertView";
@@ -457,8 +457,7 @@ public class NoticeController {
 			// 파일 삭제
 			deleteFile.delete();
 		}
-		
-		
+
 	}
 	
 

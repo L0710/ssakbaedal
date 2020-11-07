@@ -11,6 +11,7 @@ import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileList;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.member.model.vo.Member;
+import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
@@ -104,6 +105,85 @@ public class MemberDao {
 
 	public int releaseMember(int mNo) {
 		return sqlSession.update("memberMapper.releaseMember", mNo);
+	}
+
+
+	public Store selectStore(int mNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectStore", mNo);
+	}
+
+	public Attachment selectmImg(int mNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectmImg", mNo);
+	}
+
+	public int updateStore(Store s) {
+		
+		return sqlSession.update("memberMapper.updateStore", s);
+	}
+
+	public int updateLogo(Attachment attach) {
+		
+		return sqlSession.update("memberMapper.updateLogo", attach);
+	}
+
+	public int insertMenuImg(Attachment attach) {
+		
+		return sqlSession.insert("memberMapper.insertMenuImg", attach);
+	}
+
+	public int insertsMenu(Menu m) {
+		
+		return sqlSession.insert("memberMapper.insertsMenu", m);
+	}
+
+	public ArrayList<Menu> selectMenu(int mNo) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMenu", mNo);
+	}
+
+	public int deleteMenu(int mnNo) {
+
+		return sqlSession.update("memberMapper.deleteMenu", mnNo);
+	}
+
+	public Attachment selectOne(int mnNo) {
+		int refId = mnNo;
+		return sqlSession.selectOne("memberMapper.selectaOne", refId);
+	}
+
+/*	public int updateMenu(Menu menu, Attachment file) {
+		int result = 0;
+
+		result = sqlSession.update("memberMapper.updateMenu", menu);
+		if (result > 0) {
+			result = sqlSession.insert("memberMapper.updateMenuImg", file);
+		}
+		return result;
+	}*/
+
+	public int updateMenuImg(Attachment file) {
+		
+		return sqlSession.insert("memberMapper.updateMenuImg", file);
+	}
+
+	public int updateMenu(Menu menu) {
+		
+		return sqlSession.update("memberMapper.updateMenu", menu);
+	}
+
+	public int selectPriceSum(int mNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectPriceSum", mNo);
+
+	public Member selectMemberInfo(int mNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberInfo", mNo);
+	}
+
+	public int usingOrder(Order o) {
+		return sqlSession.update("memberMapper.usingOrder", o);
+
 	}
 
 }
