@@ -30,6 +30,14 @@
 	padding: 0.5em;
 	font-size: 12px;
 }
+.detailBtn {
+	border: 1px solid lightgray;
+	background-color: white;
+	width: 50px;
+	font-size: 10px;
+	padding: 0.5em;
+	text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -46,8 +54,8 @@
 						<th width="10%"><input type="checkbox" name="process"></th>
 						<th width="15%">회원번호</th>
 						<th width="25%">회원ID</th>
-						<th width="25%">회원상태</th>
-						<th width="15%">신고횟수</th>
+						<th width="25%">가입일</th>
+						<th width="15%"></th>
 					</tr>
 					<c:forEach var="m" items="${ list }">
 						<tr>
@@ -55,12 +63,27 @@
 							<td>${ m.mNo }</td>
 							<td>${fn:substring(m.mId, 0, 1)}***${fn:substring(m.mId, 4, fn:length(m.mId))}</td>
 							<td>활동</td>
-							<td>0</td>
+							<td><button class="detailBtn">상세보기</button></td>
 						</tr>
 					</c:forEach>
 				</table>
-
-
+					<c:url var="memdetail" value="memdetail.do"/>
+				<script>
+					$(function(){
+						$(".detailBtn").click(function(){
+							var btn = $(this);
+							
+							var tr = btn.parent().parent();
+	            			var td = tr.children();
+	            			
+	            			var mNo = td.eq(1).text();
+	            			
+	            			console.log("회원번호:"+mNo);
+	            			
+	            			window.open("${ memdetail }?mNo="+mNo, "ssakbaedalㅡ회원상세", "width=600,height=500,left=400,top=100");
+						});
+					});
+				</script>
 
 				<br>
 				<br>

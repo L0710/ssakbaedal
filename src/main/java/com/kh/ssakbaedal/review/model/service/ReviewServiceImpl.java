@@ -97,5 +97,20 @@ public class ReviewServiceImpl implements ReviewService{
 		return rDao.insertReply(r);
 	}
 
+	@Override
+	public int reviewCount(int mNo) {
+		return rDao.reviewCount(mNo);
+	}
+
+	@Override
+	public int selectStar(int mNo) {
+		return rDao.selectStar(mNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectReviewList(int mNo) {
+		return rDao.selectReviewList(mNo);
+	}
+
 
 }

@@ -47,7 +47,7 @@ public class ReviewController {
 		int currentPage = page != null ? page : 1;
 
 		// 페이징 정보 만들기(3번째 인자 - pageLimit, 4번째 인자 - boardLimit)
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5, 3);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 3, 3);
 
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Review> list = rService.selectList(pi, mNo);

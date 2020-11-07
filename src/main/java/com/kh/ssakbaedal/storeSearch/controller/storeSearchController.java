@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.review.model.service.ReviewService;
+import com.kh.ssakbaedal.review.model.vo.Review;
 import com.kh.ssakbaedal.storeSearch.model.exception.storeSearchException;
 import com.kh.ssakbaedal.storeSearch.model.service.storeSearchService;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
@@ -22,6 +24,8 @@ public class storeSearchController {
 	
 	@Autowired
 	private storeSearchService sService;
+	@Autowired
+	private ReviewService rService;
 	
 	// 전체매장 보기
 	@RequestMapping("tslist.do")
@@ -442,11 +446,17 @@ public class storeSearchController {
 			Attachment atLogo = sService.selectToslFile(mNo);
 			ArrayList<storeMenu> menuList = sService.selectTosMenu(mNo);
 			ArrayList<Attachment> atMenuList = sService.selectTosFile(mNo);
+			int reviewCount = rService.reviewCount(mNo);
+			int rStar = rService.selectStar(mNo);
+			ArrayList<Review> rlist = rService.selectReviewList(mNo);
 			
 //			System.out.println("store : " + store);
 //			System.out.println("menuList : " + menuList);
 //			System.out.println("atMenuList : " + atMenuList);
 //			System.out.println("atLogo : " + atLogo);
+//			System.out.println("reviewCount : " + reviewCount);
+//			System.out.println("rStar : " + rStar);
+//			System.out.println("rlist : " + rlist);
 			
 			if(store != null) {
 				mv.addObject("store", store)
@@ -454,6 +464,9 @@ public class storeSearchController {
 				  .addObject("atMenuList", atMenuList)
 				  .addObject("atLogo", atLogo)
 				  .addObject("currentPage", currentPage)
+				  .addObject("reviewCount", reviewCount)
+				  .addObject("rStar", rStar)
+				  .addObject("rlist", rlist)
 				  .setViewName("storeSearch/storeDetailView");
 			} else {
 				throw new storeSearchException("매장 상세 정보 출력 실패");

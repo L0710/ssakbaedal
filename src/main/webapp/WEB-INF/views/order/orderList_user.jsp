@@ -81,6 +81,9 @@
 											</th>
 										</c:otherwise>
 									</c:choose>
+								<th>
+									${ o.arrivalTime } min
+								</th>
 							</tr>
 							<tr>
 								<td rowspan="3" style="text-align:center;">

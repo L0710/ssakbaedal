@@ -152,10 +152,15 @@
 							<c:param name="mNo" value="${ loginUser.mNo }"/>
 							<c:param name="page" value="${ currentPage }"/>
 						</c:url>
-						<button class="btn-ghost red" id="paymentCancelBtn">결제 취소</button>
+						<button class="btn-ghost red" id="paymentCancelBtn" onclick="orderCancel();">결제 취소</button>
 						<button class="btn-ghost gray" id="listBtn" onclick="location.href='${ olist }'">목록</button>
 					</div>
-
+					<script>
+						function orderCancel(){
+							alert("결제 취소는 매장에 문의해주셔야 합니다. "+ "\n" +
+									"요리가 시작되었거나 배달이 시작된 주문은" + "\n" +"취소가 어려울 수 있습니다.");
+						}
+					</script>
 				</div>
 			</div>
 		</section>

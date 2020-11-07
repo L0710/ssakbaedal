@@ -50,7 +50,9 @@
                         </tr>
                         <tr>
                             <td>결제금액</td>
-                            <td style="text-align:right; color: red">${ payment.price }</td>
+                            <td style="text-align:right; color: red">
+                            	<fmt:formatNumber value="${ payment.price }" pattern="#,###" />
+                            </td>
                         </tr>
                     </table>
                     <br><hr><br>

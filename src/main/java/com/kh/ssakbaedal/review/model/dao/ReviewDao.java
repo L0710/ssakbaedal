@@ -79,5 +79,17 @@ public class ReviewDao {
 		return sqlSession.insert("reviewMapper.insertReply", r);
 	}
 
+	public int reviewCount(int mNo) {
+		return sqlSession.selectOne("reviewMapper.reviewCount", mNo);
+	}
+
+	public int selectStar(int mNo) {
+		return sqlSession.selectOne("reviewMapper.selectStar", mNo);
+	}
+
+	public ArrayList<Review> selectReviewList(int mNo) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectReviewList", mNo);
+	}
+
 
 }

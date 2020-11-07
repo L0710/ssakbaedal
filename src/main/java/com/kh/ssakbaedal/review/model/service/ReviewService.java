@@ -50,6 +50,15 @@ public interface ReviewService {
 	// 답글 작성(매장)
 	public int insertReply(Reply r);
 
+	// 매장 별 리뷰 수 카운트
+	public int reviewCount(int mNo);
+
+	// 매장 별 별점 합
+	public int selectStar(int mNo);
+
+	// 매장디테일 - 리뷰 리스트 출력
+	public ArrayList<Review> selectReviewList(int mNo);
+
 
 
 }

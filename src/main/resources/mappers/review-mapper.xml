@@ -48,6 +48,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		V_Review에서 메뉴를 포함하고 있는 테이블인 ODetail까지 함께 조회할 시
 		이를 V_Review에서 쓸 필요 없으므로 result property에 기입하지 않아야 함 -->
 	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultSet2">
+		<id property="oNo" column="ONO"/>
+		<result property="rContent" column="RCONTENT"/>
+		<result property="rWriter" column="MID"/>
+		<result property="rCreateDate" column="R_CREATE_DATE"/>
+		<result property="rStar" column="RSTAR"/>
+		<collection property="alist" javaType="java.util.ArrayList" resultMap="atResultSet"/>
+		<collection property="reply" javaType="java.util.ArrayList" resultMap="replyResultSet"/>
+	</resultMap>
 
 	<resultMap type="Attachment" id="atResultSet">
 		<result property="aNo" column="ANO"/>
@@ -189,5 +199,39 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				 3, NULL, NULL, #{mNo}, #{oNo}
 		)
 	</insert>
+	
+	<select id="reviewCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW R
+		JOIN SORDER O ON(O.ONO = R.ONO)
+		JOIN STORE S ON(O.S_MNO = S.MNO)
+		WHERE S.MNO = #{mNo}
+	</select>
+	
+	<select id="selectStar" parameterType="_int" resultType="_int">
+		SELECT SUM(RSTAR)
+		FROM REVIEW R
+		JOIN SORDER O ON(O.ONO = R.ONO)
+		JOIN STORE S ON(O.S_MNO = S.MNO)
+		WHERE S.MNO = #{mNo}
+	</select>
+	
+	<select id="selectReviewList" parameterType="_int" resultMap="reviewResultSet2">
+		SELECT O.ONO, M.MID, R.RCONTENT, R.R_CREATE_DATE, R.RSTAR,
+			AT.ORIGINAL_NAME, AT.CHANGE_NAME,
+			RE.RCONTENT AS RECONTENT, RE.R_CREATE_DATE
+		FROM REVIEW R
+		JOIN SORDER O ON(O.ONO = R.ONO)
+		JOIN STORE S ON(O.S_MNO = S.MNO)
+		LEFT JOIN (SELECT ORIGINAL_NAME, CHANGE_NAME, REF_ID
+		            FROM ATTACHMENT
+		            WHERE A_TYPE=7) AT ON (O.ONO = AT.REF_ID)
+		LEFT JOIN (SELECT RCONTENT, R_CREATE_DATE, ONO
+		            FROM REPLY
+		            WHERE R_TYPE=3
+		            AND MNO=#{mNo}) RE ON (RE.ONO = O.ONO)
+		JOIN MEMBER M ON (M.MNO = O.MNO)
+		WHERE S.MNO=#{mNo}
+	</select>
 	
 </mapper>

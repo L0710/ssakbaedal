@@ -3,12 +3,13 @@ package com.kh.ssakbaedal.order.model.vo;
 public class ODetail {
 	/*ODNO	NUMBER
 	ODNUM	NUMBER
+	OD_PRICE	NUMBER
 	ONO	NUMBER
 	MN_NO	NUMBER
-	ODMN	VARCHAR2(50 BYTE)
-	OPRICE	NUMBER*/
+	ODMN	VARCHAR2(50 BYTE)*/
 	private int odNo;
 	private int odNum;		// 수량
+	private int odPrice;	// 단가
 	private int oNo;
 	private int mnNo;	// 메뉴번호
 	private String mnName;	// 메뉴명
@@ -16,10 +17,11 @@ public class ODetail {
 	
 	public ODetail() {}
 
-	public ODetail(int odNo, int odNum, int oNo, int mnNo, String mnName, int price) {
+	public ODetail(int odNo, int odNum, int odPrice, int oNo, int mnNo, String mnName, int price) {
 		super();
 		this.odNo = odNo;
 		this.odNum = odNum;
+		this.odPrice = odPrice;
 		this.oNo = oNo;
 		this.mnNo = mnNo;
 		this.mnName = mnName;
@@ -40,6 +42,14 @@ public class ODetail {
 
 	public void setOdNum(int odNum) {
 		this.odNum = odNum;
+	}
+
+	public int getOdPrice() {
+		return odPrice;
+	}
+
+	public void setOdPrice(int odPrice) {
+		this.odPrice = odPrice;
 	}
 
 	public int getoNo() {
@@ -76,10 +86,9 @@ public class ODetail {
 
 	@Override
 	public String toString() {
-		return "ODetail [odNo=" + odNo + ", odNum=" + odNum + ", oNo=" + oNo + ", mnNo=" + mnNo + ", mnName=" + mnName
-				+ ", price=" + price + "]";
+		return "ODetail [odNo=" + odNo + ", odNum=" + odNum + ", odPrice=" + odPrice + ", oNo=" + oNo + ", mnNo=" + mnNo
+				+ ", mnName=" + mnName + ", price=" + price + "]";
 	}
 
-	
 	
 }
