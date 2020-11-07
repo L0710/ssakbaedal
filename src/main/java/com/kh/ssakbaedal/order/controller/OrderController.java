@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
+
 import com.kh.ssakbaedal.member.model.service.MemberService;
 import com.kh.ssakbaedal.member.model.vo.Member;
 import com.kh.ssakbaedal.order.model.exception.OrderException;
@@ -27,6 +28,7 @@ import com.kh.ssakbaedal.order.model.service.OrderService;
 import com.kh.ssakbaedal.order.model.vo.MnList;
 import com.kh.ssakbaedal.order.model.vo.ODetail;
 import com.kh.ssakbaedal.order.model.vo.Order;
+
 import com.kh.ssakbaedal.order.model.vo.PayAPI;
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
@@ -51,10 +53,17 @@ public class OrderController {
 	
 	//storeorderlist 이동
 	@RequestMapping("goOrderView.do")
-	public ModelAndView goOrderView(ModelAndView mv) {
+	public ModelAndView goOrderView(ModelAndView mv,HttpSession session) {
 		
-		ArrayList<S_Order> oList = oService.selectList();
+		Member m = (Member)session.getAttribute("loginUser");
+		int mNo = m.getmNo();
+/*		System.out.println(mNo);*/
 		
+		ArrayList<S_Order> oList = oService.selectList(mNo);
+		System.out.println("리스트개수 : "+oList.size());
+		for(int i = 0; i < oList.size(); i++) {
+			System.out.println(oList.get(3));
+		}
 		if(oList != null) {
 			mv.addObject("oList", oList);
 			mv.setViewName("store/order/storeOrderView");
@@ -66,38 +75,32 @@ public class OrderController {
 	//5초에 한번씩 orderlist reload
 	@RequestMapping("reloadList.do")
 	@ResponseBody
-	public String reloadList() {
+	public String reloadList(String mno) {
 		
-		ArrayList<S_Order> oList = oService.selectList();
-		ArrayList<SODetail> odList = oService.selectDetailList();
+		int mNo = Integer.parseInt(mno);
+		
+		ArrayList<S_Order> oList = oService.selectList(mNo);
+		ArrayList<SODetail> odList = oService.selectDetailList(mNo);
+		
+		for(S_Order sorder : oList) {
+			for(SODetail sodetail : odList) {
+				if (sorder.getoNo() == sodetail.getoNo()) {
+					sorder.getList().add(sodetail);
+				}
+			}
+		}
+		
 		
 		HashMap<String, ArrayList> hm = new HashMap<>();
 		hm.put("oList", oList);
 		hm.put("odList", odList);
+
 		
-		
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		return gson.toJson(hm);
+
 	}
-	
-	//주문내역이 없어서 일단 주석처리
-	//하루가지나면 주문내역 o_status = 'n'
-//	@Scheduled(cron="0 0 12 * * * *")
-//	public String deleteList(RedirectAttributes rd) {
-//		
-//		int result = oService.deleteList();
-//
-//		if(result > 0) {
-//			rd.addFlashAttribute("msg", "삭제성공");
-//		} else {
-//			throw new OrderException("삭제 실패");
-//		}
-//		
-//		return "redirect:orderlist.do";
-//	}
-//	
 	
 	@RequestMapping("olist.do")
 	public ModelAndView orderList(ModelAndView mv, int mNo,
@@ -174,6 +177,19 @@ public class OrderController {
 		
 	}
 	
+	//주문취소
+	@RequestMapping("cancelOrder.do")
+	public String cancelOrder(String oNo) {
+		
+		System.out.println(oNo);
+		int ono = Integer.parseInt(oNo);
+		int result = oService.cancelOrder(ono);
+		if(result <= 0) {
+			throw new OrderException("주문취소실패");
+		}
+		return "redirect:goOrderView.do";
+	}
+	
 	@RequestMapping(value="orderTimePopup.do", method=RequestMethod.GET)
 	public ModelAndView popup(ModelAndView mv, HttpServletRequest request) {
 		
@@ -188,17 +204,18 @@ public class OrderController {
 	}
 	
 	//배달예상시간, 주문상태변경
-	@RequestMapping(value="updateTime.do",  method=RequestMethod.GET)
-	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request) {
+	@RequestMapping("updateTime.do")
+	public ModelAndView updateTime(ModelAndView mv,  HttpServletRequest request,
+																String value, String oNo) {
+	
 		
-		int oNo = Integer.parseInt(request.getParameter("oNo"));
-		
-		int time = Integer.parseInt(request.getParameter("time"));
+		System.out.println("받아온정보 : " +oNo+value);
+		int ono = Integer.parseInt(oNo);
+		int ordertime = Integer.parseInt(value);
 		
 		Order order = new Order();
-		order.setoNo(oNo);
-		order.setArrivalTime(time);
-		
+		order.setoNo(ono);
+		order.setArrivalTime(ordertime);
 		
 		int result = oService.updateTime(order);
 		

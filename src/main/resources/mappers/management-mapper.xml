@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<resultMap type="OpenDB" id="openDBResultSet">
 		<id property="mNo" column="MNO"/>
 		<result property="sStatus" column="S_STATUS"/>
-		<result property="startDate" column="START_DATE"/>
-		<result property="endDate" column="END_DATE"/>
+		<result property="startDate" column="SDATE"/>
+		<result property="endDate" column="EDATE"/>
 		<result property="today" column="TODAY"/>
 	</resultMap>
 	
@@ -47,9 +47,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="setStatus" column="SET_STATUS"/>
 	</resultMap>
 	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM OPENDB
+		WHERE MNO = #{mNo}
 	</select>
 	
 	<select id="selectList" resultMap="openDBResultSet">
@@ -65,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectDB" parameterType="_int" resultMap="openDBResultSet">
-		SELECT *
+		SELECT TO_CHAR(START_DATE, 'YYYY/MM/DD') AS SDATE,TO_CHAR(END_DATE, 'YYYY/MM/DD') AS EDATE
 		FROM OpenDB
 		WHERE MNO = #{mNo}
 		ORDER BY TODAY DESC
@@ -83,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			VALUES (#{mNo}, #{sStatus}, NULL, NULL, SYSDATE)
 		</if>  
 		<if test="startDate != null and endDate != null">
-			VALUES (#{mNo}, #{sStatus}, #{startDate}, #{endDate}, SYSDATE)
+			VALUES (#{mNo},  #{sStatus},TO_DATE(#{startDate}, 'YYYY/MM/DD'), TO_DATE(#{endDate}, 'YYYY/MM/DD') , SYSDATE)
 		</if>	
 	</insert>
 	
@@ -91,12 +104,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT *
 		FROM MENU
 		WHERE MNO = #{mNo}
-		AND MN_STATUS != 'N'
+		AND MN_STATUS != 'S'
 	</select>
 	
 	<update id="updateLong">
 		UPDATE MENU
-		SET MN_STATUS = 'S'
+		SET MN_STATUS = 'N'
 		WHERE MN_NO = #{mnNo}
 	</update>
 	
@@ -110,12 +123,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE MENU
 		SET MN_STATUS = 'Y'
 		WHERE MN_NO = #{mnNo}
-	</update>
-	
-	<update id="deleteMenu">
-		UPDATE MENU
-		SET MN_STATUS = 'N'
-		WHERE MN_NO =#{mnNo}
 	</update>
 	
 	<update id="upBest">
@@ -153,6 +160,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET SET_STATUS = 'N'
 		WHERE SMNO = #{smNo}
 	</update>
-
+	
+	<select id="selecMenutImg" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM  ATTACHMENT
+		WHERE REF_ID = #{mNo}
+	</select>
 
 </mapper>

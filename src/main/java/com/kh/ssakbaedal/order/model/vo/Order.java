@@ -136,20 +136,34 @@ public class Order {
 		this.oPhone = oPhone;
 	}
 
-	public int getDeliveryCharge() {
-		return deliveryCharge;
-	}
+public void setArrivalTime(int arrivalTime) {
+	this.arrivalTime = arrivalTime;
+}
 
-	public void setDeliveryCharge(int deliveryCharge) {
-		this.deliveryCharge = deliveryCharge;
-	}
+public String getoPhone() {
+	return oPhone;
+}
 
-	@Override
-	public String toString() {
-		return "Order [oNo=" + oNo + ", oTime=" + oTime + ", request=" + request + ", oPrice=" + oPrice + ", oPoint="
-				+ oPoint + ", oAddress=" + oAddress + ", oStatus=" + oStatus + ", mNo=" + mNo + ", smNo=" + smNo
-				+ ", arrivalTime=" + arrivalTime + ", oPhone=" + oPhone + ", deliveryCharge=" + deliveryCharge + "]";
-	}
+public void setoPhone(String oPhone) {
+	this.oPhone = oPhone;
+}
 
+public int getDeliveryCharge() {
+	return deliveryCharge;
+}
+
+public void setDeliveryCharge(int deliveryCharge) {
+	this.deliveryCharge = deliveryCharge;
+}
+
+@Override
+public String toString() {
+	return "Order [oNo=" + oNo + ", oTime=" + oTime + ", request=" + request + ", oPrice=" + oPrice + ", oPoint="
+			+ oPoint + ", oAddress=" + oAddress + ", oStatus=" + oStatus + ", mNo=" + mNo + ", smNo=" + smNo
+			+ ", arrivalTime=" + arrivalTime + ", oPhone=" + oPhone + ", deliveryCharge=" + deliveryCharge + "]";
+}
+
+
+ 
 
 }

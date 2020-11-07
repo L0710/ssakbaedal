@@ -6,13 +6,13 @@ public class OpenDB {
 	
 	private int mNo;
 	private int sStatus;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private Date today;
 	
 	public OpenDB() {}
 
-	public OpenDB(int mNo, int sStatus, Date startDate, Date endDate, Date today) {
+	public OpenDB(int mNo, int sStatus, String startDate, String endDate, Date today) {
 		super();
 		this.mNo = mNo;
 		this.sStatus = sStatus;
@@ -37,19 +37,19 @@ public class OpenDB {
 		this.sStatus = sStatus;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -66,6 +66,8 @@ public class OpenDB {
 		return "OpenDB [mNo=" + mNo + ", sStatus=" + sStatus + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", today=" + today + "]";
 	}
-	
+
+
+
 }
 

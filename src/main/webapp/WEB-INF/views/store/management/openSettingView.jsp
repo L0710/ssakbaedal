@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -337,7 +338,6 @@
 				
 				var nostatus =  $("#openStatus option:selected").val();
 				$("#soStatus").val(nostatus); 
-				console.log(nostatus);
 				
 				function change() {
 					var status = $("#openStatus option:selected").val();
@@ -374,11 +374,12 @@
                             <th>매장상태</th>
                         </tr>
                         
-                        <c:forEach var="db" items="${db}">
-                        
+                        <c:forEach var="db" items="${db}" varStatus="i"> 
                         <tr>
                         <c:if test="${db.startDate != null && db.endDate != null }">
-                        	<td>${db.startDate} ~ ${db.endDate}</td>
+                        	<td>
+                        		${db.startDate}~${db.endDate}
+                        	</td>
                         	<td>휴가</td>
                         </c:if>
                         <c:if test="${db.startDate == null && db.endDate == null}">
@@ -436,6 +437,8 @@
                     </table>
 
                 </div>
+                
+                
             </div>
 
     </div>
@@ -448,7 +451,6 @@
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
-        <button class="btn-ghost gray si">리뷰관리</button>
         <button class="btn-ghost gray si">알림</button>
     </div>
     </section>

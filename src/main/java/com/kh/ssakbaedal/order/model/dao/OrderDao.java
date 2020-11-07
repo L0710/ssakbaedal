@@ -11,6 +11,7 @@ import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.vo.ODetail;
 import com.kh.ssakbaedal.order.model.vo.Order;
 import com.kh.ssakbaedal.order.model.vo.PayAPI;
+
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
@@ -21,9 +22,9 @@ public class OrderDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public ArrayList<S_Order> selectList() {
+	public ArrayList<S_Order> selectList(int mNo) {
 
-		return (ArrayList)sqlSession.selectList("orderMapper.selectorderList");
+		return (ArrayList)sqlSession.selectList("orderMapper.selectorderList", mNo);
 	}
 
 	public int deleteList() {
@@ -43,9 +44,9 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectOList", mNo, rowBounds);
 	}
 
-	public ArrayList<SODetail> selectDetaillList() {
+	public ArrayList<SODetail> selectDetailList(int mNo) {
 		
-		return (ArrayList)sqlSession.selectList("orderMapper.selectodList");
+		return (ArrayList)sqlSession.selectList("orderMapper.selectodList", mNo);
 	}
 
 
@@ -74,6 +75,11 @@ public class OrderDao {
 		return sqlSession.selectOne("orderMapper.selectOne", oNo);
 	}
 
+	public int cancelOrder(int ono) {
+		int oNo = ono;
+		return sqlSession.update("orderMapper.cancelOrder", oNo);
+	}
+
 	public int insertOrder(Order o) {
 		return sqlSession.insert("orderMapper.insertOrder", o);
 	}
@@ -95,6 +101,7 @@ public class OrderDao {
 		return sqlSession.selectOne("orderMapper.selectPaymentInfo");
 	}
 	
+
 
 	
 }
