@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +33,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.attachment.FileInfo;
+import com.kh.ssakbaedal.common.attachment.FileList;
+
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.common.page.Pagination;
 import com.kh.ssakbaedal.mail.model.service.MailService;
@@ -42,6 +47,7 @@ import com.kh.ssakbaedal.store.model.exception.ManagementException;
 import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.MenuList;
 import com.kh.ssakbaedal.store.model.vo.Store;
+
 
 @SessionAttributes({ "loginUser", "msg" })
 @Controller
@@ -76,6 +82,13 @@ public class MemberController {
 		logger.debug("비밀번호 찾기로 이동합니다");
 
 		return "member/findPwd";
+	}
+	@RequestMapping("snsSignUp.do")
+	public String snsSignUp() {
+
+		logger.debug("SNS 회원가입/로그인 페이지로 이동합니다");
+
+		return "member/snsSignUp";
 	}
 
 	@RequestMapping("signUp.do")
@@ -144,6 +157,13 @@ public class MemberController {
 			return "Yes";
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	// 일반회원 회원가입
 	@RequestMapping("mInsert.do")
@@ -527,6 +547,7 @@ public class MemberController {
 			return "null";
 		}
 	}
+
 
 	// 포인트뷰
 	@RequestMapping("pointView.do")
