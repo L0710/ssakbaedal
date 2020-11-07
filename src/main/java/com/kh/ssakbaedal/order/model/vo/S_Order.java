@@ -1,5 +1,6 @@
 package com.kh.ssakbaedal.order.model.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class S_Order {
@@ -16,11 +17,15 @@ public class S_Order {
 	private String oAddress; //주문주소
 	private String oStatus; //주문상태  1->결제완료 2->주문접수 3->기사픽업
 	private int arrivalTime; //배달예상시간
+	private int smNo; //매장번호
+	private int oPhone; //고객 전화번호
+	
+	private ArrayList<SODetail> list = new ArrayList<>();
 	
 	public S_Order() {}
 
 	public S_Order(int mNo, String mPhone, int deliveryCharge, int oNo, Date oTime, String request, String oPrice,
-			String oAddress, String oStatus, int arrivalTime) {
+			String oAddress, String oStatus, int arrivalTime, int smNo, int oPhone) {
 		super();
 		this.mNo = mNo;
 		this.mPhone = mPhone;
@@ -32,6 +37,8 @@ public class S_Order {
 		this.oAddress = oAddress;
 		this.oStatus = oStatus;
 		this.arrivalTime = arrivalTime;
+		this.smNo = smNo;
+		this.oPhone = oPhone;
 	}
 
 	public int getmNo() {
@@ -114,15 +121,39 @@ public class S_Order {
 		this.arrivalTime = arrivalTime;
 	}
 
+	public int getSmNo() {
+		return smNo;
+	}
+
+	public void setSmNo(int smNo) {
+		this.smNo = smNo;
+	}
+
+	public int getoPhone() {
+		return oPhone;
+	}
+
+	public void setoPhone(int oPhone) {
+		this.oPhone = oPhone;
+	}
+	
+	
+	
+
+	public ArrayList<SODetail> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<SODetail> list) {
+		this.list = list;
+	}
+
 	@Override
 	public String toString() {
 		return "S_Order [mNo=" + mNo + ", mPhone=" + mPhone + ", deliveryCharge=" + deliveryCharge + ", oNo=" + oNo
 				+ ", oTime=" + oTime + ", request=" + request + ", oPrice=" + oPrice + ", oAddress=" + oAddress
-				+ ", oStatus=" + oStatus + ", arrivalTime=" + arrivalTime + "]";
+				+ ", oStatus=" + oStatus + ", arrivalTime=" + arrivalTime + ", smNo=" + smNo + ", oPhone=" + oPhone
+				+ "]";
 	}
-	
-	
-
-	
 
 }

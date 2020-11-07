@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.order.model.dao.OrderDao;
 import com.kh.ssakbaedal.order.model.vo.Order;
+
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
 import com.kh.ssakbaedal.order.model.vo.V_Order;
@@ -21,9 +22,9 @@ public class OrderServiceImpl implements OrderService {
 
 	//매장 주문 리스트출력
 	@Override
-	public ArrayList<S_Order> selectList() {
+	public ArrayList<S_Order> selectList(int mNo) {
 
-		return oDao.selectList();
+		return oDao.selectList(mNo);
 	}
 
 	//스케쥴링으로 리스트 지우기
@@ -46,9 +47,9 @@ public class OrderServiceImpl implements OrderService {
 
 	//매장 주문 디테일 리스트
 	@Override
-	public ArrayList<SODetail> selectDetailList() {
+	public ArrayList<SODetail> selectDetailList(int mNo) {
 		
-		return oDao.selectDetaillList();
+		return oDao.selectDetailList(mNo);
 	}
 
 	//매장 주문 상세보기로 이동1
@@ -84,6 +85,13 @@ public class OrderServiceImpl implements OrderService {
 		
 		return oDao.updateoStatus(oNo);
 	}
+
+	@Override
+	public int cancelOrder(int ono) {
+		
+		return oDao.cancelOrder(ono);
+	}
+
 	
 	
 	

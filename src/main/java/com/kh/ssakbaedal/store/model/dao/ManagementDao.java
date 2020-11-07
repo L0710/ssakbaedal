@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.OpenDB;
@@ -40,9 +41,9 @@ public class ManagementDao {
 		return (ArrayList)sqlSession.selectList("managementMapper.selectDB", mNo);
 	}
 
-	public int selectListCount() {
+	public int selectListCount(int mNo) {
 		
-		return sqlSession.selectOne("managementMapper.selectListCount");
+		return sqlSession.selectOne("managementMapper.selectListCount", mNo);
 	}
 
 	public ArrayList<OpenDB> selectList(PageInfo pi) {
@@ -73,10 +74,10 @@ public class ManagementDao {
 		return sqlSession.update("managementMapper.updateSale", mnNo);
 	}
 
-	public int deleteMenu(int mnNo) {
+/*	public int deleteMenu(int mnNo) {
 		
 		return sqlSession.update("managementMapper.deleteMenu", mnNo);
-	}
+	}*/
 
 	public int upBest(int mnNo) {
 		
@@ -106,6 +107,12 @@ public class ManagementDao {
 	public int deleteSet(int smNo) {
 		
 		return sqlSession.update("managementMapper.deleteSet", smNo);
+	}
+
+
+	public ArrayList<Attachment> selectMenuImg(int mNo) {
+		
+		return (ArrayList)sqlSession.selectList("managementMapper.selecMenutImg", mNo);
 	}
 
 	

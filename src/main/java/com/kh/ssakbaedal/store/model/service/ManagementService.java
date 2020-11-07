@@ -2,6 +2,7 @@ package com.kh.ssakbaedal.store.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.store.model.vo.Menu;
 import com.kh.ssakbaedal.store.model.vo.OpenDB;
@@ -22,7 +23,7 @@ public interface ManagementService {
 	public int insertDB(OpenDB db);
 	
 	//openDB 게시글 갯수 구하는 메소드
-	public int selectListCount();
+	public int selectListCount(int mNo);
 	
 	//openDB 게시글 조회(페이징 처리 된)
 	public ArrayList<OpenDB> selectList(PageInfo pi);
@@ -37,8 +38,8 @@ public interface ManagementService {
 	//품절해제
 	public int updateSale(int mnNo);
 	
-	//메뉴삭제
-	public int deleteSale(int mnNo);
+/*	//메뉴삭제
+	public int deleteSale(int mnNo);*/
 	
 	//베스트메뉴로 등록
 	public int upBest(int mnNo);
@@ -54,6 +55,9 @@ public interface ManagementService {
 	
 	//세트메뉴 삭제
 	public int deleteSet(int smNo);
+	
+	//attachment select
+	public ArrayList<Attachment> selectImg(int mNo);
 
 
 

@@ -43,9 +43,11 @@ nav {
 			<c:param name="mNo" value="${ loginUser.mNo }" />
 			<c:param name="page" value="${ currentPage }" />
 		</c:url>
+		
+		
 		<a class="link" href="${ olist }">주문내역</a>
 		<a class="link" href="${ rlist }">리뷰</a>
-		<a class="link" href="#">포인트</a>
+		<a class="link" href="${contextPath}/pointView.do">포인트</a>
 		<a class="link" href="#">문의</a>
 		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
 		<a class="link" href="#">회원탈퇴</a>

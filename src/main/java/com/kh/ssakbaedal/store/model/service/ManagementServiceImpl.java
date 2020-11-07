@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
 import com.kh.ssakbaedal.store.model.dao.ManagementDao;
 import com.kh.ssakbaedal.store.model.vo.Menu;
@@ -46,9 +47,9 @@ public class ManagementServiceImpl implements ManagementService {
 	}
 
 	@Override
-	public int selectListCount() {
+	public int selectListCount(int mNo) {
 		
-		return smDao.selectListCount();
+		return smDao.selectListCount(mNo);
 	}
 
 	@Override
@@ -80,11 +81,11 @@ public class ManagementServiceImpl implements ManagementService {
 		return smDao.updateSale(mnNo);
 	}
 
-	@Override
+/*	@Override
 	public int deleteSale(int mnNo) {
 		
 		return smDao.deleteMenu(mnNo);
-	}
+	}*/
 
 	@Override
 	public int upBest(int mnNo) {
@@ -120,6 +121,12 @@ public class ManagementServiceImpl implements ManagementService {
 	public int deleteSet(int smNo) {
 		
 		return smDao.deleteSet(smNo);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectImg(int mNo) {
+		
+		return smDao.selectMenuImg(mNo);
 	}
 
 

@@ -316,12 +316,18 @@
                         	 <button class="btn-ghost blue" id="pickupBtn2"  disabled>매장픽업</button>
                         </c:if>
                         <c:if test="${sorder.arrivalTime != null }">
-                        	  <button class="btn-ghost blue" id="pickupBtn2" style="background-color:rgb(117, 182, 219); color:white;" disabled>매장픽업</button>
+                        	  <button class="btn-ghost blue" id="pickupBtn2" style="background-color:white; color:rgb(117, 182, 219);" disabled>매장픽업</button>
                         </c:if>
+                        <button type="button" onclick="cancel();" id="canBtn" class="btn-ghost gray">주문취소</button>
                     </div>
                 </div>
             </div>
 <script>
+
+	function goList() {
+		location.href="${contectPath}/ssakbaedal/goOrderView.do";
+	}
+	
     function time_popup() {
     	var oNo = ${sorder.oNo};
     	console.log(oNo);
@@ -332,22 +338,54 @@
     
     
      function win() {
-    		 $("input[type=text][name=time]").val(${sorder.arrivalTime});
+/*     		 $("input[type=text][name=time]").val(${sorder.arrivalTime}); */
+    		 $("#pickupBtn1").attr("disabled", true);
+    		 $("#pickupBtn1").css("background-color", "rgb(130, 180, 127)");
+    		 $("#pickupBtn1").css("color", "white");
+    		 
+    		 $("#pickupBtn2").attr("disabled", false);
+    		 $("#pickupBtn2").css("background-color", "white");
+    		 $("#pickupBtn2").css("color", "rgb(117, 182, 219)");
    } 
      
+	 var oNo = ${sorder.oNo};
+     
      $("#pickupBtn2").click(function() {
-    	 var oNo = ${sorder.oNo};
     	 $.ajax({
     		 url:"updateoStatus2.do",
     		 data:{oNo:oNo},
     		 success:function(data) {
 				console.log(data);
+				goList();
     		 },
     		 error:function(e) {
     			 console.log(e);
     		 }
     	 });
      });
+     
+     
+     
+     function cancel() {
+    	 var con = confirm("주문을 취소하겠습니까?");
+    	 if(con) {
+    		 alert("주문취소 되었습니다.");
+    		 $.ajax({
+        		 url:"cancelOrder.do",
+        		 data:{oNo:oNo},
+        		 success:function(data) {
+        			 console.log(data);
+        			 console.log("success");
+        			 goList();
+        		 },
+        		 error:function(e) {
+        			 console.log(e);
+        		 }	 
+    	 });
+    	 }else {
+    		 console.log("a");
+    	 }
+     }
      
      
     

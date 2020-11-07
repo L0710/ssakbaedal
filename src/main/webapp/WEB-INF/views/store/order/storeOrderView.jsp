@@ -289,7 +289,6 @@
                 <p id="orderTitle">주문관리</p>
                 
                 <div class="tableWrapper" align="center">
-               	
                     <table id="orderTable">
                     <thead>
 	                        <tr>
@@ -310,29 +309,29 @@
     </div>
     
     <script>
-    	$(function() {
+     	$(function() {
     		orderList(); 
     		
     		setInterval(function() {
     			orderList();
     		}, 5000);
-    	});
+    	}); 
     	
-    	function orderList() {
+    	var mno = "${loginUser.mNo}";
+    	console.log(mno);
+    	
+   	function orderList() {
     		$.ajax({
     			url:"reloadList.do",
     			dataType:"json",
+    			data:{mno:mno},
     			success:function(data) {
 						var list1 = data.oList;
     					var list2 = data.odList;
-    				
+    					
     				 $tableBody = $("#orderTable tbody");
     				 $tableBody.html("");
-    				 var mnName = " ";
     				 
-    				 for (var j in list2) {
-    					 mnName += list2[j].mnName + ",";
-    				 }
     				 
     				 for(var i in list1) {
     					 
@@ -340,14 +339,13 @@
     					 
     					 var $orderTime = $("<td>").text(list1[i].oTime);
     					 var $oAddress = $("<td>").text(list1[i].oAddress);
-    					 var $mnName = $("<td>").text(mnName);
+      					 var $mnName = $("<td>").text(list1[i].list.mnName);  
     					 var $oStatus = $("<td>").text(list1[i].oStatus);
     					 var $blank = $("<td>").text(list1[i].oNo);
 						
-    					 
     					 $tr.append($orderTime);
         				 $tr.append($oAddress);
-        				 $tr.append($mnName);
+            			 $tr.append($mnName);  
         				 $tr.append($oStatus);
         				 $tr.append($blank);
         				 
@@ -364,7 +362,7 @@
     				console.log(e);
     			}
     		});
-    	}
+    	}  
     	
 		function clickEvent() { 
 			$("#orderTable tbody tr").click(function() {

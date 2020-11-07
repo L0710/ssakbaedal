@@ -14,6 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="mNo" column="MNO"/>
 		<result property="smNo" column="S_MNO"/>
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
+		<result property="oPhone" column="OPHONE"/>
+		<result property="deliveryCharge" column="FEE"/>
 	</resultMap>
 
 	<resultMap id="v_orderResultSet" type="V_Order">
@@ -44,8 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="oStatus" column="O_STATUS"/>
 		<result property="arrivalTime" column="ARRIVAL_TIME"/>
 		<result property="mNo" column="MNO"/>
-		<result property="mPhone" column="MPHONE"/>
+		<result property="oPhone" column="OPHONE"/>
 		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+		<result property="smNo" column="S_MNO"/>
 	</resultMap>
 	
 	<resultMap id="sod_orderResultSet" type="SODetail">
@@ -72,17 +75,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="changeFileName" column="CHANGE_NAME"/>
 		<result property="refId" column="REF_ID"/>
 	</resultMap>
+
 	
 	<select id="selectodList" resultMap="sod_orderResultSet">
-		SELECT *
-		FROM SODETAIL
+		SELECT SOD.ODNO, SOD.ODNUM, SOD.MN_NO, SOD.MN_NAME, SOD.ONO, SOD.OTIME, SOD.OD_PRICE, SOD.OADDRESS
+		FROM SODETAIL SOD
+		JOIN SORDER SO ON (SO.ONO = SOD.ONO) 
+		WHERE SO.S_MNO = #{mNo}
 	</select>
 	
 	<select id="selectorderList" resultMap="s_orderResultSet">
 		SELECT * 
-		FROM S_ORDER
-		WHERE O_STATUS != 'S'
-		OR O_STATUS != 'N'
+		FROM  SORDER
+		WHERE S_MNO = #{mNO}
+		AND O_STATUS != 'N'
+<!-- 		AND OTIME >= SYSDATE-1 -->
 	</select>
 	
 	<update id="deleteList">
@@ -127,13 +134,19 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET O_STATUS = '3'
 		WHERE ONO = #{oNo}
 	</update>
-	
-	
+
 	
 	<select id="selectOne" parameterType="_int" resultMap="v_orderResultSet">
 		SELECT *
 		FROM V_ORDER
 		WHERE ONO=#{oNo}
 	</select>
+	
+	<update id="cancelOrder" parameterType="_int">
+		UPDATE SORDER
+		SET O_STATUS = 'N'
+		WHERE ONO = #{oNo}
+	</update>
 
+	
 </mapper>

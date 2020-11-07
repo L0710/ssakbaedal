@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,18 +38,7 @@ public class ManagementController {
 	@Autowired
 	private ManagementService smService;
 	
-	//매장정보 update
-	/*@RequestMapping("updateInfo.do")
-	public String sInfoUpdate(Store s, String post, String address1, String address2, 
-													 RedirectAttributes rd, Model model) {
-		
-		s.setsAddress(post + "," +address1+","+address2);
-		
-		
-		
-		return "redirect:home.do";
-		
-	}*/
+
 	
 	//메뉴 세팅페이지로 이동
 	@RequestMapping("menuSetting.do")
@@ -61,11 +50,13 @@ public class ManagementController {
 		Store s = smService.selectStore(mNo);
 		ArrayList<Menu> menu = smService.selectMenu(mNo);
 		ArrayList<SetMenu> set = smService.selectSetMenu(mNo); 
+		ArrayList<Attachment> attach = smService.selectImg(mNo);
 		
 		if(menu != null) {
 			mv.addObject("s", s);
 			mv.addObject("menu", menu);
 			mv.addObject("set", set);
+			mv.addObject("attach", attach);
 			mv.setViewName("store/management/menuSettingView");
 		} else {
 			throw new ManagementException("메뉴정보 출력실패");
@@ -102,30 +93,7 @@ public class ManagementController {
 		return "redirect:store/management/menuSettingView";
 	}
 	
-	//메뉴삭제
-	@RequestMapping("deleteMenu.do")
-	public ModelAndView deleteMenu(ModelAndView mv, String mnno, HttpSession session) {
-		
-		Member m = (Member)session.getAttribute("loginUser");
-		int mNo = m.getmNo();
-		int mnNo = Integer.parseInt(mnno);
-		
-		System.out.println(mnNo);
-		int result = smService.deleteSale(mnNo);
-		System.out.println(result);
-		
-		if(result <= 0) {
-			throw new ManagementException("메뉴 삭제 실패");
-		}
-		
-		ArrayList<Menu> menu = smService.selectMenu(mNo);
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		mv.addObject("menu", menu);
-		mv.addObject(gson.toJson(menu));
-		mv.setViewName("store/management/menuSettingView");
-		
-		return mv;
-	}
+
 	
 	//베스트메뉴로 등록
 	@RequestMapping("upbest.do")
@@ -214,54 +182,6 @@ public class ManagementController {
 		return mv;
 	}
 	
-	//메뉴추가
-	@RequestMapping("menuInsert.do")
-	public String menuInsert(Attachment a, FileList fl ,Menu m, HttpServletRequest request,
-												@RequestParam(value="uploadFile" ,required=false) MultipartFile file) {
-		
-		if(!file.getOriginalFilename().equals("")) {
-			String renameFileName = saveFile(file, request);
-			
-			if(renameFileName != null) {
-				
-			}
-		}
-		
-		return "";
-	}
-	
-	// 파일 저장을 위한 별도의 메소드
-	public String saveFile(MultipartFile file, HttpServletRequest request) {
-		// 파일이 저장 될 경로 설정
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		
-		String savePath = root + "\\muploadFiles";
-		
-		File folder = new File(savePath);
-		
-		if(!folder.exists())	// 사진을 저장하고자 하는 경로가 존재하지 않는다면
-			folder.mkdirs();	// 포함 된 경로를 모두 생성함
-		
-		// 파일 Rename -> 현재 시간 년월일시분초.확장자
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originFileName = file.getOriginalFilename(); // -> 원래 이름으로부터 확장자 추출
-		String renameFileName = sdf.format(new Date()) 
-				+ originFileName.substring(originFileName.lastIndexOf("."));
-		
-		String renamePath = folder + "\\" + renameFileName;
-		
-		
-		try {
-			file.transferTo(new File(renamePath));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		return renameFileName;
-	}
-	
-	
-	
 	
 	//오픈세팅 페이지로 이동
 	@RequestMapping("openSetting.do")
@@ -271,7 +191,7 @@ public class ManagementController {
 		Member m = (Member) session.getAttribute("loginUser");
 		int mNo = m.getmNo();
 		
-		int listCount = smService.selectListCount();
+		int listCount = smService.selectListCount(mNo);
 		
 		int currentPage = page != null ? page : 1;
 		
@@ -308,8 +228,9 @@ public class ManagementController {
 	public String updatesStatus(Store s, RedirectAttributes rd,
 													@RequestParam("soStatus") String soStatus,
 													@RequestParam("start") String start,
-													@RequestParam("end") String end) throws ParseException {
+													@RequestParam("end") String end) throws ParseException{
 		
+		System.out.println("update : " + start+end);
 		OpenDB db = new OpenDB();
 
 		int mNo = s.getmNo();
@@ -319,36 +240,30 @@ public class ManagementController {
 		
 		s.setsStatus(sStatus);
 		
-		if(start != "" && end != "") {
-			SimpleDateFormat sdf = new SimpleDateFormat("yy/mm/dd");
-/*			
-			db.setStartDate(startDate);
-			db.setEndDate(endDate);*/
+		if(start != null && end != null) {
+			
+			System.out.println("a");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			
+			String sDate = start.replace("-", "");
+			System.out.println(sDate);
+			
+			String eDate = end.replace("-", "");
+			System.out.println(eDate);
+			
+			db.setStartDate(sDate);
+			db.setEndDate(eDate);
+
 		} 
+		
 		int result1 = smService.insertDB(db);
 		int result = smService.updatesStatus(s);
 		
 		return "redirect:openSetting.do";
 	}
 	
-	//매장관리페이지로 이동
-	@RequestMapping("storeManage.do")
-	public ModelAndView goStoreManage(ModelAndView mv, HttpSession session) {
-		
-		Member m = (Member) session.getAttribute("loginUser");
-		int mNo = m.getmNo();
-		
-		Store s = smService.selectStore(mNo);
-		
-		if(s != null) {
-			mv.addObject("s", s);
-			mv.setViewName("store/management/storeInfoView");
-		} else {
-			throw new ManagementException("매장 정보 페이지 조회 실패");
-		}
-		
-		return mv;
-	}
+
 	
 	
 
