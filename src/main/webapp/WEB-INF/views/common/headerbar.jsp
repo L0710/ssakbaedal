@@ -199,7 +199,7 @@
 				<div class="btnGroup" align="right">
 					<c:url var="logout" value="logout.do" />
 					<c:url var="mypage_admin" value="memlist.do" />
-					<c:url var="mypage_user" value="olist.do">
+					<c:url var="mypage_user" value="myInfo.do">
 						<c:param name="mNo" value="${ loginUser.mNo }"/>
 					</c:url>
 					<c:url var="mypage_store" value="mypage_store.do" />
