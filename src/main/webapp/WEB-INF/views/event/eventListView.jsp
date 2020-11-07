@@ -17,11 +17,29 @@
 	
 	#eventList {
 		width: 80%;
+		margin: auto;
 	}
 	
 	#eventList tr:hover {
-	cursor: pointer;
-	background: rgba(130, 180, 127, 0.1);
+		cursor: pointer;
+		background: rgba(130, 180, 127, 0.1);
+	}
+	
+	#searchBtn {
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		height: auto;
+		font-size: 10px;
+		padding: 0.5em;
+	}
+	.btn {
+		border: 1px solid lightgray;
+		background-color: white;
+		width: 50px;
+		font-size: 10px;
+		padding: 0.5em;
+	}
 </style>
 </head>
 <body>
@@ -42,7 +60,7 @@
             <div class="contents">
             	<h1 align="center">이벤트</h1>
             	<br>
-                <table align="center" id="eventList">
+                <table id="eventList">
                     <tr>
                         <th width="7%">NO</th>
                         <th width="8%">진행</th>
@@ -84,7 +102,7 @@
                 <br>
                 <c:if test="${ !empty loginUser && loginUser.mId == 'admin' }">
 	                <div align="right" style="margin-right: 10%">
-	                    <button class="btn-ghost green" id="insertBtn" align="right" onclick="location.href='einsertView.do'">작성</button>
+	                    <button class="btn" id="insertBtn" align="right" onclick="location.href='einsertView.do'">작성</button>
 	                </div>
                 </c:if>
                 <br><br>
@@ -92,6 +110,7 @@
                 <div class="pagingArea" align="center" style="font-size:14px;">
                 
                 	<!-- 페이징 -->
+                	<!-- 이전 -->
                     <c:if test="${ pi.currentPage <= 1 }">
 					[이전]&nbsp;
 					</c:if>
@@ -122,7 +141,7 @@
 							<c:if test="${ search == null }">
 		                        <c:url var="pagination" value="elist.do">
 		                           <c:param name="page" value="${ p }"/>
-		                              </c:url>
+		                        </c:url>
 		                        <a href="${ pagination }">${ p }</a> &nbsp;
 							</c:if>
 							<c:if test="${ search != null }">

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.event.model.dao.EventDao;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
@@ -94,8 +95,8 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public ArrayList<Event> searchList(Search search) {
-		return eDao.searchList(search);
+	public ArrayList<Event> searchList(Search search, PageInfo pi) {
+		return eDao.searchList(search, pi);
 	}
 
 	@Override
@@ -125,6 +126,16 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public int searchListCount(Search search) {
 		return eDao.searchListCount(search);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int eNo) {
+		return eDao.selectReplyList(eNo);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return eDao.insertReply(r);
 	}
 
 

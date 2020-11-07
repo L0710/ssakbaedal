@@ -77,6 +77,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</resultMap>
 
 	
+	<resultMap type="PayAPI" id="paymentResultSet">
+		<id property="pNo" column="PNO"/>
+		<result property="price" column="PRICE"/>
+		<result property="pDate" column="PDATE"/>
+		<result property="pStatus" column="P_STATUS"/>
+		<result property="oNo" column="ONO"/>
+	</resultMap>
+	
 	<select id="selectodList" resultMap="sod_orderResultSet">
 		SELECT SOD.ODNO, SOD.ODNUM, SOD.MN_NO, SOD.MN_NAME, SOD.ONO, SOD.OTIME, SOD.OD_PRICE, SOD.OADDRESS
 		FROM SODETAIL SOD
@@ -134,7 +142,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET O_STATUS = '3'
 		WHERE ONO = #{oNo}
 	</update>
-
 	
 	<select id="selectOne" parameterType="_int" resultMap="v_orderResultSet">
 		SELECT *
@@ -148,5 +155,35 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE ONO = #{oNo}
 	</update>
 
+	<insert id="insertOrder" parameterType="Order">
+		INSERT INTO SORDER
+		VALUES (O_SEQ.NEXTVAL, SYSDATE, #{request}, #{oPrice}, #{oPoint}, #{oAddress}, 1, #{mNo}, #{smNo},
+		 	NULL, #{oPhone}, #{deliveryCharge})
+	</insert>
+
+	<insert id="insertMenu" parameterType="ODetail">
+		INSERT INTO ODETAIL
+		VALUES (OD_SEQ.NEXTVAL, #{odNum}, O_SEQ.CURRVAL, #{mnNo}, #{mnName}, #{price})
+	</insert>
 	
+	<select id="selectOrderInfo" resultMap="orderResultSet">
+		SELECT * 
+		FROM(SELECT * 
+		    FROM SORDER
+		    ORDER BY ONO DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertPayment" parameterType="PayAPI">
+		INSERT INTO PAYAPI
+		VALUES (PAY_SEQ.NEXTVAL, #{price}, SYSDATE, 'Y', #{oNo})
+	</insert>
+	
+	<select id="selectPaymentInfo" resultMap="paymentResultSet">
+		SELECT * 
+		FROM(SELECT * 
+		    FROM PAYAPI
+		    ORDER BY ONO DESC)
+		WHERE ROWNUM = 1
+	</select>
 </mapper>

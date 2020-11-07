@@ -170,6 +170,9 @@ public class MemberController {
 		
 		s.setsAddress(post + "," + address1 + "," + address2);
 		
+		System.out.println(m);
+		System.out.println(s);
+		
 		FileInfo bfileInfo = saveFile("6",bfile,request);
 		Attachment bf = new Attachment();
 		bf.setOriginalFileName(bfile.getOriginalFilename());

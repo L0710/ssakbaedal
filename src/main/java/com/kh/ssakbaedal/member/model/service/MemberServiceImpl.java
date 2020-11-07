@@ -246,6 +246,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	public Member selectMemberInfo(int mNo) {
+		return mDao.selectMemberInfo(mNo);
+	}
 
 }
 

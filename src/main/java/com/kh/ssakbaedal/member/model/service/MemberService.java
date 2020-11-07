@@ -55,6 +55,7 @@ public interface MemberService {
 	// (스케줄링)회원 상태 n->y
 	public int releaseMember(int mNo);
 
+
 	//회원번호-> 매장회원정보 select
 	public Store selectStore(int mNo);
 
@@ -82,6 +83,8 @@ public interface MemberService {
 	public int selectPriceSum(int mNo);
 
 
+	// 회원번호 기준으로 회원 정보 가져오기
+	public Member selectMemberInfo(int mNo);
 
 
 

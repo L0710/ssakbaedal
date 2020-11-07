@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="storeApproveMapper">
+  <resultMap type="StoreAppro" id="StoreApproResultSet">
+		<id property="mNo" column="MNO"/>
+		<result property="sName" column="SNAME"/>
+		<result property="sNo" column="SNO"/>
+		<result property="sTel" column="STEL"/>
+		<result property="sAddress" column="S_ADDRESS"/>
+		<result property="deliveryKm" column="DELIVERY_KM"/>
+		<result property="sInfo" column="SINFO"/>
+		<result property="openTime" column="OPEN_TIME"/>
+		<result property="sStatus" column="S_STATUS"/>
+		<result property="sAccept" column="SACCEPT"/>
+		<result property="sCategory" column="S_CATEGORY"/>
+		<result property="deliveryCharge" column="DELIVERY_CHARGE"/>
+		<result property="minPrice" column="MIN_PRICE"/>
+		<result property="soff" column="SOFF"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="aNo" column="ANO"/>
+		<result property="originalFileName" column="ORIGINAL_NAME"/>
+		<result property="changeFileName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="uploadDate" column="UPLOAD_DATE"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="aStatus" column="A_STATUS"/>
+		<result property="aType" column="A_TYPE"/>
+		<result property="refId" column="REF_ID"/>
+	</resultMap>
+	
+	<!-- 관리자 미승인 매장회원 리스트 갯수 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM STORE
+		WHERE SACCEPT='N'
+	</select>
+	
+	<!-- 관리자 미승인 매장회원 리스트 출력 -->
+	<select id="storeApproveList" resultMap="StoreApproResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='N'
+		ORDER BY MNO DESC
+	</select>
+	
+	<!-- 관리자 미승인 매장회원 디테일 뷰 출력 -->
+	<select id="selectStoreAp" parameterType="_int" resultMap="StoreApproResultSet">
+		SELECT *
+		FROM STORE
+		WHERE SACCEPT='N'
+		AND MNO=#{mNo}
+	</select>
+	
+	<!-- 관리자 미승인 매장회원 디테일 뷰 출력 -->
+	<select id="selectsaFile" parameterType="_int" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE REF_ID=#{mNo}
+		AND A_TYPE=6
+		AND A_STATUS='Y'
+	</select>
+	
+	<!-- 관리자 미승인 매장회원 승인 -->
+	<update id="storeApprove" parameterType="_int">
+		UPDATE STORE
+		SET SACCEPT='Y'
+		WHERE MNO=#{mNo}
+	</update>
+  
+  
+</mapper>

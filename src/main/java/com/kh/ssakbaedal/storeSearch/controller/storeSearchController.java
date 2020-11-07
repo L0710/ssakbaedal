@@ -1,6 +1,7 @@
 package com.kh.ssakbaedal.storeSearch.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.storeSearch.model.exception.storeSearchException;
 import com.kh.ssakbaedal.storeSearch.model.service.storeSearchService;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
 import com.kh.ssakbaedal.storeSearch.model.vo.Pagination;
+import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
 @Controller
@@ -35,15 +38,28 @@ public class storeSearchController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 		
 		// 페이징 정보에 맞는 게시글 리트트 셀렉
-		ArrayList<storeSearch> tslist = sService.selectList(pi);
+		/*ArrayList<storeSearch> tslist = sService.selectList(pi);*/
+		
+		HashMap<String, Object> hmap = sService.selectTestList(pi);
 		
 		//System.out.println("tslist : " + tslist);
 		//System.out.println("pi : " + pi);
+//		System.out.println("toList : " + hmap.get("toList"));
+//		System.out.println("atList : " + hmap.get("atList"));
 		
-		if(tslist != null) {
+		/*if(tslist != null) {
 			mv.addObject("tslist", tslist);
 			mv.addObject("pi", pi);
 			mv.setViewName("storeSearch/totalListView");
+		} else {
+			throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
+		}*/
+		
+		if(hmap.get("toList") != null && hmap.get("atList") != null) {
+			mv.addObject("toList", hmap.get("toList"))
+			  .addObject("atList", hmap.get("atList"))
+			  .addObject("pi", pi)
+			  .setViewName("storeSearch/totalListView");
 		} else {
 			throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 		}
@@ -387,7 +403,7 @@ public class storeSearchController {
 			return mv;
 		}
 		
-		// 도시락 매장 보기
+		// 카페/디저트 매장 보기
 		@RequestMapping("cdslist.do")
 		public ModelAndView cafedessertListView(ModelAndView mv,
 				@RequestParam(value="page", required=false) Integer page) {
@@ -412,6 +428,38 @@ public class storeSearchController {
 				throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
 			}
 																									
+			return mv;
+		}
+		
+		// 전체매장 뷰에서 매장 상세정보 뷰로 이동 테스트
+		@RequestMapping("sinfoDetail.do")
+		public ModelAndView storeDetailView(ModelAndView mv,
+				int mNo, @RequestParam("page") Integer page) {
+			
+			int currentPage = page != null ? page : 1;
+			
+			storeSearch store = sService.selectstore(mNo);
+			Attachment atLogo = sService.selectToslFile(mNo);
+			ArrayList<storeMenu> menuList = sService.selectTosMenu(mNo);
+			ArrayList<Attachment> atMenuList = sService.selectTosFile(mNo);
+			
+//			System.out.println("store : " + store);
+//			System.out.println("menuList : " + menuList);
+//			System.out.println("atMenuList : " + atMenuList);
+//			System.out.println("atLogo : " + atLogo);
+			
+			if(store != null) {
+				mv.addObject("store", store)
+				  .addObject("menuList", menuList)
+				  .addObject("atMenuList", atMenuList)
+				  .addObject("atLogo", atLogo)
+				  .addObject("currentPage", currentPage)
+				  .setViewName("storeSearch/storeDetailView");
+			} else {
+				throw new storeSearchException("매장 상세 정보 출력 실패");
+			}
+			
+			
 			return mv;
 		}
 	

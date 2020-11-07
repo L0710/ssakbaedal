@@ -1,8 +1,11 @@
 package com.kh.ssakbaedal.storeSearch.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
+import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
 
@@ -13,7 +16,10 @@ public interface storeSearchService {
 	public int selectListCount();
 	
 	// 1_2. 전체 매장 조회(페이징 처리 된)
-	public ArrayList<storeSearch> selectList(PageInfo pi);
+	/*public ArrayList<storeSearch> selectList(PageInfo pi);*/
+	
+	// 전체 매장 조회 이미지포함 test
+	public HashMap<String, Object> selectTestList(PageInfo pi);
 	
 	// 2_1 한식 매장 전체 수 리턴 받기 -> 페이징 계산
 	public int selectKsListCount();
@@ -92,5 +98,15 @@ public interface storeSearchService {
 	
 	// 14_2. 도시락 매장 조회(페이징 처리 된)
 	public ArrayList<storeSearch> selectCdsList(PageInfo pi);
+	
+	// 전체 매장에서 디테일 뷰 이동(매장 셀렉)
+	public storeSearch selectstore(int mNo);
+	// 전체 매장에서 디테일 뷰 이동(매장 메뉴 셀렉)
+	public ArrayList<storeMenu> selectTosMenu(int mNo);
+	// 전체 매장에서 디테일 뷰 이동(메뉴 이미지 셀렉)
+	public ArrayList<Attachment> selectTosFile(int mNo);
+	// 전체 매장에서 디테일 뷰 이동(매장 로고 셀렉)
+	public Attachment selectToslFile(int mNo);
+
 	
 }

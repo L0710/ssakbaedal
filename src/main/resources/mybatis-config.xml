@@ -14,6 +14,7 @@
 		<typeAlias type="com.kh.ssakbaedal.event.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type="com.kh.ssakbaedal.common.attachment.Attachment" alias="Attachment"/>
 		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.storeSearch" alias="stSearch"/>
+		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.storeMenu" alias="storeMenu"/>
 		<typeAlias type="com.kh.ssakbaedal.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.Order" alias="Order"/>
 		<typeAlias type="com.kh.ssakbaedal.order.model.vo.V_Order" alias="V_Order"/>
@@ -35,7 +36,10 @@
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.ChartStatistics" alias="Chart"/>
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.ChartSum" alias="ChartSum"/>
 		<typeAlias type="com.kh.ssakbaedal.store.model.vo.MenuChart" alias="MenuChart"/>
-	
+		<typeAlias type="com.kh.ssakbaedal.order.model.vo.PayAPI" alias="PayAPI"/>
+		<typeAlias type="com.kh.ssakbaedal.require.model.vo.Require" alias="Require"/>
+		<typeAlias type="com.kh.ssakbaedal.require.model.vo.reqSearch" alias="reqSearch"/>
+		<typeAlias type="com.kh.ssakbaedal.storeApprove.model.vo.StoreAppro" alias="StoreAppro"/>
 	</typeAliases>
 
 	<mappers>
@@ -48,6 +52,8 @@
 		<mapper resource="mappers/faq-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/chart-mapper.xml"/>
+		<mapper resource="mappers/require-mapper.xml"/>
+		<mapper resource="mappers/storeApprove-mapper.xml"/>
 	</mappers>
 
 </configuration>

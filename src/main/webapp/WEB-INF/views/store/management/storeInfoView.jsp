@@ -699,6 +699,7 @@
         <button class="btn-ghost gray si">알림</button>
     </div>
     </section>
+    <c:import url="../../common/sidemenu_store.jsp" />
 
 
     </div>
@@ -708,7 +709,7 @@
 
 
 
-    </div>
+    
     
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 	

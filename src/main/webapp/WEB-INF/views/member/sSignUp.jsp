@@ -57,7 +57,7 @@
         background-color:rgb(130, 180, 127,0.3);
         color: rgb(64, 64, 64);
         text-align: center;
-        width: 130px;
+        width: 100px;
     }
     td:nth-child(2){
         width: 300px;
@@ -66,6 +66,7 @@
         width: 150px;
     }
     #menu_table{
+    	width: 750px;
         margin: auto;
         margin-top: 10px;
         border-radius: 5px;
@@ -107,7 +108,7 @@
         font-size: 15px;
         
     }
-    #check_btn{
+    #check_btn,#postcodify_search_button{
         display: inline-block;
         border: none;
         border-radius: 5px;
@@ -198,43 +199,6 @@
     }
     p{
         margin: 3px;
-    }
-
-    /* file css */
-    .filebox input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    }
-
-    .filebox label {
-    cursor: pointer; 
-    text-align: center;
-    display: inline-block;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(64, 64, 64);
-    color: white;
-    font-size: 13px;
-    padding-top: 3px;
-    width: 50px;
-    height: 23px;
-    }
-
-    /* named upload */
-    .filebox .upload-name {
-    display: inline-block;
-    width: 200px;
-    height: 20px;
-    font-size:10px;
-    color: gray;
-    vertical-align: middle;
-    border-radius: 5px;
-    border: 1px solid  lightgray;
-
     }
     /* 증감소 버튼 숨기기 css */
     input[type="number"]::-webkit-outer-spin-button,
@@ -557,10 +521,7 @@
                                 <td>사업자등록증 사본등록</td>
                                 <td>
                                 <div class="filebox"> 
-                                    <input class="upload-name" value="파일용량은 100MB까지 가능합니다." readonly>
-                                    <input type="file"  multiple="multiple" id="buisness_file"name="bFile"accept=".gif, .jpg, .png" required>
-                                    <label for="buisness_file">업로드</label> 
-                                </div>
+                                    <input class="filebox" type="file"  multiple="multiple" id="buisness_file"name="bFile"accept=".gif, .jpg, .png" required>                             
                                 </td>
                             </tr>
                         </table>
@@ -619,27 +580,27 @@
 						<tr>
                                 <td>휴무일</td>
                                 <td>
-                                    <input type="checkbox" name="sOff" class="day"><label>연중무휴</label>
-                                    <input type="checkbox" name="sOff" class="day"><label>공휴일</label>
-                                    <input type="checkbox" name="sOff" class="day"id="holiday"><label for="holiday">정기휴무</label>
+                                    <input type="checkbox" name="sOff" class="day" value="연중무휴"><label>연중무휴</label>
+                                    <input type="checkbox" name="sOff" class="day" value="공휴일"><label>공휴일</label>
+                                    <input type="checkbox" name="sOff" name="sOff" class="day" id="holiday" value="정기휴무"><label for="holiday">정기휴무</label>
                                     <p class="holiday" style="display:none;">주 단위 휴무 : 
-                                    <select>
-                                    <option value="0">매주</option>
-                                    <option value="1">매월 첫째</option>
-                                    <option value="2">매월 둘째</option>
-                                    <option value="3">매월 셋째</option>
-                                    <option value="4">매월 넷째</option>
+                                    <select id="week">
+                                    <option value="매주">매주</option>
+                                    <option value="매주 첫째주">매월 첫째</option>
+                                    <option value="매월 둘째주">매월 둘째</option>
+                                    <option value="매월 셋째주">매월 셋째</option>
+                                    <option value="매월 넷째주">매월 넷째</option>
                                     </select>
                                     </p>
                                     <p class="holiday" style="display:none;">요일별 휴무 : 
-                                    <select>
-                                    <option value="1">월요일</option>
-                                    <option value="2">화요일</option>
-                                    <option value="3">수요일</option>
-                                    <option value="4">목요일</option>
-                                    <option value="5">금요일</option>
-                                    <option value="6">토요일</option>
-                                    <option value="7">일요일</option>
+                                    <select id="day">
+                                    <option value="월요일">월요일</option>
+                                    <option value="화요일">화요일</option>
+                                    <option value="수요일">수요일</option>
+                                    <option value="목요일">목요일</option>
+                                    <option value="금요일">금요일</option>
+                                    <option value="토요일">토요일</option>
+                                    <option value="일요일">일요일</option>
                                     </select>
                                     </p>
                                     </td>
@@ -677,15 +638,8 @@
 						<tr>
 							<td>가게 대표 이미지</td>
 							<td>
-							<input type="text" id="fileName"class="file_input_textbox" readonly="readonly">
-
-								<div class="file_input_div">
-
-									<input type="button" value="파일선택" class="file_input_button">
-
-									<input type="file" class="file_input_hidden" name="sFile"
-										onchange="javascript:document.getElementById('fileName').value = this.value.split('\\')[this.value.split('\\').length-1]"readonly>
-								</div></td>
+                            	<input type="file"  multiple="multiple" id="store_file"name="sFile"accept=".gif, .jpg, .png" required>
+							</td>
 						</tr>
 						<tr>
                                 <td>가게 소개</td>
@@ -695,13 +649,21 @@
                         <table id="menu_table" style="display:none" >
                             <caption style="font:25px; margin-bottom: 5px; "><strong>메뉴</strong></caption>
                             <tr>
+                            	<th style="width:100px;">분류</th>
                                 <th style="width:250px;">메뉴명</th>
-                                <th style="width:130px">가격</th>
-                                <th style="width:220px">이미지</th>
-                                <th style="width:100px"></th>
+                                <th style="width:150px">가격</th>
+                                <th style="width:200px">이미지</th>
+                                <th style="width:150px"></th>
                             </tr>
                             <tr>
-                                <td><input type="text" name="menuList[0].mnName"></td>
+                            	<td>
+                            		<select name="menuList[0].mnCategory" >
+                                    <option value="일반메뉴">단품메뉴</option>
+                                    <option value="사이드">사이드</option>
+                                    <option value="음료">음료</option>
+                                    </select>
+                            	</td>
+                                <td><input type="text"  placeholder="한개의 메뉴는 필수로 입력해주세요" name="menuList[0].mnName"></td>
                                 <td><input type="number" name="menuList[0].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
                                 <td>
                                 <div> 
@@ -745,20 +707,27 @@
         };
     });
    $('.day').bind('click',function() {
-	   if($("#holiday").is(":checked") ){
+	   $('input[type="checkbox"]').not(this).prop("checked", false);
+	    	
+	   if( $('#holiday').is(":checked") == true){
+		   console.log( $('.day').val() );  
 	     	$('.holiday').show();
 		 }else {
-		 	 $('.holiday').hide();
+		 	$('.holiday').hide();
 		 };
-   		$('input[type="checkbox"]').not(this).prop("checked", false);
    });
-
-
-    	  
+   
     $(document).on("click","input[name=addStaff]",function(){
 		console.log("동작");
 	     	var i = 1;
 	        var addStaffText ='<tr>'+
+	            '    <td>'+
+	            '    <select name="menuList['+i+'].mnCategory" >'+
+	            '    <option value="일반메뉴">단품메뉴</option>'+
+	            '    <option value="사이드">사이드</option>'+
+	            '    <option value="음료">음료</option>'+
+	            '    </select>'+
+	            '    </td>'+
 	            '    <td><input type="text" name="menuList['+i+'].mnName"></td>'+
 	            '    <td><input type="number" name="menuList['+i+'].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>'+
 	            '    <td>'+
@@ -882,15 +851,8 @@
 	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){
 	    		check2[0]=true;}
 	    	
-	/*     	if($('#buisness_file').val()!="") { */
-/* 	    		var fileSize = this.files[0].size;
-	    		var maxSize = 100 * 1024 * 1024;
-	    		if(fileSize > maxSixe){check2[1]=true;} */
-	    	/* 	} */
-
 	    	if($.inArray(false, check2) >= 0){
 	    		checkAry[1] = false; 
-	    		console.log(check2);
 			}else{
 	    		checkAry[1] = true; 
 			}
@@ -938,6 +900,9 @@
 	    
 	    var checkAry = [false,false,false,false];
 	    $('#sign_up').on("click", function() {
+	    	if($("#sOff").is(":checked")){
+	    		$("#sOff").val($("#week").val()+" "+$("#day").val());
+	    	}
 	    	$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
 	   		/* if($.inArray(false, checkAry) >= 0){
 				$('#textValue').text("다시 확인 해 주세요.").css(tRed);

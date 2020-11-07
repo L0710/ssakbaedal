@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.order.model.vo.ODetail;
 import com.kh.ssakbaedal.order.model.vo.Order;
+import com.kh.ssakbaedal.order.model.vo.PayAPI;
 
 import com.kh.ssakbaedal.order.model.vo.SODetail;
 import com.kh.ssakbaedal.order.model.vo.S_Order;
@@ -69,8 +71,6 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateoStatus", oNo);
 	}
 
-
-
 	public V_Order selectOrder(int oNo) {
 		return sqlSession.selectOne("orderMapper.selectOne", oNo);
 	}
@@ -80,6 +80,27 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.cancelOrder", oNo);
 	}
 
+	public int insertOrder(Order o) {
+		return sqlSession.insert("orderMapper.insertOrder", o);
+	}
+
+	// 주문한 메뉴 odetail 테이블에 insert
+	public int insertMenu(ODetail od) {
+		return sqlSession.insert("orderMapper.insertMenu", od);
+	}
+
+	public Order selectOrderInfo() {
+		return sqlSession.selectOne("orderMapper.selectOrderInfo");
+	}
+
+	public int insertPayment(PayAPI p) {
+		return sqlSession.insert("orderMapper.insertPayment", p);
+	}
+
+	public PayAPI selectPaymentInfo() {
+		return sqlSession.selectOne("orderMapper.selectPaymentInfo");
+	}
+	
 
 
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.common.page.PageInfo;
+import com.kh.ssakbaedal.common.reply.Reply;
 import com.kh.ssakbaedal.event.model.vo.Event;
 import com.kh.ssakbaedal.event.model.vo.PointHistory;
 import com.kh.ssakbaedal.event.model.vo.Search;
@@ -39,7 +40,7 @@ public interface EventService {
 		public int deleteEvent(int eNo);
 
 		// 7. 게시글 검색
-		public ArrayList<Event> searchList(Search search);
+		public ArrayList<Event> searchList(Search search, PageInfo pi);
 		
 		// 8. 포인트 추가
 		public int pointUpdate(Member updateMember, Integer eNo);
@@ -49,5 +50,11 @@ public interface EventService {
 		
 		// 10. 검색한 게시글 개수
 		public int searchListCount(Search search);
+
+		// 11. 댓글 리스트 조회
+		public ArrayList<Reply> selectReplyList(int eNo);
+
+		// 12. 댓글 등록
+		public int insertReply(Reply r);
 
 }

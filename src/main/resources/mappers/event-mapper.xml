@@ -39,6 +39,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pDate" column="P_DATE"/>
 	</resultMap>
 	
+	<resultMap id="replyResultSet" type="Reply">
+		<id property="rId" column="RID"/>
+		<result property="rContent" column="RCONTENT"/>
+		<result property="refBid" column="REF_BID"/>
+		<result property="rWriter" column="RWRITER"/>
+		<result property="rCreateDate" column="R_CREATE_DATE"/>
+		<result property="rModifyDate" column="R_MODIFY_DATE"/>
+		<result property="rStatus" column="R_STATUS"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM EVENT
@@ -151,7 +161,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/>
 		SELECT COUNT(*)
 		FROM EVENT
-		<where><!-- where : where + AND|OR로 시작 시 자동 제거 기능 --><!-- trim도 사용 가능 -->
+		<where>
+		E_STATUS='Y'
 			<choose>
 				<when test="searchCondition == 'title'">
 					AND ETITLE LIKE #{sv}
@@ -165,6 +176,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				</otherwise>
 			</choose>
 		</where>
-		
 	</select>
+	
+	<select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+		SELECT * 
+		FROM REPLY R
+		JOIN EVENT E ON(R.REF_ENO = E.ENO)
+		WHERE REF_ENO=#{eNo}
+		AND R_STATUS = 'Y'
+		ORDER BY RNO DESC
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY VALUES
+		(REP_SEQ.NEXTVAL, #{rContent}, #{rWriter}, SYSDATE, SYSDATE, DEFAULT, 1, #{refENo},
+		NULL, NULL, NULL)
+	</insert>
 </mapper>

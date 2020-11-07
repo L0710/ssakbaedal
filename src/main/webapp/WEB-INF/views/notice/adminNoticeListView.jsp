@@ -157,10 +157,8 @@
             
             <div class="contents">
             	<div id="asdf">
-                    <h1>공지사항</h1>
+					<h1 style="font-size: 24px">공지사항</h1>
                 </div>
-            	<br>
-                <br>
                 <table id="notice_table" align="center">
                     <tr>
                         <th width="10%">NO</th>
@@ -176,6 +174,7 @@
 							<c:param name="searchCondition" value="${ search.searchCondition }"/>
 							<c:param name="searchValue" value="${ search.searchValue }"/>
 						</c:url>
+						
 	                    <tr onclick="location.href='${contextPath}/${ andetail }'">
 	                        <td>${ n.nId }</td>
 	                        <td>${ n.nTitle }</td>
