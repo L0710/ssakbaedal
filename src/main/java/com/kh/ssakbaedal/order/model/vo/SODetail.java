@@ -4,18 +4,18 @@ public class SODetail {
 	
 	private int odNo; //주문상세번호
 	private int odNum; //수량
-	private int odPrice; //단가
+	private int oPrice; //단가
 	private int mnNo; //메뉴번호
 	private String mnName; //메뉴이름
 	private int oNo; //주문번호
 	
 	public SODetail() {}
 
-	public SODetail(int odNo, int odNum, int odPrice, int mnNo, String mnName, int oNo) {
+	public SODetail(int odNo, int odNum, int oPrice, int mnNo, String mnName, int oNo) {
 		super();
 		this.odNo = odNo;
 		this.odNum = odNum;
-		this.odPrice = odPrice;
+		this.oPrice = oPrice;
 		this.mnNo = mnNo;
 		this.mnName = mnName;
 		this.oNo = oNo;
@@ -37,12 +37,12 @@ public class SODetail {
 		this.odNum = odNum;
 	}
 
-	public int getOdPrice() {
-		return odPrice;
+	public int getoPrice() {
+		return oPrice;
 	}
 
-	public void setOdPrice(int odPrice) {
-		this.odPrice = odPrice;
+	public void setoPrice(int oPrice) {
+		this.oPrice = oPrice;
 	}
 
 	public int getMnNo() {
@@ -71,10 +71,9 @@ public class SODetail {
 
 	@Override
 	public String toString() {
-		return "SODetail [odNo=" + odNo + ", odNum=" + odNum + ", odPrice=" + odPrice + ", mnNo=" + mnNo + ", mnName="
+		return "SODetail [odNo=" + odNo + ", odNum=" + odNum + ", oPrice=" + oPrice + ", mnNo=" + mnNo + ", mnName="
 				+ mnName + ", oNo=" + oNo + "]";
 	}
-	
-	
+
 
 }
