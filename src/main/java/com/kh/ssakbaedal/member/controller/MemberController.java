@@ -670,7 +670,7 @@ public class MemberController {
 //		System.out.println("mem:"+mem);
 		
 		if(mem != null) {
-//			mv.addObject("mem",mem);
+			mv.addObject("mem",mem);
 			mv.setViewName("member/memberDetail");
 		}
 		return mv;
