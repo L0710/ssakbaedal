@@ -663,5 +663,16 @@ public class MemberController {
 	}
 	
 
+	@RequestMapping("memdetail.do")
+	public ModelAndView memberList(ModelAndView mv, int mNo) {
 
+		Member mem = mService.selectMemberInfo(mNo);
+//		System.out.println("mem:"+mem);
+		
+		if(mem != null) {
+//			mv.addObject("mem",mem);
+			mv.setViewName("member/memberDetail");
+		}
+		return mv;
+	}
 }

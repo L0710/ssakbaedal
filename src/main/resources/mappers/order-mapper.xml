@@ -163,7 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 
 	<insert id="insertMenu" parameterType="ODetail">
 		INSERT INTO ODETAIL
-		VALUES (OD_SEQ.NEXTVAL, #{odNum}, O_SEQ.CURRVAL, #{mnNo}, #{mnName}, #{price})
+		VALUES (OD_SEQ.NEXTVAL, #{odNum}, NULL, O_SEQ.CURRVAL, #{mnNo}, #{mnName}, #{price} )
 	</insert>
 	
 	<select id="selectOrderInfo" resultMap="orderResultSet">

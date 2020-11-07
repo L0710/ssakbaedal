@@ -170,7 +170,10 @@ img:hover {
 						<c:forEach var="rply" items="${ r.reply }">
 							<c:if test="${ rply.rContent ne null }">
 								<td colspan="2" style="background-color: rgb(226, 226, 226); text-align: left;">
-									<h4><strong>사장님 &nbsp;&nbsp;&nbsp; ${ rply.rCreateDate }</strong></h4>
+									<h4>
+										<strong>사장님 &nbsp;&nbsp;&nbsp; 
+										<fmt:formatDate var="rplyDate" type="date" value="${ rply.rCreateDate }" pattern="yyyy/MM/dd HH:mm" />${ rplyDate }</strong>
+									</h4>
 									${ rply.rContent }
 								</td>
 							</c:if>

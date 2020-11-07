@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
+import com.kh.ssakbaedal.common.reply.Reply;
 
 public class Review {
 	/*ONO	NUMBER
@@ -17,25 +18,29 @@ public class Review {
 	private int oNo;
 	private int rType;
 	private String rContent;
+	private String rWriter;
 	private Date rCreateDate;
 	private Date rModifyDate;
 	private String rStatus;
 	private int rStar;
 	private ArrayList<Attachment> alist;
+	private ArrayList<Reply> reply;
 	
 	public Review() {}
 
-	public Review(int oNo, int rType, String rContent, Date rCreateDate, Date rModifyDate, String rStatus, int rStar,
-			ArrayList<Attachment> alist) {
+	public Review(int oNo, int rType, String rContent, String rWriter, Date rCreateDate, Date rModifyDate,
+			String rStatus, int rStar, ArrayList<Attachment> alist, ArrayList<Reply> reply) {
 		super();
 		this.oNo = oNo;
 		this.rType = rType;
 		this.rContent = rContent;
+		this.rWriter = rWriter;
 		this.rCreateDate = rCreateDate;
 		this.rModifyDate = rModifyDate;
 		this.rStatus = rStatus;
 		this.rStar = rStar;
 		this.alist = alist;
+		this.reply = reply;
 	}
 
 	public int getoNo() {
@@ -60,6 +65,14 @@ public class Review {
 
 	public void setrContent(String rContent) {
 		this.rContent = rContent;
+	}
+
+	public String getrWriter() {
+		return rWriter;
+	}
+
+	public void setrWriter(String rWriter) {
+		this.rWriter = rWriter;
 	}
 
 	public Date getrCreateDate() {
@@ -102,11 +115,19 @@ public class Review {
 		this.alist = alist;
 	}
 
+	public ArrayList<Reply> getReply() {
+		return reply;
+	}
+
+	public void setReply(ArrayList<Reply> reply) {
+		this.reply = reply;
+	}
+
 	@Override
 	public String toString() {
-		return "Review [oNo=" + oNo + ", rType=" + rType + ", rContent=" + rContent + ", rCreateDate=" + rCreateDate
-				+ ", rModifyDate=" + rModifyDate + ", rStatus=" + rStatus + ", rStar=" + rStar + ", alist=" + alist
-				+ "]";
+		return "Review [oNo=" + oNo + ", rType=" + rType + ", rContent=" + rContent + ", rWriter=" + rWriter
+				+ ", rCreateDate=" + rCreateDate + ", rModifyDate=" + rModifyDate + ", rStatus=" + rStatus + ", rStar="
+				+ rStar + ", alist=" + alist + ", reply=" + reply + "]";
 	}
 
 }

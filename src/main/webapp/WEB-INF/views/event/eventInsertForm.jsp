@@ -92,10 +92,6 @@
                         <td style="text-align:left;"><input type="text" name="ePoint" style="width:200px" placeholder="원 단위로 입력 : ex) 1000" required></td>
                     </tr>
                     <tr>
-                        <td>댓글작성가능</td>
-                        <td style="text-align:left;"><input type="checkbox" checked></td>
-                    </tr>
-                    <tr>
                         <td>첨부파일</td>
                         <td style="text-align:left;"><input type="file" name="uploadFile"></td>
                     </tr>

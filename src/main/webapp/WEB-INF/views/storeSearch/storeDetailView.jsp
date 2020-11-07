@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -211,6 +213,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	font-size: 10px;
 	padding: 0.5em;
 }
+#contentImg {
+	margin:0.5px;
+}
+#rplyWriter {
+	background-color:transparent;
+	text-align:left;
+}
 </style>
 </head>
 <body>
@@ -234,8 +243,11 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 							<td style="font-size: 14px"><b>${ store.sTel }</b></td>
 						</tr>
 						<tr>
-							<td>별점 4.5</td>
-							<td>리뷰 n개</td>
+							<c:set var="st" value="${ rStar div reviewCount }"/>
+							<fmt:formatNumber var="star" value="${ st }" pattern=".0"/>
+
+							<td>별점 ${ star }</td>
+							<td>리뷰 ${ reviewCount }개</td>
 						</tr>
 						<tr>
 							<td>최소주문금액</td>
@@ -333,36 +345,71 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 							for="tab3">리뷰</label>
 						<div class="tab">
 							<h1 style="text-align: center;">
-								총 <span style="color: rgb(130, 180, 127)">n</span>개의 리뷰가
+								총 <span style="color: rgb(130, 180, 127)">${ reviewCount }</span>개의 리뷰가
 								작성되었습니다.
 							</h1>
 							<hr>
-							<table id="reviewArea" class="sinfoTable" style="width: 100%">
-								<tr>
-									<td style="width: 60%">asd**님</td>
-									<td>★★★★★</td>
-									<td style="width: 15%">2020-10-27</td>
-									<td>
-										<button id="reportBtn" class="btn-ghost gray">신고</button>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" id="reviewContent">살 수 굳세게 별과 얼마나 것은 쓸쓸하랴?
-										스며들어 소담스러운 맺어, 천자만홍이 봄바람이다. 그것을 얼마나 귀는 들어 청춘의 곳으로 아니다. 창공에 내려온
-										풀밭에 끝까지 밥을 안고, 위하여, 곳으로 속에서 것이다. 천고에 청춘의 실로 같은 석가는 모래뿐일 우는 가는
-										더운지라 황금시대다. 관현악이며, 유소년에게서 뛰노는 보이는 많이 불어 끝에 기관과 천고에 쓸쓸하랴? 뭇 열락의
-										얼마나 살 날카로우나 길을 어디 우리 때문이다. 만천하의 장식하는 위하여 있으랴? 품고 피가 피부가 위하여,
-										목숨이 공자는 이 창공에 칼이다. 청춘을 하는 그 <input value="더보기"
-										onclick="more();" type="button" id="moreBtn">
-									</td>
-									<td colspan="2">
-										<div class="imgArea">
-											<img id="reviewImg1" width="50" height="50">
-											<img id="reviewImg2" width="50" height="50">
-											<img id="reviewImg3" width="50" height="50">
-										</div>
-									</td>
-								</tr>
+							<table id="reviewTable" class="sinfoTable" style="width: 100%">
+								<c:forEach var="r" items="${ rlist }">
+									<tr>
+										<td style="width: 60%">
+										${fn:substring(r.rWriter, 0, 2)}**${fn:substring(r.rWriter, 4, fn:length(r.rWriter))}님
+										</td>
+										<td style="text-align:right;">
+											<c:if test="${ r.rStar eq '1'}">
+				                        		<p style="color:rgb(255, 194, 0);"><strong>★☆☆☆☆</strong></p>
+				                        	</c:if>
+				                        	<c:if test="${ r.rStar eq '2'}">
+				                        		<p style="color:rgb(255, 194, 0);"><strong>★★☆☆☆</strong></p>
+				                        	</c:if>
+				                        	<c:if test="${ r.rStar eq '3'}">
+				                        		<p style="color:rgb(255, 194, 0);"><strong>★★★☆☆</strong></p>
+				                        	</c:if>
+				                        	<c:if test="${ r.rStar eq '4'}">
+				                        		<p style="color:rgb(255, 194, 0);"><strong>★★★★☆</strong></p>
+				                        	</c:if>
+				                        	<c:if test="${ r.rStar eq '5'}">
+				                        		<p style="color:rgb(255, 194, 0);"><strong>★★★★★</strong></p>
+				                        	</c:if>
+										</td>
+										<td style="width: 20%; text-align:right;">2020-10-27</td>
+									</tr>
+									<tr>
+										<td colspan="2" id="rContents">
+											<span>
+											${ r.rContent }</span>
+											<input value="더보기" onclick="more();" type="button" id="moreBtn">
+										</td>
+										<td colspan="2">
+											<div class="imgArea">
+												<c:forEach var="at" items="${ r.alist }">
+													<c:if test="${ !empty at.originalFileName  }">
+														<div id="contentImgArea" style="float: left;">
+															<img id="contentImg" width="50" height="50" src="${ contextPath }/resources/ruploadFiles/${ at.changeFileName }">
+														</div>
+													</c:if>
+												</c:forEach>
+											</div>
+										</td>
+									</tr>
+										<c:forEach var="rply" items="${ r.reply }">
+											<c:if test="${ rply.rContent ne null }">
+									<tr>
+										<td colspan="3">
+											<label id="rplyWriter" style="border-bottom:black;"><strong>사장님</strong></label>
+										</td>
+                                    </tr>
+                                    <tr>
+                                    	<td>
+                                    		${ rply.rContent }
+                                    	</td>
+                                    </tr>
+											</c:if>
+										</c:forEach>
+                                    <tr>
+                                    	<td colspan="3"><hr style="border:0.3px solid lightgray"></td>
+                                    </tr>
+								</c:forEach>
 							</table>
 						</div>
 					</div>
@@ -393,10 +440,21 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center;"><br>
-								<button class="btn-ghost red" type="submit" >주문</button>
+								<c:if test="${ loginUser.mType eq 2 }">
+									<button class="btn-ghost red" type="submit" >주문</button>
+								</c:if>
+								<c:if test="${ loginUser.mType ne 2 }">
+									<button class="btn-ghost red" type="button" onclick="warning()">주문</button>
+								</c:if>
 							</td>
 						</tr>
 					</table>
+					<script>
+						function warning(){
+							alert("일반 회원만 주문 가능합니다.");
+							$(this).attr("disabled", true);
+						}
+					</script>
 						<!-- + 버튼 클릭 시 메뉴, 수량, 가격 주문표에 추가 -->
 						<script>
 							$(function(){

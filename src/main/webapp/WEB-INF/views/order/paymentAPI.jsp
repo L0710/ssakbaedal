@@ -25,7 +25,7 @@
         	pg : 'kakaopay',
         	pay_method : 'card',
         	merchant_uid : '${ order.oNo }',
-          	name : '${ order.oTime }',
+          	name : 'ssakbaedal',
           	amount : ${ order.oPrice },
           	buyer_tel : '${ order.oPhone }'
               //m_redirect_url : 'http://www.naver.com'
