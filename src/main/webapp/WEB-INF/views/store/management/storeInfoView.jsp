@@ -471,6 +471,25 @@
 		                        	}); 
                                 </script>
                             </div>
+                            
+                            <script>
+                         	function readURL(input) {
+                        		if(input.files && input.files[0]) {
+                        			var reader = new FileReader();
+                        			
+                        			reader.onload = function(e) {
+                            			$("#slogoimg").attr("src", e.target.result);
+                            		}
+                        			reader.readAsDataURL(input.files[0]);
+                        		}
+                        	}
+                        	
+                        	$("input[name=uploadLogoFile]").change(function() {
+                        		readURL(this);
+                        	}); 
+                            </script>
+                            
+                            
                             <br><br><br><br>
                             <hr style="margin-top:30px; margin-bottom: 30px;">
                             <div><span id="sinfo">매장정보</span></div><br>
@@ -701,7 +720,6 @@
         <button class="btn-ghost gray si">알림</button>
     </div>
     </section>
-    <c:import url="../../common/sidemenu_store.jsp" />
 
 
     </div>

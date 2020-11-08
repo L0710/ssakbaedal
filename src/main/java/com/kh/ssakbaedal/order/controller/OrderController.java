@@ -60,10 +60,12 @@ public class OrderController {
 /*		System.out.println(mNo);*/
 		
 		ArrayList<S_Order> oList = oService.selectList(mNo);
-		System.out.println("리스트개수 : "+oList.size());
+/*		System.out.println(oList);*/
+		
+/*		System.out.println("리스트개수 : "+oList.size());
 		for(int i = 0; i < oList.size(); i++) {
 			System.out.println(oList.get(3));
-		}
+		}*/
 		if(oList != null) {
 			mv.addObject("oList", oList);
 			mv.setViewName("store/order/storeOrderView");
@@ -81,15 +83,16 @@ public class OrderController {
 		
 		ArrayList<S_Order> oList = oService.selectList(mNo);
 		ArrayList<SODetail> odList = oService.selectDetailList(mNo);
+/*		System.out.println(oList);
+		System.out.println(odList);*/
 		
-		for(S_Order sorder : oList) {
+/*		for(S_Order sorder : oList) {
 			for(SODetail sodetail : odList) {
 				if (sorder.getoNo() == sodetail.getoNo()) {
 					sorder.getList().add(sodetail);
 				}
 			}
-		}
-		
+		}*/
 		
 		HashMap<String, ArrayList> hm = new HashMap<>();
 		hm.put("oList", oList);
@@ -160,15 +163,15 @@ public class OrderController {
 	public ModelAndView orderDetail(ModelAndView mv, HttpServletRequest request) {
 		
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
-		
+		System.out.println(oNo);
 		S_Order o = oService.selectStoreOrder(oNo);
+
+		ArrayList<SODetail> odList = oService.selectStoreDetail(oNo);
+		System.out.println("sod : " +odList);
 		
-		
-		ArrayList<SODetail> od = oService.selectStoreDetail(oNo);
-		
-		if(o != null && od != null) {
+		if(o != null && odList != null) {
 			mv.addObject("sorder", o);
-			mv.addObject("sod", od);
+			mv.addObject("sod", odList);
 			mv.setViewName("store/order/orderDetailView");
 		} else {
 			throw new OrderException("주문 상세보기에 실패했습니다.");

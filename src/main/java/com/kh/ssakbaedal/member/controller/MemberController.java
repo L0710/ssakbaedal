@@ -379,70 +379,71 @@ public class MemberController {
 	}
 	
 	
-	   //매장 정보 update
-	   @RequestMapping("updateInfo.do")
-	   public String updatesInfo(ModelAndView mv, Store s, Attachment attach, 
-	                                                 HttpServletRequest request,
-	                                                 @RequestParam(value="uploadLogoFile", required=false) MultipartFile file,
-	                                                 @RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
-	                                                 @RequestParam("sOpen1")String open1, @RequestParam("sOpen2")String open2, @RequestParam("sOpen3")String open3,
-	                                                 @RequestParam("sOff")String sOff, 
-	                                                 @RequestParam("week")String week, @RequestParam("date")String date,
-	                                                 @RequestParam("cateinpt") String sCate) {
-	      
-	      s.setOpenTime(open1+","+open2+","+open3);
-	      s.setsAddress(post + "," + address1 + "," + address2);
-	      s.setsCategory(sCate);
-	      
-	      int mNo = s.getmNo();
-	      attach.setRefId(mNo);
-	      
-	      
-	      if(sOff.equals("정기휴무")) {
-	         s.setsOff(sOff+","+week+","+date);
-	         System.out.println(s.getsOff());
-	      } else {
-	         s.setsOff(sOff);
-	      }
-	      
-	      //로고 수정 했을 때
-	      if(file != null && !file.isEmpty()) {
-	         
-	         FileInfo logoInfo = saveFile("8",file,request);   
-	         
-	         attach.setOriginalFileName(file.getOriginalFilename());
-	         attach.setChangeFileName(logoInfo.getRenameFileName());
-	         attach.setFilePath(logoInfo.getRenamePath());
-	         
-	         int result1 = mService.updateLogo(attach);
-	         
-	         if(result1 > 0 ) {
-	            System.out.println("성공");
-	   /*         mv.addObject("attach", attach);
-	            mv.setViewName("store/management/storeInfoView");*/
-	         } else {
-	            throw new MemberException("매장로고 수정 실패");
-	         }
-	         
-	      } else {  
-	         //로고 수정 안했을 때
-	         int result2 = mService.updateStore(s);
-	         Attachment at = mService.selectmImg(mNo);
-	         if(result2 > 0 && at != null) {
-	            System.out.println("성공");
-	/*            mv.addObject("s", s);
-	            mv.addObject("attach", at);
-	            mv.setViewName("store/management/storeInfoView");*/
-	         } else {
-	            throw new MemberException("매장정보 수정 실패");
-	         }
-	         
-	      }
-	      
-	   
+	//매장 정보 update
+	@RequestMapping("updateInfo.do")
+	public String updatesInfo(ModelAndView mv, Store s, Attachment attach, 
+															    HttpServletRequest request,
+															    @RequestParam(value="uploadLogoFile", required=false) MultipartFile file,
+															    @RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
+															    @RequestParam("sOpen1")String open1, @RequestParam("sOpen2")String open2, @RequestParam("sOpen3")String open3,
+															    @RequestParam("sOff")String sOff, 
+															    @RequestParam("week")String week, @RequestParam("date")String date,
+															    @RequestParam("cateinpt") String sCate) {
+		
+		s.setOpenTime(open1+","+open2+","+open3);
+		s.setsAddress(post + "," + address1 + "," + address2);
+		s.setsCategory(sCate);
+		
+		int mNo = s.getmNo();
+		attach.setRefId(mNo);
+		
+		
+		if(sOff.equals("정기휴무")) {
+			s.setsOff(sOff+","+week+","+date);
+			System.out.println(s.getsOff());
+		} else {
+			s.setsOff(sOff);
+		}
+		
+		//로고 수정 했을 때
+		if(file != null && !file.isEmpty()) {
+			
+			FileInfo logoInfo = saveFile("8",file,request);	
+			
+			attach.setOriginalFileName(file.getOriginalFilename());
+			attach.setChangeFileName(logoInfo.getRenameFileName());
+			attach.setFilePath(logoInfo.getRenamePath());
+			
+			int result1 = mService.updateLogo(attach);
+			
+			if(result1 > 0 ) {
+				System.out.println("성공");
+	/*			mv.addObject("attach", attach);
+				mv.setViewName("store/management/storeInfoView");*/
+			} else {
+				throw new MemberException("매장로고 수정 실패");
+			}
+			
+		} else {  
+			//로고 수정 안했을 때
+			int result2 = mService.updateStore(s);
+			Attachment at = mService.selectmImg(mNo);
+			if(result2 > 0 && at != null) {
+				System.out.println("성공");
+/*				mv.addObject("s", s);
+				mv.addObject("attach", at);
+				mv.setViewName("store/management/storeInfoView");*/
+			} else {
+				throw new MemberException("매장정보 수정 실패");
+			}
+			
+		}
+		
+	
 
-	      return "redirect:storeManage.do";
-	   }
+		return "redirect:storeManage.do";
+	}
+
 	
 	//메뉴삭제
 		@RequestMapping("deleteMenu.do")

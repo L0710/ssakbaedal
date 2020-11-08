@@ -31,10 +31,12 @@
 	  <c:url var ="goOpenSetting" value="openSetting.do"/>
 	  <c:url var="goStoreManage" value="storeManage.do"/>
     <c:url var="goStoreNotice" value="snlist.do"/>
+    
 	  <c:url var="reviewSetting" value="srlist.do">
 		  <c:param name="mNo" value="${ loginUser.mNo }" />
 		  <c:param name="page" value="${ currentPage }" />
 	  </c:url>
+	  
 		  <button class="btn-ghost green" onclick="loaction.href='${menuSetting}'">메뉴관리</button>
 		  <button class="btn-ghost green" onclick="location.href='${openSetting}'">영업관리</button>
 		  <button class="btn-ghost green" onclick="location.href='${storeManage}'">매장관리</button>

@@ -262,7 +262,7 @@
 <body onunload="opener.close();">
     <div class="wrapper">
     
-                 	<c:import url="../../common/headerbar.jsp"/>
+        <c:import url="../../common/headerbar.jsp"/>
 
         <section>
             <c:import url="../../common/nav_store.jsp"/>
@@ -281,13 +281,13 @@
                             <th>수량</th>
                             <th>가격</th>
                         </tr>
-                	<c:forEach var="sod" items="${ sod }">
+                	 <c:forEach var="sod" items="${ sod }">
                         <tr>
                             <td>${ sod.mnName }</td>
                             <td>${ sod.odNum }</td>
-                            <td>${ sod.odPrice }</td>
+                            <td>${ sod.oPrice }</td>
                         </tr>
-                   	</c:forEach>
+                   	</c:forEach> 
                         <tr>
                             <td colspan="2">배달팁</td>
                             <td colspan="2">${sorder.deliveryCharge}</td>
@@ -332,7 +332,7 @@
     	var oNo = ${sorder.oNo};
     	console.log(oNo);
 
-			window.open("${contextPath}/orderTimePopup.do?oNo="+oNo, "배달예상시간", "width=400,height=500,left=400,top=100");
+			window.open("${contextPath}/orderTimePopup.do?oNo="+oNo, "배달예상시간", "width=400,height=450,left=400,top=100");
         
     }
     

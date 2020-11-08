@@ -10,7 +10,7 @@
 <title>ssakbaedal</title>
 <style>
 #section {
-	width: 85%;
+	width: 100%;
 	height: 60%;
 	float: left;
 }
@@ -169,7 +169,6 @@
             </div>
 	</section>
 	
-    <c:import url="../common/sidemenu_store.jsp" />
     
     </div>
 	<br><br>
