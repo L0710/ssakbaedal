@@ -409,8 +409,17 @@
 						</tr>
 						<tr>
 							<td>이름</td>
-							<td><input type="text" name="mName" value=${param.name}
-								placeholder="2글자이상 입력해 주세요."></td>
+							<td>
+							<c:set var="name" value="${param.name}" /> 
+							<c:choose>
+							<c:when test="${name == null}">
+							<input type="text" name="mName" placeholder="2글자이상 입력해 주세요.">
+							</c:when>
+							<c:otherwise>
+							<input type="text" name="mName" value=${param.name} placeholder="2글자이상 입력해 주세요.">
+							</c:otherwise>
+						</c:choose>
+						</td>			
 						</tr>
 						<tr>
 							<td>이메일</td>
@@ -431,7 +440,9 @@
 						</tr>
 					<tr>
 						<td>성별</td>
-						<td><c:set var="gender" value="${param.gender}" /> <c:choose>
+						<td>
+						<c:set var="gender" value="${param.gender}" /> 
+						<c:choose>
 								<c:when test="${gender eq 'F'}">
 									<input type="radio" class="gender" id="radio1" name="gender"
 										value="F" checked>
