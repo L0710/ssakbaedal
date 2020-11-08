@@ -22,18 +22,26 @@
 
     /* div별 css */
 
+	section{
+	 background-color: rgb(130, 180, 127, 0.7);
+	 background-image: url( "resources/img/background.png" );
+	 background-size: 100% 100%;
+	 margin: 1% auto 1%;
+	 padding: 5%;
+	}
     #login_div{
-        border: 2px solid  rgb(130, 180, 127);
+        
+        background-color: rgb(246, 246, 246, 0.7);
+        border-radius: 30px;
         padding: 10px;
-        margin: auto;
+        margin: 5% auto 5%;
         min-width: 400px;
         width: 50%;
         height: 50%;
         text-align: center;
     }
     #sign_up_div{
-        border: 1px solid  rgb(64, 64, 64);
-        margin: auto;
+        margin: 5% auto 3%;
         text-align: center;
     }
     #find_div{
@@ -102,10 +110,6 @@
 				<c:url var="findPwd" value="findPwd.do" />
 				<span onclick="id_find();">아이디 찾기</span> / <span onclick="pass_find();">비밀번호 찾기</span>
 			</div>
-<%-- 			<hr style="width: 85%;">
-			<h2>SNS 로그인/회원가입</h2>
-			<c:url var="sns" value="snsSignUp.do" />
-			<button id="kakao" class="body_btn" onclick="sns();">카카오</button> --%>
 			<div id="sign_up_div">
 				<h3>아직 싹배달의 회원이 아니신가요?</h3>
 				<p>회원가입을 하시면 더 다양한 혜택을 받으실수 있습니다.</p>
