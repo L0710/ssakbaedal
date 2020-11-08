@@ -6,12 +6,12 @@
 <meta name="google-signin-client_id" content="1080594680359-76pin2bglpice9fuk3lc4396l20rlkuu.apps.googleusercontent.com">
  -->
 <meta name="google-signin-scope" content="profile email"> 
-<meta name="google-signin-client_id" content="My API KeyNumber.apps.googleusercontent.com"> 
+<meta name="google-signin-client_id" content="1080594680359-76pin2bglpice9fuk3lc4396l20rlkuu.apps.googleusercontent.com"> 
 <!-- KaKao Login Js --> 
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script> 
 <!-- Google Login Js --> 
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> <script src="https://apis.google.com/js/platform.js?onload=triggerGoogleLoaded"></script> 
-<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script> <script src="http://localhost:8800/ssakbaedal/signUp.do/platform.js" async defer></script> 
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script> <script src="/lib/hello.all.js" async defer></script> 
 <!-- Naver Login Js --> 
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 
@@ -74,16 +74,6 @@
     .sing_up{
         background-color: rgb(64, 64, 64, 0.7);
     }
-    #kakao{
-        margin: 5px;
-    }
-    #google{
-        width: 68px;
-        height: 69px;
-        border-radius: 10px;
-        margin: 5px;
-    }
-
 
     </style>
 </head>
@@ -100,84 +90,21 @@
                 <hr style="width: 85%;">
                 <h3>SNS 회원가입</h3>
                 <c:url var="sns" value="snsSignUp.do" />
-                <!-- <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" id="kakao" onclick="snskakao();"/>				
-                <input type="image" id="google" name="button" src="resources/img/google.png" onclick="Google();"/>				
-				<div class="g-signin2" data-onsuccess="onSignIn" id="hidenn_google" ></div> -->
 				<!-- Google Login Btn --> 
-				<div class="g-signin2" style="max-width:400px;max-height:60px" data-onsuccess="onSignIn" data-theme="dark" data-width="auto" data-height="60"></div> 
-				<!-- Naver Login Btn --> 
-				<div id="naverIdLogin" > 
-				<a id="naverIdLogin_loginButton"> 
-				<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" width="100%" height="auto" style="max-width:400px;max-height:60px"/> 
-				</a> 
-				</div> 
+				<div class="g-signin2" style="max-width:60;max-height:60px;display: inline-block;" data-onsuccess="onSignIn" data-theme="White" data-width="auto" data-height="60"></div>   
 				<!-- KaKao Login Btn --> 
 				<a id="login-form-btn" href="javascript:loginFormWithKakao()"> 
-				<img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="100%" height="auto" style="max-width:400px;max-height:60px"/> 
+				<img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" style="max-width:60px;max-height:60px"/> 
 				</a>
-
-				
-				
-				
-				
-				
-				
-				
+				<!-- Naver Login Btn --> 
+				<div id="naverIdLogin"  style="display:none;max-width:60px;max-height:60px;" > 
+				<a id="naverIdLogin_loginButton"> 
+				<img class="naver" src="resources/img/naver_Green.PNG" style="max-width:60px;max-height:60px"/> 
+				</a> 
+				</div>
             </div>
         </section>
         <script langqwuage="javascript">
-/*         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('54a0daec21ba792b78efb112d8522735');
-        // SDK 초기화 여부를 판단합니다.
-        console.log(Kakao.isInitialized());
-        var url = "";
-        var gender = "";
-        var email = "";
-        var name = "";
-		function snskakao() {
-	            Kakao.Auth.login({
-	            	success: function(authObj) {
-	            	      Kakao.API.request({
-	            	        url: '/v2/user/me',
-	            	        success: function(res) {
-	            	        	email = res.kakao_account.email;
-	            	        	if(res.kakao_account.gender = "female"){
-	            	        		gender="F";
-	            	        	}else if(res.kakao_account.gender = "male"){
-	            	        		gender="M";
-	            	        	}
-	            	          url = "email="+ email+"&"+"gender="+ gender +"&";
-	            	          
-	            	          Kakao.API.request({url: '/v1/user/unlink'});
-	            	          location.href = "http://localhost:8800/ssakbaedal/snsSignUp.do?"+url;
-	            	        },
-	            	        fail: function(error) {
-	            	          alert(
-	            	            'login success, but failed to request user information: ' +
-	            	              JSON.stringify(error)
-	            	          )
-	            	        },
-	            	      })
-	            	    },
-	            	    fail: function(err) {
-	            	      alert('failed to login: ' + JSON.stringify(err))
-	            	    },
-	            })
-		}
-		function onSignIn(googleUser) {
-			  var profile = googleUser.getBasicProfile();
-			  console.log('Name: ' + profile.getName());
-			  console.log('Email: ' + profile.getEmail()); 
-			  email = profile.getEmail();
-			  name = profile.getName();
-			}
-		var google = document.getElementById("hidenn_google");
-		function Google() {
-			google.onclick();
-		  url = "email="+ email+"&"+"name="+ name +"&";
-		  console.log(email,name);
-		  location.href = "http://localhost:8800/ssakbaedal/snsSignUp.do?"+url;
-		} */
 
         var url = "";
         var gender = "";
@@ -185,8 +112,8 @@
         var name = "";
 		
 		var naverLogin = new naver.LoginWithNaverId({ 
-			clientId: "clientId", 
-			callbackUrl: "callbackUrl", 
+			clientId: "Oe5oQMQm4I_32uDZuBL7", 
+			callbackUrl: "http://localhost:8800/ssakbaedal/signUp.do", 
 			isPopup: false, 
 			/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */ 
 			}); 
@@ -198,20 +125,26 @@
 				if (status) { 
 					/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */ 
 					console.log(naverLogin.accessToken.accessToken) 
-					var email = naverLogin.user.getEmail(); 
-					var profileImage = naverLogin.user.getProfileImage(); 
-					var name = naverLogin.user.getName(); 
-					var uniqId = naverLogin.user.getId(); 
+					email = naverLogin.user.getEmail(); 
+					name = naverLogin.user.getName(); 
+					console.log("네이버"+name); 
+					console.log("네이버"+email);
+      	          	
+	
 					if( email == undefined || email == null) { alert("이메일은 필수정보입니다. 정보제공을 동의해주세요."); 
 					/* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */ 
-					naverLogin.reprompt(); 
+					
 					return; 
 					}else if( name == undefined || name == null){ 
-						alert("회원이름은 필수정보입니다. 정보제공을 동의해주세요."); 
 						naverLogin.reprompt(); 
 						return; 
 						}else{ 
-							// 성공 
+							console.log(" 성공 ");
+							url = "email="+ email+"&"+"gender="+ gender +"&"+"name="+ name +"&";
+							if(on == true){
+								on = false;
+								location.href = "http://localhost:8800/ssakbaedal/snsSignUp.do?"+url; 
+							}
 							} 
 					} else {
 						console.log("callback 처리에 실패하였습니다."); 
@@ -226,6 +159,7 @@
 						url: '/v2/user/me', 
 						success: function(res) { 
             	        	email = res.kakao_account.email;
+            	        	gender = res.kakao_account.gender;
             	        	if(res.kakao_account.gender = "female"){
             	        		gender="F";
             	        	}else if(res.kakao_account.gender = "male"){
@@ -249,34 +183,39 @@
 		$(function(){ 
 			$('#login').on("click",function(){ 
 				js_login(); 
+				console.log(js_login());
 				}) 
 				$('#naverIdLogin_loginButton').on("click",function(){ 
 					var email = $('#naver_email').val(); 
 					var password = $('#naver_password').val(); 
 					$('.email').val(email); 
 					$('.password').val(password); 
+					
+					
 					}); 
 			}); 
 		function googleSign(){ 
 			
 		} 
+		var on = false;
 		function onSignIn(googleUser) { 
 			var profile = googleUser.getBasicProfile(); 
-			// console.log("ID: " + profile.getId()); 
-			// console.log('Full Name: ' + profile.getName()); 
-			// console.log('Given Name: ' + profile.getGivenName()); 
-			// console.log('Family Name: ' + profile.getFamilyName()); 
-			// console.log("Image URL: " + profile.getImageUrl()); 
-			// console.log("Email: " + profile.getEmail()); 
+			 console.log('구글 이름: ' + profile.getName()); 
+			 console.log("구글 메일: " + profile.getEmail());
+			 url = "email="+ profile.getEmail()+"&"+"gender="+ gender +"&"+"name="+  profile.getName() +"&";
+			if(on == true){
+				on = false;
+				location.href = "http://localhost:8800/ssakbaedal/snsSignUp.do?"+url; 
+			}
 			}
 
+		$('.g-signin2').on("click",function(){ 
+			on = true;
+		});
 		
-		
-		
-		
-		
-		
-		
+		$('naver.com').on("click",function(){ 
+			on = true;
+		});
 		
 		
 		

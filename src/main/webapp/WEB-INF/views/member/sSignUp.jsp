@@ -171,6 +171,11 @@
         border-radius: 5px;
         border: 1px solid  lightgray;
     }
+    input[type=file]{
+   		border-radius: 0px;
+        border: 0px solid  lightgray;
+        padding: 1px;
+    }
     input[type=number]{
         height: 20px;
         width:100px;
@@ -487,7 +492,7 @@
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td ><input type="text" name="mName" placeholder="2자 이상의 한글로 입력해 주세요."></td>
+                                <td ><input type="text" name="mName" placeholder="2글자 이상 입력해 주세요."></td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
@@ -772,7 +777,7 @@
 		console.log($('input[name=mId]').attr("readonly"));
 		
 		if(check1[0]==true){
-			var result = confirm('사용 가능한 아이디인 경우 변경이 불가합니다.계속 진행하시겠습니까?'); 
+			var result = confirm( "최초 가입 시 입력한 아이디는 변경할 수 없습니다." + "\n" + "계속 진행하시겠습니까?"); 
 			var mId = idput.val();
 		
 			if (result) {
@@ -903,14 +908,14 @@
 	    	if($("#sOff").is(":checked")){
 	    		$("#sOff").val($("#week").val()+" "+$("#day").val());
 	    	}
-	    	$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
-	   		/* if($.inArray(false, checkAry) >= 0){
+  	$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit(); */
+/* 	   		if($.inArray(false, checkAry) >= 0){
 				$('#textValue').text("다시 확인 해 주세요.").css(tRed);
 				return false;
 			}else{
 				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
 				return true;
-			} */
+			}  */
 	    });
 
     </script>   
