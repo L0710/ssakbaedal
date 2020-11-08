@@ -69,6 +69,7 @@
             width: 70%;
             overflow: hidden;
             border-radius: 5px;
+
         }
 
         th,
@@ -77,6 +78,10 @@
             text-align: center;
             font-size: 12px;
             padding: 10px;
+        }
+        
+        tr {
+        	border-bottom:1px solid lightgray;
         }
 
         th {
@@ -144,13 +149,13 @@
             margin-top: 1%;
         }
 
-        .sidemenu {
+/*         .sidemenu {
             width: 150px;
             position: fixed;
             top: 200px;
             left: 1150px;
             margin-top: 50px;
-        }
+        } */
 
         .contents {
             margin-top: 1%;
@@ -205,10 +210,7 @@
             margin: 50px auto;
         }
 
-        #orderTable td,
-        #orderTable th {
-            border: 1px solid black;
-        }
+
         
         #orderTable td:hover{
             cursor: pointer;
@@ -288,13 +290,15 @@
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
                 
+                	 누적 주문 : <input type="text" id="orderCount" style="border:none;" readonly>
+                	 누적 금액 : <input type="text" id="orderSum" style="border:none;" readonly>
+                
                 <div class="tableWrapper" align="center">
                     <table id="orderTable">
                     <thead>
 	                        <tr>
 	                            <th>주문시간</th>
 	                            <th>주소</th>
-	                            <th>주문 메뉴</th>
 	                            <th>메뉴 상태</th>
 	                            <th>주문번호</th>
 	                        </tr>
@@ -319,6 +323,20 @@
     	
     	var mno = "${loginUser.mNo}";
     	console.log(mno);
+    	var count; 
+    	var sum = 0;
+    	
+    	Number.prototype.format = function(){
+    	    if(this==0) return 0;
+    	 
+    	    var reg = /(^[+-]?\d+)(\d{3})/;
+    	    var n = (this + '');
+    	 
+    	    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+    	 
+    	    return n;
+    	};
+
     	
    	function orderList() {
     		$.ajax({
@@ -326,32 +344,55 @@
     			dataType:"json",
     			data:{mno:mno},
     			success:function(data) {
-						var list1 = data.oList;
-    					var list2 = data.odList;
+					sum=0;	
+    				var list1 = data.oList;
+    				var list2 = data.odList;
     					
     				 $tableBody = $("#orderTable tbody");
     				 $tableBody.html("");
     				 
     				 
     				 for(var i in list1) {
+    					 var string;
+    					 var status = list1[i].oStatus;
+    					 if(status == '1') {
+    						 string = '결제완료';
+    					 } else if(status == '2') {
+    						 string = '주문접수';
+    					 } else {
+    						 string = '기사픽업';
+    					 }
     					 
     					 var $tr = $("<tr>");
     					 
     					 var $orderTime = $("<td>").text(list1[i].oTime);
     					 var $oAddress = $("<td>").text(list1[i].oAddress);
-      					 var $mnName = $("<td>").text(list1[i].list.mnName);  
-    					 var $oStatus = $("<td>").text(list1[i].oStatus);
+     					 var $oStatus = $("<td>").text(string);
     					 var $blank = $("<td>").text(list1[i].oNo);
-						
+    					 
+    					 
+    					 var oPrice = Number(list1[i].oPrice);
+    					 sum += oPrice;
+    					 
+    					 
+/* 						 var contents = list1[i].oNo; */
     					 $tr.append($orderTime);
-        				 $tr.append($oAddress);
-            			 $tr.append($mnName);  
+        				 $tr.append($oAddress); 
         				 $tr.append($oStatus);
         				 $tr.append($blank);
         				 
         				 $tableBody.append($tr);
         				 
+        				 
+
+
+        				 
     				 }
+    				 count = $("#orderTable tbody tr").length;
+    				 console.log(count);
+    				 console.log(sum.format());
+    				 $("#orderCount").val(count);
+    				 $("#orderSum").val(sum.format());
     				 
     				 $(function() {
     					 clickEvent();
@@ -363,16 +404,17 @@
     			}
     		});
     	}  
+
     	
 		function clickEvent() { 
 			$("#orderTable tbody tr").click(function() {
 				$(this).css("background-color", "gray"); 
-				var contents = $(this).children().eq(4).text(); 
+				var contents = $(this).children().eq(3).text(); 
 
 		    	console.log(contents);
 		    	
-				location.href="orderDetail.do?oNo="+contents;
-	    	
+				location.href="orderDetail.do?oNo="+contents; 
+	    		
 			});
 		}
 		    	

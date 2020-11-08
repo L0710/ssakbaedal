@@ -63,12 +63,18 @@
             background-color: rgb(130, 180, 127);
             color: white;
         }
+        
+            #deliveryImg {
+        width: 100px;
+        border-radius: 10px;
+    }
 
 </style>
 
 </head>
-<body align="center">
+<body align="center" style="border:1px solid rgb(130, 180, 127);">
     <h1>배달예상시간</h1>
+    <img src="./resources/img/delivery.png" id="deliveryImg"/><br>
 	    <input type="button"  id="10min" class="btn-ghost blue" value="10" style="width:80px;height:40px;">
 	    <input type="button"  id="20min" class="btn-ghost blue" value="20" style="width:80px;height:40px;"><br>
 	    <input type="button" id="30min" class="btn-ghost blue" value="30"  style="width:80px;height:40px;">

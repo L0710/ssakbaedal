@@ -174,6 +174,11 @@
         .groupBtn {
             margin-top: 100px;
         }
+        .bc {
+        	width:10%;
+        	heigth:10%;
+        	border:1px black solid;
+        }
 
 
     </style>
@@ -188,20 +193,18 @@
             <div class="contents" align="center">
             <h1>메뉴별통계</h1><br><br><br>
             <div style="float:left; margin-left:160px;"> 
-				<canvas id="canvas1" width="400" height="400"></canvas>            
+				<canvas id="canvas1" width="300" height="300"></canvas>            
             </div>
-<!--              <div style="border:1px black solid; width:200px; height:300px; float:left; margin-left:70px;" >
-            	<table>
+            <div style="width:250px; height:170px; float:left; margin-left:70px; padding-top:20px; border:1px solid lightgray;" >
+            	<table id="menuListTable">
             		<thead>
-            				<td>메뉴이름</td>
-            				<td>갯수</td>
+            				<td></td>
             				<td></td>
             		</thead>
             		<tbody>
-
             		</tbody>
             	</table>
-            </div>  -->
+            </div> 
 
             </div>
 
@@ -210,11 +213,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
 
 <script>
+
+		
     
 		var canvas1 = document.getElementById("canvas1");
 		var context = canvas1.getContext('2d');
    		var chartLabels = [];
    		var chartData = [];
+   		var backgroundC = ['#ff7473',
+					'#ffc952',
+							'#47b8e0',
+							'#bd1550',
+							'#008c9e',
+							'#cbe86b',
+							'#bf209f',
+							'#55967e',
+							'#6a60a9',
+							'#fd999a',
+							'#a79c8e',
+							'#CE6D39'];
 
     
 		$.getJSON("menuChart.do", function(data) {
@@ -224,7 +241,7 @@
 				chartData.push(obj.count);
 			});
 			
-			console.log(chartLabels);
+/* 			console.log(chartLabels); */
 			createChart();
 			console.log("create Chart");
 		});
@@ -233,29 +250,16 @@
    				labels : chartLabels,
    				datasets : [{
    						label : "메뉴별 통계",
-   						backgroundColor:
-   							 [
-   	   							'#ff7473',
-   	   							'#ffc952',
-   	   							'#47b8e0',
-   	   							'#bd1550',
-   	   							'#008c9e',
-   	   							'#cbe86b',
-   	   							'#bf209f',
-   	   							'#55967e',
-   	   							'#6a60a9',
-   	   							'#fd999a',
-   	   							'#a79c8e',
-   	   							'#CE6D39'
-   							],	 
-   					borderWidth: 1,
-   					 data : chartData	
+   						backgroundColor:backgroundC,	 
+   						borderWidth: 1,
+   					 	data : chartData	
    					}],
    					
    		}
    		
    		function createChart() {
-   			console.log("function");
+/*    			console.log("function"); */
+				menuList();
    			var ctx = document.getElementById("canvas1").getContext("2d");
    			DoughnutChartDemo = Chart.Doughnut(ctx, {
    				data:DouChartData,
@@ -278,6 +282,30 @@
  				    }
    			})
    		}
+/*    		var chartLabels = [];
+   		var chartData = []; */
+   		
+		function menuList() {
+   			
+   			console.log("a");
+   			console.log(chartLabels);
+   			console.log(chartData);
+			
+   			$tableBody = $("#menuListTable tbody");
+   			
+			for (var i in chartLabels) {
+				console.log(i);
+				var $tr = $("<tr>");
+				
+				var $menuName = $("<td>").text(chartLabels[i]);
+				var $menuColor = $("<td><div class='bc' style='border: 5px solid "+backgroundC[i]+";'></div>");
+				
+				$tr.append($menuColor);
+				$tr.append($menuName);
+				
+				$tableBody.append($tr);
+			}
+		}
 /* 	var ctx = document.getElementById('myChart');
 	
 	var myChart = new Chart(ctx, {

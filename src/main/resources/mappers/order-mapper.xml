@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<id property="oNo" column="ONO"/>
 		<result property="odNo" column="ODNO"/>
 		<result property="odNum" column="ODNUM"/>
-		<result property="odPrice" column="OD_PRICE"/>
+		<result property="oPrice" column="OPRICE"/>
 		<result property="mnNo" column="MN_NO"/>
 		<result property="mnName" column="MN_NAME"/>
 	</resultMap>
@@ -97,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM  SORDER
 		WHERE S_MNO = #{mNO}
 		AND O_STATUS != 'N'
-<!-- 		AND OTIME >= SYSDATE-1 -->
+		AND OTIME >= SYSDATE-1 
 	</select>
 	
 	<update id="deleteList">
@@ -126,8 +126,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectStoreDetail"  resultMap="sod_orderResultSet">
-		SELECT *
-		FROM SODETAIL
+		SELECT ODNUM, MN_NAME,  OPRICE, ONO
+		FROM SODETAIL 
 		WHERE ONO = #{oNo}
 	</select>
 	

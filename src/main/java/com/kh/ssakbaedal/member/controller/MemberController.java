@@ -381,7 +381,7 @@ public class MemberController {
 	
 	//매장 정보 update
 	@RequestMapping("updateInfo.do")
-	public ModelAndView updatesInfo(ModelAndView mv, Store s, Attachment attach, 
+	public String updatesInfo(ModelAndView mv, Store s, Attachment attach, 
 															    HttpServletRequest request,
 															    @RequestParam(value="uploadLogoFile", required=false) MultipartFile file,
 															    @RequestParam("post") String post,@RequestParam("address1") String address1,@RequestParam("address2") String address2,
@@ -417,8 +417,9 @@ public class MemberController {
 			int result1 = mService.updateLogo(attach);
 			
 			if(result1 > 0 ) {
-				mv.addObject("attach", attach);
-				mv.setViewName("store/management/storeInfoView");
+				System.out.println("성공");
+	/*			mv.addObject("attach", attach);
+				mv.setViewName("store/management/storeInfoView");*/
 			} else {
 				throw new MemberException("매장로고 수정 실패");
 			}
@@ -428,9 +429,10 @@ public class MemberController {
 			int result2 = mService.updateStore(s);
 			Attachment at = mService.selectmImg(mNo);
 			if(result2 > 0 && at != null) {
-				mv.addObject("s", s);
+				System.out.println("성공");
+/*				mv.addObject("s", s);
 				mv.addObject("attach", at);
-				mv.setViewName("store/management/storeInfoView");
+				mv.setViewName("store/management/storeInfoView");*/
 			} else {
 				throw new MemberException("매장정보 수정 실패");
 			}
@@ -439,7 +441,7 @@ public class MemberController {
 		
 	
 
-		return mv;
+		return "redirect:storeManage.do";
 	}
 	
 	//메뉴삭제

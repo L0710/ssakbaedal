@@ -20,7 +20,6 @@ public class S_Order {
    private int smNo; //매장번호
    private String oPhone; //고객 전화번호
    
-   private ArrayList<SODetail> list = new ArrayList<>();
    
    public S_Order() {}
 
@@ -137,16 +136,6 @@ public class S_Order {
       this.oPhone = oPhone;
    }
    
-   
-   
-
-   public ArrayList<SODetail> getList() {
-      return list;
-   }
-
-   public void setList(ArrayList<SODetail> list) {
-      this.list = list;
-   }
 
    @Override
    public String toString() {

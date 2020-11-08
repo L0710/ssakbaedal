@@ -199,7 +199,7 @@ img:hover {
 			</div>
 		</section>
 
-		<c:import url="../common/sidemenu_store.jsp" />
+
 
 	</div>
 	<br>
