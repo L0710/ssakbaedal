@@ -22,7 +22,11 @@
     }
 
     /* 태그별 css */
-
+   #section {
+      width: 85%;
+      height: 60%;
+      float: left;
+   }
     #update_div{
         border: 2px solid  rgb(130, 180, 127);
         padding: 5px 10% 5px;
@@ -32,7 +36,7 @@
         height: 50%;
     }
     #update_form{
-        margin: auto;
+        margin: 3% auto 5%;
         padding: 5px;
         width: 90%;
         height: 90%;
@@ -67,16 +71,31 @@
         border: 1px solid  lightgray;
     }
     /* 버튼별 css */
+    #delete:hover{
+        background-color: rgb(64, 64, 64);
+    }
+    #delete{
+        display: inline-block;
+        width: 100px;
+        height: 25px;
+        border: none;
+        border-radius: 5px;
+        margin: 5px 5px 5px 5px;
+        background-color: rgb(130, 180, 127, 0.7);
+        color: white;
+        font-size: 15px;
+        
+    }
     #update:hover{
         background-color: rgb(64, 64, 64);
     }
     #update{
-        display: block;
-        width: 150px;
+        display: inline-block;
+        width: 100px;
         height: 25px;
         border: none;
         border-radius: 5px;
-        margin: 5px auto 5px;
+        margin: 5px 5px 5px 5px;
         background-color: rgb(130, 180, 127, 0.7);
         color: white;
         font-size: 15px;
@@ -129,12 +148,10 @@
     </style>
 </head>
 <body>
+<div class="wrapper">
 	<c:import url="../common/headerbar.jsp" />
-
+<section id="section">
 	<c:choose>
-		<c:when test="${ loginUser.mType == 1 }">
-			<c:import url="../common/nav_admin.jsp" />
-		</c:when>
 		<c:when test="${ loginUser.mType == 2 }">
 			<c:import url="../common/nav_user.jsp" />
 		</c:when>
@@ -144,6 +161,7 @@
 	</c:choose>
 	<div class="contents" align="center">
 			<div id="update_div">
+			<br>
 				<h1>정보변경</h1>
 				<form id="update_form" >
 					<table id="update_table">
@@ -212,12 +230,29 @@
 								<label for="radio2">남자</label></td>
 						</tr>
 					</table>
-					<input type="button" id="update"class="btn-ghost green" value="수정">
+					<br><br>
+					<c:url var="mdelete" value="mdelete.do">
+						<c:param name="id" value="${ loginUser.mId }"/>
+					</c:url>
+					<input type="button" id="delete" onclick="location.href='${ mdelete }'" value="탈퇴"> &nbsp;&nbsp;
+					<input type="button" id="update" value="수정">
 					<input type="text" name="mPhone" style="display:none">
 				</form>
-			</div>
-		</div>
-			<script>
+			</div>	
+		</div>	
+		</section>
+		<c:choose>
+		<c:when test="${ loginUser.mType == 2 }">
+		 	<c:import url="../common/sidemenu_user.jsp"/>	
+		</c:when>
+		<c:otherwise>
+			<c:import url="../common/sidemenu_store.jsp" />
+		</c:otherwise>
+		</c:choose>
+		</div>	
+		<jsp:include page="../common/footer.jsp" />	 	
+</body>
+<script>
 
 		var checkAry = [true,false,false,false,false,false,false];
 
@@ -275,6 +310,4 @@
 			}
 		});
 		</script>
-	<jsp:include page="../common/footer.jsp" />
-</body>
 </html>

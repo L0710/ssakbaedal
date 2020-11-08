@@ -43,7 +43,6 @@
 		<a class="link" href="elist.do">이벤트</a>
 		<a class="link" href="${ areqList }">문의사항</a>
 		<a class="link" href="nlist.do">공지사항</a>
-		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
 
 	</nav>
 </body>

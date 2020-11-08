@@ -94,7 +94,6 @@
         width: 800px;
         border: 1px solid  lightgray;
     }
-
     /* 버튼별 css */
     #sign_up{
         display: block;
@@ -509,8 +508,9 @@
                                 </td>
                             </tr>
                         </table>
+                        <br>
                         <table id="buisness_table">
-                                <caption style="font:25px; margin-bottom: 5px; "><strong>사업자 정보</strong></caption>
+                                <caption style="font:25px; margin-bottom: 15px; "><strong>사업자 정보</strong></caption>
                             <tr>
                                 <td>사업자등록번호</td>
                                 <td>
@@ -530,9 +530,11 @@
                                 </td>
                             </tr>
                         </table>
+                        <br>
                         <img src="./resources/img/open.png" id="open">
+                        <br>
                         <table id="store_table" style="display:none" >
-                            <caption style="font:25px; margin-bottom: 5px; "><strong>매장 정보</strong></caption>
+                            <caption style="font:25px; margin-bottom: 15px; "><strong>매장 정보</strong></caption>
                             <tr>
                                 <td>매장명</td>
                                 <td colspan=""><input type="text" name="sName" placeholder="매장명은 필수입니다."></td>
@@ -651,8 +653,9 @@
                                 <td><textarea id="sInfo" name="sInfo" rows="5" cols="100" placeholder="내용을 입력해주세요"></textarea></td>
                             </tr>
                         </table>
+                        <br>
                         <table id="menu_table" style="display:none" >
-                            <caption style="font:25px; margin-bottom: 5px; "><strong>메뉴</strong></caption>
+                            <caption style="font:25px; margin-bottom: 15px; "><strong>메뉴</strong></caption>
                             <tr>
                             	<th style="width:100px;">분류</th>
                                 <th style="width:250px;">메뉴명</th>
@@ -681,7 +684,9 @@
                                 </td>
                             </tr>
                         </table>
+                        <br><br>
                         <input type="submit" id="sign_up" class="btn-ghost green"value="회원가입">
+                        <br>
                         <input type="text" name="mPhone" style="display:none">
                         <input type="text" name="sTel" style="display:none">                        
                         <input type="text" name="sNo" style="display:none">
@@ -698,7 +703,7 @@
 	$("#check_b").click( function() {
 		$('#sign_up_form').show();
 		$('#terms').hide();
-		checkAry[10] = true;
+		checkAry[4] = true;
 	});
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
@@ -842,22 +847,24 @@
 	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
 	    	
 	    	if($.inArray(false, check1) >= 0){
-	    		checkAry[0] = false; 
+	    		checkAry[0] = false;
+	    		console.log("1번 테이블"+check3);
 			}else{
 	    		checkAry[0] = true; 
 			}
 	    });
 	    
 		
-		var check2 = [false,false];
+		var check2 = [false];
 		$(document).on("focusin","#buisness_table",function(){
 	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
 	    	
 	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){
 	    		check2[0]=true;}
 	    	
-	    	if($.inArray(false, check2) >= 0){
+	    	if($.inArray(false, check2[0]) >= 0){
 	    		checkAry[1] = false; 
+	    		console.log("2번 테이블"+check3);
 			}else{
 	    		checkAry[1] = true; 
 			}
@@ -867,13 +874,12 @@
 	    for(var i=0;i<12;i++){check3[i]=false;}
 	    $('#store_table').on("mouseover focus", function() {
 	    	
-	    	if((/^[a-zA-Z0-9가-힣]+$/).test($('input[name=sName]').val())){
+	    	if((/^[0-9가-힣a-zA-Z.;\-]+$/).test($('input[name=sName]').val())){
 	    		check3[0] = true;$('input[name=sName]').css(green);}
 	    	
 	    	$('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
 	    	if((/^[0-9]+$/).test($('input[name=sTel]').val())){
-	    		check3[1] = true;$('#sTel1').css(green);$('#sTel2').css(green);$('#sTel3').css(green);}
-	    	
+	    		check3[1] = true;}
 	    	if($('input[name=post]').val()!=""||$('input[name=address1]').val()!=""){
 		    	check3[2] = true;$('input[name=sName]').css(green);}
 	    	
@@ -887,35 +893,36 @@
 
 	    	if($.inArray(false, check3) >= 0){
 	    		checkAry[2] = false;
-	    		console.log(check3);
+	    		console.log("3번 테이블"+check3);
 			}else{
 	    		checkAry[2] = true; 
 			}
+	    	
 	    });
 	    
 		var check4 = [];
 	    $('#menu_table').on("mouseover focus", function() {
 	    	if($.inArray(false, check4) >= 0){
 	    		checkAry[3] = false;
+	    		console.log("4번 테이블"+check3);
 			}else{
 	    		checkAry[3] = true; 
 			}
 	    });
 
 	    
-	    var checkAry = [false,false,false,false];
+	    var checkAry = [true,false,true,true];
 	    $('#sign_up').on("click", function() {
 	    	if($("#sOff").is(":checked")){
 	    		$("#sOff").val($("#week").val()+" "+$("#day").val());
 	    	}
-  	$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit(); */
-/* 	   		if($.inArray(false, checkAry) >= 0){
-				$('#textValue').text("다시 확인 해 주세요.").css(tRed);
+ 	   		if($.inArray(false, checkAry) >= 0){
+ 	   			console.log("최종"+checkAry);
+				alert("다시 확인 해 주세요.");
 				return false;
 			}else{
 				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
-				return true;
-			}  */
+			} 
 	    });
 
     </script>   

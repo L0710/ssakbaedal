@@ -13,7 +13,6 @@
     *:focus{
         outline: none;
     }
-
     /* 공통,색별 버튼 css */
     button {
         cursor: pointer;
@@ -28,7 +27,7 @@
         padding: 5px 10% 5px;
         margin: auto;
         min-width: 400px;
-        width: 70%;
+        width: 80%;
         height: 50%;
     }
     #sign_up_form{
@@ -129,7 +128,9 @@
     </style>
 </head>
 <body>
+	<div class="wrapper">
 	<jsp:include page="../common/headerbar.jsp" />
+		<section id="section">
 		<div class="contents" align="center">
 			<div id="sign_up_div">
 				<h1>회원가입</h1>
@@ -388,6 +389,7 @@
 				</div>
 				<p id="textValue" disabled></p>
 				<form id="sign_up_form"style="display:none" >
+				<br>
 					<table id="sign_up_table">
 						<tr>
 							<td>아이디</td>
@@ -436,10 +438,16 @@
 								value="M"> <label for="radio2">남자</label></td>
 						</tr>
 					</table>
+					<br>
+					<br>
 					<input type="button" id="sign_up"class="btn-ghost green" value="회원가입">
+					<br>
+					<br>
 					<input type="text" name="mPhone" style="display:none">
 				</form>
 			</div>
+		</div>
+		</section>
 		</div>
 	<script>
 	 

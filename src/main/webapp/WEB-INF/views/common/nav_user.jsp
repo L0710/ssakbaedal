@@ -51,7 +51,6 @@ nav {
 		<a class="link" href="${contextPath}/pointView.do">포인트</a>
 		<a class="link" href="${ uRequireList }">문의</a>
 		<a class="link" href="${contextPath}/myInfo.do">내정보</a>
-		<a class="link" href="#">회원탈퇴</a>
 	</nav>
 </body>
 </html>

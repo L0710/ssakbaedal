@@ -123,17 +123,17 @@ public class MemberController {
 		return "member/myInfo";
 	} 
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	   public String memberLogin(Member m, Model model) {
+	   public String memberLogin(Member m, Model model,RedirectAttributes rd) {
 	      
 	      Member loginUser = mService.loginMember(m);
 	      
 	      if(loginUser != null) {
 	         model.addAttribute("loginUser", loginUser);
+	         return "redirect:home.do";
 	      }else {
-	         throw new MemberException("로그인에 실패하였습니다.");
+	    	  rd.addFlashAttribute("msg", "로그인을 실패하였습니다. 다시 시도해주세요");
+		      return "redirect:login.do";
 	      }
-
-	      return "redirect:home.do";
 	   }
 
 	@RequestMapping("logout.do")
@@ -158,7 +158,21 @@ public class MemberController {
 		}
 	}
 	
-	
+	@RequestMapping("mdelete.do")
+	public String memberDelete( String id, 
+								SessionStatus status,
+								RedirectAttributes rd) {
+		
+		int result = mService.deleteMember(id); 
+		
+		if(result > 0) {
+			rd.addFlashAttribute("msg", "회원 탈퇴가 완료 되었습니다.");
+			status.setComplete(); // 세션에서도 loginUser 제거
+		}else {
+			throw new MemberException("회원 탈퇴에 실패하였습니다.");
+		}
+		return "redirect:home.do";
+	}
 	
 	
 	
