@@ -206,7 +206,7 @@ public class EventController {
 	}
 	
 	@RequestMapping("eupdate.do")
-	public ModelAndView boardUpdate(ModelAndView mv, Event e, Attachment at,
+	public ModelAndView eventUpdate(ModelAndView mv, Event e, Attachment at,
 									HttpServletRequest request, 
 									@RequestParam("page") Integer page,
 									@RequestParam(value="reloadFile", required=false) MultipartFile file) {

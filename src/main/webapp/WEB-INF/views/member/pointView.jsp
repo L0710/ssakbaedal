@@ -14,9 +14,65 @@
 <meta charset="UTF-8">
 <title>ssakbaedal</title>
 <style>
-	        .groupBtn {
+* {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        header,
+        section,
+        aside,
+        footer {
+            box-sizing: border-box;
+            display: block;
+        }
+
+        body {
+            width: 1200px;
+            height: 800px;
+            margin: auto;
+        }
+
+        header {
+            width: 100%;
+            height: 20%;
+        }
+
+        section {
+            width: 85%;
+            height: 100%;
+            float: left;
+        }
+
+        aside {
+            width: 15%;
+            height: 60%;
+            float: left;
+        }
+
+        footer {
+            width: 100%;
+            height: 20%;
+            border-top: 3px solid rgb(192, 211, 192);
+            margin: auto;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            padding-top: 2%;
+            padding-bottom: 1%;
+            text-align: center;
+            font-size: 12px;
+            float: left;
+        }
+           .groupBtn {
             margin-top: 100px;
         }
+        
+
+        
+/*            #section {
+      width: 85%;
+      height: 60%;
+      float: left;
+   } */
 
  
 
@@ -159,13 +215,21 @@
         border: 0.1px solid rgba(138, 206, 61, 0.596);
         cursor: pointer;
      }
+     
+              nav {
+            padding: 24px;
+            text-align: center;
+            background: rgb(64, 64, 64);
+            margin-top:0.3%;
+       
+        } 
 
         
-        nav a:hover {
+/*         nav a:hover {
             text-decoration: none;
             color: rgb(130, 180, 127);
 
-        }
+        } */
 
         #intro p{
             text-align: left;
@@ -173,36 +237,36 @@
         }
         
         #result {
-        	text-align:center;
-        	font-size:15px;
-	      	border:none;
-        	color:palevioletred;
-        	width:120px;
-        	margin:0 auto;
-        	font-weight:bold;
+           text-align:center;
+           font-size:15px;
+            border:none;
+           color:palevioletred;
+           width:120px;
+           margin:0 auto;
+           font-weight:bold;
         }
         
         #intro {
-        	margin-top:50px;
-        	margin-bottom:20px;
+           margin-top:50px;
+           margin-bottom:20px;
         }
 </style>
 </head>
 <body>
-	<div class="wrapper">
+   <div class="wrapper">
         <c:import url="../common/headerbar.jsp"/>
     
         <section id="section">
-        	<!-- 로그인했을시 유저에 따른 내비 보여주기 -->
-        	<!-- 관리자 -->
-        	<c:if test="${ !empty loginUser && loginUser.mId eq 'admin' }">
-        		<c:import url="../common/nav_admin.jsp"/>
-			</c:if>
-			<!-- 일반유저 -->
-			<c:if test="${ !empty loginUser && loginUser.mId ne 'admin' }">
-				<c:import url="../common/nav_user.jsp"/>
-			</c:if>
-			
+           <!-- 로그인했을시 유저에 따른 내비 보여주기 -->
+           <!-- 관리자 -->
+           <c:if test="${ !empty loginUser && loginUser.mId eq 'admin' }">
+              <c:import url="../common/nav_admin.jsp"/>
+         </c:if>
+         <!-- 일반유저 -->
+         <c:if test="${ !empty loginUser && loginUser.mId ne 'admin' }">
+            <c:import url="../common/nav_user.jsp"/>
+         </c:if>
+         
                 <div class="contents">
                         <div id="all-wrapper">
                                 <div id="info-wrapper">
@@ -215,31 +279,31 @@
                                         <input type="hidden" id="cal" value="${loginUser.priceSum }">
                                         
                                         <c:choose>
-                                        	<c:when test="${loginUser.mGrade eq 'BRONZE' }">
-                                        		<p style="margin-right:30px">현재 레벨은</p> <p style="font-size:10px; color:rgb(184, 132, 20); ">(브론즈)</p> 
-	                                            <div><img id="level-img1"  src="${contextPath}/resources/img/coin.png" ></div>
-	                                            <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:silver; ">(실버)</p> 
-	                                            <div><img id="level-img2"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
-	                                            <p>까지</p>
-	                                            <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
-	                                            <p>남았습니다.</p>
-                                        	</c:when>
-                                        	
-                                        	<c:when test="${loginUser.mGrade eq 'SILVER' }">
-                                        		<p style="margin-right:30px">현재 레벨은 </p>  <p style="font-size:10px; color:silver; ">(실버)</p> 
-	                                            <div><img id="level-img1"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
-	                                            <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:gold; ">(골드)</p> 
-	                                            <div><img id="level-img2"  src="${contextPath}/resources/img/diamond.png" ></div>
-	                                            <p>까지</p>
-	                                            <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
-	                                            <p>남았습니다.</p>
-                                        	</c:when>
-                                        	
-                                        	<c:otherwise>
-                                        		<p style="margin-right:30px">현재 레벨은 </p>  <p style="font-size:10px; color:silver; ">(골드)</p> 
-	                                            <div><img id="level-img1"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
-	                                            <p>축하드립니다. 최고레벨 입니다.</p>
-                                        	</c:otherwise>
+                                           <c:when test="${loginUser.mGrade eq 'BRONZE' }">
+                                              <p style="margin-right:30px">현재 레벨은</p> <p style="font-size:10px; color:rgb(184, 132, 20); ">(브론즈)</p> 
+                                               <div><img id="level-img1"  src="${contextPath}/resources/img/coin.png" ></div>
+                                               <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:silver; ">(실버)</p> 
+                                               <div><img id="level-img2"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
+                                               <p>까지</p>
+                                               <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
+                                               <p>남았습니다.</p>
+                                           </c:when>
+                                           
+                                           <c:when test="${loginUser.mGrade eq 'SILVER' }">
+                                              <p style="margin-right:30px">현재 레벨은 </p>  <p style="font-size:10px; color:silver; ">(실버)</p> 
+                                               <div><img id="level-img1"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
+                                               <p style="margin-right:30px">이고 다음 레벨 </p><p style="font-size:10px; color:gold; ">(골드)</p> 
+                                               <div><img id="level-img2"  src="${contextPath}/resources/img/diamond.png" ></div>
+                                               <p>까지</p>
+                                               <p style="color:palevioletred"><fmt:formatNumber value="${cal.difference}" type="number"/>원</p>
+                                               <p>남았습니다.</p>
+                                           </c:when>
+                                           
+                                           <c:otherwise>
+                                              <p style="margin-right:30px">현재 레벨은 </p>  <p style="font-size:10px; color:silver; ">(골드)</p> 
+                                               <div><img id="level-img1"  src="${contextPath}/resources/img/gold-ingots.png" ></div>
+                                               <p>축하드립니다. 최고레벨 입니다.</p>
+                                           </c:otherwise>
                                         </c:choose>
                                             
                                         </div>
@@ -249,16 +313,16 @@
                                             <p id="ppoint">누적 포인트    ${loginUser.point}</p>
                                         </div>
                                 </div>
-                                    <div id="imgwra" align="center" style="margin-bottom:30px;">
+                                    <div id="imgwra" align="center" style="margin-bottom:30px; margin-left:40px;">
                                     <c:if test="${loginUser.mGrade eq 'BRONZE' }">
-                                    	<div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
-                                    	<input type="range" id="range" min="0" max="500000" step="1000" value="${cal.priceSum}" disabled>
-                                   		<div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
+                                       <div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
+                                       <input type="range" id="range" min="0" max="500000" step="1000" value="${cal.priceSum}" disabled>
+                                         <div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
                                     </c:if>
                                     <c:if test="${loginUser.mGrade eq 'SILVER' }">
-                                    	<div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
-                                    	<input type="range" id="range" min="0" max="1000000" step="1000" value="${cal.priceSum}" disabled>
-                                   		<div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
+                                       <div id="wrapimg1"><img id="level_img1" src="${contextPath}/resources/img/dollar.png"></div>
+                                       <input type="range" id="range" min="0" max="1000000" step="1000" value="${cal.priceSum}" disabled>
+                                         <div id="wrapimg2"><img id="level_img2" src="${contextPath}/resources/img/diamond.png"></div>
                                     </c:if>   
                                     </div>
        
@@ -286,7 +350,7 @@
                                             </tr>
                                         </table>
                                         
-                                        <p style="margin-top:30px;">
+                                        <p style="margin-top:40px; font-size:13px;">
                                             -포인트 지급은 레벨마다 상이합니다. 자세한 사항은 표를 참고해주세요.<br>
                                             -적립된 포인트는 1000p부터 100점씩 사용가능합니다.<br>
                                             -적립된 포인트 사용 시 사용하신 포인트 만큼의 포인트를 차감합니다.<br>
@@ -294,6 +358,7 @@
                                             -포인트 적립은 이벤트에서 가능합니다.<br>
                                             -포인트 적립과 사용은 회원만 가능합니다.<br>
                                         </p>
+                                        
                                     </div>
                                     
 
@@ -308,37 +373,36 @@
 
     </div>
 
-
     <c:import url="../common/footer.jsp"/>
 </body>
 
-		<script>
-			$(function() {
-				cal();
-			})
-		
+      <script>
+         $(function() {
+            cal();
+         })
+      
 
-			function cal() {
-				
-					var cal = $("#cal").val();
-					var re = 0;
-					var result = 0;
-					if(cal < 500000) {
-						re = 500000;
-						result = re - cal;
-						console.log(result);
-					} else if (cal >= 500000 && cal < 1000000 ) {
-						re = 1000000;
-						result = re - cal;
-						console.log(result);
-					} else {
-						result = 0;
-					}	 
-					console.log(result);
-			        $("#result").val(result);
-			    };
-			
-		</script>
-		
-		
+         function cal() {
+            
+               var cal = $("#cal").val();
+               var re = 0;
+               var result = 0;
+               if(cal < 500000) {
+                  re = 500000;
+                  result = re - cal;
+                  console.log(result);
+               } else if (cal >= 500000 && cal < 1000000 ) {
+                  re = 1000000;
+                  result = re - cal;
+                  console.log(result);
+               } else {
+                  result = 0;
+               }    
+               console.log(result);
+                 $("#result").val(result);
+             };
+         
+      </script>
+      
+      
 </html>
