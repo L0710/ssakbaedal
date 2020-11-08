@@ -57,6 +57,9 @@
         margin: 2px auto ;
 
     }
+    strong{
+    	margin:auto;
+    }
 
     </style>
 </head>
@@ -79,8 +82,8 @@
     	        var mName = $('#mName').val();
     	        var mEmail = $('#mEmail').val();
     	        
-    	        $('#value').text("...확인중...");
-    	        
+    	        $('#value').text("...............진행중..............");
+    	        $('#value').css({"color":"black"});
     	       if(mName!=""||mEmail!=""||mId!=""){
     	        $.ajax({
     	            url: "findPwd.do",
@@ -92,6 +95,7 @@
     	            		$('#value').css({"color":"red","font-weight":"bold"});
     	            	}else{
     	            		 alert("임시비밀번호가 발송되었습니다.");
+    	            		 $('#value').text("");
     	            	}
     	            },
     	            error: function(){
