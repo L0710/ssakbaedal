@@ -14,7 +14,7 @@
 <script src='fullcalendar/daygrid.js'></script>
 <script src='fullcalendar/fullcalendar.css'></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ssakbaedal</title>
 </head>
 <body>
 	<div class="wrapper">
