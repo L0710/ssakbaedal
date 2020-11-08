@@ -12,7 +12,6 @@
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
     <style>
-    <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
         }
@@ -455,6 +454,22 @@
                                     <label for="imgchangeBtn" id="btnla" class="btn-ghost green"  name="reloadFile">파일선택</label>
                                     <input type="file" id="imgchangeBtn" name="uploadLogoFile" >
                                 </div>
+                                <script>
+								function readURL(input) {
+	                        		if(input.files && input.files[0]) {
+	                        			var reader = new FileReader();
+	                        			
+	                        			reader.onload = function(e) {
+	                            			$("#slogoimg").attr("src", e.target.result);
+	                            		}
+	                        			reader.readAsDataURL(input.files[0]);
+	                        		}
+	                        	}
+	                        	
+		                        	$("input[name=uploadLogoFile]").change(function() {
+		                        		readURL(this);
+		                        	}); 
+                                </script>
                             </div>
                             <br><br><br><br>
                             <hr style="margin-top:30px; margin-bottom: 30px;">
@@ -673,20 +688,7 @@
 	        	$("input[name=cateinpt]").val(sCate);
 
             
-/*             	function readURL(input) {
-            		if(input.files && input.files[0]) {
-            			var reader = new FileReader();
-            			
-            			reader.onload = function(e) {
-                			$("#slogoimg").attr("src", e.target.result);
-                		}
-            			reader.readAsDataURL(input.files[0]);
-            		}
-            	}
-            	
-            	$("input[name=uploadFile]").change(function() {
-            		readURL(this);
-            	}); */
+
             </script>
 
     </div>

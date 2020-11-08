@@ -220,6 +220,22 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	background-color:transparent;
 	text-align:left;
 }
+
+/* #reviewTable td {
+	padding-top: 0;
+} */
+
+/* #reviewTable .rContents {
+	padding-top: 0;
+} */
+
+/* table td {
+	padding-top: 0;
+} */
+
+/* th, td {
+	padding-top: -10px;
+} */
 </style>
 </head>
 <body>
@@ -375,10 +391,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 										<td style="width: 20%; text-align:right;">2020-10-27</td>
 									</tr>
 									<tr>
-										<td colspan="2" id="rContents">
-											<span>
-											${ r.rContent }</span>
-											<input value="더보기" onclick="more();" type="button" id="moreBtn">
+										<td colspan="2" class="rContents" >
+											<span>${ r.rContent }</span>
 										</td>
 										<td colspan="2">
 											<div class="imgArea">
