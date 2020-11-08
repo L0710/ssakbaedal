@@ -443,6 +443,7 @@ public class MemberController {
 
 		return "redirect:storeManage.do";
 	}
+
 	
 	//메뉴삭제
 		@RequestMapping("deleteMenu.do")

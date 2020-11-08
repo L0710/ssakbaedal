@@ -200,7 +200,6 @@ img:hover {
 		</section>
 
 
-
 	</div>
 	<br>
 	<br>

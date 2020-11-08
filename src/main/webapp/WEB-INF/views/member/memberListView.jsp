@@ -9,7 +9,7 @@
 <title>ssakbaedal</title>
 <style>
 #section {
-	width: 85%;
+	width: 100%;
 	height: 60%;
 	float: left;
 }
@@ -62,7 +62,7 @@
 							<td><input type="checkbox"></td>
 							<td>${ m.mNo }</td>
 							<td>${fn:substring(m.mId, 0, 1)}***${fn:substring(m.mId, 4, fn:length(m.mId))}</td>
-							<td>활동</td>
+							<td>${ m.mEnrollDate }</td>
 							<td><button class="detailBtn">상세보기</button></td>
 						</tr>
 					</c:forEach>
@@ -196,7 +196,6 @@
 			</div>
 		</section>
 
-		<c:import url="../common/sidemenu_user.jsp" />
 
 	</div>
 	<br>
