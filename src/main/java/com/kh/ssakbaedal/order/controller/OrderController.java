@@ -122,7 +122,7 @@ public class OrderController {
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Order> olist = oService.selectOList(pi, mNo);
 		
-//		System.out.println("olist : " + olist);
+		System.out.println("olist : " + olist);
 //		System.out.println("pi : " + pi);
 		
 		if(olist != null) {

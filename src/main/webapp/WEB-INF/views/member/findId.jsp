@@ -6,7 +6,7 @@
 <html> 
 <head>
 <meta charset="UTF-8">
-<title>FindId</title>
+<title>ssakbaedal</title>
     <style>
     /* 공통,div css */
     *:focus{

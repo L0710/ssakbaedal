@@ -19,7 +19,7 @@
 <html> 
 <head> 
 <meta charset="UTF-8">
-<title>signUp</title>
+<title>ssakbaedal</title>
     <style>
     /* 공통 css */ 
 

@@ -52,7 +52,7 @@ public class ReviewController {
 		// 페이징 정보에 맞는 게시글 리스트 셀렉
 		ArrayList<Review> list = rService.selectList(pi, mNo);
 
-//		System.out.println("list : " + list);
+		System.out.println("list : " + list);
 //		System.out.println("pi : " + pi);
 
 		if (list != null) {

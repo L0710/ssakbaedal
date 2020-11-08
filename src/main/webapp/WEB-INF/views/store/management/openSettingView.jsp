@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ssakbaedal</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
         <script
   src="https://code.jquery.com/jquery-3.5.1.js"
@@ -156,11 +156,9 @@
         .sidemenu {
             width: 150px;
             position: fixed;
-            top: 200px;
-            left: 1150px;
+            top: 230px;
+            left: 1230px;
             margin-top: 50px;
-            /* border: 1px solid rgb(64, 64, 64);
-            border-radius: 20px; */
         }
 
         .contents {

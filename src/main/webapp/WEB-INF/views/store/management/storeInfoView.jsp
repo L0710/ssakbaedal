@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ssakbaedal</title>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
           <script
   src="https://code.jquery.com/jquery-3.5.1.js"
@@ -151,8 +151,8 @@
         .sidemenu {
             width: 150px;
             position: fixed;
-            top: 200px;
-            left: 1150px;
+            top: 230px;
+            left: 1230px;
             margin-top: 50px;
         }
 
@@ -444,7 +444,7 @@
                     <input type="hidden" name="filePath" value="${attach.filePath}">
                     <div id="spanwrapper">
                         <div>
-                            <p id="slogo">로고</p><br>
+                            <p id="slogo"><strong>로고</strong></p><br>
                             <div id="slogoWrapper" align="center" name="sLogo">
           					    <div id="ss"><img id="slogoimg" src="${contextPath}/resources/muploadFiles/logo/${attach.changeFileName}"></div>                  
                             </div>
@@ -493,8 +493,8 @@
                             <br><br><br><br>
                             <hr style="margin-top:30px; margin-bottom: 30px;">
                             <div><span id="sinfo">매장정보</span></div><br>
-                            <span>매장명</span><input type="text" id="stName" class="stinfo" name="sName" value="${s.sName }"><br>
-                            <span>전화번호</span><input type="tel" id="sTel" class="stinfo" name="sTel" value="${s.sTel }"><br>
+                            <span>매장명</span><input type="text" id="stName" class="stinfo" name="sName" value="${s.sName }" readonly><br>
+                            <span>전화번호</span><input type="tel" id="sTel" class="stinfo" name="sTel" value="${s.sTel }" readonly><br>
                             	<br><br>
                             	
                             	<c:forTokens items="${ s.openTime }" var="open" delims="," varStatus="status">
