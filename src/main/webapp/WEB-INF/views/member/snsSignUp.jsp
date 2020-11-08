@@ -410,7 +410,7 @@
 						<tr>
 							<td>이름</td>
 							<td><input type="text" name="mName" value=${param.name}
-								placeholder="2자 이상의 한글로 입력해 주세요."></td>
+								placeholder="2글자이상 입력해 주세요."></td>
 						</tr>
 						<tr>
 							<td>이메일</td>
@@ -427,23 +427,38 @@
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td><input type="text" name="birth" maxlength="6" placeholder="예)201010 형식으로 입력해주세요."></td>
+							<td><input type="text" name="birth" maxlength="8" placeholder="예)20201010 형식으로 입력해주세요."></td>
 						</tr>
-						<tr>
-							<td>성별</td>
-							<td>
-							<c:set var="gender" value="${param.gender}" />
-							<c:if test="${gender eq 'F'}">
- 							<input type="radio" class="gender" id="radio1"name="gender" value="F" checked> <label for="radio1">여자</label>
- 							<input type="radio" class="gender" id="radio2" name="gender" value="M" > <label for="radio2">남자</label>							
-							</c:if>
-							<c:if test="${gender eq 'M'}">
- 							<input type="radio" class="gender" id="radio1"name="gender" value="F" > <label for="radio1">여자</label>
- 							<input type="radio" class="gender" id="radio2" name="gender" value="M" checked> <label for="radio2">남자</label>
-							</c:if>
-							</td>
-						</tr>
-					</table>
+					<tr>
+						<td>성별</td>
+						<td><c:set var="gender" value="${param.gender}" /> <c:choose>
+								<c:when test="${gender eq 'F'}">
+									<input type="radio" class="gender" id="radio1" name="gender"
+										value="F" checked>
+									<label for="radio1">여자</label>
+									<input type="radio" class="gender" id="radio2" name="gender"
+										value="M">
+									<label for="radio2">남자</label>
+								</c:when>
+								<c:when test="${gender eq 'M'}">
+									<input type="radio" class="gender" id="radio1" name="gender"
+										value="F">
+									<label for="radio1">여자</label>
+									<input type="radio" class="gender" id="radio2" name="gender"
+										value="M" checked>
+									<label for="radio2">남자</label>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" class="gender" id="radio1" name="gender"
+										value="F">
+									<label for="radio1">여자</label>
+									<input type="radio" class="gender" id="radio2" name="gender"
+										value="M">
+									<label for="radio2">남자</label>
+								</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</table>
 					<input type="button" id="sign_up"class="btn-ghost green" value="회원가입">
 					<input type="text" name="mPhone" style="display:none">
 				</form>
@@ -555,7 +570,7 @@
 									check = (/^[0-9]{4}$/).test(vput);
 									break;
 								case 8:
-									check = (/^[0-9]{6}$/).test(vput);
+									check = (/^[0-9]{8}$/).test(vput);
 									break;
 								}
 

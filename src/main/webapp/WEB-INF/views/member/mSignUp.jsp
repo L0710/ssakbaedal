@@ -409,7 +409,7 @@
 						<tr>
 							<td>이름</td>
 							<td><input type="text" name="mName"
-								placeholder="2자 이상의 한글로 입력해 주세요."></td>
+								placeholder="2글자 이상 입력해 주세요."></td>
 						</tr>
 						<tr>
 							<td>이메일</td>
@@ -426,7 +426,7 @@
 						</tr>
 						<tr>
 							<td>생년월일</td>
-							<td><input type="text" name="birth" maxlength="6" placeholder="예)201010 형식으로 입력해주세요."></td>
+							<td><input type="text" name="birth" maxlength="8" placeholder="예)20201010 형식으로 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td>성별</td>
@@ -474,7 +474,7 @@
 							console.log($('input[name=mId]').attr("readonly"));
 
 							if (checkAry[0] == true) {
-								var result = confirm('사용 가능한 아이디인 경우 변경이 불가합니다.계속 진행하시겠습니까?');
+								var result = confirm("최초 가입 시 입력한 아이디는 변경할 수 없습니다." + "\n" + "계속 진행하시겠습니까?");
 								var mId = idput.val();
 
 								if (result) {
@@ -548,7 +548,7 @@
 									check = (/^[0-9]{4}$/).test(vput);
 									break;
 								case 8:
-									check = (/^[0-9]{6}$/).test(vput);
+									check = (/^[0-9]{8}$/).test(vput);
 									break;
 								}
 
