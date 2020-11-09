@@ -156,7 +156,7 @@
             width: 150px;
             position: fixed;
             top: 230px;
-            left: 1230px;
+            left: 1150px;
             margin-top: 50px;
         }
 

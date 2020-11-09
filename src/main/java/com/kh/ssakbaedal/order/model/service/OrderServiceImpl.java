@@ -106,13 +106,11 @@ public class OrderServiceImpl implements OrderService {
 		int result = 0;
 		
 		result = oDao.insertOrder(o);
-//		System.out.println("주문 insert result impl:"+result);
 		
 		if(result < 0 ) {
 			throw new OrderException("주문 실패");
 		} else {	// 주문 성공
 			result = mDao.usingOrder(o);
-//			System.out.println("멤버 포인트, 주문누적 변경 result:" + result);
 			
 			if(result < 0) {	// 멤버 변경 실패 시
 				throw new MemberException("멤버 포인트, 주문누적 변경 실패");
@@ -120,9 +118,8 @@ public class OrderServiceImpl implements OrderService {
 			} else {	// 포인트 사용, 주문누적까지 성공
 				for(int i = 0; i < mnList.getMnList().size(); i++) {
 					ODetail od = mnList.getMnList().get(i);
-//				System.out.println("od(i):"+od);
 					result = oDao.insertMenu(od);
-//				System.out.println("menu insert result:"+result);
+					
 					if(result < 0) {
 						throw new OrderException("주문 메뉴 insert 실패");
 					}

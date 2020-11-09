@@ -483,7 +483,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 		                            var mnName = td.eq(1).text();
 		                            var mnPrice = td.eq(2).text();
 		                            
-		                            console.log("메뉴명:" + mnName + "/가격:" + mnPrice + "/메뉴넘버:" + mnNo);
+		                            /* console.log("메뉴명:" + mnName + "/가격:" + mnPrice + "/메뉴넘버:" + mnNo); */
 	                                
 	                                var $tbody = $("#basketList tbody:first");
 	                        	    var $tr = $("<tr>");
@@ -564,16 +564,12 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 						$("#total").html(total.toLocaleString());
 					}
 					
-					<!-- 주문금액 확인, 주소 입력 뷰로 이동 -->
+					<%-- 주문금액 확인, 주소 입력 뷰로 이동 --%>
 					function confirm(){
-						/* console.log("주문최소금액:"+${ store.minPrice });
-						console.log("total:"+total); */
 						if(total < ${ store.minPrice }){
 							alert("최소주문금액 이하로 주문 불가합니다.")
-							/* console.log("안댐~~"); */
 							return false;
 						} else {
-							/* console.log("댐~"); */
 							return true;
 						}
 					}

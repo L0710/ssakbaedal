@@ -237,7 +237,7 @@
 
         #require {
             height: 80px;
-            width: 900px;
+            width: 700px;
             margin-top: 10px;
             margin-bottom: 10px;
         }
@@ -256,6 +256,9 @@
             text-decoration: none;
             color:white;
         }
+        #section {
+        	width:100%;
+        }
     </style>
 
 </head>
@@ -264,15 +267,15 @@
     
         <c:import url="../../common/headerbar.jsp"/>
 
-        <section>
+        <section id="section">
             <c:import url="../../common/nav_store.jsp"/>
 
 
             <div class="contents" align="center">
                 <p id="orderTitle">주문관리</p>
-                <div align="left">
+                <div align="left" style="margin-left:18%;">
                     <label for="oaddress" class="label">주소</label><input type="text" id="oaddress" value="${sorder.oAddress }"  readonly><br><br>
-                    <label for="clienttel"class="label">전화번호</label><input type="text" id="clienttel" value="${sorder.mPhone }" readonly>
+                    <label for="clienttel"class="label">전화번호</label><input type="text" id="clienttel" value="${sorder.oPhone }" readonly>
                 </div>
                 <div align="center"><br><br>
                  <table id="orderTable" align="center">
@@ -297,8 +300,8 @@
                             <td>${sorder.oPrice }</td>
                         </tr>
                   </table>
-                    
-                    <div align="left">
+                    <br><br>
+                    <div align="left" style="margin-left:18%;">
                         <label for="require" class="label" >요청사항</label><br>
                         <input type="text" id="require" value="${sorder.request}" >
                     </div>
@@ -405,7 +408,6 @@
     </section>
 
     </div>
-    <br><br><br><br><br><br>
 
   	<c:import url="../../common/footer.jsp"/>
     </div>

@@ -170,12 +170,6 @@
         <br>
         <section>
             <div class="contents">
-                <form action="#" name="#" method="GET">
-                    <div id="search_area">
-                        <input id="searchValue" type="search" name="searchValue" placeholder=" 먹고 싶은 메뉴, 가게 검색">
-                        <button type="submit" id="search_btn" class="btn-ghost gray">검색</button>
-                    </div>
-                </form>
 
                 <div class="slide_wrapper" align="center">
                     <ul class="slides">
@@ -248,7 +242,7 @@
                             <h1 style="display:none;">추천</h1>
                         </div>
                         <div class="main_recommend_rnak_img_area">
-                            <img src="./resources/img/recommend_1.png" width="400px" height="300px">
+                            <img src="./resources/img/recommend_1.png" width="400px" height="300px" onclick="alert('개발 예정...')">
                         </div>
                     </div>
 
@@ -257,7 +251,7 @@
                             <h1 style="display:none;">랭킹</h1>
                         </div>
                         <div class="main_recommend_rnak_img_area">
-                            <img src="./resources/img/rank_1.png" width="400px" height="300px">
+                            <img src="./resources/img/rank_1.png" width="400px" height="300px" onclick="alert('개발 예정...')">
                         </div>
                     </div>
 

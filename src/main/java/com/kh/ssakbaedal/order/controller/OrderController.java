@@ -167,7 +167,7 @@ public class OrderController {
 		S_Order o = oService.selectStoreOrder(oNo);
 
 		ArrayList<SODetail> odList = oService.selectStoreDetail(oNo);
-		System.out.println("sod : " +odList);
+//		System.out.println("sod : " +odList);
 		
 		if(o != null && odList != null) {
 			mv.addObject("sorder", o);
@@ -277,10 +277,7 @@ public class OrderController {
 	@RequestMapping("orderInsert.do")
 	public ModelAndView orderInsert(ModelAndView mv, Order o, @RequestParam(value="usedPoint", required=false) Integer usedPoint,
 				@RequestParam("address1") String address1, @RequestParam("address2") String address2, @ModelAttribute MnList mnList) {
-//		System.out.println("usedPoint:"+usedPoint);
-		
-//		System.out.println("address1:"+address1);
-//		System.out.println("address2:"+address2);
+
 		if(usedPoint == null) {	// 포인트 사용하지 않아 usedPoint 값이 0으로 들어왔을 경우
 			usedPoint = 0;
 			o.setoPoint(usedPoint);
@@ -288,17 +285,13 @@ public class OrderController {
 			o.setoPoint(usedPoint);
 		}
 		o.setoAddress(address1 + ", " + address2);	// 도로명주소 + 상세주소
-//		System.out.println("주문 입력으로 들어갈 order:"+o);
-//		System.out.println("주문 시 입력해야 할 주문 메뉴 mnList:"+mnList);
-//		System.out.println("Order:"+o);	// 포인트 정상적으로 세팅 되었는지 확인
 		
 		
 		int mNo = o.getmNo();	// 포인트 차감, 주문금액 누적할 멤버 번호
 		int result = oService.insertOrder(o, mnList, mNo);
-//		System.out.println("controller 주문 프로세스 result:" + result);
+		
 		if(result > 0) {
 			Order order = oService.selectOrderInfo();
-//			System.out.println("주문 insert 완료 된 order:"+order);
 			mv.addObject("order", order);
 			mv.setViewName("order/paymentAPI");
 		} else {
@@ -310,11 +303,9 @@ public class OrderController {
 	@RequestMapping("paymentSuccess.do")
 	@ResponseBody
 	public String paymentInsert(ModelAndView mv, PayAPI p) {
-//		System.out.println("결제정보 출력 : " + p);
 		
 		int result = oService.insertPayment(p);
 		
-//		System.out.println("controller 결제 프로세스 result:" + result);
 		
 		if(result > 0) {
 			return "success";
@@ -327,8 +318,9 @@ public class OrderController {
 	@RequestMapping("pComplete.do")
 	public ModelAndView paymentComplete(ModelAndView mv) {
 		PayAPI payment = oService.selectPaymentInfo();
-//		System.out.println("payment:"+payment);
+		
 		Order order = oService.selectOrderInfo();
+		
 		if(payment != null && order != null) {
 			mv.addObject("payment", payment);
 			mv.addObject("order", order);

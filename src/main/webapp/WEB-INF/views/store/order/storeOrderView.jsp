@@ -426,7 +426,6 @@
     </section>
 
     </div>
-    <br><br><br><br><br><br>
 
   	<c:import url="../../common/footer.jsp"/>
 

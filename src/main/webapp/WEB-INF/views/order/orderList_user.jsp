@@ -118,8 +118,10 @@
 										<c:param name="page" value="${ pi.currentPage }" />
 									</c:url>
 									<c:url var="rinsertView" value="rinsertView.do"/>
-									<a href="${ odetail }">주문상세</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<button class="writeBtn" id="writeReviewBtn${ o.oNo }" onclick="check(${ o.oNo })">리뷰쓰기</button>
+										<a href="${ odetail }">주문상세</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<c:if test="${ o.oStatus ne 'N' }">
+										<button class="writeBtn" id="writeReviewBtn${ o.oNo }" onclick="check(${ o.oNo })">리뷰쓰기</button>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

@@ -157,7 +157,7 @@
             width: 150px;
             position: fixed;
             top: 230px;
-            left: 1230px;
+            left: 1150px;
             margin-top: 50px;
         }
 
@@ -264,7 +264,7 @@
             font-size: 18px;
             font-weight:bold;
             border: none;
-            width: 100px;
+            width: 100%;
             margin-bottom: 20px;
             margin-left:55px;
         }
@@ -308,9 +308,7 @@
 
             <div class="contents" align="center">
                 <p id="opentTitle">영업관리</p>
-                
-                <input type="text" id="sName" value="${store.sName}" readonly>
-                
+                <p><b>${store.sName}</b></p>
                 <form action="updatesStatus.do" method="post">
                 <label>매장상태</label>
                 <input type="hidden"  id="mNo" name="mNo">

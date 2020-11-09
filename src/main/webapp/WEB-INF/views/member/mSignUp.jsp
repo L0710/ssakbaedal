@@ -133,6 +133,7 @@
 		<section id="section">
 		<div class="contents" align="center">
 			<div id="sign_up_div">
+			<br>
 				<h1>회원가입</h1>
 				<div id="terms">
 				<h4>이용 약관 동의</h4>
@@ -385,7 +386,9 @@
 
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
                         </textarea>
+                        <br>
 				<input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
+				<br><br>
 				</div>
 				<p id="textValue" disabled></p>
 				<form id="sign_up_form"style="display:none" >

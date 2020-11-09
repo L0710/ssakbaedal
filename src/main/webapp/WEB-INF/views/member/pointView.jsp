@@ -310,7 +310,6 @@
                                         <br>
                                         <div id="sum_point" align="center">
                                             <p id="psum" >누적금액    <fmt:formatNumber value="${cal.priceSum}" type="number"/>원</p>
-                                            <p id="ppoint">누적 포인트    ${loginUser.point}</p>
                                         </div>
                                 </div>
                                     <div id="imgwra" align="center" style="margin-bottom:30px; margin-left:40px;">
