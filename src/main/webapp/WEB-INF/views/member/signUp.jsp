@@ -50,7 +50,7 @@
         margin: 1% auto 1%;
         min-width: 400px;
         width: 50%;
-        height: 50%;
+        height: 65%;
         text-align: center;
         
     }
