@@ -243,13 +243,6 @@
 	
 		<section>
 			<jsp:include page="../common/nav_category.jsp" />
-		
-			<form action="#" name="#">
-				<div id="search_area">
-					<input id="searchValue" type="search" name="searchValue" placeholder=" 먹고 싶은 메뉴, 가게 검색">
-					<button type="submit" id="search_btn" class="btn-ghost gray">검색</button>
-				</div>
-			</form>
 			
 			<div class="contents">
 	
@@ -274,7 +267,7 @@
 		                        <div class="store_img_area"> <!-- 사진 파일 저장되면 불러올 예정. -->
 			                        <c:forEach var="atList" items="${ atList }">
 				                        <c:if test="${ to.mNo == atList.refId }">
-				                            <img src="${ contextPath }/resources/logoUploadFiles/${ atList.changeFileName }" width="120px" height="100px">
+				                            <img src="${ contextPath }/resources/muploadFiles/logo/${ atList.changeFileName }" width="120px" height="100px">
 				                        </c:if>
 				                    </c:forEach>
 		                        </div>
@@ -298,6 +291,8 @@
 					<c:if test="${ pi.currentPage > 1 }">
 						<c:url var="before" value="tslist.do">
 							<c:param name="page" value="${ pi.currentPage - 1 }"/>
+							<c:param name="addr" value="${ addr }"/>
+                			<c:param name="address1" value="${ address1 }"/>
 						</c:url>
 						<a href="${ before }">[이전]</a>&nbsp;
 					</c:if>
@@ -309,6 +304,8 @@
 						<c:if test="${ p ne pi.currentPage }">
 							<c:url var="pagination" value="tslist.do">
 								<c:param name="page" value="${ p }"/>
+								<c:param name="addr" value="${ addr }"/>
+                				<c:param name="address1" value="${ address1 }"/>
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
 						</c:if>
@@ -320,6 +317,8 @@
 					<c:if test="${ pi.currentPage < pi.maxPage }">
 						<c:url var="after" value="tslist.do">
 							<c:param name="page" value="${ pi.currentPage + 1 }"/>
+							<c:param name="addr" value="${ addr }"/>
+                			<c:param name="address1" value="${ address1 }"/>
 						</c:url>
 						<a href="${ after }">[다음]</a>
 					</c:if>

@@ -168,9 +168,9 @@
         margin-bottom: 0;
     }
 
-     #address {
+     /* #address {
         float: left;
-    }
+    } */
 </style>
 </head>
 <body>
@@ -181,12 +181,12 @@
 	</c:if>
 
 	<div id="header">
-	<c:if test="${ loginUser.mType != 3 }">
+	<%-- <c:if test="${ loginUser.mType != 3 }">
 		<div id="address" align="left">
 			<button class="btn-ghost gray" id="mypageBtn">현재주소</button>
 			<input id="addtxt" type="text" placeholder="주소입력">
 		</div>
-	</c:if>
+	</c:if> --%>
 	<c:if test="${ loginUser.mType == 3 }"></c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<div class="btnGroup" align="right">

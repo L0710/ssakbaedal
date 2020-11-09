@@ -114,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
             select M_SEQ.currval from DUAL
         </selectKey>
 		INSERT INTO MENU
-		VALUES (MN_SEQ.NEXTVAL,#{mnName}, DEFAULT, DEFAULT, #{mNo},DEFAULT,#{mnPrice})
+		VALUES (MN_SEQ.NEXTVAL,#{mnName}, DEFAULT, DEFAULT, #{mNo},#{smallCate},#{mnPrice})
 	</insert>
 	
 	<insert id="minsertAttachment" parameterType="Attachment">

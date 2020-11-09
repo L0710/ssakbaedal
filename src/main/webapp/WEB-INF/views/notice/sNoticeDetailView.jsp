@@ -67,6 +67,20 @@
         	margin-top: 30px;
         }
         
+        .btn-ghost.gray.si {
+    		width: 150px;
+    		height: 40px;
+    		padding-top: 5px;
+		}
+		
+		.sidemenu {
+            width: 150px;
+            position: fixed;
+            top: 230px;
+            left: 1150px;
+            margin-top: 50px;
+        }
+        
 </style>
 
 </head>

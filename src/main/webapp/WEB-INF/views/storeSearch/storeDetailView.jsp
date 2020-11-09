@@ -297,7 +297,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 										<td>
 											<div id="menuImg">
 												<img width="60px" height="60px"
-													src="${ contextPath }/resources/mUploadFiles/menu/${atMenuList[vs.index].changeFileName}">
+													src="${ contextPath }/resources/muploadFiles/menu/${atMenuList[vs.index].changeFileName}">
 											</div>
 										</td>
 										<td width="5%">

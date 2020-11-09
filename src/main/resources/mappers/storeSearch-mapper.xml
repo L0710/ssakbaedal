@@ -43,32 +43,37 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</resultMap>
 	
 	<!-- 전체 매장 수  받기 -> 페이징 계산 -->
-	<select id="selectListCount" resultType="_int">
+	<select id="selectListCount" resultType="_int" parameterType="address">
+	<bind name="sv" value="'%' + _parameter.getAdd2() + '%'"/>
 		SELECT COUNT(*)
 		FROM STORE
 		WHERE SACCEPT='Y'
+		AND S_ADDRESS LIKE #{sv}
 	</select>
 	
-	<!-- 전체 매장 조회(페이징 처리 된)(임시 sql문) -->
-	<select id="selectList" resultMap="searchResultSet">
+	<!-- 전체 매장 조회(페이징 처리 된) -->
+	<select id="selectToList" resultMap="searchResultSet" parameterType="address">
+	<bind name="sv" value="'%' + _parameter.getAdd2() + '%'"/>
 		SELECT *
 		FROM STORE
 		WHERE SACCEPT='Y'
+		AND S_ADDRESS LIKE #{sv}
+		ORDER BY MNO ASC
 	</select>
 	
-	<!-- 전체 매장 조회(페이징 처리 된) 테스트 진행중 -->
-	<select id="selectToList" resultMap="searchResultSet">
-		SELECT *
-		FROM STORE
-		WHERE SACCEPT='Y'
-	</select>
-	
-	<!-- 전체 매장 조회(페이징 처리 된) 파일 테스트 진행중 -->
-	<select id="selectToatList" resultMap="attachmentResultSet">
-		SELECT *
-		FROM ATTACHMENT
-		WHERE A_STATUS='Y'
-		AND A_TYPE=8
+	<!-- 전체 매장 조회(페이징 처리 된) -->
+	<select id="selectToatList" resultMap="attachmentResultSet" parameterType="address">
+	<bind name="sv" value="'%' + _parameter.getAdd2() + '%'"/>
+		SELECT 
+		    ANO, ORIGINAL_NAME, CHANGE_NAME,
+		    FILE_PATH, UPLOAD_DATE, FILE_LEVEL,
+		    A_STATUS, A_TYPE, REF_ID,
+		    MNO, S_ADDRESS
+		FROM ATTACHMENT A, STORE S
+		WHERE A.REF_ID = S.MNO
+		AND A.A_TYPE=8
+		AND S.S_ADDRESS LIKE #{sv}
+		ORDER BY A.REF_ID ASC
 	</select>
 	
 	<!-- 전체 매장 디테일 뷰 출력 (매장 셀렉) -->
@@ -85,14 +90,25 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM MENU
 		WHERE MN_STATUS='Y'
 		AND MNO=#{mNo}
+		ORDER BY MN_NO ASC
 	</select>
 	
 	<!-- 전체 매장 디테일 뷰 출력 (메뉴 이미지 셀렉) -->
 	<select id="selectTosFile" resultMap="attachmentResultSet">
-		SELECT *
+		<!-- SELECT *
 		FROM ATTACHMENT
 		WHERE REF_ID=#{mNo}
 		AND A_TYPE=5
+		AND A_STATUS='Y' -->
+		SELECT
+		    MN_NO, MN_NAME, MN_CATEGORY, MN_STATUS, M.MNO, SMALL_CATE, MN_PRICE,
+		    ANO, ORIGINAL_NAME, CHANGE_NAME, A_STATUS, A_TYPE, REF_ID,
+		    S.MNO
+		FROM MENU M, ATTACHMENT A, STORE S
+		WHERE M.MNO = S.MNO
+		AND M.MN_NO = A.REF_ID
+		AND S.MNO = #{mNo}
+		AND A.A_TYPE = 5
 		AND A_STATUS='Y'
 	</select>
 	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.storeSearch.model.dao.storeSearchDao;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
+import com.kh.ssakbaedal.storeSearch.model.vo.address;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
@@ -22,8 +23,8 @@ public class storeSearchServiceImpl implements storeSearchService {
 	
 	// 1_1. 전체 매장 수 리턴 받기 -> 페이징 계산
 	@Override
-	public int selectListCount() {
-		return sDao.slectListCount();
+	public int selectListCount(address add) {
+		return sDao.slectListCount(add);
 	}
 	
 	// 1_2. 전체 매장 조회(페이징 처리 된)
@@ -34,10 +35,10 @@ public class storeSearchServiceImpl implements storeSearchService {
 	
 	// 전체 매장 조회 이미지 포함 테스트
 	@Override
-	public HashMap<String, Object> selectTestList(PageInfo pi) {
+	public HashMap<String, Object> selectTestList(PageInfo pi, address add) {
 		
-		ArrayList<storeSearch> toList = sDao.selectToList(pi);
-		ArrayList<Attachment> atList = sDao.selectToatList(pi);
+		ArrayList<storeSearch> toList = sDao.selectToList(pi, add);
+		ArrayList<Attachment> atList = sDao.selectToatList(pi, add);
 		
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap.put("toList", toList);

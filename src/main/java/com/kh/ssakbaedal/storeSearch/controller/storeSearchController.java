@@ -3,10 +3,13 @@ package com.kh.ssakbaedal.storeSearch.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
@@ -16,10 +19,12 @@ import com.kh.ssakbaedal.storeSearch.model.exception.storeSearchException;
 import com.kh.ssakbaedal.storeSearch.model.service.storeSearchService;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
 import com.kh.ssakbaedal.storeSearch.model.vo.Pagination;
+import com.kh.ssakbaedal.storeSearch.model.vo.address;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
 @Controller
+@SessionAttributes({"sAddr", "sAddress1"})
 public class storeSearchController {
 	
 	@Autowired
@@ -27,13 +32,46 @@ public class storeSearchController {
 	@Autowired
 	private ReviewService rService;
 	
+	// 현재주소 저장 후 다시 홈으로 넘기기
+	@RequestMapping("addrSave.do")
+	public ModelAndView addAddress(ModelAndView mv,String address1,
+									HttpSession session) {
+		
+		System.out.println("String address : " + address1);
+		
+		String[] splitAddr = address1.split(" ");
+		String addr = splitAddr[1];
+		
+		System.out.println("split된 addr : " + addr);
+		
+		session.setAttribute("sAddr", addr);
+		session.setAttribute("sAddress1", address1);
+		
+		if(addr != null) {
+			mv.addObject("addr", addr)
+			  .addObject("address1", address1)
+			  .setViewName("home");
+		} else {
+			throw new storeSearchException("주소를 url에 저장하는데 실패했습니다.");
+		}
+		
+		return mv;
+	}
+	
 	// 전체매장 보기
 	@RequestMapping("tslist.do")
-	public ModelAndView totalListView(ModelAndView mv,
+	public ModelAndView totalListView(ModelAndView mv, address add,
+			String addr, String address1,
 			@RequestParam(value="page", required=false) Integer page) {
 		
+		System.out.println("전체매장 addr : " + addr);
+		System.out.println("전체매장 address1 : " + address1);
+		
+		add.setAdd2(addr);
+		add.setAddress1(address1);
+		
 		// 1. 전체 게시글 수 리턴 받기
-		int listCount = sService.selectListCount();
+		int listCount = sService.selectListCount(add);
 		
 		// 현재 페이지 계산
 		int currentPage = page != null ? page : 1;
@@ -42,26 +80,19 @@ public class storeSearchController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10, 10);
 		
 		// 페이징 정보에 맞는 게시글 리트트 셀렉
-		/*ArrayList<storeSearch> tslist = sService.selectList(pi);*/
-		
-		HashMap<String, Object> hmap = sService.selectTestList(pi);
+		HashMap<String, Object> hmap = sService.selectTestList(pi, add);
 		
 		//System.out.println("tslist : " + tslist);
 		//System.out.println("pi : " + pi);
-//		System.out.println("toList : " + hmap.get("toList"));
-//		System.out.println("atList : " + hmap.get("atList"));
+		//System.out.println("toList : " + hmap.get("toList"));
+		//System.out.println("atList : " + hmap.get("atList"));
 		
-		/*if(tslist != null) {
-			mv.addObject("tslist", tslist);
-			mv.addObject("pi", pi);
-			mv.setViewName("storeSearch/totalListView");
-		} else {
-			throw new storeSearchException(" 전체 매장 목록 조회에 실패하였습니다.");
-		}*/
 		
 		if(hmap.get("toList") != null && hmap.get("atList") != null) {
 			mv.addObject("toList", hmap.get("toList"))
 			  .addObject("atList", hmap.get("atList"))
+			  .addObject("addr", addr)
+			  .addObject("address1", address1)
 			  .addObject("pi", pi)
 			  .setViewName("storeSearch/totalListView");
 		} else {
@@ -446,13 +477,15 @@ public class storeSearchController {
 			Attachment atLogo = sService.selectToslFile(mNo);
 			ArrayList<storeMenu> menuList = sService.selectTosMenu(mNo);
 			ArrayList<Attachment> atMenuList = sService.selectTosFile(mNo);
-			int reviewCount = rService.reviewCount(mNo);
+			// 매장 메뉴 출력 테스트로 잠깐 리뷰 주석해놓음.
+			// 메뉴 출력 후 리뷰 주석 풀어야함.
+			/*int reviewCount = rService.reviewCount(mNo);
 			int rStar = rService.selectStar(mNo);
-			ArrayList<Review> rlist = rService.selectReviewList(mNo);
+			ArrayList<Review> rlist = rService.selectReviewList(mNo);*/
 			
 //			System.out.println("store : " + store);
-//			System.out.println("menuList : " + menuList);
-//			System.out.println("atMenuList : " + atMenuList);
+			System.out.println("menuList : " + menuList);
+			System.out.println("atMenuList : " + atMenuList);
 //			System.out.println("atLogo : " + atLogo);
 //			System.out.println("reviewCount : " + reviewCount);
 //			System.out.println("rStar : " + rStar);
@@ -464,9 +497,11 @@ public class storeSearchController {
 				  .addObject("atMenuList", atMenuList)
 				  .addObject("atLogo", atLogo)
 				  .addObject("currentPage", currentPage)
-				  .addObject("reviewCount", reviewCount)
+				// 매장 메뉴 출력 테스트로 잠깐 리뷰 주석해놓음.
+					// 메뉴 출력 후 리뷰 주석 풀어야함.
+				  /*.addObject("reviewCount", reviewCount)
 				  .addObject("rStar", rStar)
-				  .addObject("rlist", rlist)
+				  .addObject("rlist", rlist)*/
 				  .setViewName("storeSearch/storeDetailView");
 			} else {
 				throw new storeSearchException("매장 상세 정보 출력 실패");

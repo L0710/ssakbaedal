@@ -40,6 +40,7 @@
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.Require" alias="Require"/>
 		<typeAlias type="com.kh.ssakbaedal.require.model.vo.reqSearch" alias="reqSearch"/>
 		<typeAlias type="com.kh.ssakbaedal.storeApprove.model.vo.StoreAppro" alias="StoreAppro"/>
+		<typeAlias type="com.kh.ssakbaedal.storeSearch.model.vo.address" alias="address"/>
 	</typeAliases>
 
 	<mappers>
