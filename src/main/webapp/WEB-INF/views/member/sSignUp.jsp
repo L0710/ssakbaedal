@@ -66,7 +66,7 @@
         width: 150px;
     }
     #menu_table{
-    	width: 750px;
+       width: 750px;
         margin: auto;
         margin-top: 10px;
         border-radius: 5px;
@@ -171,7 +171,7 @@
         border: 1px solid  lightgray;
     }
     input[type=file]{
-   		border-radius: 0px;
+         border-radius: 0px;
         border: 0px solid  lightgray;
         padding: 1px;
     }
@@ -217,10 +217,11 @@
 <section>
             <div class="contents" align="center">
                 <div id="sign_up_div">
+                <br>
                    <h1>회원가입</h1>
-                   				<div id="terms">
-				<h4>이용 약관 동의</h4>
-				<textarea id="checktext">
+                               <div id="terms">
+            <h4>이용 약관 동의</h4>
+            <textarea id="checktext">
 전자상거래(인터넷사이버몰) 표준약관
 
 
@@ -469,16 +470,18 @@
 
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
                         </textarea>
-				<input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
-				</div>
-				<p id="textValue" disabled></p>
+                        <br>
+            <input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
+            <br><br>
+            </div>
+            <p id="textValue" disabled></p>
                     <form id="sign_up_form" enctype="multipart/form-data" style="display:none" >
                         <table id="sign_up_table">
                             <tr>
                                 <td>아이디</td>
                                 <td>
                                     <input type="text" name="mId" placeholder="영문,숫자로 포함 4~12자로 입력해주세요.">
-									<button type="button" id="check_btn" >중복확인</button>
+                           <button type="button" id="check_btn" >중복확인</button>
                                 </td>
                             </tr>
                             <tr>
@@ -550,41 +553,41 @@
                                 </td>
                             </tr> 
                               <!--전화번호 유효성 두군데 수정  -->
-						<tr>
-							<td>우편번호</td>
-							<td><input type="text" name="post"
-								class="postcodify_postcode5" size="6" />
-								<button id="postcodify_search_button" type="button">검색</button>
-							</td>
-						</tr>
-						<tr>
-							<td>도로명 주소</td>
-							<td><input type="text" name="address1"class="postcodify_address" /></td>
-						</tr>
-						<tr>
-							<td>상세 주소</td>
-							<td><input type="text" name="address2"class="postcodify_details" /></td>
-						</tr>
-						<tr>
-							<td>카테고리</td>
-							<td><select name="sCategory" id="category">
-									<option value="">선택하기</option>
-									<option value="한식">한식</option>
-									<option value="분식">분식</option>
-									<option value="돈까스,회,일식">돈까스,회,일식</option>
-									<option value="아시안,양식">아시안,양식</option>
-									<option value="중국집">중국집</option>
-									<option value="카페,디저트">카페,디저트</option>
-									<option value="도시락">도시락</option>
-									<option value="패스트푸드">패스트푸드</option>
-									<option value="치킨">치킨</option>
-									<option value="피자">피자</option>
-									<option value="족발,보쌈">족발,보쌈</option>
-									<option value="찜,탕">찜,탕</option>
-									<option value="야식">야식</option>
-							</select></td>
-						</tr>
-						<tr>
+                  <tr>
+                     <td>우편번호</td>
+                     <td><input type="text" name="post"
+                        class="postcodify_postcode5" size="6" />
+                        <button id="postcodify_search_button" type="button">검색</button>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>도로명 주소</td>
+                     <td><input type="text" name="address1"class="postcodify_address" /></td>
+                  </tr>
+                  <tr>
+                     <td>상세 주소</td>
+                     <td><input type="text" name="address2"class="postcodify_details" /></td>
+                  </tr>
+                  <tr>
+                     <td>카테고리</td>
+                     <td><select name="sCategory" id="category">
+                           <option value="">선택하기</option>
+                           <option value="한식">한식</option>
+                           <option value="분식">분식</option>
+                           <option value="돈까스,회,일식">돈까스,회,일식</option>
+                           <option value="아시안,양식">아시안,양식</option>
+                           <option value="중국집">중국집</option>
+                           <option value="카페,디저트">카페,디저트</option>
+                           <option value="도시락">도시락</option>
+                           <option value="패스트푸드">패스트푸드</option>
+                           <option value="치킨">치킨</option>
+                           <option value="피자">피자</option>
+                           <option value="족발,보쌈">족발,보쌈</option>
+                           <option value="찜,탕">찜,탕</option>
+                           <option value="야식">야식</option>
+                     </select></td>
+                  </tr>
+                  <tr>
                                 <td>휴무일</td>
                                 <td>
                                     <input type="checkbox" name="sOff" class="day" value="연중무휴"><label>연중무휴</label>
@@ -636,19 +639,19 @@
                                 <td>배달비</td>
                                 <td><p><input name="deliveryCharge" type="number"placeholder="숫자만 입력해 주세요.">원</p></td>
                             </tr>
-						<tr>
-							<td>배달가능 최소금액</td>
-							<td><p>
-									<input name="minPrice" type="number" placeholder="숫자만 입력해 주세요.">원
-								</p></td>
-						</tr>
-						<tr>
-							<td>가게 대표 이미지</td>
-							<td>
-                            	<input type="file"  multiple="multiple" id="store_file"name="sFile"accept=".gif, .jpg, .png" required>
-							</td>
-						</tr>
-						<tr>
+                  <tr>
+                     <td>배달가능 최소금액</td>
+                     <td><p>
+                           <input name="minPrice" type="number" placeholder="숫자만 입력해 주세요.">원
+                        </p></td>
+                  </tr>
+                  <tr>
+                     <td>가게 대표 이미지</td>
+                     <td>
+                               <input type="file"  multiple="multiple" id="store_file"name="sFile"accept=".gif, .jpg, .png" required>
+                     </td>
+                  </tr>
+                  <tr>
                                 <td>가게 소개</td>
                                 <td><textarea id="sInfo" name="sInfo" rows="5" cols="100" placeholder="내용을 입력해주세요"></textarea></td>
                             </tr>
@@ -657,20 +660,20 @@
                         <table id="menu_table" style="display:none" >
                             <caption style="font:25px; margin-bottom: 15px; "><strong>메뉴</strong></caption>
                             <tr>
-                            	<th style="width:100px;">분류</th>
+                               <th style="width:100px;">분류</th>
                                 <th style="width:250px;">메뉴명</th>
                                 <th style="width:150px">가격</th>
                                 <th style="width:200px">이미지</th>
                                 <th style="width:150px"></th>
                             </tr>
                             <tr>
-                            	<td>
-                            		<select name="menuList[0].mnCategory" >
+                               <td>
+                                  <select name="menuList[0].mnCategory" >
                                     <option value="일반메뉴">단품메뉴</option>
                                     <option value="사이드">사이드</option>
                                     <option value="음료">음료</option>
                                     </select>
-                            	</td>
+                               </td>
                                 <td><input type="text"  placeholder="한개의 메뉴는 필수로 입력해주세요" name="menuList[0].mnName"></td>
                                 <td><input type="number" name="menuList[0].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>
                                 <td>
@@ -697,14 +700,14 @@
         </section>
         
         <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-		<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+      <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
         
     <script> 
-	$("#check_b").click( function() {
-		$('#sign_up_form').show();
-		$('#terms').hide();
-		checkAry[4] = true;
-	});
+   $("#check_b").click( function() {
+      $('#sign_up_form').show();
+      $('#terms').hide();
+      checkAry[3] = true;
+   });
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
             $('#open').attr('src',"./resources/img/close.png");
@@ -717,213 +720,185 @@
         };
     });
    $('.day').bind('click',function() {
-	   $('input[type="checkbox"]').not(this).prop("checked", false);
-	    	
-	   if( $('#holiday').is(":checked") == true){
-		   console.log( $('.day').val() );  
-	     	$('.holiday').show();
-		 }else {
-		 	$('.holiday').hide();
-		 };
+      $('input[type="checkbox"]').not(this).prop("checked", false);
+          
+      if( $('#holiday').is(":checked") == true){
+         console.log( $('.day').val() );  
+           $('.holiday').show();
+       }else {
+          $('.holiday').hide();
+       };
    });
    
     $(document).on("click","input[name=addStaff]",function(){
-		console.log("동작");
-	     	var i = 1;
-	        var addStaffText ='<tr>'+
-	            '    <td>'+
-	            '    <select name="menuList['+i+'].mnCategory" >'+
-	            '    <option value="일반메뉴">단품메뉴</option>'+
-	            '    <option value="사이드">사이드</option>'+
-	            '    <option value="음료">음료</option>'+
-	            '    </select>'+
-	            '    </td>'+
-	            '    <td><input type="text" name="menuList['+i+'].mnName"></td>'+
-	            '    <td><input type="number" name="menuList['+i+'].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>'+
-	            '    <td>'+
-	            '    <div>'+
-	            '    <input type="file"  multiple="multiple" id="buisness_file" name="mnFile" >'+
-	            '    </div>'+
-	            '    </td>'+
-	            '    <td>'+
-	            '    <input type="button" name="addStaff" value="추가" >'+
-	            '    <input type="button" name="delStaff" value="삭제" >'+
-	            '    </td>'+
-	            '    </tr>';
+      console.log("동작");
+           var i = 1;
+           var addStaffText ='<tr>'+
+               '    <td>'+
+               '    <select name="menuList['+i+'].mnCategory" >'+
+               '    <option value="일반메뉴">단품메뉴</option>'+
+               '    <option value="사이드">사이드</option>'+
+               '    <option value="음료">음료</option>'+
+               '    </select>'+
+               '    </td>'+
+               '    <td><input type="text" name="menuList['+i+'].mnName"></td>'+
+               '    <td><input type="number" name="menuList['+i+'].mnPrice" style="display:inline-block;" placeholder="숫자만 입력해 주세요.">원</td>'+
+               '    <td>'+
+               '    <div>'+
+               '    <input type="file"  multiple="multiple" id="buisness_file" name="mnFile" >'+
+               '    </div>'+
+               '    </td>'+
+               '    <td>'+
+               '    <input type="button" name="addStaff" value="추가" >'+
+               '    <input type="button" name="delStaff" value="삭제" >'+
+               '    </td>'+
+               '    </tr>';
 
-	    var trHtml = $( "#menu_table tr:last"  );
-	        
-	    trHtml.after(addStaffText);
-	    i++;
-	    });
-	    
-	    //삭제 버튼
-	   $(document).on("click","input[name=delStaff]",function(){
-		   if($("#menu_table tr").length)
-	        var trHtml = $(this).parent().parent();
-	        trHtml.remove();
-	        
-	    });
-	
-	
-	
-	
-	var ng = "양식이 맞지 않습니다.";
-	var tGreen = ({"color" : "green"});
-	var tRed = ({"color" : "red"});
-	var red = ({"border" : "2px solid  red"});
-	var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
-	
-	var check1 = [];
-	$('#check_btn').on('click', function() {
-		console.log(check1[0]);
-		var idput = $('input[name=mId]');
-		console.log($('input[name=mId]').prop("readonly"));
-		console.log($('input[name=mId]').attr("readonly"));
-		
-		if(check1[0]==true){
-			var result = confirm( "최초 가입 시 입력한 아이디는 변경할 수 없습니다." + "\n" + "계속 진행하시겠습니까?"); 
-			var mId = idput.val();
-		
-			if (result) {
-				$.ajax({
-					url : "checkId.do",
-					type : "POST",
-					data : {mId : mId},
-					success : function(data) {
-						if (data == "No") {
-							check1[0] = false;
-							idput.css(red);
-							$('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
-						} else {
-							check1[0] = true;
-							idput.css(green);
-							idput.css("background","Lightgrey");
-							idput.prop("readonly", true);
-							$('#textValue').text("  ");
-						}
-					},
-					error : function() {
-						alert("문제가 발생하였습니다.관리자에게 문의해주세요.");
-					}
-				});
-			}
-	 	}else{
-	 		$('#textValue').text("다시 확인해주세요").css(tRed);
-	 	}
-	});
-	
-	$('input').on("keyup", function() {
-		var put = $('td input');
-		var pwd = put.eq(1).val();
+       var trHtml = $( "#menu_table tr:last"  );
+           
+       trHtml.after(addStaffText);
+       i++;
+       });
+       
+       //삭제 버튼
+      $(document).on("click","input[name=delStaff]",function(){
+         if($("#menu_table tr").length>=3){
+           var trHtml = $(this).parent().parent();
+           trHtml.remove();
+         }
+       });
+   
+   
+   
+   
+   var ng = "양식이 맞지 않습니다.";
+   var tGreen = ({"color" : "green"});
+   var tRed = ({"color" : "red"});
+   var red = ({"border" : "2px solid  red"});
+   var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
+   var checkAry = [true,false,false,false];
+   
+   var check1 = [];
+   $('#check_btn').on('click', function() {
+      var idput = $('input[name=mId]');
+      console.log($('input[name=mId]').prop("readonly"));
+      console.log($('input[name=mId]').attr("readonly"));
+      
+      if(check1[0]==true){
+         var result = confirm( "최초 가입 시 입력한 아이디는 변경할 수 없습니다." + "\n" + "계속 진행하시겠습니까?"); 
+         var mId = idput.val();
+      
+         if (result) {
+            $.ajax({
+               url : "checkId.do",
+               type : "POST",
+               data : {mId : mId},
+               success : function(data) {
+                  if (data == "No") {
+                     check1[0] = false;
+                     idput.css(red);
+                     $('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
+                  } else {
+                     check1[0] = true;
+                     checkAry[4] = true;
+                     idput.css(green);
+                     idput.css("background","Lightgrey");
+                     idput.prop("readonly", true);
+                     $('#textValue').text("  ");
+                  }
+               },
+               error : function() {
+                  alert("문제가 발생하였습니다.관리자에게 문의해주세요.");
+               }
+            });
+         }
+       }else{
+          $('#textValue').text("다시 확인해주세요").css(tRed);
+       }
+   });
+   
+   $('input').on("keyup", function() {
+      var put = $('td input');
+      var pwd = put.eq(1).val();
 
-		for (var i=0; i<8;i++) {
-			var check = false;
-			var cput = put.eq(i);
-			var vput = put.eq(i).val();
-			
-			switch(i){
-				case 0 :check=(/^[a-zA-Z0-9]{6,10}$/).test(vput);break;
-				case 1 :check=(/^[a-zA-Z0-9]{8,12}$/).test(vput);break;
-				case 2 :check=(pwd==vput);break;
-				case 3 :check=(/^[가-힣]{2,}$/).test(vput);break;
-				case 4 :check=(/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(vput);break;
-				default :check = (/^[0-9]+$/).test(vput);break;}
-			
-			if(check==false){
-				check1[i] = false; 
-				cput.css(red);
-				break;
-			}else{
-				check1[i] = true;
-				cput.css(green);
-			}
-		}
-	});
-	
+      for (var i=0; i<8;i++) {
+         var check = false;
+         var cput = put.eq(i);
+         var vput = put.eq(i).val();
+         
+         switch(i){
+            case 0 :check=(/^[a-zA-Z0-9]{6,10}$/).test(vput);break;
+            case 1 :check=(/^[a-zA-Z0-9]{8,12}$/).test(vput);break;
+            case 2 :check=(pwd==vput);break;
+            case 3 :check=(/^[가-힣]{2,}$/).test(vput);break;
+            case 4 :check=(/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(vput);break;
+            default :check = (/^[0-9]+$/).test(vput);break;}
+         
+         if(check==false){
+            check1[i] = false; 
+            cput.css(red);
+            break;
+         }else{
+            check1[i] = true;
+            cput.css(green);
+         }
+      }
+   });
+   
 
 
-	    $('#sign_up_table').on("mouseover focus", function() {
-	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
-	    	
-	    	if($.inArray(false, check1) >= 0){
-	    		checkAry[0] = false;
-	    		console.log("1번 테이블"+check3);
-			}else{
-	    		checkAry[0] = true; 
-			}
-	    });
-	    
-		
-		var check2 = [false];
-		$(document).on("focusin","#buisness_table",function(){
-	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
-	    	
-	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){
-	    		check2[0]=true;}
-	    	
-	    	if($.inArray(false, check2[0]) >= 0){
-	    		checkAry[1] = false; 
-	    		console.log("2번 테이블"+check3);
-			}else{
-	    		checkAry[1] = true; 
-			}
-	    });
-	    
-	    var check3 = [];
-	    for(var i=0;i<12;i++){check3[i]=false;}
-	    $('#store_table').on("mouseover focus", function() {
-	    	
-	    	if((/^[0-9가-힣a-zA-Z.;\-]+$/).test($('input[name=sName]').val())){
-	    		check3[0] = true;$('input[name=sName]').css(green);}
-	    	
-	    	$('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
-	    	if((/^[0-9]+$/).test($('input[name=sTel]').val())){
-	    		check3[1] = true;}
-	    	if($('input[name=post]').val()!=""||$('input[name=address1]').val()!=""){
-		    	check3[2] = true;$('input[name=sName]').css(green);}
-	    	
-	    	if($('select[name=sCategory]').val()!=""){
-		    	check3[3] = true;$('select[name=sCategory]').css(green);}
-	    	
-	    	var time = $('.time'); 
-	    	$('#openTime').val("평일 : "+time.eq(0).val()+"~"+time.eq(1).val()
-	    			+",토요일 : "+time.eq(2).val()+"~"+time.eq(3).val()
-	    			+",일요일 : "+time.eq(4).val()+"~"+time.eq(5).val()); 
+       $('#sign_up_table').on("mouseover focus", function() {
+          $('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
+          
+          if($.inArray("false", check1) >= 0){
+             checkAry[0] = false;
+             console.log("1번 테이블 불량"+check1);
+         }else{
+             checkAry[0] = true; 
+             console.log("1번 테이블"+check1);
+             console.log("1번 테이블"+checkAry);
+         }
+       });
+       
+      
+      $('#buisness_table').on("mouseover focus", function() {
+          $('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
+          
+          if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){checkAry[1] = true; }
 
-	    	if($.inArray(false, check3) >= 0){
-	    		checkAry[2] = false;
-	    		console.log("3번 테이블"+check3);
-			}else{
-	    		checkAry[2] = true; 
-			}
-	    	
-	    });
-	    
-		var check4 = [];
-	    $('#menu_table').on("mouseover focus", function() {
-	    	if($.inArray(false, check4) >= 0){
-	    		checkAry[3] = false;
-	    		console.log("4번 테이블"+check3);
-			}else{
-	    		checkAry[3] = true; 
-			}
-	    });
+             console.log("2번 테이블 결과"+checkAry);
+       });
+       
+       var check3 = [];
+       $('#store_table').on("mouseover focus", function() {
+          
+          if((/^[0-9가-힣a-zA-Z.;\-_ ]+$/).test($('input[name=sName]').val())){checkAry[2] = true;}
+          
+          $('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
 
-	    
-	    var checkAry = [true,false,true,true];
-	    $('#sign_up').on("click", function() {
-	    	if($("#sOff").is(":checked")){
-	    		$("#sOff").val($("#week").val()+" "+$("#day").val());
-	    	}
- 	   		if($.inArray(false, checkAry) >= 0){
- 	   			console.log("최종"+checkAry);
-				alert("다시 확인 해 주세요.");
-				return false;
-			}else{
-				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
-			} 
-	    });
+          var time = $('.time'); 
+          $('#openTime').val("평일 : "+time.eq(0).val()+"~"+time.eq(1).val()
+                +",토요일 : "+time.eq(2).val()+"~"+time.eq(3).val()
+                +",일요일 : "+time.eq(4).val()+"~"+time.eq(5).val()); 
+          
+             console.log("3번 테이블 결과"+checkAry);
+       });
+       
+
+       
+       
+       $('#sign_up').on("click", function() {
+          if($("#sOff").is(":checked")){$("#sOff").val($("#week").val()+" "+$("#day").val());}
+          
+          $("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
+/*              if($.inArray(false, checkAry) >= 0){
+                console.log("최종불량"+checkAry);
+            alert("다시 확인 해 주세요.");
+            return false;
+         }else{
+            $("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
+         }  */
+       });
 
     </script>   
 <jsp:include page="../common/footer.jsp" />

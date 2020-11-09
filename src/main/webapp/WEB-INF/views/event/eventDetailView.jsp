@@ -24,9 +24,15 @@
 	#replyTable {
 		width: 80%;
 	}
+	
+	.imgArea {
+		width:200px;
+		height:600px;
+	}
+	
 	#eventImg {
-		width:100%;
-		height:100%;
+		width:200px;
+		height:600px;
 	}
 	
 	.btn {
@@ -95,7 +101,7 @@
                     <tr><td colspan="2"><hr></td></tr>
                     <tr>
                         <td colspan="2">
-                            <div id="imgArea">
+                            <div id="imgArea" align="center">
 	                            <c:if test="${ !empty at.originalFileName }">
 	                            	<img id="eventImg" src="${ contextPath }/resources/euploadFiles/${ at.changeFileName }">
 	                           	</c:if>

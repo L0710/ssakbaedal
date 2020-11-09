@@ -95,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM ATTACHMENT
 		WHERE REF_ID=#{eNo}
 		AND A_STATUS='Y'
+        AND A_TYPE=1
 	</select>
 	
 	<update id="updateEvent" parameterType="Event">

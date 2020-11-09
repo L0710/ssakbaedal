@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -659,12 +660,11 @@ public class MemberController {
 		return "redirect:memlist.do";
 	}
 
-//	@Scheduled(cron = "0 0 0 * * ?") // 매일 00시마다 동작
 //	@Scheduled(cron="0 * * * * *") // 매분 0초마다 동작
+	@Scheduled(cron = "0 0 0 * * ?") // 매일 00시마다 동작
 	public void releaseMember() {
 		
 		ArrayList<Member> list = mService.selectBannedList();
-//		System.out.println("list:"+list);
 		
 		int result = 0;
 		

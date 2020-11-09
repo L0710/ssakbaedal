@@ -156,7 +156,7 @@
             width: 150px;
             position: fixed;
             top: 230px;
-            left: 1230px;
+            left: 1150px;
             margin-top: 50px;
         }
 
@@ -955,8 +955,8 @@ function load() {
     <div class="sidemenu">
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
-        <button class="btn-ghost gray si" onclick="location.href='${contextPaht}/storeManage.do'">매장관리</button>
-        <button class="btn-ghost gray si">알림</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
+        <button class="btn-ghost gray si" onclick="location.href='${contextPath}/snlist.do'">매장공지</button>
     </div>
     </section>
 
