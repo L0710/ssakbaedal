@@ -131,12 +131,11 @@
         .sidemenu {
             width: 150px;
             position: fixed;
-            top: 200px;
-            left: 1150px;
+            top: 230px;
+            left: 1230px;
             margin-top: 50px;
-            /* border: 1px solid rgb(64, 64, 64);
-            border-radius: 20px; */
         }
+
 
         .contents {
             margin-top: 1%;
@@ -361,7 +360,6 @@
     </section>
 
     </div>
-    <br><br><br><br><br><br>
 
 	<c:import url="../../common/footer.jsp"/>
 

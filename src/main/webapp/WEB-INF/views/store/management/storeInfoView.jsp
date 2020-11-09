@@ -152,9 +152,10 @@
             width: 150px;
             position: fixed;
             top: 230px;
-            left: 1150px;
+            left: 1230px;
             margin-top: 50px;
         }
+
 
         .contents {
             margin-top: 1%;
