@@ -152,6 +152,7 @@
 				}); 
 			}); 
 		Kakao.init('54a0daec21ba792b78efb112d8522735'); 
+		Kakao.isInitialized();
 		function loginFormWithKakao() { 
 			Kakao.Auth.loginForm({ 
 				success: function(authObj) { 

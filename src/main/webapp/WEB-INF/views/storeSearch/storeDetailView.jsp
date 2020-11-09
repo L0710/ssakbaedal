@@ -25,7 +25,7 @@ section {
 .sinfoTable {
 	border-collapse: collapse;
 	background-color: #F2F2F2;
-	width: 60%;
+	width: 70%;
 	overflow: hidden;
 	border-radius: 5px;
 }
@@ -553,12 +553,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 					function sum(){
 						total = 0;	
 						$('.qty').each(function(index, value){
-							//console.log("index : " + index);
-							//console.log("value : " + value);
 							var qty = $(this).val();
 							var mPrice = parseInt($('.mPrice')[index].value);
-							/* console.log(qty);
-							console.log(mPrice); */
+							
 							total += qty * mPrice;
 						})
 						$("#total").html(total.toLocaleString());
