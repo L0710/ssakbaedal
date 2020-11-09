@@ -434,15 +434,9 @@ function load() {
                             <td>
                             <c:if test="${menu.mnStatus eq 'N'}">
                             	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long" checked >
-	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day">
-                            </c:if>
-	                           <c:if test="${menu.mnStatus eq 'D'}">
-                            	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long"  >
-	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" checked>
                             </c:if>
                             <c:if test="${menu.mnStatus eq 'Y'}">
                             	장기품절<input type="checkbox" name="soldout" class="ssoldout" value="long" >
-	                            하루품절<input type="checkbox" name="soldout" class="ssoldout"  value="day" >
                             </c:if>
                             </td>
                         </tr>

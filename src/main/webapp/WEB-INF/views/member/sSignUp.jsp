@@ -473,6 +473,7 @@
                         <br>
             <input type="checkbox" id="check_b"><label>약관 확인 후 동의합니다.</label> 
             <br><br>
+
             </div>
             <p id="textValue" disabled></p>
                     <form id="sign_up_form" enctype="multipart/form-data" style="display:none" >
@@ -706,7 +707,9 @@
    $("#check_b").click( function() {
       $('#sign_up_form').show();
       $('#terms').hide();
+
       checkAry[3] = true;
+
    });
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
@@ -766,6 +769,7 @@
            var trHtml = $(this).parent().parent();
            trHtml.remove();
          }
+
        });
    
    
@@ -776,10 +780,12 @@
    var tRed = ({"color" : "red"});
    var red = ({"border" : "2px solid  red"});
    var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
+
    var checkAry = [true,false,false,false];
    
    var check1 = [];
    $('#check_btn').on('click', function() {
+
       var idput = $('input[name=mId]');
       console.log($('input[name=mId]').prop("readonly"));
       console.log($('input[name=mId]').attr("readonly"));
@@ -800,7 +806,9 @@
                      $('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
                   } else {
                      check1[0] = true;
+
                      checkAry[4] = true;
+
                      idput.css(green);
                      idput.css("background","Lightgrey");
                      idput.prop("readonly", true);
@@ -850,9 +858,11 @@
        $('#sign_up_table').on("mouseover focus", function() {
           $('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
           
+
           if($.inArray("false", check1) >= 0){
              checkAry[0] = false;
              console.log("1번 테이블 불량"+check1);
+
          }else{
              checkAry[0] = true; 
              console.log("1번 테이블"+check1);
@@ -861,18 +871,21 @@
        });
        
       
+
       $('#buisness_table').on("mouseover focus", function() {
           $('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
           
           if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){checkAry[1] = true; }
 
              console.log("2번 테이블 결과"+checkAry);
+
        });
        
        var check3 = [];
        $('#store_table').on("mouseover focus", function() {
           
           if((/^[0-9가-힣a-zA-Z.;\-_ ]+$/).test($('input[name=sName]').val())){checkAry[2] = true;}
+
           
           $('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
 
@@ -880,6 +893,7 @@
           $('#openTime').val("평일 : "+time.eq(0).val()+"~"+time.eq(1).val()
                 +",토요일 : "+time.eq(2).val()+"~"+time.eq(3).val()
                 +",일요일 : "+time.eq(4).val()+"~"+time.eq(5).val()); 
+
           
              console.log("3번 테이블 결과"+checkAry);
        });
@@ -893,10 +907,12 @@
           $("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
 /*              if($.inArray(false, checkAry) >= 0){
                 console.log("최종불량"+checkAry);
+
             alert("다시 확인 해 주세요.");
             return false;
          }else{
             $("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
+
          }  */
        });
 

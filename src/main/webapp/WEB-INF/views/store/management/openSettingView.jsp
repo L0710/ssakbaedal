@@ -370,28 +370,24 @@
                             <th>매장상태</th>
                         </tr>
                         
-                        <c:forEach var="db" items="${db}" varStatus="i"> 
+                       <c:forEach var="db" items="${db}" > 
                         <tr>
-                        <c:if test="${db.startDate != null && db.endDate != null }">
-                        	<td>
-                        		${db.startDate}~${db.endDate}
-                        	</td>
-                        	<td>휴가</td>
-                        </c:if>
-                        <c:if test="${db.startDate == null && db.endDate == null}">
-                        	<td>${db.today}</td>
-                        	<c:choose>
-                        		<c:when test="${db.sStatus eq 1}">
-                        			<td>정상영업</td>
-                        		</c:when>
-                        		<c:when test="${db.sStatus eq 2 }">
-                        			<td>하루폐점</td>
-                        		</c:when>
-                        	</c:choose>                 
-                        </c:if>
-
+                        	<c:if test="${db.sStatus == 3 }">
+                        		<td>${db.startDate} ~ ${db.endDate}</td>
+                        		<td>휴가</td>
+                        	</c:if>
+                        	
+                        	<c:if test="${db.sStatus == 2 }">
+                        		<td>${db.today}</td>
+                        		<td>하루폐점</td>
+                        	</c:if>
+                        	
+                        	<c:if test="${db.sStatus == 1 }">
+                        		<td>${db.today}</td>
+                        		<td>정상영업</td>
+                        	</c:if>
                         </tr>
-                        </c:forEach>
+                        </c:forEach> 
                         
                         
          <tr align="center" height="20">
@@ -440,8 +436,8 @@
     </div>
 
     </section>
-    <div class="sidemenu">
-    	<c:url var="storeManage" value="storeManage.do">
+        <div class="sidemenu">
+        <c:url var="storeManage" value="storeManage.do">
 			<c:param name="mNo" value="${ loginUser.mNo }"/>
 		</c:url> 
         <button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
