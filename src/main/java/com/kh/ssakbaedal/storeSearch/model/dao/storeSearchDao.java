@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ssakbaedal.common.attachment.Attachment;
 import com.kh.ssakbaedal.storeSearch.model.vo.PageInfo;
+import com.kh.ssakbaedal.storeSearch.model.vo.address;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeMenu;
 import com.kh.ssakbaedal.storeSearch.model.vo.storeSearch;
 
@@ -20,8 +21,8 @@ public class storeSearchDao {
 	private SqlSessionTemplate sqlSession;
 	
 	// 1_1. 전체 매장 수 리턴 받기 -> 페이징 계산
-	public int slectListCount() {
-		return sqlSession.selectOne("storeSearchMapper.selectListCount");
+	public int slectListCount(address add) {
+		return sqlSession.selectOne("storeSearchMapper.selectListCount", add);
 	}
 	
 	// 1_2. 전체 매장 조회(페이징 처리 된)
@@ -33,17 +34,17 @@ public class storeSearchDao {
 	}*/
 	
 	// 전체 매장 조회 페이징 처리 된 테스트 중.
-	public ArrayList<storeSearch> selectToList(PageInfo pi) {
+	public ArrayList<storeSearch> selectToList(PageInfo pi, address add) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("storeSearchMapper.selectToList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("storeSearchMapper.selectToList", add, rowBounds);
 	}
 	
 	// 전체 매장 조회 파일 테스트 중
-	public ArrayList<Attachment> selectToatList(PageInfo pi) {
+	public ArrayList<Attachment> selectToatList(PageInfo pi, address add) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("storeSearchMapper.selectToatList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("storeSearchMapper.selectToatList", add, rowBounds);
 	}
 	
 	// 2_1. 한식 매장 전체 수 조회 -> 페이징 계산

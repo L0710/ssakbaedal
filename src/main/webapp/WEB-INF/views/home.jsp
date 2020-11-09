@@ -162,6 +162,23 @@
 		padding: 0.5em;
 	}
 	
+	#postcodify_search_button{
+		height: 30px;
+		width: 280px;
+		background-color: white;
+		font-size: 15px;
+		margin-top: 5px;
+		margin-left: 46px;
+	}
+	
+	.close {
+      border: 1px solid lightgray;
+      background-color: white;
+      width: 50px;
+      font-size: 10px;
+      padding: 0.5em;
+   }
+	
 </style>
 </head>
 <body>
@@ -170,11 +187,24 @@
         <br>
         <section>
             <div class="contents">
+            	<form action="addrSave.do" method="get">
+					<div id="address" align="center">
+						<input type="text" id="postcodify_search_button" class="postcodify_address addtxt"
+							name="address1" placeholder="주소입력" value="${ address1 }">
+						<button type="submit" id="addrSave" class="btn-ghost green close">저장</button>
+					</div>
+				</form>
 
                 <div class="slide_wrapper" align="center">
+                	<!-- 전체보기 -->
+                	<c:url var="tslist" value="tslist.do">
+                		<c:param name="addr" value="${ addr }"/>
+                		<c:param name="address1" value="${ address1 }"/>
+                	</c:url>
+             		
                     <ul class="slides">
                         <li>
-                            <img src="./resources/img/total22.jpg" onclick="location.href='${contextPath}/tslist.do'">
+                            <img src="./resources/img/total22.jpg" onclick="location.href='${contextPath}/${ tslist }'">
                             <p style="font-family: 'Nanum Gothic', sans-serif; font-size: 14px;">전체보기</p>
                         </li>
                         <li>
@@ -306,5 +336,9 @@
             }
         };
     </script>
+    
+    <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+	
+	<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
 </body>
 </html>

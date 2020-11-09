@@ -12,14 +12,12 @@
     *:focus{
         outline: none;
     }
-
     /* 공통,색별 버튼 css */
     button {
         cursor: pointer;
         margin: 3px;
         padding: 10px 20px;
     }
-
     /* 태그별 css */
     #sign_up_div{
         border: 2px solid  rgb(130, 180, 127);
@@ -209,7 +207,6 @@
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
-
     </style>
 </head>
 <body>
@@ -845,7 +842,6 @@
 	});
 	
 
-
 	    $('#sign_up_table').on("mouseover focus", function() {
 	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
 	    	
@@ -864,6 +860,7 @@
 	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
 	    	
 	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){checkAry[1] = true;}else{checkAry[1] = false;}
+
 
 	    		console.log("2번 테이블 결과"+checkAry);
 	    });
@@ -899,7 +896,7 @@
 			}  
 	    });
 
-
+      
     </script>   
 <jsp:include page="../common/footer.jsp" />
 </body>

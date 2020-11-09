@@ -67,6 +67,20 @@
         	margin-top: 30px;
         }
         
+        .btn-ghost.gray.si {
+    		width: 150px;
+    		height: 40px;
+    		padding-top: 5px;
+		}
+		
+		.sidemenu {
+            width: 150px;
+            position: fixed;
+            top: 230px;
+            left: 1150px;
+            margin-top: 50px;
+        }
+        
 </style>
 
 </head>
@@ -140,7 +154,12 @@
 			</div>
 			
 		</section>
-		<c:import url="../common/sidemenu_store.jsp"/>
+		<div class="sidemenu">
+        	<button class="btn-ghost gray si" onclick="location.href='${contextPath}/menuSetting.do'">메뉴관리</button>
+        	<button class="btn-ghost gray si" onclick="location.href='${contextPath}/openSetting.do'">영업관리</button>
+        	<button class="btn-ghost gray si" onclick="location.href='${contextPath}/storeManage.do'">매장관리</button>
+        	<button class="btn-ghost gray si" onclick="location.href='${contextPath}/snlist.do'">매장공지</button>
+    	</div>
 		
 	</div>
 	

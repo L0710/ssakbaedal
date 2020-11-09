@@ -33,7 +33,11 @@
 
 </head>
 <body>
-	<c:url var="tslist" value="tslist.do"/>
+	<!-- 전체보기 -->
+    <c:url var="tslist" value="tslist.do">
+		<c:param name="addr" value="${ sAddr }"/>
+		<c:param name="address1" value="${ sAddress1 }"/>
+    </c:url>
 	<c:url var="kslist" value="kslist.do"/>
 	<c:url var="cslist" value="cslist.do"/>
 	<c:url var="jslist" value="jslist.do"/>
