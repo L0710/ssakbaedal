@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectDB" parameterType="_int" resultMap="openDBResultSet">
-		SELECT TO_CHAR(START_DATE, 'YYYY/MM/DD') AS SDATE,TO_CHAR(END_DATE, 'YYYY/MM/DD') AS EDATE
+		SELECT  MNO, S_STATUS,TO_CHAR(START_DATE,'YYYY/MM/DD') AS SDATE,TO_CHAR(END_DATE,'YYYY/MM/DD') AS EDATE,TODAY
 		FROM OpenDB
 		WHERE MNO = #{mNo}
 		ORDER BY TODAY DESC

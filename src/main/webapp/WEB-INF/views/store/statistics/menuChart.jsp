@@ -195,8 +195,8 @@
             <div style="float:left; margin-left:160px;"> 
 				<canvas id="canvas1" width="300" height="300"></canvas>            
             </div>
-            <div style="width:250px; height:170px; float:left; margin-left:70px; padding-top:20px; border:1px solid lightgray;" >
-            	<table id="menuListTable">
+            <div style="width:250px; height:170px; float:left; margin-left:70px; padding-top:20px;" >
+            	<table id="menuListTable" style=" margin-bottom:30px;">
             		<thead>
             				<td></td>
             				<td></td>
