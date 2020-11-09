@@ -702,11 +702,13 @@
       <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
         
     <script> 
+
 	$("#check_b").click( function() {
 		$('#sign_up_form').show();
 		$('#terms').hide();
 		checkAry[3] = true;
 	});
+
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
             $('#open').attr('src',"./resources/img/close.png");
@@ -814,6 +816,7 @@
 	$('input').on("keyup", function() {
 		var put = $('td input');
 		var pwd = put.eq(1).val();
+
 		for (var i=0; i<8;i++) {
 			var check = false;
 			var cput = put.eq(i);
@@ -838,6 +841,7 @@
 		}
 	});
 	
+
 	    $('#sign_up_table').on("mouseover focus", function() {
 	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
 	    	
@@ -856,6 +860,8 @@
 	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
 	    	
 	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){checkAry[1] = true;}else{checkAry[1] = false;}
+
+
 	    		console.log("2번 테이블 결과"+checkAry);
 	    });
 	    
@@ -866,6 +872,7 @@
 	    	if(sName!=''){checkAry[2] = true;}else{checkAry[2] = false;}
 	    	
 	    	$('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
+
 	    	var time = $('.time'); 
 	    	$('#openTime').val("평일 : "+time.eq(0).val()+"~"+time.eq(1).val()
 	    			+",토요일 : "+time.eq(2).val()+"~"+time.eq(3).val()
@@ -874,10 +881,12 @@
 	    		console.log("3번 테이블 결과"+checkAry);
 	    });
 	    
+
 	    
 	    
 	    $('#sign_up').on("click", function() {
 	    	if($("#sOff").is(":checked")){$("#sOff").val($("#week").val()+" "+$("#day").val());}
+
   	   	if($.inArray(false, checkAry) >= 0){
  	   			console.log("최종불량"+checkAry);
 				alert("다시 확인 해 주세요.");
@@ -886,6 +895,8 @@
 				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
 			}  
 	    });
+
+      
     </script>   
 <jsp:include page="../common/footer.jsp" />
 </body>
