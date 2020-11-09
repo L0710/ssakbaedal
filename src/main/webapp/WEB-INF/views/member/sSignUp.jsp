@@ -665,7 +665,7 @@
                             </tr>
                             <tr>
                             	<td>
-                            		<select name="menuList[0].mnCategory" >
+                            		<select name="menuList[0].smallCate" >
                                     <option value="일반메뉴">단품메뉴</option>
                                     <option value="사이드">사이드</option>
                                     <option value="음료">음료</option>
@@ -703,7 +703,7 @@
 	$("#check_b").click( function() {
 		$('#sign_up_form').show();
 		$('#terms').hide();
-		checkAry[4] = true;
+		checkAry[3] = true;
 	});
     $( '#open' ).click( function() {
         if ($('#store_table').css('display') == 'none') {
@@ -726,13 +726,12 @@
 		 	$('.holiday').hide();
 		 };
    });
-   
+   var i = 1;
     $(document).on("click","input[name=addStaff]",function(){
-		console.log("동작");
-	     	var i = 1;
+	     	
 	        var addStaffText ='<tr>'+
 	            '    <td>'+
-	            '    <select name="menuList['+i+'].mnCategory" >'+
+	            '    <select name="menuList['+i+'].smallCate" >'+
 	            '    <option value="일반메뉴">단품메뉴</option>'+
 	            '    <option value="사이드">사이드</option>'+
 	            '    <option value="음료">음료</option>'+
@@ -750,19 +749,18 @@
 	            '    <input type="button" name="delStaff" value="삭제" >'+
 	            '    </td>'+
 	            '    </tr>';
-
+	    i+=1;
 	    var trHtml = $( "#menu_table tr:last"  );
 	        
 	    trHtml.after(addStaffText);
-	    i++;
 	    });
 	    
 	    //삭제 버튼
 	   $(document).on("click","input[name=delStaff]",function(){
-		   if($("#menu_table tr").length)
+		   if($("#menu_table tr").length>2){
 	        var trHtml = $(this).parent().parent();
 	        trHtml.remove();
-	        
+		   }
 	    });
 	
 	
@@ -773,13 +771,11 @@
 	var tRed = ({"color" : "red"});
 	var red = ({"border" : "2px solid  red"});
 	var green = ({"border" : "2px solid rgb(130, 180, 127, 0.7)"});
+	var checkAry = [true,false,false,false];
 	
 	var check1 = [];
 	$('#check_btn').on('click', function() {
-		console.log(check1[0]);
 		var idput = $('input[name=mId]');
-		console.log($('input[name=mId]').prop("readonly"));
-		console.log($('input[name=mId]').attr("readonly"));
 		
 		if(check1[0]==true){
 			var result = confirm( "최초 가입 시 입력한 아이디는 변경할 수 없습니다." + "\n" + "계속 진행하시겠습니까?"); 
@@ -797,6 +793,7 @@
 							$('#textValue').text("사용 불가능한 아이디 입니다").css(tRed);
 						} else {
 							check1[0] = true;
+							checkAry[4] = true;
 							idput.css(green);
 							idput.css("background","Lightgrey");
 							idput.prop("readonly", true);
@@ -846,83 +843,54 @@
 	    $('#sign_up_table').on("mouseover focus", function() {
 	    	$('input[name=mPhone]').val($('#phone1').val() +$('#phone2').val()+$('#phone3').val());
 	    	
-	    	if($.inArray(false, check1) >= 0){
+	    	if($.inArray("false", check1) >= 0){
 	    		checkAry[0] = false;
-	    		console.log("1번 테이블"+check3);
+	    		console.log("1번 테이블 불량"+check1);
 			}else{
 	    		checkAry[0] = true; 
+	    		console.log("1번 테이블"+check1);
+	    		console.log("1번 테이블"+checkAry);
 			}
 	    });
 	    
 		
-		var check2 = [false];
-		$(document).on("focusin","#buisness_table",function(){
+		$('#buisness_table').on("mouseover focus", function() {
 	    	$('input[name=sNo]').val($('#sNumber1').val()+$('#sNumber2').val()+$('#sNumber3').val());
 	    	
-	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){
-	    		check2[0]=true;}
-	    	
-	    	if($.inArray(false, check2[0]) >= 0){
-	    		checkAry[1] = false; 
-	    		console.log("2번 테이블"+check3);
-			}else{
-	    		checkAry[1] = true; 
-			}
+	    	if((/^[0-9]{10}$/).test($('input[name=sNo]').val())){checkAry[1] = true;}else{checkAry[1] = false;}
+
+	    		console.log("2번 테이블 결과"+checkAry);
 	    });
 	    
 	    var check3 = [];
-	    for(var i=0;i<12;i++){check3[i]=false;}
 	    $('#store_table').on("mouseover focus", function() {
+	    	var sName = $('input[name=sName]').val();
 	    	
-	    	if((/^[0-9가-힣a-zA-Z.;\-]+$/).test($('input[name=sName]').val())){
-	    		check3[0] = true;$('input[name=sName]').css(green);}
+	    	if(sName!=''){checkAry[2] = true;}else{checkAry[2] = false;}
 	    	
 	    	$('input[name=sTel]').val($('#sTel1').val() +$('#sTel2').val()+$('#sTel3').val());
-	    	if((/^[0-9]+$/).test($('input[name=sTel]').val())){
-	    		check3[1] = true;}
-	    	if($('input[name=post]').val()!=""||$('input[name=address1]').val()!=""){
-		    	check3[2] = true;$('input[name=sName]').css(green);}
-	    	
-	    	if($('select[name=sCategory]').val()!=""){
-		    	check3[3] = true;$('select[name=sCategory]').css(green);}
-	    	
+
 	    	var time = $('.time'); 
 	    	$('#openTime').val("평일 : "+time.eq(0).val()+"~"+time.eq(1).val()
 	    			+",토요일 : "+time.eq(2).val()+"~"+time.eq(3).val()
 	    			+",일요일 : "+time.eq(4).val()+"~"+time.eq(5).val()); 
-
-	    	if($.inArray(false, check3) >= 0){
-	    		checkAry[2] = false;
-	    		console.log("3번 테이블"+check3);
-			}else{
-	    		checkAry[2] = true; 
-			}
 	    	
+	    		console.log("3번 테이블 결과"+checkAry);
 	    });
 	    
-		var check4 = [];
-	    $('#menu_table').on("mouseover focus", function() {
-	    	if($.inArray(false, check4) >= 0){
-	    		checkAry[3] = false;
-	    		console.log("4번 테이블"+check3);
-			}else{
-	    		checkAry[3] = true; 
-			}
-	    });
 
 	    
-	    var checkAry = [true,false,true,true];
+	    
 	    $('#sign_up').on("click", function() {
-	    	if($("#sOff").is(":checked")){
-	    		$("#sOff").val($("#week").val()+" "+$("#day").val());
-	    	}
- 	   		if($.inArray(false, checkAry) >= 0){
- 	   			console.log("최종"+checkAry);
+	    	if($("#sOff").is(":checked")){$("#sOff").val($("#week").val()+" "+$("#day").val());}
+
+  	   		if($.inArray(false, checkAry) >= 0){
+ 	   			console.log("최종불량"+checkAry);
 				alert("다시 확인 해 주세요.");
 				return false;
 			}else{
 				$("#sign_up_form").attr({action:'sInsert.do', method:'POST'}).submit();
-			} 
+			}  
 	    });
 
     </script>   
