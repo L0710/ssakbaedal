@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -92,7 +92,7 @@ public class ManagementController {
 		
 		return "redirect:store/management/menuSettingView";
 	}
-	
+
 
 	
 	//베스트메뉴로 등록
@@ -200,7 +200,6 @@ public class ManagementController {
 		ArrayList<OpenDB> list = smService.selectList(pi);
 		
 		System.out.println(list);
-		System.out.println(pi);
 		
 		if(list != null) {
 			mv.addObject("list", list);
@@ -211,7 +210,6 @@ public class ManagementController {
 		
 		Store s = smService.selectStore(mNo);
 		ArrayList<OpenDB> db = smService.selectDB(mNo);
-		
 		
 		if(s != null) {
 			mv.addObject("store", s);
@@ -230,7 +228,8 @@ public class ManagementController {
 													@RequestParam("start") String start,
 													@RequestParam("end") String end) throws ParseException{
 		
-		System.out.println("update : " + start+end);
+System.out.println(start);
+System.out.println(soStatus);
 		OpenDB db = new OpenDB();
 
 		int mNo = s.getmNo();
@@ -238,23 +237,14 @@ public class ManagementController {
 		db.setmNo(mNo);
 		db.setsStatus(sStatus);
 		
+		System.out.println(start);
+		System.out.println(end);
+		
 		s.setsStatus(sStatus);
 		
-		if(start != null && end != null) {
-			
-			System.out.println("a");
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			
-			String sDate = start.replace("-", "");
-			System.out.println(sDate);
-			
-			String eDate = end.replace("-", "");
-			System.out.println(eDate);
-			
-			db.setStartDate(sDate);
-			db.setEndDate(eDate);
-
+		if(soStatus.equals("3")) {
+			db.setStartDate(start);
+			db.setEndDate(end);
 		} 
 		
 		int result1 = smService.insertDB(db);
