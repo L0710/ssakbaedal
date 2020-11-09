@@ -225,8 +225,8 @@
             float: left;
             width: 286px;
             height: 100px;
-            margin-top: 4.5px;
-            margin-left: 10px;
+            margin-top: 26px;
+            margin-left: 15px;
         }
 
         .store_info span{
@@ -248,13 +248,6 @@
 	
 	                <!-- 상단 메뉴바에서 전체보기 및 한식 중 식 선택 시 텍스트도 동일하게 변경됨. -->
 	                <h1 align="center">전체보기</h1>
-	
-	                <div id="sort_area">
-	                    <span id="sort_title">정렬 기준 : </span>
-	                    <button class="btn-ghost gray" id="starScore">별점</button>
-	                    <button class="btn-ghost gray" id="review">리뷰</button>
-	                </div> 
-					
 					
 		                <div class="store_area">
 		                <c:forEach var="to" items="${toList}">
@@ -263,7 +256,7 @@
 		                		<c:param name="page" value="${ pi.currentPage }"/>
 		                		
 		                	</c:url>
-		                    <div class="store_item" id="storeItem" onclick="location.href='${contextPath}/${sinfoDetail}'"><!-- 요걸 클릭했을 때 매장 상세정보 뷰로 이동하게 해야 함. -->
+		                    <div class="store_item" id="storeItem" onclick="location.href='${contextPath}/${sinfoDetail}'">
 		                        <div class="store_img_area"> <!-- 사진 파일 저장되면 불러올 예정. -->
 			                        <c:forEach var="atList" items="${ atList }">
 				                        <c:if test="${ to.mNo == atList.refId }">
@@ -274,9 +267,7 @@
 		                        <div class="store_info">
 		                            <p>
 		                            	<strong>${ to.sName }</strong><br>
-		                            	<span>별점 (ex: ★ 4)</span><br>
-										리뷰갯수(ex: 리뷰 100)<br>
-										사장님 댓글(ex: 사장님 댓글 100+)
+		                            	${ to.sTel }
 		                            </p>
 		                        </div>
 		                    </div>

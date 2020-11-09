@@ -37,12 +37,12 @@ public class storeSearchController {
 	public ModelAndView addAddress(ModelAndView mv,String address1,
 									HttpSession session) {
 		
-		System.out.println("String address : " + address1);
+//		System.out.println("String address : " + address1);
 		
 		String[] splitAddr = address1.split(" ");
 		String addr = splitAddr[1];
 		
-		System.out.println("split된 addr : " + addr);
+//		System.out.println("split된 addr : " + addr);
 		
 		session.setAttribute("sAddr", addr);
 		session.setAttribute("sAddress1", address1);
@@ -64,8 +64,8 @@ public class storeSearchController {
 			String addr, String address1,
 			@RequestParam(value="page", required=false) Integer page) {
 		
-		System.out.println("전체매장 addr : " + addr);
-		System.out.println("전체매장 address1 : " + address1);
+//		System.out.println("전체매장 addr : " + addr);
+//		System.out.println("전체매장 address1 : " + address1);
 		
 		add.setAdd2(addr);
 		add.setAddress1(address1);
@@ -477,15 +477,13 @@ public class storeSearchController {
 			Attachment atLogo = sService.selectToslFile(mNo);
 			ArrayList<storeMenu> menuList = sService.selectTosMenu(mNo);
 			ArrayList<Attachment> atMenuList = sService.selectTosFile(mNo);
-			// 매장 메뉴 출력 테스트로 잠깐 리뷰 주석해놓음.
-			// 메뉴 출력 후 리뷰 주석 풀어야함.
-			/*int reviewCount = rService.reviewCount(mNo);
+			int reviewCount = rService.reviewCount(mNo);
 			int rStar = rService.selectStar(mNo);
-			ArrayList<Review> rlist = rService.selectReviewList(mNo);*/
+			ArrayList<Review> rlist = rService.selectReviewList(mNo);
 			
 //			System.out.println("store : " + store);
-			System.out.println("menuList : " + menuList);
-			System.out.println("atMenuList : " + atMenuList);
+//			System.out.println("menuList : " + menuList);
+//			System.out.println("atMenuList : " + atMenuList);
 //			System.out.println("atLogo : " + atLogo);
 //			System.out.println("reviewCount : " + reviewCount);
 //			System.out.println("rStar : " + rStar);
@@ -497,11 +495,9 @@ public class storeSearchController {
 				  .addObject("atMenuList", atMenuList)
 				  .addObject("atLogo", atLogo)
 				  .addObject("currentPage", currentPage)
-				// 매장 메뉴 출력 테스트로 잠깐 리뷰 주석해놓음.
-					// 메뉴 출력 후 리뷰 주석 풀어야함.
-				  /*.addObject("reviewCount", reviewCount)
+				  .addObject("reviewCount", reviewCount)
 				  .addObject("rStar", rStar)
-				  .addObject("rlist", rlist)*/
+				  .addObject("rlist", rlist)
 				  .setViewName("storeSearch/storeDetailView");
 			} else {
 				throw new storeSearchException("매장 상세 정보 출력 실패");

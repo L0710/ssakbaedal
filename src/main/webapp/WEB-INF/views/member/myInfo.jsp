@@ -245,9 +245,9 @@
 		<c:when test="${ loginUser.mType == 2 }">
 		 	<c:import url="../common/sidemenu_user.jsp"/>	
 		</c:when>
-		<c:otherwise>
+		<%-- <c:otherwise>
 			<c:import url="../common/sidemenu_store.jsp" />
-		</c:otherwise>
+		</c:otherwise> 필요없어보여서 주석 처리함... --%>
 		</c:choose>
 		</div>	
 		<jsp:include page="../common/footer.jsp" />	 	
